@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+:root {
+    /* Monochrome-First Design System */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+
+    --primary: 221 100% 50%;        /* Depoint Blue #0066FF */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 22 100% 50%;       /* Depoint Orange #FF6A00 */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 0% 90%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 221 100% 50%;
+
+    /* Simplified Monochrome Palette */
+    --gray-50: 0 0% 98%;
+    --gray-100: 0 0% 96%;
+    --gray-200: 0 0% 90%;
+    --gray-300: 0 0% 83%;
+    --gray-400: 0 0% 64%;
+    --gray-500: 0 0% 45%;
+    --gray-600: 0 0% 32%;
+    --gray-700: 0 0% 25%;
+    --gray-800: 0 0% 15%;
+    --gray-900: 0 0% 9%;
+    
+    /* Brand Accent Colors (use sparingly) */
+    --depoint-blue: 221 100% 50%;   /* #0066FF */
+    --depoint-orange: 22 100% 50%;  /* #FF6A00 */
+    
+    /* Strategic Pillar Colors */
+    --pillar-margin: 142 76% 36%;    /* Green - Protect Margin */
+    --pillar-risk: 14 100% 57%;      /* Red/Orange - Reduce Risk */
+    --pillar-revenue: 221 100% 50%;  /* Blue - Protect Revenue */
+    --pillar-growth: 271 81% 56%;    /* Purple - Accelerate Growth */
+    
+    /* Minimal shadows - no colors, just depth */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1);
+    
+    /* Typography Hierarchy */
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --text-h1: 2.25rem;       /* 36pt - Slide Title */
+    --text-h2: 1.75rem;       /* 28pt - Section Head */
+    --text-h3: 1.25rem;       /* 20pt - Sub-heading */
+    --text-body: 1rem;        /* 16pt - Body Copy */
+    --text-label: 0.75rem;    /* 12pt - Labels/Captions */
+    --text-data: 4rem;        /* 64pt - Data Highlight */
+    
+    /* Line Heights */
+    --leading-h1: 1.2;
+    --leading-h2: 1.3;
+    --leading-h3: 1.4;
+    --leading-body: 1.5;
+    --leading-label: 1.4;
+    --leading-data: 1.0;
+    
+    /* Professional Spacing */
+    --space-section: 3rem;
+    --space-content: 2rem;
+    --space-element: 1rem;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 25%;
+    --sidebar-primary: 0 0% 9%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 221 100% 50%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-family);
+  }
+  
+  /* Monochrome Typography Classes */
+  .slide-h1 {
+    font-family: var(--font-family);
+    font-size: var(--text-h1);
+    font-weight: 700;
+    color: hsl(var(--foreground));
+    line-height: var(--leading-h1);
+  }
+  
+  .slide-h2 {
+    font-family: var(--font-family);
+    font-size: var(--text-h2);
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    line-height: var(--leading-h2);
+  }
+  
+  .slide-h3 {
+    font-family: var(--font-family);
+    font-size: var(--text-h3);
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    line-height: var(--leading-h3);
+  }
+  
+  .slide-body {
+    font-family: var(--font-family);
+    font-size: var(--text-body);
+    font-weight: 400;
+    color: hsl(var(--foreground));
+    line-height: var(--leading-body);
+  }
+  
+  .slide-label {
+    font-family: var(--font-family);
+    font-size: var(--text-label);
+    font-weight: 400;
+    color: hsl(var(--muted-foreground));
+    line-height: var(--leading-label);
+  }
+  
+  .slide-data {
+    font-family: var(--font-family);
+    font-size: var(--text-data);
+    font-weight: 700;
+    color: hsl(var(--primary));
+    line-height: var(--leading-data);
+  }
+  
+  /* Clean slide container - no gradients */
+  .slide-container {
+    width: 100%;
+    aspect-ratio: 1344 / 816; /* Legal paper aspect ratio: 1.65:1 */
+    background: hsl(var(--background));
+    padding: 2rem 1.5rem 3rem 1.5rem;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  /* Responsive breakpoints for better mobile/tablet experience */
+  @media (min-width: 640px) {
+    .slide-container {
+      padding: 2.5rem 2rem 3.5rem 2rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .slide-container {
+      padding: 3rem 2.5rem 4rem 2.5rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .slide-container {
+      padding: 3.5rem 4rem 4.5rem 4rem;
+    }
+  }
+  
+  /* Print-specific: Fixed Legal paper dimensions */
+  @media print {
+    .slide-container {
+      width: 1344px !important;
+      height: 816px !important;
+      aspect-ratio: unset !important;
+      padding: 56px 64px 72px 64px !important;
+      page-break-after: always;
+      page-break-inside: avoid;
+    }
+    
+    .slide-container:last-child {
+      page-break-after: auto;
+    }
+  }
+  
+  .slide-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 64px;
+    border-top: 1px solid hsl(var(--border));
+    background: hsl(var(--background));
+  }
+}
+
+/* Monochrome Utility Classes */
+@layer utilities {
+  /* Grayscale utilities */
+  .text-gray-50 { color: hsl(var(--gray-50)); }
+  .text-gray-100 { color: hsl(var(--gray-100)); }
+  .text-gray-200 { color: hsl(var(--gray-200)); }
+  .text-gray-300 { color: hsl(var(--gray-300)); }
+  .text-gray-400 { color: hsl(var(--gray-400)); }
+  .text-gray-500 { color: hsl(var(--gray-500)); }
+  .text-gray-600 { color: hsl(var(--gray-600)); }
+  .text-gray-700 { color: hsl(var(--gray-700)); }
+  .text-gray-800 { color: hsl(var(--gray-800)); }
+  .text-gray-900 { color: hsl(var(--gray-900)); }
+  
+  .bg-gray-50 { background-color: hsl(var(--gray-50)); }
+  .bg-gray-100 { background-color: hsl(var(--gray-100)); }
+  .bg-gray-200 { background-color: hsl(var(--gray-200)); }
+  
+  /* Strategic accent colors - use sparingly */
+  .text-depoint-blue { color: hsl(var(--depoint-blue)); }
+  .text-depoint-orange { color: hsl(var(--depoint-orange)); }
+  .bg-depoint-blue { background-color: hsl(var(--depoint-blue)); }
+  .bg-depoint-orange { background-color: hsl(var(--depoint-orange)); }
+  .border-depoint-blue { border-color: hsl(var(--depoint-blue)); }
+  .border-depoint-orange { border-color: hsl(var(--depoint-orange)); }
+  
+  /* Strategic Pillar Colors */
+  .text-pillar-margin { color: hsl(var(--pillar-margin)); }
+  .text-pillar-risk { color: hsl(var(--pillar-risk)); }
+  .text-pillar-revenue { color: hsl(var(--pillar-revenue)); }
+  .text-pillar-growth { color: hsl(var(--pillar-growth)); }
+  .bg-pillar-margin { background-color: hsl(var(--pillar-margin)); }
+  .bg-pillar-risk { background-color: hsl(var(--pillar-risk)); }
+  .bg-pillar-revenue { background-color: hsl(var(--pillar-revenue)); }
+  .bg-pillar-growth { background-color: hsl(var(--pillar-growth)); }
+  .border-pillar-margin { border-color: hsl(var(--pillar-margin)); }
+  .border-pillar-risk { border-color: hsl(var(--pillar-risk)); }
+  .border-pillar-revenue { border-color: hsl(var(--pillar-revenue)); }
+  .border-pillar-growth { border-color: hsl(var(--pillar-growth)); }
+  
+  /* Clean shadows */
+  .shadow-clean-sm { box-shadow: var(--shadow-sm); }
+  .shadow-clean-md { box-shadow: var(--shadow-md); }
+  .shadow-clean-lg { box-shadow: var(--shadow-lg); }
+}
