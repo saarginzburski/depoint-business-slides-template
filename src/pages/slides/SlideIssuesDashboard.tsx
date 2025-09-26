@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import dashboardImage from '@/assets/issues-dashboard-interface-new.png';
 
@@ -82,12 +82,7 @@ const SlideIssuesDashboard = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Because surprises belong in birthdays, not boardrooms."
-        avatarStyle="consultant"
-        highlightWords={['surprises', 'boardrooms']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

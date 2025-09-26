@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import dashboardImage from '@/assets/task-compliance-dashboard-interface.png';
 
@@ -82,12 +82,7 @@ const SlideTaskComplianceDashboard = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Because 'done' beats 'I thought so.'"
-        avatarStyle="consultant"
-        highlightWords={['done', 'thought']}
-        highlightColor="orange"
-      />
+      <SlideFooter />
     </div>
   );
 };

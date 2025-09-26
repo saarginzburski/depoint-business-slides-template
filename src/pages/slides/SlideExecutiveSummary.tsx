@@ -1,7 +1,7 @@
 import React from 'react';
 import { Check, TrendingUp, Users, Building2 } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideExecutiveSummary = () => {
@@ -91,11 +91,7 @@ const SlideExecutiveSummary = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Happy staff, fewer fines, safer EBITDA."
-        avatarStyle="consultant"
-        highlightWords={['EBITDA', 'safer']}
-      />
+      <SlideFooter />
     </div>
   );
 };

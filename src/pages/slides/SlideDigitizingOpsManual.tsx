@@ -1,7 +1,7 @@
 import React from 'react';
 import { FileText, Smartphone, Clipboard, Shield, Trophy, GraduationCap } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideDigitizingOpsManual = () => {
@@ -79,12 +79,7 @@ const SlideDigitizingOpsManual = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Finally, a manual that protects your brand instead of collecting dust."
-        avatarStyle="consultant"
-        highlightWords={['manual', 'protects', 'brand']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

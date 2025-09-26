@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import { Store, Handshake, Shield, DollarSign, RotateCcw, ClipboardList, Smartphone } from 'lucide-react';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
@@ -182,12 +182,7 @@ const SlideCrossIndustryPlatform = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Different uniforms, same leaks — one fix."
-        avatarStyle="consultant"
-        highlightWords={['same leaks', 'one fix']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

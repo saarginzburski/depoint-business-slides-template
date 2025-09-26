@@ -1,7 +1,7 @@
 import React from 'react';
 import { Eye, RefreshCw, Shield, Coins, Trophy, CheckSquare, DollarSign, Clock, Lock, GraduationCap } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideFranchisorFranchisee = () => {
@@ -132,12 +132,7 @@ const SlideFranchisorFranchisee = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Win-win is not just theory here."
-        avatarStyle="consultant"
-        highlightWords={['Win-win']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

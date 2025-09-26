@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideConsultingPartners = () => {
@@ -85,11 +85,7 @@ const SlideConsultingPartners = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Advisory revenue with actual ROI? Your clients will thank you."
-        avatarStyle="consultant"
-        highlightWords={['ROI', 'thank']}
-      />
+      <SlideFooter />
     </div>
   );
 };

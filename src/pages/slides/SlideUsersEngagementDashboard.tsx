@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import dashboardImage from '@/assets/users-engagement-dashboard-interface.png';
 
@@ -82,12 +82,7 @@ const SlideUsersEngagementDashboard = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="If they love using it, you'll love the P&L."
-        avatarStyle="consultant"
-        highlightWords={['love', 'P&L']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

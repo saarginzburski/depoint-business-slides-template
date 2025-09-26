@@ -1,7 +1,7 @@
 import React from 'react';
 import { DollarSign, AlertTriangle, Shield, TrendingUp } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideSolution = () => {
@@ -121,12 +121,7 @@ const SlideSolution = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="If your staff are guessing, your P&L is too."
-        avatarStyle="consultant"
-        highlightWords={['guessing', 'P&L']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

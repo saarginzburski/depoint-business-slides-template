@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import dashboardImage from '@/assets/speed-of-service-dashboard-interface.png';
 
@@ -82,12 +82,7 @@ const SlideSpeedOfServiceDashboard = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Faster lines, fatter margins."
-        avatarStyle="consultant"
-        highlightWords={['Faster', 'margins']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

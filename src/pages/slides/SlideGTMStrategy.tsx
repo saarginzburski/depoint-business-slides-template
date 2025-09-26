@@ -1,7 +1,7 @@
 import React from 'react';
 import { TrendingUp, Users, Building2, Target, Zap, ArrowRight, Flag, Check, Globe, Clock, DollarSign, Layers } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideGTMStrategy = () => {
@@ -129,12 +129,7 @@ const SlideGTMStrategy = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Land where fires burn. Expand where margins return."
-        avatarStyle="consultant"
-        highlightWords={['fires burn', 'margins return']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

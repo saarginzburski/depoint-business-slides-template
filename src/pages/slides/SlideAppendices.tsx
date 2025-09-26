@@ -1,7 +1,7 @@
 import React from 'react';
 import { getSlideStyle } from '@/lib/slideConfig';
 import { FileText, ChevronRight } from 'lucide-react';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 
 const SlideAppendices = () => {
   return (
@@ -31,12 +31,7 @@ const SlideAppendices = () => {
       </div>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Because details matter when billions are at stake."
-        avatarStyle="consultant"
-        highlightWords={['details matter', 'billions']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

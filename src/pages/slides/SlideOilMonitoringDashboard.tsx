@@ -1,7 +1,7 @@
 import React from 'react';
 import { Smartphone } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import dashboardImage from '@/assets/oil-monitoring-dashboard-interface.png';
 
@@ -99,12 +99,7 @@ const SlideOilMonitoringDashboard = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Every liter saved = 200 meals not trashed."
-        avatarStyle="consultant"
-        highlightWords={['liter', 'trashed']}
-        highlightColor="orange"
-      />
+      <SlideFooter />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import dashboardImage from '@/assets/sales-management-dashboard-interface.png';
 
@@ -82,12 +82,7 @@ const SlideSalesManagementDashboard = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Find the money you're already earning."
-        avatarStyle="consultant"
-        highlightWords={['money', 'earning']}
-        highlightColor="orange"
-      />
+      <SlideFooter />
     </div>
   );
 };

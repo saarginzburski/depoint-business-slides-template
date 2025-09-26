@@ -1,7 +1,7 @@
 import React from 'react';
 import { Target, BarChart3, Brain, Zap, ChevronRight, RefreshCw, AlertTriangle, Shield, TrendingUp } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlidePlatformEcosystem = () => {
@@ -167,12 +167,7 @@ const SlidePlatformEcosystem = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Unlike your horoscope, this actually predicts the future."
-        avatarStyle="consultant"
-        highlightWords={['horoscope', 'predicts']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

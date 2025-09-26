@@ -1,7 +1,7 @@
 import React from 'react';
 import { DollarSign, AlertTriangle, Shield, TrendingUp } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideDashboardSummary = () => {
@@ -101,12 +101,7 @@ const SlideDashboardSummary = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="One screen to end a hundred headaches."
-        avatarStyle="consultant"
-        highlightWords={['One screen', 'hundred headaches']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

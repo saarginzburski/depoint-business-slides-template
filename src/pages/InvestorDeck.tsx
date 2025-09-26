@@ -4,7 +4,7 @@ import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square } from 'lucide
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { slideConfig } from './slides/slideConfig';
-import SimplePDFExporter from '@/components/SimplePDFExporter';
+import PDFExporter from '@/components/PDFExporter';
 import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
 
 // Lazy load all slide components for previews with error handling

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Award, Star, TrendingUp, Users, Building2, Zap, Quote } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import mcdonaldsLogo from "@/assets/mcdonalds-logo-new.png";
 import jollibeeLogo from "@/assets/jollibee-logo-new.png";
@@ -109,12 +109,7 @@ const SlideCustomerStories = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Battle-tested in fryers, not in slide decks."
-        avatarStyle="consultant"
-        highlightWords={['Battle-tested', 'fryers']}
-        highlightColor="orange"
-      />
+      <SlideFooter />
     </div>
   );
 };

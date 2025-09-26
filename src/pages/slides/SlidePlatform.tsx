@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle, Settings, Smartphone, Users, Network, BarChart3, Shield, Zap, Building2 } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlidePlatform = () => {
@@ -67,12 +67,7 @@ const SlidePlatform = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Enterprise secure. Store simple."
-        avatarStyle="consultant"
-        highlightWords={['Enterprise', 'simple']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

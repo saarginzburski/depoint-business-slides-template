@@ -1,7 +1,7 @@
 import React from 'react';
 import { Building2, Network, Globe, Store, Users, Zap, Shield, Database, CheckCircle } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideCompetitiveLandscape = () => {
@@ -121,12 +121,7 @@ const SlideCompetitiveLandscape = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="When 'it depends' is the answer — we still deliver."
-        avatarStyle="consultant"
-        highlightWords={['it depends', 'still deliver']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

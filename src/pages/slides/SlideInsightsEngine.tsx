@@ -1,7 +1,7 @@
 import React from 'react';
 import { AlertTriangle, Thermometer, Smartphone } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideInsightsEngine = () => {
@@ -136,12 +136,7 @@ const SlideInsightsEngine = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="We text you before the freezer quits on Friday."
-        avatarStyle="consultant"
-        highlightWords={['text', 'Friday']}
-        highlightColor="orange"
-      />
+      <SlideFooter />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import dashboardImage from '@/assets/audit-report-dashboard-interface-new.png';
 
@@ -82,12 +82,7 @@ const SlideAuditReportDashboard = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Pass audits without the all-nighter."
-        avatarStyle="consultant"
-        highlightWords={['audits', 'all-nighter']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

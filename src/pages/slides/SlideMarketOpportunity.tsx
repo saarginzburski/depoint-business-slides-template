@@ -1,7 +1,7 @@
 import React from 'react';
 import { Target, TrendingUp, Building2, Globe, ArrowRight, BarChart3, Utensils, Users, Cloud } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideMarketOpportunity = () => {
@@ -87,12 +87,7 @@ const SlideMarketOpportunity = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Making 'Ops Intelligence' something your CFO actually wants."
-        avatarStyle="consultant"
-        highlightWords={['Ops Intelligence', 'CFO']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

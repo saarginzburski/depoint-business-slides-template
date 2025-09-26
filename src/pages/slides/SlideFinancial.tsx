@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart3, DollarSign, TrendingUp } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideFinancial = () => {
@@ -164,12 +164,7 @@ const SlideFinancial = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="ARR up, burn down — CFO-approved."
-        avatarStyle="consultant"
-        highlightWords={['ARR', 'CFO-approved']}
-        highlightColor="orange"
-      />
+      <SlideFooter />
     </div>
   );
 };

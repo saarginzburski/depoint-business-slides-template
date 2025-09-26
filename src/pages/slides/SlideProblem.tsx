@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, CheckCircle, ArrowUp, Building2, Smartphone, BarChart3, Shield, FileText, Clock, Unlink, ArrowRight, TrendingUp, AlertTriangle, FileSpreadsheet, ClipboardList, MessageCircle, PenTool, Mail, Gauge, Wrench } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 const SlideProblem = () => {
   return (
@@ -317,12 +317,7 @@ const SlideProblem = () => {
     </SlideLayout>
     
     {/* Custom Humor Footer */}
-    <HumorFooter 
-      text="Excel_Chaos_v17_FINAL.xlsx — may it rest in peace."
-      avatarStyle="consultant"
-      highlightWords={['Excel_Chaos_v17_FINAL.xlsx', 'peace']}
-      highlightColor="orange"
-    />
+    <SlideFooter />
   </div>
 );
 };

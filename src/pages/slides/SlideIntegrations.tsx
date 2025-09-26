@@ -1,7 +1,7 @@
 import React from 'react';
 import { Zap, DollarSign, Thermometer, Users, Settings, ArrowRight } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideIntegrations = () => {
@@ -124,12 +124,7 @@ const SlideIntegrations = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Plays well with others, unlike that one kid in kindergarten."
-        avatarStyle="consultant"
-        highlightWords={['Plays well']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

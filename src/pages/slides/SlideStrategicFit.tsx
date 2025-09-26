@@ -1,7 +1,7 @@
 import React from 'react';
 import { Brain, Database } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideStrategicFit = () => {
@@ -150,12 +150,7 @@ const SlideStrategicFit = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Your moat gets deeper every lunch rush."
-        avatarStyle="consultant"
-        highlightWords={['moat', 'lunch rush']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

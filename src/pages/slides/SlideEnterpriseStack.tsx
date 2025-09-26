@@ -1,7 +1,7 @@
 import React from 'react';
 import { Monitor, Users, Wifi } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideEnterpriseStack = () => {
@@ -95,12 +95,7 @@ const SlideEnterpriseStack = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="Your ERP's brain meets your frontline's heartbeat."
-        avatarStyle="consultant"
-        highlightWords={['ERP brain', 'frontline heartbeat']}
-        highlightColor="blue"
-      />
+      <SlideFooter />
     </div>
   );
 };

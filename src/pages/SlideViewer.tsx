@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { slideConfig, getSlideInfo, getNextSlideId, getPrevSlideId } from './slides/slideConfig';
-import SimplePDFExporter from '@/components/SimplePDFExporter';
+import PDFExporter from '@/components/PDFExporter';
 import { SLIDE_CONFIG } from '@/lib/slideConfig';
 
 // Lazy load all slide components

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapPin, Users, Building2, CheckCircle, Database, Network } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import HumorFooter from '@/components/HumorFooter';
+import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import jollibeeLogo from "@/assets/jollibee-logo-new.png";
 
@@ -99,12 +99,7 @@ const SlideJollibeeCase = () => {
       </SlideLayout>
       
       {/* Custom Humor Footer */}
-      <HumorFooter 
-        text="When the bee buzzes, 1,324 stores listen."
-        avatarStyle="consultant"
-        highlightWords={['bee buzzes', '1,324']}
-        highlightColor="orange"
-      />
+      <SlideFooter />
     </div>
   );
 };
