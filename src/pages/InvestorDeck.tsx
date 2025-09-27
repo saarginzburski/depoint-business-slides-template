@@ -1,8 +1,10 @@
 import React, { Suspense, lazy, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen } from 'lucide-react';
+import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { slideConfig } from './slides/slideConfig';
 import PDFExporter from '@/components/PDFExporter';
 import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
@@ -90,6 +92,11 @@ const InvestorDeck = () => {
   // State for editable deck name
   const [deckName, setDeckName] = useState('Investor Deck');
   const [isEditingName, setIsEditingName] = useState(false);
+  
+  // State for deck publishing
+  const [isDeckPublished, setIsDeckPublished] = useState(() => {
+    return localStorage.getItem('isDeckPublished') === 'true';
+  });
   
   // State for managing selected sections (all selected by default)
   const [selectedSections, setSelectedSections] = useState<Set<string>>(
@@ -216,6 +223,16 @@ const InvestorDeck = () => {
     }
   };
 
+  const handlePublishToggle = (checked: boolean) => {
+    setIsDeckPublished(checked);
+    localStorage.setItem('isDeckPublished', checked.toString());
+    
+    // Force a page reload to update the App component's routing
+    if (checked) {
+      window.location.href = '/deck/slide/1';
+    }
+  };
+
   const getSelectedVisibleSlidesCount = () => {
     return visibleSlides.filter(slide => selectedSlides.has(slide.id)).length;
   };
@@ -282,6 +299,23 @@ const InvestorDeck = () => {
                 : `Print ${getSelectedVisibleSlidesCount()} Selected`
               }
             </Button>
+          </div>
+
+          {/* Publish Deck Toggle */}
+          <div className="flex items-center justify-center gap-3 mb-8 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+            <Globe className="w-5 h-5 text-blue-600" />
+            <Label htmlFor="publish-toggle" className="text-sm font-medium text-gray-700 cursor-pointer">
+              Publish Deck
+            </Label>
+            <Switch
+              id="publish-toggle"
+              checked={isDeckPublished}
+              onCheckedChange={handlePublishToggle}
+              className="data-[state=checked]:bg-blue-600"
+            />
+            <span className="text-xs text-gray-500">
+              {isDeckPublished ? 'Root URL redirects to first slide' : 'Root URL shows overview'}
+            </span>
           </div>
           
           {/* Section Selection */}

@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import NotFound from "./pages/NotFound";
+import { useEffect, useState } from "react";
 
 import InvestorDeck from "./pages/InvestorDeck";
 import SlideViewer from "./pages/SlideViewer";
@@ -12,23 +13,36 @@ import PrintableDeck from "./pages/PrintableDeck";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<InvestorDeck />} />
-          <Route path="/deck/slide/:slideId" element={<SlideViewer />} />
-          <Route path="/print-deck" element={<PrintableDeck />} />
-          
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [isDeckPublished, setIsDeckPublished] = useState(false);
+
+  useEffect(() => {
+    const published = localStorage.getItem('isDeckPublished') === 'true';
+    setIsDeckPublished(published);
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route 
+              path="/" 
+              element={isDeckPublished ? <Navigate to="/deck/slide/1" replace /> : <InvestorDeck />} 
+            />
+            <Route path="/overview" element={<InvestorDeck />} />
+            <Route path="/deck/slide/:slideId" element={<SlideViewer />} />
+            <Route path="/print-deck" element={<PrintableDeck />} />
+            
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
