@@ -42,7 +42,10 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [newVariationName, setNewVariationName] = useState('');
   const [selectedSections, setSelectedSections] = useState<Set<string>>(new Set());
-  const [showVariationsList, setShowVariationsList] = useState(true);
+  const [showVariationsList, setShowVariationsList] = useState(() => {
+    const saved = localStorage.getItem('showVariationsList');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
 
   const handleSelectVariation = (variationId: string) => {
     const variation = variations.find(v => v.id === variationId);
@@ -85,6 +88,12 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
       newSet.add(sectionId);
     }
     setSelectedSections(newSet);
+  };
+
+  const toggleVariationsList = () => {
+    const newState = !showVariationsList;
+    setShowVariationsList(newState);
+    localStorage.setItem('showVariationsList', JSON.stringify(newState));
   };
 
   if (loading) {
@@ -200,7 +209,7 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
 
           <div className="flex items-center gap-2">
             <Button
-              onClick={() => setShowVariationsList(!showVariationsList)}
+              onClick={toggleVariationsList}
               size="sm"
               variant="outline"
               className="border-gray-300"
