@@ -104,28 +104,110 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
   return (
     <Card className="mb-6 border-blue-200 bg-blue-50/30">
       <CardContent className="p-6">
-        {/* Single row with selector, toggle, and new button */}
+        {/* Single row with selector, actions, toggle, and new button */}
         <div className="flex items-center justify-between gap-4 mb-4">
-          <Select
-            value={currentVariation?.id || ''}
-            onValueChange={handleSelectVariation}
-          >
-            <SelectTrigger className="flex-1">
-              <SelectValue placeholder="Select a deck variation" />
-            </SelectTrigger>
-            <SelectContent>
-              {variations.map((variation) => (
-                <SelectItem key={variation.id} value={variation.id}>
-                  <div className="flex items-center gap-2">
-                    <span>{variation.name}</span>
-                    {variation.is_default && (
-                      <Badge variant="secondary" className="text-xs">Default</Badge>
-                    )}
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="flex items-center gap-3 flex-1">
+            <Select
+              value={currentVariation?.id || ''}
+              onValueChange={handleSelectVariation}
+            >
+              <SelectTrigger className="flex-1 max-w-xs">
+                <SelectValue placeholder="Select a deck variation" />
+              </SelectTrigger>
+              <SelectContent>
+                {variations.map((variation) => (
+                  <SelectItem key={variation.id} value={variation.id}>
+                    <div className="flex items-center gap-2">
+                      <span>{variation.name}</span>
+                      {variation.is_default && (
+                        <Badge variant="secondary" className="text-xs">Default</Badge>
+                      )}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Actions for current variation */}
+            {currentVariation && (
+              <div className="flex items-center gap-1">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => {
+                    const slides = currentVariation.sections.map(sectionId => {
+                      const section = sections.find(s => s.id === sectionId);
+                      return section?.slides || [];
+                    }).flat().sort((a, b) => a - b);
+                    if (slides.length > 0) {
+                      const slidesParam = slides.join(',');
+                      window.open(`/deck/slide/${slides[0]}?deckName=${encodeURIComponent(currentVariation.name)}&slides=${slidesParam}`, '_blank');
+                    }
+                  }}
+                  className="text-gray-500 hover:text-green-600"
+                  title="View variation"
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => {
+                    const slides = currentVariation.sections.map(sectionId => {
+                      const section = sections.find(s => s.id === sectionId);
+                      return section?.slides || [];
+                    }).flat().sort((a, b) => a - b);
+                    if (slides.length > 0) {
+                      const slideParams = slides.join(',');
+                      window.open(`/print-deck?slides=${slideParams}`, '_blank');
+                    }
+                  }}
+                  className="text-gray-500 hover:text-purple-600"
+                  title="Print variation"
+                >
+                  <Printer className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setReorderingVariationId(currentVariation.id)}
+                  className="text-gray-500 hover:text-orange-600"
+                  title="Reorder slides"
+                >
+                  <Settings className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => handleDuplicateVariation(currentVariation)}
+                  className="text-gray-500 hover:text-blue-600"
+                  title="Duplicate variation"
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setEditingId(currentVariation.id)}
+                  className="text-gray-500 hover:text-blue-600"
+                  title="Edit variation name"
+                >
+                  <Edit2 className="h-4 w-4" />
+                </Button>
+                {!currentVariation.is_default && (
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => deleteVariation(currentVariation.id)}
+                    className="text-gray-500 hover:text-red-600"
+                    title="Delete variation"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+            )}
+          </div>
 
           <div className="flex items-center gap-2">
             <Button
