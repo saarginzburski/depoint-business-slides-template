@@ -12,22 +12,30 @@ const SlideDashboardIntro = () => {
     {
       title: "💰 Protect Margin",
       subtitle: "Control costs & eliminate waste",
-      color: "from-emerald-500 to-green-600",
-      iconBg: "bg-emerald-100",
-      iconColor: "text-emerald-600",
+      bgColor: "bg-green-50",
+      borderColor: "border-green-200",
+      titleColor: "text-green-700",
+      subtitleColor: "text-green-600",
+      buttonColor: "bg-green-600 hover:bg-green-700",
       icon: DollarSign,
+      iconBg: "bg-green-100",
+      iconColor: "text-green-600",
       dashboards: [
-        { name: "Oil Monitoring Dashboard", slideId: 22, icon: "🛢️" },
+        { name: "Oil Monitoring", slideId: 22, icon: "🛢️" },
         { name: "Issues Dashboard", slideId: 23, icon: "🔧" }
       ]
     },
     {
       title: "⚠️ Reduce Risk",
       subtitle: "Prevent failures & avoid penalties",
-      color: "from-orange-500 to-red-500",
+      bgColor: "bg-orange-50",
+      borderColor: "border-orange-200",
+      titleColor: "text-orange-700",
+      subtitleColor: "text-orange-600",
+      buttonColor: "bg-orange-600 hover:bg-orange-700",
+      icon: AlertTriangle,
       iconBg: "bg-orange-100",
       iconColor: "text-orange-600",
-      icon: AlertTriangle,
       dashboards: [
         { name: "Equipment Monitoring", slideId: 24, icon: "⚙️" },
         { name: "Audit Report", slideId: 25, icon: "📋" },
@@ -37,10 +45,14 @@ const SlideDashboardIntro = () => {
     {
       title: "🔒 Protect Revenue",
       subtitle: "Safeguard sales with consistent quality",
-      color: "from-blue-500 to-indigo-600",
+      bgColor: "bg-blue-50",
+      borderColor: "border-blue-200",
+      titleColor: "text-blue-700",
+      subtitleColor: "text-blue-600",
+      buttonColor: "bg-blue-600 hover:bg-blue-700",
+      icon: Shield,
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600",
-      icon: Shield,
       dashboards: [
         { name: "Product Gold Standard", slideId: 27, icon: "🏆" }
       ]
@@ -48,10 +60,14 @@ const SlideDashboardIntro = () => {
     {
       title: "📈 Accelerate Growth",
       subtitle: "Drive revenue through execution speed & insights",
-      color: "from-purple-500 to-pink-600",
+      bgColor: "bg-purple-50",
+      borderColor: "border-purple-200",
+      titleColor: "text-purple-700",
+      subtitleColor: "text-purple-600",
+      buttonColor: "bg-purple-600 hover:bg-purple-700",
+      icon: TrendingUp,
       iconBg: "bg-purple-100",
       iconColor: "text-purple-600",
-      icon: TrendingUp,
       dashboards: [
         { name: "Speed of Service", slideId: 28, icon: "⚡" },
         { name: "Users Engagement", slideId: 29, icon: "👥" },
@@ -65,71 +81,77 @@ const SlideDashboardIntro = () => {
   };
 
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="relative w-full h-full">
       <SlideLayout
-        title="Dashboard Intelligence Hub"
+        title="The Intelligence Layer: Why Dashboards Matter"
         slideNumber="20"
         totalSlides="31"
         logoSrc={depointLogo}
         hideFooter={true}
       >
-      <div className="h-full flex flex-col px-6 py-4">
+      <div className="h-full flex flex-col px-6 py-3">
         
-        {/* Hero Section */}
-        <div className="mb-6 text-center">
-          <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl shadow-xl mb-4">
-            <div className="bg-white/20 rounded-full p-3">
-              <Brain className="w-8 h-8" />
-            </div>
-            <div className="text-left">
-              <h2 className="text-2xl font-bold mb-1">Intelligence Layer</h2>
-              <p className="text-blue-100 text-sm">Click any dashboard to explore live insights</p>
+        {/* Central Message - 100% wide, reduced height */}
+        <div className="mb-3 flex-shrink-0">
+          <div className="bg-blue-600 rounded-xl px-6 py-3 text-white shadow-xl w-full">
+            <div className="flex items-center gap-4">
+              <div className="bg-white/15 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                <Brain className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold leading-tight mb-2">
+                  Dashboards are not features — they prove the unmatched depth of <span className="text-blue-200">Depoint's intelligence engine</span>
+                </h3>
+                <p className="text-sm text-blue-100 font-medium">
+                  Each dashboard represents millions of data points transformed into strategic insight
+                </p>
+              </div>
             </div>
           </div>
         </div>
         
-        {/* Dashboard Categories Grid */}
-        <div className="grid grid-cols-2 gap-4 flex-1 min-h-0">
+        {/* 4-Column Grid for better space utilization */}
+        <div className="grid grid-cols-4 gap-3 flex-1 min-h-0">
           {dashboardCategories.map((category, categoryIndex) => {
             const IconComponent = category.icon;
             return (
-              <div key={categoryIndex} className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 flex flex-col hover:shadow-2xl transition-all duration-300">
-                {/* Category Header */}
-                <div className="flex items-center gap-4 mb-5">
-                  <div className={`w-14 h-14 ${category.iconBg} rounded-xl flex items-center justify-center`}>
-                    <IconComponent className={`w-7 h-7 ${category.iconColor}`} />
+              <div key={categoryIndex} className={`${category.bgColor} rounded-lg shadow-lg border-2 ${category.borderColor} p-3 flex flex-col hover:shadow-xl transition-all duration-200`}>
+                {/* Category Header - Compact */}
+                <div className="flex items-center gap-2 mb-3">
+                  <div className={`w-8 h-8 ${category.iconBg} rounded-lg flex items-center justify-center`}>
+                    <IconComponent className={`w-4 h-4 ${category.iconColor}`} />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-gray-800 mb-1">{category.title}</h3>
-                    <p className="text-sm text-gray-600">{category.subtitle}</p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className={`text-sm font-bold ${category.titleColor} leading-tight`}>{category.title}</h3>
+                    <p className={`text-xs ${category.subtitleColor}`}>{category.subtitle}</p>
                   </div>
                 </div>
                 
-                {/* Dashboard Cards */}
-                <div className="space-y-3 flex-1">
+                {/* Dashboard Buttons - Compact */}
+                <div className="space-y-2 flex-1">
                   {category.dashboards.map((dashboard, dashIndex) => (
                     <button
                       key={dashIndex}
                       onClick={() => handleDashboardClick(dashboard.slideId)}
-                      className={`w-full group bg-gradient-to-r ${category.color} hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 rounded-xl p-4 text-white`}
+                      className={`w-full ${category.buttonColor} hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 rounded-lg px-3 py-2 text-white text-xs font-medium`}
                     >
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-lg">{dashboard.icon}</span>
-                          <span className="font-semibold text-sm">{dashboard.name}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm">{dashboard.icon}</span>
+                          <span className="truncate">{dashboard.name}</span>
                         </div>
-                        <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                        <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-200 flex-shrink-0" />
                       </div>
                     </button>
                   ))}
                 </div>
                 
-                {/* Stats Footer */}
-                <div className="mt-4 pt-4 border-t border-gray-100">
+                {/* Stats Footer - Compact */}
+                <div className="mt-2 pt-2 border-t border-gray-200">
                   <div className="flex items-center justify-between text-xs text-gray-500">
                     <span className="flex items-center gap-1">
                       <BarChart3 className="w-3 h-3" />
-                      Live Analytics
+                      Live
                     </span>
                     <span className="flex items-center gap-1">
                       <Zap className="w-3 h-3" />
