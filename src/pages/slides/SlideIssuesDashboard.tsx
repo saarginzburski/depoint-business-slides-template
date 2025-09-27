@@ -54,22 +54,22 @@ const SlideIssuesDashboard = () => {
         {/* Right Side - Content (30%) */}
         <div className="w-[30%] flex flex-col gap-3 overflow-y-auto">
           {/* Financial Impact KPIs */}
-          <div className="bg-green-700 text-white p-3 rounded-lg shadow-xl">
+          <div className="bg-pillar-margin text-white p-3 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <span className="font-bold text-base text-white">💰 Margin Protection Impact</span>
             </div>
             <div className="grid grid-cols-1 gap-2 text-sm">
               <div className="bg-white/20 p-2 rounded">
                 <div className="text-lg font-bold text-white">$4.2M</div>
-                <div className="text-green-100 text-xs">Annual cost of chronic issues if not eliminated</div>
+                <div className="text-white/80 text-xs">Annual cost of chronic issues if not eliminated</div>
               </div>
               <div className="bg-white/20 p-2 rounded">
                 <div className="text-lg font-bold text-white">$850</div>
-                <div className="text-green-100 text-xs">Average labor cost per recurring equipment issue</div>
+                <div className="text-white/80 text-xs">Average labor cost per recurring equipment issue</div>
               </div>
               <div className="bg-white/20 p-2 rounded">
                 <div className="text-lg font-bold text-white">67%</div>
-                <div className="text-green-100 text-xs">Cost reduction through root cause elimination</div>
+                <div className="text-white/80 text-xs">Cost reduction through root cause elimination</div>
               </div>
             </div>
           </div>
