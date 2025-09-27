@@ -133,14 +133,14 @@ const InvestorDeck = () => {
   const handleSlideClick = (slideId: number) => {
     if (typeof window !== 'undefined' && navigate) {
       // Pass deck name as URL parameter
-      navigate(`/investor-deck/slide/${slideId}?deckName=${encodeURIComponent(deckName)}`);
+      navigate(`/deck/slide/${slideId}?deckName=${encodeURIComponent(deckName)}`);
     }
   };
 
   const handleStartPresentation = () => {
     if (typeof window !== 'undefined' && navigate) {
       const firstSlide = visibleSlides.length > 0 ? visibleSlides[0].id : 1;
-      navigate(`/investor-deck/slide/${firstSlide}?deckName=${encodeURIComponent(deckName)}`);
+      navigate(`/deck/slide/${firstSlide}?deckName=${encodeURIComponent(deckName)}`);
     }
   };
 

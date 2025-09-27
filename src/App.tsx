@@ -20,7 +20,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<InvestorDeck />} />
-          <Route path="/investor-deck/slide/:slideId" element={<SlideViewer />} />
+          <Route path="/deck/slide/:slideId" element={<SlideViewer />} />
           <Route path="/print-deck" element={<PrintableDeck />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

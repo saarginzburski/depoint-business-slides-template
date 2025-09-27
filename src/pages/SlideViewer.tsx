@@ -58,7 +58,7 @@ const SlideViewer = () => {
   const deckName = decodeURIComponent(searchParams.get('deckName') || 'Investor Deck');
 
   if (!slideInfo) {
-    navigate('/investor-deck/slide/1');
+    navigate('/deck/slide/1');
     return null;
   }
 
@@ -68,14 +68,14 @@ const SlideViewer = () => {
   const handleNextSlide = () => {
     if (typeof window !== 'undefined' && navigate) {
       const nextId = getNextSlideId(currentSlideId);
-      navigate(`/investor-deck/slide/${nextId}?deckName=${encodeURIComponent(deckName)}`);
+      navigate(`/deck/slide/${nextId}?deckName=${encodeURIComponent(deckName)}`);
     }
   };
 
   const handlePrevSlide = () => {
     if (typeof window !== 'undefined' && navigate) {
       const prevId = getPrevSlideId(currentSlideId);
-      navigate(`/investor-deck/slide/${prevId}?deckName=${encodeURIComponent(deckName)}`);
+      navigate(`/deck/slide/${prevId}?deckName=${encodeURIComponent(deckName)}`);
     }
   };
 
