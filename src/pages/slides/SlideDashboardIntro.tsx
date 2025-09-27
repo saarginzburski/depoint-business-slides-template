@@ -87,7 +87,6 @@ const SlideDashboardIntro = () => {
         slideNumber="20"
         totalSlides="31"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
       <div className="h-full flex flex-col px-6 py-3">
         
@@ -185,8 +184,6 @@ const SlideDashboardIntro = () => {
       </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

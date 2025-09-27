@@ -11,7 +11,6 @@ const SlideTeam = () => {
         slideNumber="14"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
       <div className="h-full flex flex-col justify-center items-center px-12">
         <div className="max-w-4xl w-full grid grid-cols-3 gap-8">

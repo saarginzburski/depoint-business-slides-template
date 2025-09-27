@@ -14,7 +14,6 @@ const SlideCustomerStories = () => {
         slideNumber="5"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
       {/* World-class design - optimized for perfect fit */}
       <div className="h-full flex flex-col justify-center py-6 max-w-7xl mx-auto">
@@ -108,8 +107,6 @@ const SlideCustomerStories = () => {
       </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

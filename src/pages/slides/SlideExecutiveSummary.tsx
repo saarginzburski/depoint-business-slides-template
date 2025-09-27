@@ -12,7 +12,6 @@ const SlideExecutiveSummary = () => {
         slideNumber="2"
         totalSlides="26"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
       <div className="h-full flex flex-col justify-center py-6 max-w-7xl mx-auto">
         
@@ -90,8 +89,6 @@ const SlideExecutiveSummary = () => {
       </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

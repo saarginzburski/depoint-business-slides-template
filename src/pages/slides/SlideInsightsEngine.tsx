@@ -12,7 +12,6 @@ const SlideInsightsEngine = () => {
         slideNumber="7"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
       {/* Main Content - Simple two-step visual flow */}
       <div className="h-full flex flex-col justify-center py-6">
@@ -134,9 +133,6 @@ const SlideInsightsEngine = () => {
         
       </div>
       </SlideLayout>
-      
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

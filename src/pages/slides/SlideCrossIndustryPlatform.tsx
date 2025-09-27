@@ -12,7 +12,6 @@ const SlideCrossIndustryPlatform = () => {
         slideNumber="12"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
         <div className="h-full flex flex-col justify-center gap-6 py-6">
         
@@ -181,8 +180,6 @@ const SlideCrossIndustryPlatform = () => {
         </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

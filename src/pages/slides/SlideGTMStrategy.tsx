@@ -12,7 +12,6 @@ const SlideGTMStrategy = () => {
         slideNumber="9"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
         {/* Content focused on the proven process with elite metrics callout */}
         <div className="h-full flex flex-col justify-center gap-6 py-6">
@@ -128,8 +127,6 @@ const SlideGTMStrategy = () => {
         </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

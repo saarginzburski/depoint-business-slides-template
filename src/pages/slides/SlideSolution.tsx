@@ -12,7 +12,7 @@ const SlideSolution = () => {
         slideNumber="3" 
         totalSlides="15" 
         logoSrc={depointLogo}
-        hideFooter={true}
+        
       >
       {/* Content balanced for proper viewport fit within 78% content area */}
       <div className="h-full flex flex-col justify-center py-6 gap-6">
@@ -120,8 +120,6 @@ const SlideSolution = () => {
       </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

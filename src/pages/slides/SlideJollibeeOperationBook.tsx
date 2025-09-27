@@ -103,7 +103,6 @@ const SlideJollibeeOperationBook = () => {
         slideNumber="7"
         totalSlides="31"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
         <div className="content-viewport h-full flex flex-col overflow-auto py-4">
           
@@ -150,9 +149,6 @@ const SlideJollibeeOperationBook = () => {
           </div>
         </div>
       </SlideLayout>
-      
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

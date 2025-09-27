@@ -12,7 +12,6 @@ const SlideCompetitiveLandscape = () => {
         slideNumber="11"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
         <div className="h-full flex flex-col justify-center py-6 max-w-7xl mx-auto">
         
@@ -120,8 +119,6 @@ const SlideCompetitiveLandscape = () => {
         </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

@@ -12,7 +12,6 @@ const SlideIntegrations = () => {
         slideNumber="17"
         totalSlides="31"
         logoSrc={depointLogoBlack}
-        hideFooter={true}
       >
         <div className="content-viewport h-full flex flex-col py-8">
           
@@ -138,8 +137,6 @@ const SlideIntegrations = () => {
         </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

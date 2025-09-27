@@ -13,7 +13,7 @@ const SlideDigitizingOpsManual = () => {
         slideNumber="4"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
+        
       >
         <div className="content-viewport h-full flex flex-col justify-center py-6">
           {/* Subtitle */}
@@ -78,8 +78,6 @@ const SlideDigitizingOpsManual = () => {
         </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

@@ -28,7 +28,6 @@ const SlideSalesManagementDashboard = () => {
         slideNumber="31"
         totalSlides="31"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
       <div className="h-full flex gap-4 py-2 px-4 min-h-0">
 
@@ -95,9 +94,6 @@ const SlideSalesManagementDashboard = () => {
         </div>
       </div>
       </SlideLayout>
-      
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

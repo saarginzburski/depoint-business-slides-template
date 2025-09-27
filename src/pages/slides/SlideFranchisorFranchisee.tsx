@@ -12,7 +12,6 @@ const SlideFranchisorFranchisee = () => {
         slideNumber="5"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
         <div className="content-viewport h-full flex flex-col justify-center py-6">
           
@@ -130,9 +129,6 @@ const SlideFranchisorFranchisee = () => {
           </div>
         </div>
       </SlideLayout>
-      
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

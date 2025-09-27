@@ -12,7 +12,6 @@ const SlideStrategicFit = () => {
         slideNumber="13"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
         <div className="h-full flex flex-col justify-center py-6">
         
@@ -149,8 +148,6 @@ const SlideStrategicFit = () => {
         </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

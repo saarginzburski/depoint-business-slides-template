@@ -28,7 +28,6 @@ const SlideOilMonitoringDashboard = () => {
         slideNumber="23"
         totalSlides="31"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
       <div className="h-full flex gap-4 py-2 px-4 min-h-0">
 
@@ -110,9 +109,6 @@ const SlideOilMonitoringDashboard = () => {
         </div>
       </div>
       </SlideLayout>
-      
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };

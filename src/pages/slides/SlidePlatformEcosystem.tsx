@@ -13,7 +13,6 @@ const SlidePlatformEcosystem = () => {
         slideNumber="6"
         totalSlides="15"
         logoSrc={depointLogo}
-        hideFooter={true}
       >
       {/* Redesigned with modern, dynamic flywheel and key statement */}
       <div className="h-full py-6 overflow-hidden">
@@ -166,8 +165,6 @@ const SlidePlatformEcosystem = () => {
       </div>
       </SlideLayout>
       
-      {/* Custom Humor Footer */}
-      <SlideFooter />
     </div>
   );
 };
