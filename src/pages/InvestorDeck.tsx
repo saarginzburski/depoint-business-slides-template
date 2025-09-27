@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
+import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
@@ -105,7 +105,6 @@ const InvestorDeck = () => {
     new Set(sections.map(section => section.id))
   );
   const [currentVariation, setCurrentVariation] = useState<DeckVariationWithSections | null>(null);
-  const [showSections, setShowSections] = useState(true);
 
   // Update selected sections when variation changes
   useEffect(() => {
@@ -287,25 +286,31 @@ const InvestorDeck = () => {
                 </Button>
               </div>
 
-              {/* Right - Section Toggle */}
-              <div className="flex items-center gap-3">
-                <Button
-                  onClick={() => setShowSections(!showSections)}
-                  variant="outline"
-                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2 rounded-lg"
-                >
-                  {showSections ? (
-                    <>
-                      <ChevronUp className="w-4 h-4 mr-2" />
-                      Hide Sections
-                    </>
-                  ) : (
-                    <>
-                      <ChevronDown className="w-4 h-4 mr-2" />
-                      Show Sections
-                    </>
-                  )}
-                </Button>
+              {/* Right - Section Selection */}
+              <div className="flex items-center gap-2">
+                {sections.map(section => {
+                  const Icon = section.icon;
+                  const isSelected = selectedSections.has(section.id);
+                  const colorClasses = {
+                    blue: isSelected ? 'bg-blue-50 border-blue-300 text-blue-900' : 'bg-white border-gray-200 text-gray-700',
+                    slate: isSelected ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-white border-gray-200 text-gray-700',
+                    green: isSelected ? 'bg-green-50 border-green-300 text-green-900' : 'bg-white border-gray-200 text-gray-700',
+                    gray: isSelected ? 'bg-gray-50 border-gray-300 text-gray-900' : 'bg-white border-gray-200 text-gray-700',
+                  };
+                  
+                  return (
+                    <Button
+                      key={section.id}
+                      onClick={() => toggleSectionSelection(section.id)}
+                      variant="outline"
+                      size="sm"
+                      className={`transition-all ${colorClasses[section.color as keyof typeof colorClasses]}`}
+                    >
+                      <Icon className="w-4 h-4 mr-2" />
+                      {section.name}
+                    </Button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -318,38 +323,7 @@ const InvestorDeck = () => {
           onDeckNameChange={handleDeckNameChange}
         />
         
-        {/* Section Selection */}
-        {showSections && (
-          <div className="mb-8">
-            <div className="flex items-center justify-center gap-4 flex-wrap">
-              {sections.map(section => {
-                const Icon = section.icon;
-                const isSelected = selectedSections.has(section.id);
-                const colorClasses = {
-                  blue: isSelected ? 'bg-blue-50 border-blue-300 text-blue-900' : 'bg-white border-gray-200 text-gray-700',
-                  slate: isSelected ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-white border-gray-200 text-gray-700',
-                  green: isSelected ? 'bg-green-50 border-green-300 text-green-900' : 'bg-white border-gray-200 text-gray-700',
-                  gray: isSelected ? 'bg-gray-50 border-gray-300 text-gray-900' : 'bg-white border-gray-200 text-gray-700',
-                };
-                
-                return (
-                  <Card
-                    key={section.id}
-                    className={`p-4 cursor-pointer transition-all min-w-[250px] ${colorClasses[section.color as keyof typeof colorClasses]}`}
-                    onClick={() => toggleSectionSelection(section.id)}
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <Icon className="w-5 h-5" />
-                      <h3 className="font-semibold">{section.name}</h3>
-                    </div>
-                    <p className="text-sm opacity-75">{section.description}</p>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
+        
         {/* Slides organized by sections */}
         {visibleSlides.length > 0 && (
           <div className="space-y-8">
