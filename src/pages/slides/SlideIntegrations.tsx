@@ -2,7 +2,8 @@ import React from 'react';
 import { Zap, DollarSign, Thermometer, Users, Settings, ArrowRight } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
 import SlideFooter from '@/components/SlideFooter';
-import depointLogo from '@/assets/Depoint-Logo-black.png';
+import depointLogo from '@/assets/depoint-logo-white.png';
+import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
 
 const SlideIntegrations = () => {
   return (
@@ -10,8 +11,8 @@ const SlideIntegrations = () => {
       <SlideLayout
         title="Plug Into Any Platform"
         slideNumber="17"
-        totalSlides="15"
-        logoSrc={depointLogo}
+        totalSlides="31"
+        logoSrc={depointLogoBlack}
         hideFooter={true}
       >
         <div className="content-viewport h-full flex flex-col">
@@ -30,7 +31,7 @@ const SlideIntegrations = () => {
               {/* Central Hub - Depoint */}
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                 <div className="w-32 h-32 bg-primary rounded-full flex items-center justify-center shadow-2xl border-4 border-white">
-                  <img src={depointLogo} alt="Depoint" className="w-20 h-20" />
+                  <img src={depointLogo} alt="Depoint" className="h-16 object-contain" />
                 </div>
               </div>
 
