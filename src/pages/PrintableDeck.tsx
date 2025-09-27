@@ -38,7 +38,9 @@ const slideComponents = {
   SlideIssuesDashboard: lazy(() => import('./slides/SlideIssuesDashboard')),
   SlideDashboardSummary: lazy(() => import('./slides/SlideDashboardSummary')),
   SlideJollibeeCase: lazy(() => import('./slides/SlideJollibeeCase')),
+  SlideJollibeeOperationBook: lazy(() => import('./slides/SlideJollibeeOperationBook')),
   SlideIntegrations: lazy(() => import('./slides/SlideIntegrations')),
+  SlideDashboardsDemo: lazy(() => import('./slides/SlideDashboardsDemo')),
 };
 
 const PrintableDeck = () => {
