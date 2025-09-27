@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import NotFound from "./pages/NotFound";
-import Index from "./pages/Index";
+
 import InvestorDeck from "./pages/InvestorDeck";
 import SlideViewer from "./pages/SlideViewer";
 import PrintableDeck from "./pages/PrintableDeck";
@@ -19,8 +19,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/investor-deck" element={<InvestorDeck />} />
+          <Route path="/" element={<InvestorDeck />} />
           <Route path="/investor-deck/slide/:slideId" element={<SlideViewer />} />
           <Route path="/print-deck" element={<PrintableDeck />} />
           
