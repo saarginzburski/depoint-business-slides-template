@@ -150,15 +150,18 @@ const DeckOverview = () => {
 
   const handleSlideClick = (slideId: number) => {
     if (typeof window !== 'undefined' && navigate) {
-      // Pass deck name as URL parameter
-      navigate(`/deck/slide/${slideId}?deckName=${encodeURIComponent(deckName)}`);
+      const slidesParam = visibleSlides.map(s => s.id).join(',');
+      const slidesQuery = slidesParam ? `&slides=${slidesParam}` : '';
+      navigate(`/deck/slide/${slideId}?deckName=${encodeURIComponent(deckName)}${slidesQuery}`);
     }
   };
 
   const handleStartPresentation = () => {
     if (typeof window !== 'undefined' && navigate) {
       const firstSlide = visibleSlides.length > 0 ? visibleSlides[0].id : 1;
-      navigate(`/deck/slide/${firstSlide}?deckName=${encodeURIComponent(deckName)}`);
+      const slidesParam = visibleSlides.map(s => s.id).join(',');
+      const slidesQuery = slidesParam ? `&slides=${slidesParam}` : '';
+      navigate(`/deck/slide/${firstSlide}?deckName=${encodeURIComponent(deckName)}${slidesQuery}`);
     }
   };
 
@@ -254,8 +257,10 @@ const DeckOverview = () => {
               <div className="flex items-center gap-3">
                 <Button 
                   onClick={() => {
-                    const firstSlide = slideConfig.length > 0 ? slideConfig[0].id : 1;
-                    navigate(`/deck/slide/${firstSlide}?deckName=${encodeURIComponent(deckName)}`);
+                    const firstSlide = visibleSlides.length > 0 ? visibleSlides[0].id : 1;
+                    const slidesParam = visibleSlides.map(s => s.id).join(',');
+                    const slidesQuery = slidesParam ? `&slides=${slidesParam}` : '';
+                    navigate(`/deck/slide/${firstSlide}?deckName=${encodeURIComponent(deckName)}${slidesQuery}`);
                   }}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all"
                 >
