@@ -65,8 +65,8 @@ const SlideClosing4 = () => {
           </div>
         </div>
 
-        {/* Depoint logo big at bottom - like cover slide */}
-        <div className="absolute bottom-16 right-16">
+        {/* Depoint logo big at top-center */}
+        <div className="absolute top-20 left-1/2 transform -translate-x-1/2">
           <img 
             src={depointLogo} 
             alt="Depoint" 
