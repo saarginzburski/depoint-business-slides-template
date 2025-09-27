@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Copy } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Copy, Eye, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,6 +14,7 @@ interface Section {
   name: string;
   description: string;
   color: string;
+  slides: number[];
 }
 
 interface DeckVariationsManagerProps {
@@ -217,8 +218,44 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                 <Button
                   size="sm"
                   variant="ghost"
+                  onClick={() => {
+                    const slides = variation.sections.map(sectionId => {
+                      const section = sections.find(s => s.id === sectionId);
+                      return section?.slides || [];
+                    }).flat().sort((a, b) => a - b);
+                    if (slides.length > 0) {
+                      window.open(`/deck/slide/${slides[0]}?deckName=${encodeURIComponent(variation.name)}`, '_blank');
+                    }
+                  }}
+                  className="text-gray-500 hover:text-green-600"
+                  title="View variation"
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => {
+                    const slides = variation.sections.map(sectionId => {
+                      const section = sections.find(s => s.id === sectionId);
+                      return section?.slides || [];
+                    }).flat().sort((a, b) => a - b);
+                    if (slides.length > 0) {
+                      const slideParams = slides.join(',');
+                      window.open(`/print-deck?slides=${slideParams}`, '_blank');
+                    }
+                  }}
+                  className="text-gray-500 hover:text-purple-600"
+                  title="Print variation"
+                >
+                  <Printer className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
                   onClick={() => handleDuplicateVariation(variation)}
                   className="text-gray-500 hover:text-blue-600"
+                  title="Duplicate variation"
                 >
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -227,6 +264,7 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                   variant="ghost"
                   onClick={() => setEditingId(variation.id)}
                   className="text-gray-500 hover:text-blue-600"
+                  title="Edit variation name"
                 >
                   <Edit2 className="h-4 w-4" />
                 </Button>
@@ -236,6 +274,7 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                     variant="ghost"
                     onClick={() => deleteVariation(variation.id)}
                     className="text-gray-500 hover:text-red-600"
+                    title="Delete variation"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

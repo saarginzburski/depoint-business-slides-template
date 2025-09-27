@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen, Globe } from 'lucide-react';
+import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
@@ -93,9 +93,6 @@ const InvestorDeck = () => {
   
   const [deckName, setDeckName] = useState('Depoint Business Templates Editor');
   const [isEditingName, setIsEditingName] = useState(false);
-  const [isDeckPublished, setIsDeckPublished] = useState(() => {
-    return localStorage.getItem('isDeckPublished') === 'true';
-  });
   const [selectedSections, setSelectedSections] = useState<Set<string>>(
     new Set(sections.map(section => section.id))
   );
@@ -195,15 +192,6 @@ const InvestorDeck = () => {
     }
   };
 
-  const handlePublishToggle = (checked: boolean) => {
-    setIsDeckPublished(checked);
-    localStorage.setItem('isDeckPublished', checked.toString());
-    
-    // Force a page reload to update the App component's routing
-    if (checked) {
-      window.location.href = '/deck/slide/1';
-    }
-  };
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
@@ -290,31 +278,8 @@ const InvestorDeck = () => {
                 </Button>
               </div>
 
-              {/* Center - Publish Toggle */}
-              <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
-                <Globe className="w-4 h-4 text-blue-600" />
-                <Label htmlFor="publish-toggle" className="text-sm font-medium text-gray-700 cursor-pointer">
-                  Publish Deck
-                </Label>
-                <Switch
-                  id="publish-toggle"
-                  checked={isDeckPublished}
-                  onCheckedChange={(checked) => {
-                    setIsDeckPublished(checked);
-                    localStorage.setItem('isDeckPublished', checked.toString());
-                    if (checked) {
-                      window.location.href = '/deck/slide/1';
-                    }
-                  }}
-                  className="data-[state=checked]:bg-blue-600"
-                />
-                <span className="text-xs text-gray-500">
-                  {isDeckPublished ? 'Root URL redirects to first slide' : 'Root URL shows overview'}
-                </span>
-              </div>
-
               {/* Right - Secondary Actions - For now empty, can add more later */}
-              <div className="w-40"></div>
+              <div className="flex items-center gap-3"></div>
             </div>
           </div>
         </div>
