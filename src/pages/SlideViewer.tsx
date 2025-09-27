@@ -62,9 +62,14 @@ const SlideViewer = () => {
 
   useEffect(() => {
     if (slidesParam) {
-      const slideIds = slidesParam.split(',').map(Number);
-      const filteredSlides = slideConfig.filter(slide => slideIds.includes(slide.id));
-      setAvailableSlides(filteredSlides);
+      const slideIds = slidesParam
+        .split(',')
+        .map((n) => parseInt(n, 10))
+        .filter((n) => !Number.isNaN(n));
+      const orderedSlides = slideIds
+        .map((id) => slideConfig.find((s) => s.id === id))
+        .filter((s): s is typeof slideConfig[number] => Boolean(s));
+      setAvailableSlides(orderedSlides);
     } else {
       setAvailableSlides(slideConfig);
     }
