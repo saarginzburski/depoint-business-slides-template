@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brain, DollarSign, AlertTriangle, Shield, TrendingUp } from 'lucide-react';
+import { Brain, DollarSign, AlertTriangle, Shield, TrendingUp, ChevronRight, BarChart3, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SlideLayout from '@/components/SlideLayout';
 import SlideFooter from '@/components/SlideFooter';
@@ -8,161 +8,138 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 const SlideDashboardIntro = () => {
   const navigate = useNavigate();
 
+  const dashboardCategories = [
+    {
+      title: "💰 Protect Margin",
+      subtitle: "Control costs & eliminate waste",
+      color: "from-emerald-500 to-green-600",
+      iconBg: "bg-emerald-100",
+      iconColor: "text-emerald-600",
+      icon: DollarSign,
+      dashboards: [
+        { name: "Oil Monitoring Dashboard", slideId: 22, icon: "🛢️" },
+        { name: "Issues Dashboard", slideId: 23, icon: "🔧" }
+      ]
+    },
+    {
+      title: "⚠️ Reduce Risk",
+      subtitle: "Prevent failures & avoid penalties",
+      color: "from-orange-500 to-red-500",
+      iconBg: "bg-orange-100",
+      iconColor: "text-orange-600",
+      icon: AlertTriangle,
+      dashboards: [
+        { name: "Equipment Monitoring", slideId: 24, icon: "⚙️" },
+        { name: "Audit Report", slideId: 25, icon: "📋" },
+        { name: "Task Compliance", slideId: 26, icon: "✅" }
+      ]
+    },
+    {
+      title: "🔒 Protect Revenue",
+      subtitle: "Safeguard sales with consistent quality",
+      color: "from-blue-500 to-indigo-600",
+      iconBg: "bg-blue-100",
+      iconColor: "text-blue-600",
+      icon: Shield,
+      dashboards: [
+        { name: "Product Gold Standard", slideId: 27, icon: "🏆" }
+      ]
+    },
+    {
+      title: "📈 Accelerate Growth",
+      subtitle: "Drive revenue through execution speed & insights",
+      color: "from-purple-500 to-pink-600",
+      iconBg: "bg-purple-100",
+      iconColor: "text-purple-600",
+      icon: TrendingUp,
+      dashboards: [
+        { name: "Speed of Service", slideId: 28, icon: "⚡" },
+        { name: "Users Engagement", slideId: 29, icon: "👥" },
+        { name: "Sales Management", slideId: 30, icon: "💼" }
+      ]
+    }
+  ];
+
   const handleDashboardClick = (slideId: number) => {
     navigate(`/investor-deck/slide/${slideId}`);
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full bg-gradient-to-br from-slate-50 to-blue-50">
       <SlideLayout
-        title="The Intelligence Layer: Why Dashboards Matter"
+        title="Dashboard Intelligence Hub"
         slideNumber="20"
         totalSlides="31"
         logoSrc={depointLogo}
         hideFooter={true}
       >
-      <div className="h-full flex flex-col px-8 max-w-5xl mx-auto py-4">
+      <div className="h-full flex flex-col px-6 py-4">
         
-        {/* Central Message - Enhanced with left-aligned brain icon */}
-        <div className="mb-4 flex-shrink-0">
-          <div className="bg-blue-600 rounded-xl px-8 py-6 text-white shadow-xl">
-            <div className="flex items-center gap-6">
-              {/* Brain icon on the left */}
-              <div className="bg-white/15 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
-                <Brain className="w-7 h-7 text-white" />
-              </div>
-              
-              {/* Text content on the right */}
-              <div className="flex-1">
-                <h3 className="text-xl font-bold leading-tight mb-3">
-                  Dashboards are not features —<br />
-                  they prove the unmatched depth of<br />
-                  <span className="text-blue-200">Depoint's intelligence engine</span>
-                </h3>
-                <p className="text-base text-blue-100 font-medium">
-                  Each dashboard represents millions of data points transformed into strategic insight
-                </p>
-              </div>
+        {/* Hero Section */}
+        <div className="mb-6 text-center">
+          <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl shadow-xl mb-4">
+            <div className="bg-white/20 rounded-full p-3">
+              <Brain className="w-8 h-8" />
+            </div>
+            <div className="text-left">
+              <h2 className="text-2xl font-bold mb-1">Intelligence Layer</h2>
+              <p className="text-blue-100 text-sm">Click any dashboard to explore live insights</p>
             </div>
           </div>
         </div>
         
-        {/* 2x2 Quadrant Grid - Optimized for available space */}
-        <div className="grid grid-cols-2 gap-3 w-full flex-1 min-h-0">
-          
-          {/* Quadrant 1: Protect Margin */}
-          <div className="bg-white rounded-lg shadow-lg border-2 border-green-200 p-5 flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                <DollarSign className="w-6 h-6 text-green-600" />
+        {/* Dashboard Categories Grid */}
+        <div className="grid grid-cols-2 gap-4 flex-1 min-h-0">
+          {dashboardCategories.map((category, categoryIndex) => {
+            const IconComponent = category.icon;
+            return (
+              <div key={categoryIndex} className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 flex flex-col hover:shadow-2xl transition-all duration-300">
+                {/* Category Header */}
+                <div className="flex items-center gap-4 mb-5">
+                  <div className={`w-14 h-14 ${category.iconBg} rounded-xl flex items-center justify-center`}>
+                    <IconComponent className={`w-7 h-7 ${category.iconColor}`} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-gray-800 mb-1">{category.title}</h3>
+                    <p className="text-sm text-gray-600">{category.subtitle}</p>
+                  </div>
+                </div>
+                
+                {/* Dashboard Cards */}
+                <div className="space-y-3 flex-1">
+                  {category.dashboards.map((dashboard, dashIndex) => (
+                    <button
+                      key={dashIndex}
+                      onClick={() => handleDashboardClick(dashboard.slideId)}
+                      className={`w-full group bg-gradient-to-r ${category.color} hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 rounded-xl p-4 text-white`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-lg">{dashboard.icon}</span>
+                          <span className="font-semibold text-sm">{dashboard.name}</span>
+                        </div>
+                        <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                
+                {/* Stats Footer */}
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <div className="flex items-center justify-between text-xs text-gray-500">
+                    <span className="flex items-center gap-1">
+                      <BarChart3 className="w-3 h-3" />
+                      Live Analytics
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Zap className="w-3 h-3" />
+                      Real-time
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="min-w-0">
-                <h3 className="text-lg font-bold text-green-700">💰 Protect Margin</h3>
-                <p className="text-sm text-green-600">Control costs & eliminate waste</p>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm text-gray-700 flex-1">
-              <button 
-                onClick={() => handleDashboardClick(22)}
-                className="w-full text-left hover:text-green-700 hover:bg-green-50 p-2 rounded transition-colors cursor-pointer"
-              >
-                • Oil Monitoring Dashboard
-              </button>
-              <button 
-                onClick={() => handleDashboardClick(23)}
-                className="w-full text-left hover:text-green-700 hover:bg-green-50 p-2 rounded transition-colors cursor-pointer"
-              >
-                • Issues Dashboard
-              </button>
-            </div>
-          </div>
-          
-          {/* Quadrant 2: Reduce Risk */}
-          <div className="bg-white rounded-lg shadow-lg border-2 border-orange-200 p-5 flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                <AlertTriangle className="w-6 h-6 text-orange-600" />
-              </div>
-              <div className="min-w-0">
-                <h3 className="text-lg font-bold text-orange-700">⚠️ Reduce Risk</h3>
-                <p className="text-sm text-orange-600">Prevent failures & avoid penalties</p>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm text-gray-700 flex-1">
-              <button 
-                onClick={() => handleDashboardClick(24)}
-                className="w-full text-left hover:text-orange-700 hover:bg-orange-50 p-2 rounded transition-colors cursor-pointer"
-              >
-                • Equipment Monitoring Dashboard
-              </button>
-              <button 
-                onClick={() => handleDashboardClick(25)}
-                className="w-full text-left hover:text-orange-700 hover:bg-orange-50 p-2 rounded transition-colors cursor-pointer"
-              >
-                • Audit Report Dashboard
-              </button>
-              <button 
-                onClick={() => handleDashboardClick(26)}
-                className="w-full text-left hover:text-orange-700 hover:bg-orange-50 p-2 rounded transition-colors cursor-pointer"
-              >
-                • Task Compliance Dashboard
-              </button>
-            </div>
-          </div>
-          
-          {/* Quadrant 3: Protect Revenue */}
-          <div className="bg-white rounded-lg shadow-lg border-2 border-blue-200 p-5 flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Shield className="w-6 h-6 text-blue-600" />
-              </div>
-              <div className="min-w-0">
-                <h3 className="text-lg font-bold text-blue-700">🔒 Protect Revenue</h3>
-                <p className="text-sm text-blue-600">Safeguard sales with consistent quality</p>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm text-gray-700 flex-1">
-              <button 
-                onClick={() => handleDashboardClick(27)}
-                className="w-full text-left hover:text-blue-700 hover:bg-blue-50 p-2 rounded transition-colors cursor-pointer"
-              >
-                • Product Gold Standard Dashboard
-              </button>
-            </div>
-          </div>
-          
-          {/* Quadrant 4: Accelerate Growth */}
-          <div className="bg-white rounded-lg shadow-lg border-2 border-purple-200 p-5 flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                <TrendingUp className="w-6 h-6 text-purple-600" />
-              </div>
-              <div className="min-w-0">
-                <h3 className="text-lg font-bold text-purple-700">📈 Accelerate Growth</h3>
-                <p className="text-sm text-purple-600">Drive revenue through execution speed & insights</p>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm text-gray-700 flex-1">
-              <button 
-                onClick={() => handleDashboardClick(28)}
-                className="w-full text-left hover:text-purple-700 hover:bg-purple-50 p-2 rounded transition-colors cursor-pointer"
-              >
-                • Speed of Service Dashboard
-              </button>
-              <button 
-                onClick={() => handleDashboardClick(29)}
-                className="w-full text-left hover:text-purple-700 hover:bg-purple-50 p-2 rounded transition-colors cursor-pointer"
-              >
-                • Users Engagement Dashboard
-              </button>
-              <button 
-                onClick={() => handleDashboardClick(30)}
-                className="w-full text-left hover:text-purple-700 hover:bg-purple-50 p-2 rounded transition-colors cursor-pointer"
-              >
-                • Sales Management Dashboard
-              </button>
-            </div>
-          </div>
+            );
+          })}
           
         </div>
         
