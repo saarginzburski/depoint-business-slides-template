@@ -51,10 +51,22 @@ export const useDeckVariations = () => {
 
       setVariations(variationsWithSections);
       
-      // Set current variation to default or first one
-      const defaultVariation = variationsWithSections.find(v => v.is_default) || variationsWithSections[0];
-      if (defaultVariation && !currentVariation) {
-        setCurrentVariation(defaultVariation);
+      // Set current variation based on localStorage, default, or first one
+      if (!currentVariation) {
+        const savedVariationId = localStorage.getItem('selectedDeckVariation');
+        let targetVariation = null;
+        
+        if (savedVariationId) {
+          targetVariation = variationsWithSections.find(v => v.id === savedVariationId);
+        }
+        
+        if (!targetVariation) {
+          targetVariation = variationsWithSections.find(v => v.is_default) || variationsWithSections[0];
+        }
+        
+        if (targetVariation) {
+          setCurrentVariation(targetVariation);
+        }
       }
       
     } catch (error) {
@@ -232,10 +244,19 @@ export const useDeckVariations = () => {
     fetchVariations();
   }, []);
 
+  const persistentSetCurrentVariation = (variation: DeckVariationWithSections | null) => {
+    setCurrentVariation(variation);
+    if (variation) {
+      localStorage.setItem('selectedDeckVariation', variation.id);
+    } else {
+      localStorage.removeItem('selectedDeckVariation');
+    }
+  };
+
   return {
     variations,
     currentVariation,
-    setCurrentVariation,
+    setCurrentVariation: persistentSetCurrentVariation,
     loading,
     createVariation,
     updateVariation,
