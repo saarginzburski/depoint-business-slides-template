@@ -3,17 +3,9 @@ import SlideLayout from '@/components/SlideLayout';
 import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import jollibeeLogo from "@/assets/jollibee-logo-new.png";
-
 const SlideJollibeeCase = () => {
-  return (
-    <div className="relative w-full h-full">
-      <SlideLayout
-        title="Jollibee: Scale & Complexity Made Simple"
-        slideNumber="6"
-        totalSlides="32"
-        logoSrc={depointLogo}
-        hideFooter={true}
-      >
+  return <div className="relative w-full h-full">
+      <SlideLayout title="Jollibee: Scale & Complexity Made Simple" slideNumber="6" totalSlides="32" logoSrc={depointLogo} hideFooter={true}>
         <div className="content-viewport h-full flex flex-col overflow-auto">
           
           {/* Header with Logo */}
@@ -49,17 +41,17 @@ const SlideJollibeeCase = () => {
 
           {/* Results */}
           <div className="mb-4">
-            <h3 className="text-xl font-bold text-neutral-800 mb-4 text-center">Results</h3>
+            <h3 className="text-xl font-bold text-neutral-800 mb-4 text-center">Franchisees Deployment Results</h3>
             <div className="grid grid-cols-2 gap-6 max-w-4xl mx-auto">
               <div className="bg-green-50 rounded-lg p-4 border border-green-200 text-center">
                 <div className="text-2xl font-black text-green-600 mb-1">95%+</div>
                 <div className="text-sm font-semibold text-neutral-700">First Week Compliance</div>
-                <div className="text-xs text-neutral-600 mt-1">200+ VisMin stores</div>
+                <div className="text-xs text-neutral-600 mt-1">Across all franchisee stores</div>
               </div>
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 text-center">
                 <div className="text-2xl font-black text-blue-600 mb-1">Full Rollout</div>
-                <div className="text-sm font-semibold text-neutral-700">Weekly Deployments</div>
-                <div className="text-xs text-neutral-600 mt-1">Targeting all 1,324 stores</div>
+                <div className="text-sm font-semibold text-neutral-700">Three Weeks Deployment</div>
+                <div className="text-xs text-neutral-600 mt-1">184 franchisees, 7,000+ employees</div>
               </div>
             </div>
           </div>
@@ -77,8 +69,6 @@ const SlideJollibeeCase = () => {
       
       {/* Custom Humor Footer */}
       <SlideFooter />
-    </div>
-  );
+    </div>;
 };
-
 export default SlideJollibeeCase;
