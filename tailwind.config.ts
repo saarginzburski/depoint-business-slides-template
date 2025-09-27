@@ -62,22 +62,22 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Monochrome grayscale system
+				// Simplified grayscale system - only 100/200/400/600 steps
 				gray: {
-					50: 'hsl(var(--gray-50))',
 					100: 'hsl(var(--gray-100))',
 					200: 'hsl(var(--gray-200))',
-					300: 'hsl(var(--gray-300))',
 					400: 'hsl(var(--gray-400))',
-					500: 'hsl(var(--gray-500))',
 					600: 'hsl(var(--gray-600))',
-					700: 'hsl(var(--gray-700))',
-					800: 'hsl(var(--gray-800))',
-					900: 'hsl(var(--gray-900))',
 				},
-				// Strategic brand accents
+				// Strategic brand accents (exact specs)
 				'depoint-blue': 'hsl(var(--depoint-blue))',
 				'depoint-orange': 'hsl(var(--depoint-orange))',
+				'neutral-navy': 'hsl(var(--neutral-navy))',
+				// Strategic pillar colors
+				'pillar-margin': 'hsl(var(--pillar-margin))',
+				'pillar-risk': 'hsl(var(--pillar-risk))',
+				'pillar-revenue': 'hsl(var(--pillar-revenue))',
+				'pillar-growth': 'hsl(var(--pillar-growth))',
 			},
 			fontSize: {
 				'hero': 'var(--text-hero)',
