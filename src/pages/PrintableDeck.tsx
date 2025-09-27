@@ -51,6 +51,16 @@ const PrintableDeck = () => {
   const componentsParam = searchParams.get('components');
   const slidesParam = searchParams.get('slides') || 'all';
   const autoprint = searchParams.get('autoprint') === 'true';
+  const deckName = searchParams.get('deckName') || 'Depoint Deck';
+  
+  // Set document title for PDF filename
+  useEffect(() => {
+    const originalTitle = document.title;
+    document.title = deckName;
+    return () => {
+      document.title = originalTitle;
+    };
+  }, [deckName]);
   
   // Determine which slides to render - preserve the exact order from URL
   let slidesToRender: typeof slideConfig = [];
@@ -261,7 +271,7 @@ const PrintableDeck = () => {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-900 mb-2">
-              Pure HTML Print Deck ({slidesToRender.length} slides)
+              {deckName} ({slidesToRender.length} slides)
             </h2>
             <p className="text-sm text-gray-600 mb-2">Use Ctrl+P (Cmd+P on Mac) to print.</p>
             <p className="text-xs text-blue-600">
