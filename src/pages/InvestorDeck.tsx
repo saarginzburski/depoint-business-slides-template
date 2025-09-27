@@ -25,7 +25,7 @@ const sections: Section[] = [
     name: 'Main Deck',
     description: 'Core investor presentation (21 slides)',
     icon: Layers,
-    slides: Array.from({length: 21}, (_, i) => i + 1), // slides 1-21
+    slides: Array.from({length: 21}, (_, i) => i + 1),
     color: 'blue'
   },
   {
@@ -33,7 +33,7 @@ const sections: Section[] = [
     name: 'Appendices',
     description: 'Supporting documentation (1 slide)',
     icon: BookOpen,
-    slides: [22], // slide 22
+    slides: [22],
     color: 'slate'
   },
   {
@@ -41,7 +41,7 @@ const sections: Section[] = [
     name: 'Dashboard Demo',
     description: 'Live dashboard demonstrations (10 slides)', 
     icon: Monitor,
-    slides: Array.from({length: 10}, (_, i) => i + 23), // slides 23-32
+    slides: Array.from({length: 10}, (_, i) => i + 23),
     color: 'green'
   }
 ];
@@ -71,7 +71,7 @@ const slideComponents = {
   SlideTeam: lazy(() => import('./slides/SlideTeam').catch(() => ({ default: () => <div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">14</div></div> }))),
   SlideAppendices: lazy(() => import('./slides/SlideAppendices').catch(() => ({ default: () => <div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">16</div></div> }))),
   SlideDashboardsDemo: lazy(() => import('./slides/SlideDashboardsDemo').catch(() => ({ default: () => <div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">32</div></div> }))),
-  SlideConsultingPartners: lazy(() => import('./slides/SlideConsultingPartners').catch(() => ({ default: () => <div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">17</div></div> }))),
+  SlideConsultingPartners: lazy(() => import('./slides/SlideConsultingPartners').catch(()(() => ({ default: () => <div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">17</div></div> }))),
   SlideDashboardIntro: lazy(() => import('./slides/SlideDashboardIntro').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">19</div></div> }))),
   SlideSalesManagementDashboard: lazy(() => import('./slides/SlideSalesManagementDashboard').catch(() => ({ default: () => <div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">19</div></div> }))),
   SlideProductGoldStandardDashboard: lazy(() => import('./slides/SlideProductGoldStandardDashboard').catch(() => ({ default: () => <div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">20</div></div> }))),
@@ -89,26 +89,18 @@ const slideComponents = {
 const InvestorDeck = () => {
   const navigate = useNavigate();
   
-  // State for editable deck name
   const [deckName, setDeckName] = useState('Investor Deck');
   const [isEditingName, setIsEditingName] = useState(false);
-  
-  // State for deck publishing
   const [isDeckPublished, setIsDeckPublished] = useState(() => {
     return localStorage.getItem('isDeckPublished') === 'true';
   });
-  
-  // State for managing selected sections (all selected by default)
   const [selectedSections, setSelectedSections] = useState<Set<string>>(
     new Set(sections.map(section => section.id))
   );
-  
-  // State for managing selected slides for printing
   const [selectedSlides, setSelectedSlides] = useState<Set<number>>(
     new Set(slideConfig.map(slide => slide.id))
   );
 
-  // Get slides from selected sections, organized by section
   const getSlidesBySection = () => {
     const slidesBySection: { [key: string]: typeof slideConfig } = {};
     
@@ -123,7 +115,6 @@ const InvestorDeck = () => {
     return slidesBySection;
   };
 
-  // Get all visible slides (for counts and printing)
   const getVisibleSlides = () => {
     const visibleSlideIds = new Set<number>();
     sections.forEach(section => {
@@ -237,331 +228,243 @@ const InvestorDeck = () => {
     return visibleSlides.filter(slide => selectedSlides.has(slide.id)).length;
   };
 
-  // Remove old function since we're using PDFExporter component
-
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
-      <div className="container mx-auto px-6 py-12">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <img src={depointLogoBlack} alt="Depoint" className="h-12" />
-            <div className="h-8 w-px bg-gray-300"></div>
-            {isEditingName ? (
-              <input
-                type="text"
-                value={deckName}
-                onChange={(e) => setDeckName(e.target.value)}
-                onBlur={handleDeckNameSubmit}
-                onKeyDown={handleDeckNameKeyPress}
-                className="text-4xl font-bold text-gray-900 bg-transparent border-b-2 border-blue-500 outline-none text-center min-w-0"
-                autoFocus
-                style={{ width: `${Math.max(deckName.length * 0.6, 8)}em` }}
-              />
-            ) : (
-              <h1 
-                className="text-4xl font-bold text-gray-900 cursor-pointer hover:text-blue-600 transition-colors"
-                onClick={() => setIsEditingName(true)}
-                title="Click to edit deck name"
-              >
-                {deckName}
-              </h1>
-            )}
-        </div>
-        
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Comprehensive presentation showcasing Depoint's enterprise operations intelligence platform, 
-            trusted by global restaurant giants and proven at scale.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <Button 
-              onClick={handleStartPresentation}
-              disabled={visibleSlides.length === 0}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg shadow-lg shadow-blue-600/20 transition-all hover:shadow-blue-600/30 disabled:opacity-50"
-              size="lg"
-            >
-              <Play className="w-5 h-5 mr-2" />
-              Start Presentation
-            </Button>
-            
-            <Button
-              onClick={handlePrintSelected}
-              disabled={getSelectedVisibleSlidesCount() === 0}
-              variant="outline"
-              size="lg"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Printer className="w-5 h-5 mr-2" />
-              {getSelectedVisibleSlidesCount() === 0 
-                ? 'Select Slides to Print'
-                : `Print ${getSelectedVisibleSlidesCount()} Selected`
-              }
-            </Button>
-          </div>
-
-          {/* Publish Deck Toggle */}
-          <div className="flex items-center justify-center gap-3 mb-8 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
-            <Globe className="w-5 h-5 text-blue-600" />
-            <Label htmlFor="publish-toggle" className="text-sm font-medium text-gray-700 cursor-pointer">
-              Publish Deck
-            </Label>
-            <Switch
-              id="publish-toggle"
-              checked={isDeckPublished}
-              onCheckedChange={handlePublishToggle}
-              className="data-[state=checked]:bg-blue-600"
-            />
-            <span className="text-xs text-gray-500">
-              {isDeckPublished ? 'Root URL redirects to first slide' : 'Root URL shows overview'}
-            </span>
-          </div>
-          
-          {/* Section Selection */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Select Sections to Display</h2>
-            <div className="flex items-center justify-center gap-4 flex-wrap">
-              {sections.map((section) => {
-                const isSelected = selectedSections.has(section.id);
-                const IconComponent = section.icon;
-                const colorClasses = {
-                  blue: isSelected 
-                    ? 'bg-blue-100 border-blue-500 text-blue-700' 
-                    : 'border-blue-200 text-blue-600 hover:bg-blue-50',
-                  slate: isSelected 
-                    ? 'bg-slate-100 border-slate-500 text-slate-700' 
-                    : 'border-slate-200 text-slate-600 hover:bg-slate-50',
-                  green: isSelected 
-                    ? 'bg-green-100 border-green-500 text-green-700' 
-                    : 'border-green-200 text-green-600 hover:bg-green-50'
-                };
-                
-                return (
-                  <button
-                    key={section.id}
-                    onClick={() => toggleSectionSelection(section.id)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg border-2 transition-all hover:shadow-md ${colorClasses[section.color as keyof typeof colorClasses]}`}
+      <div className="container mx-auto px-6 py-8">
+        {/* Header Section - Compact & Modern */}
+        <div className="bg-white border border-gray-200 rounded-xl shadow-sm mb-8">
+          <div className="px-8 py-6">
+            {/* Top Row - Logo, Title, and Key Actions */}
+            <div className="flex items-center justify-between mb-6">
+              {/* Left - Logo and Title */}
+              <div className="flex items-center gap-4">
+                <img src={depointLogoBlack} alt="Depoint" className="h-8" />
+                <div className="h-6 w-px bg-gray-300"></div>
+                {isEditingName ? (
+                  <input
+                    type="text"
+                    value={deckName}
+                    onChange={(e) => setDeckName(e.target.value)}
+                    onBlur={() => setIsEditingName(false)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === 'Escape') {
+                        setIsEditingName(false);
+                      }
+                    }}
+                    className="text-2xl font-semibold text-gray-900 bg-transparent border-b-2 border-blue-500 outline-none min-w-0"
+                    autoFocus
+                    style={{ width: `${Math.max(deckName.length * 0.6, 8)}em` }}
+                  />
+                ) : (
+                  <h1 
+                    className="text-2xl font-semibold text-gray-900 cursor-pointer hover:text-blue-600 transition-colors"
+                    onClick={() => setIsEditingName(true)}
+                    title="Click to edit deck name"
                   >
-                    <IconComponent className="w-5 h-5" />
-                    <div className="text-left">
-                      <div className="font-medium">{section.name}</div>
-                      <div className="text-xs opacity-75">{section.description}</div>
-                    </div>
-                  </button>
-                );
-              })}
+                    {deckName}
+                  </h1>
+                )}
+              </div>
+
+              {/* Right - Action Buttons */}
+              <div className="flex items-center gap-3">
+                <Button 
+                  onClick={() => {
+                    const firstSlide = slideConfig.length > 0 ? slideConfig[0].id : 1;
+                    navigate(`/deck/slide/${firstSlide}?deckName=${encodeURIComponent(deckName)}`);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all"
+                >
+                  <Play className="w-4 h-4 mr-2" />
+                  Start Presentation
+                </Button>
+                
+                <Button
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && window.open) {
+                      const slideIds = slideConfig.map(s => s.id).sort((a, b) => a - b);
+                      const slideParams = slideIds.join(',');
+                      window.open(`/print-deck?slides=${slideParams}`, '_blank');
+                    }
+                  }}
+                  variant="outline"
+                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2 rounded-lg"
+                >
+                  <Printer className="w-4 h-4 mr-2" />
+                  Print All
+                </Button>
+              </div>
+            </div>
+
+            {/* Bottom Row - Publish Toggle */}
+            <div className="flex items-center justify-center">
+              <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
+                <Globe className="w-4 h-4 text-blue-600" />
+                <Label htmlFor="publish-toggle" className="text-sm font-medium text-gray-700 cursor-pointer">
+                  Publish Deck
+                </Label>
+                <Switch
+                  id="publish-toggle"
+                  checked={isDeckPublished}
+                  onCheckedChange={(checked) => {
+                    setIsDeckPublished(checked);
+                    localStorage.setItem('isDeckPublished', checked.toString());
+                    if (checked) {
+                      window.location.href = '/deck/slide/1';
+                    }
+                  }}
+                  className="data-[state=checked]:bg-blue-600"
+                />
+                <span className="text-xs text-gray-500">
+                  {isDeckPublished ? 'Root URL redirects to first slide' : 'Root URL shows overview'}
+                </span>
+              </div>
             </div>
           </div>
-            
-          {/* Select All Slides Toggle */}
-          {visibleSlides.length > 0 && (
-            <div className="flex items-center justify-center gap-2 mb-8">
+        </div>
+        
+        {/* Section Selection */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Select Sections to Display</h2>
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            {sections.map(section => {
+              const Icon = section.icon;
+              const isSelected = selectedSections.has(section.id);
+              const colorClasses = {
+                blue: isSelected ? 'bg-blue-50 border-blue-300 text-blue-900' : 'bg-white border-gray-200 text-gray-700',
+                slate: isSelected ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-white border-gray-200 text-gray-700',
+                green: isSelected ? 'bg-green-50 border-green-300 text-green-900' : 'bg-white border-gray-200 text-gray-700',
+              };
+              
+              return (
+                <Card
+                  key={section.id}
+                  className={`p-4 cursor-pointer transition-all min-w-[250px] ${colorClasses[section.color as keyof typeof colorClasses]}`}
+                  onClick={() => toggleSectionSelection(section.id)}
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <Icon className="w-5 h-5" />
+                    <h3 className="font-semibold">{section.name}</h3>
+                  </div>
+                  <p className="text-sm opacity-75">{section.description}</p>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Slide Selection Controls */}
+        {visibleSlides.length > 0 && (
+          <div className="mb-8 flex items-center justify-center gap-4">
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4 text-gray-500" />
+              <span className="text-sm text-gray-600">{visibleSlides.length} Slides Displayed</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-gray-500" />
+              <span className="text-sm text-gray-600">~{Math.ceil(visibleSlides.length * 1.5)} min presentation</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Eye className="w-4 h-4 text-gray-500" />
+              <span className="text-sm text-gray-600">Q3 2025</span>
+            </div>
+          </div>
+        )}
+
+        {/* Slides organized by sections */}
+        {visibleSlides.length > 0 && (
+          <div className="space-y-8">
+            {/* Global slide selection */}
+            <div className="text-center">
               <Button
                 onClick={toggleSelectAllSlides}
                 variant="ghost"
-                size="sm"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-800"
               >
-                {getSelectedVisibleSlidesCount() === visibleSlides.length ? (
+                {visibleSlides.every(slide => selectedSlides.has(slide.id)) ? (
                   <CheckSquare className="w-4 h-4 mr-2" />
                 ) : (
                   <Square className="w-4 h-4 mr-2" />
                 )}
-                {getSelectedVisibleSlidesCount() === visibleSlides.length ? 'Deselect All Visible' : 'Select All Visible'} 
-                ({getSelectedVisibleSlidesCount()}/{visibleSlides.length})
+                {visibleSlides.every(slide => selectedSlides.has(slide.id)) 
+                  ? `Deselect All Visible (${visibleSlides.length}/${visibleSlides.length})`
+                  : `Select All Visible (${getSelectedVisibleSlidesCount()}/${visibleSlides.length})`
+                }
               </Button>
             </div>
-          )}
-        
-          {/* Deck Stats */}
-          <div className="flex items-center justify-center gap-8 text-sm text-gray-500">
-            <div className="flex items-center gap-2">
-              <FileText className="w-4 h-4" />
-              <span>{visibleSlides.length} Slides Displayed</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4" />
-              <span>~{Math.ceil(visibleSlides.length * 0.95)} min presentation</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4" />
-              <span>Q3 2025</span>
-            </div>
-          </div>
-        </div>
-                
-        {/* No slides message */}
-        {visibleSlides.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="text-gray-400 mb-4">
-              <Layers className="w-16 h-16 mx-auto mb-4" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">No Sections Selected</h3>
-            <p className="text-gray-500">Please select at least one section to display slides.</p>
-          </div>
-        ) : (
-          /* Slides by Section */
-          <div className="max-w-7xl mx-auto space-y-12">
-            {sections.map((section) => {
-              if (!slidesBySection[section.id] || slidesBySection[section.id].length === 0) return null;
+
+            {/* Slides by section */}
+            {Object.entries(slidesBySection).map(([sectionId, sectionSlides]) => {
+              const section = sections.find(s => s.id === sectionId);
+              if (!section) return null;
               
-              const IconComponent = section.icon;
-              const sectionSlides = slidesBySection[section.id];
-              const selectedInSection = sectionSlides.filter(slide => selectedSlides.has(slide.id)).length;
-              
+              const Icon = section.icon;
               const colorClasses = {
                 blue: 'border-blue-200 bg-blue-50',
-                slate: 'border-slate-200 bg-slate-50',
-                green: 'border-green-200 bg-green-50'
-              };
-              
-              const textColorClasses = {
-                blue: 'text-blue-700',
-                slate: 'text-slate-700', 
-                green: 'text-green-700'
+                slate: 'border-slate-200 bg-slate-50', 
+                green: 'border-green-200 bg-green-50',
               };
               
               return (
-                <div key={section.id} className="space-y-6">
-                  {/* Section Header */}
-                  <div className={`rounded-2xl border-2 p-6 ${colorClasses[section.color as keyof typeof colorClasses]}`}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm`}>
-                          <IconComponent className={`w-6 h-6 ${textColorClasses[section.color as keyof typeof textColorClasses]}`} />
-                        </div>
-                        <div>
-                          <h2 className={`text-2xl font-bold ${textColorClasses[section.color as keyof typeof textColorClasses]}`}>
-                            {section.name}
-                          </h2>
-                          <p className="text-gray-600 mt-1">{section.description}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className={`text-lg font-semibold ${textColorClasses[section.color as keyof typeof textColorClasses]}`}>
-                          {sectionSlides.length} slides
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {selectedInSection} selected for print
-                        </div>
-                      </div>
-                    </div>
+                <div key={sectionId} className={`border rounded-lg p-6 ${colorClasses[section.color as keyof typeof colorClasses]}`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <Icon className="w-5 h-5 text-gray-700" />
+                    <h3 className="text-lg font-semibold text-gray-900">{section.name}</h3>
+                    <span className="text-sm text-gray-500">({sectionSlides.length} slides)</span>
                   </div>
                   
-                  {/* Section Slides Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {sectionSlides.map((slide) => {
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    {sectionSlides.map(slide => {
                       const componentKey = slide.component as keyof typeof slideComponents;
                       const SlideComponent = slideComponents[componentKey];
                       const isSelected = selectedSlides.has(slide.id);
                       
-                      const sectionColorClasses = {
-                        blue: 'border-blue-200',
-                        slate: 'border-slate-200', 
-                        green: 'border-green-200'
-                      };
-                      
                       return (
-                        <Card 
+                        <Card
                           key={slide.id}
-                          className={`group hover:shadow-xl transition-all duration-300 overflow-hidden border-2 ${
+                          className={`relative p-3 transition-all cursor-pointer ${
                             isSelected 
-                              ? 'border-blue-500 ring-2 ring-blue-200' 
-                              : sectionColorClasses[section.color as keyof typeof sectionColorClasses]
-                          } hover:border-blue-300`}
+                              ? 'ring-2 ring-blue-500 ring-offset-2' 
+                              : 'hover:shadow-md hover:scale-105'
+                          }`}
+                          onClick={() => toggleSlideSelection(slide.id)}
                         >
-                          {/* Slide Toolbar */}
-                          <div className="bg-gray-50 border-b border-gray-200 px-3 py-2 flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <span className="text-xs font-medium text-gray-600">
-                                {slide.id} / {slideConfig.length}
-                              </span>
-                              <span className={`text-xs px-2 py-0.5 rounded-full ${textColorClasses[section.color as keyof typeof textColorClasses]} ${colorClasses[section.color as keyof typeof colorClasses]} border`}>
-                                {section.name}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              {/* Print Checkbox */}
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleSlideSelection(slide.id);
-                                }}
-                                className="p-1.5 rounded hover:bg-gray-200 transition-colors"
-                                title={isSelected ? "Remove from print selection" : "Add to print selection"}
-                              >
-                                {isSelected ? (
-                                  <CheckSquare className="w-4 h-4 text-blue-600" />
-                                ) : (
-                                  <Square className="w-4 h-4 text-gray-400" />
-                                )}
-                              </button>
-                            </div>
-                          </div>
-
                           <div 
-                            className="aspect-video bg-white relative overflow-hidden cursor-pointer"
-                            onClick={() => handleSlideClick(slide.id)}
+                            className="w-full aspect-[16/9] bg-white rounded border shadow-sm mb-2 overflow-hidden cursor-pointer"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSlideClick(slide.id);
+                            }}
                           >
-                            {/* Actual Slide Preview */}
-                            <div 
-                              className="w-full h-full"
-                              style={{
-                                transform: 'scale(0.25)',
-                                transformOrigin: 'top left',
-                                width: '400%',
-                                height: '400%'
-                              }}
-                            >
-                              <Suspense 
-                                fallback={
-                                  <div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-                                    <div className="text-white/20 text-6xl font-bold">
-                                      {slide.id}
-                                    </div>
-                                  </div>
-                                }
-                              >
-                                {SlideComponent ? (
-                                  <SlideComponent />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center">
-                                    <div className="text-gray-500 text-sm">Unknown component: {slide.component}</div>
-                                  </div>
-                                )}
+                            <div className="w-full h-full transform scale-[0.2] origin-top-left" style={{ width: '500%', height: '500%' }}>
+                              <Suspense fallback={<div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center"><div className="animate-pulse text-gray-400">{slide.id}</div></div>}>
+                                {SlideComponent ? <SlideComponent /> : <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center"><div className="text-gray-400 text-6xl font-bold">{slide.id}</div></div>}
                               </Suspense>
-                            </div>
-                            
-                            {/* Slide Type Indicator */}
-                            <div className="absolute top-3 left-3 z-10">
-                              <div className="bg-black/70 backdrop-blur-sm rounded-lg px-2 py-1 text-xs text-white font-medium">
-                                {slide.name}
-                              </div>
-                            </div>
-                            
-                            {/* Hover Overlay */}
-                            <div 
-                              className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10"
-                              onClick={() => handleSlideClick(slide.id)}
-                            >
-                              <Button 
-                                variant="ghost" 
-                                className="text-white border border-white/30 hover:bg-white/10"
-                              >
-                                <Play className="w-4 h-4 mr-2" />
-                                View Slide
-                              </Button>
                             </div>
                           </div>
                           
-                          <div className="p-4">
-                            <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-                              {slide.name}
-                            </h3>
-                            <p className="text-sm text-gray-500 truncate">
-                              {slide.title}
-                            </p>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <h4 className="text-xs font-medium text-gray-900 truncate">{slide.name}</h4>
+                              <p className="text-xs text-gray-500">Slide {slide.id}</p>
+                            </div>
+                            
+                            <div 
+                              className="flex-shrink-0 ml-2"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {isSelected ? (
+                                <CheckSquare 
+                                  className="w-4 h-4 text-blue-600 cursor-pointer" 
+                                  onClick={() => toggleSlideSelection(slide.id)}
+                                />
+                              ) : (
+                                <Square 
+                                  className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer" 
+                                  onClick={() => toggleSlideSelection(slide.id)}
+                                />
+                              )}
+                            </div>
                           </div>
                         </Card>
                       );
@@ -580,7 +483,7 @@ const InvestorDeck = () => {
           </p>
         </div>
       </div>
-            </div>
+    </div>
   );
 };
 
