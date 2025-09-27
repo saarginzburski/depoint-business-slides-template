@@ -33,7 +33,7 @@ const SlidePlatformEcosystem = () => {
                   fill="none" 
                   stroke="#3b82f6" 
                   strokeWidth="16"
-                  className="opacity-90 drop-shadow-lg"
+                  className="opacity-90"
                 />
                 {/* Additional inner ring for visual depth */}
                 <circle 
@@ -70,7 +70,7 @@ const SlidePlatformEcosystem = () => {
             </div>
             
             {/* Central Hub - Larger and more detailed */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-2xl z-20 border-4 border-white">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-600 rounded-full flex items-center justify-center z-20 border-4 border-white">
               <div className="text-center text-white">
                 <RefreshCw className="w-10 h-10 mx-auto mb-2 animate-spin" style={{animationDuration: '3s'}} />
                 <div className="text-base font-bold leading-tight">Operations</div>
@@ -82,49 +82,49 @@ const SlidePlatformEcosystem = () => {
             
             {/* Node 01 - Execute (Top) - Positioned further out */}
             <div className="absolute" style={{top: '-12px', left: '50%', transform: 'translateX(-50%)'}}>
-              <div className="w-32 h-32 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center text-white shadow-2xl border-4 border-white z-10 relative">
+              <div className="w-32 h-32 bg-red-500 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative">
                 <div className="text-center">
                   <Target className="w-8 h-8 mx-auto mb-1" />
                   <div className="text-base font-bold">Execute</div>
                   <div className="text-xs opacity-90">Real-time</div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-red-600 rounded-full flex items-center justify-center text-sm font-bold shadow-lg">01</div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-red-600 rounded-full flex items-center justify-center text-sm font-bold">01</div>
               </div>
             </div>
             
             {/* Node 02 - Measure (Right) - Positioned further out */}
             <div className="absolute" style={{top: '50%', right: '-16px', transform: 'translateY(-50%)'}}>
-              <div className="w-32 h-32 bg-gradient-to-br from-slate-500 to-slate-600 rounded-full flex items-center justify-center text-white shadow-2xl border-4 border-white z-10 relative">
+              <div className="w-32 h-32 bg-slate-500 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative">
                 <div className="text-center">
                   <BarChart3 className="w-8 h-8 mx-auto mb-1" />
                   <div className="text-base font-bold">Measure</div>
                   <div className="text-xs opacity-90">100% Coverage</div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-slate-600 rounded-full flex items-center justify-center text-sm font-bold shadow-lg">02</div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-slate-600 rounded-full flex items-center justify-center text-sm font-bold">02</div>
               </div>
             </div>
             
             {/* Node 03 - Analyze (Bottom) - Positioned further out */}
             <div className="absolute" style={{bottom: '-12px', left: '50%', transform: 'translateX(-50%)'}}>
-              <div className="w-36 h-36 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white shadow-2xl border-4 border-white z-10 relative">
+              <div className="w-36 h-36 bg-orange-500 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative">
                 <div className="text-center">
                   <Brain className="w-9 h-9 mx-auto mb-1" />
                   <div className="text-base font-bold">Analyze</div>
                   <div className="text-xs opacity-90">AI-Powered</div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-orange-600 rounded-full flex items-center justify-center text-sm font-bold shadow-lg">03</div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-orange-600 rounded-full flex items-center justify-center text-sm font-bold">03</div>
               </div>
             </div>
             
             {/* Node 04 - Improve (Left) - Positioned further out */}
             <div className="absolute" style={{top: '50%', left: '-16px', transform: 'translateY(-50%)'}}>
-              <div className="w-36 h-36 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white shadow-2xl border-4 border-white z-10 relative">
+              <div className="w-36 h-36 bg-purple-500 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative">
                 <div className="text-center">
                   <Zap className="w-9 h-9 mx-auto mb-1" />
                   <div className="text-base font-bold">Improve</div>
                   <div className="text-xs opacity-90">Predictive</div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-purple-600 rounded-full flex items-center justify-center text-sm font-bold shadow-lg">04</div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-purple-600 rounded-full flex items-center justify-center text-sm font-bold">04</div>
               </div>
             </div>
             
@@ -146,7 +146,7 @@ const SlidePlatformEcosystem = () => {
           </div>
           
           {/* Enhanced Proprietary IP Statement */}
-          <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-2 border-orange-200 rounded-2xl p-5 text-center max-w-xl mx-auto shadow-lg">
+          <div className="bg-orange-50 border-2 border-orange-200 rounded-2xl p-5 text-center max-w-xl mx-auto">
             <div className="text-orange-900 font-bold text-lg leading-tight mb-2">
               "Depoint doesn't just analyze data. It operationalizes it."
             </div>
@@ -166,9 +166,9 @@ const SlidePlatformEcosystem = () => {
           <div className="flex-1 grid grid-rows-4 gap-3 mb-2">
             
             {/* Execute Card - Enhanced with metrics */}
-            <div className="bg-gradient-to-r from-white to-red-50 rounded-xl border-2 border-red-200 shadow-xl p-4 hover:shadow-2xl transition-all hover:scale-105">
+            <div className="bg-red-50 rounded-xl border-2 border-red-200 p-4 transition-all">
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-red-100 to-red-200 rounded-full flex items-center justify-center flex-shrink-0 shadow-inner">
+                <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <Target className="w-7 h-7 text-red-600" />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -183,9 +183,9 @@ const SlidePlatformEcosystem = () => {
             </div>
             
             {/* Measure Card - Enhanced with metrics */}
-            <div className="bg-gradient-to-r from-white to-slate-50 rounded-xl border-2 border-slate-200 shadow-xl p-4 hover:shadow-2xl transition-all hover:scale-105">
+            <div className="bg-slate-50 rounded-xl border-2 border-slate-200 p-4 transition-all">
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center flex-shrink-0 shadow-inner">
+                <div className="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <BarChart3 className="w-7 h-7 text-slate-600" />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -200,9 +200,9 @@ const SlidePlatformEcosystem = () => {
             </div>
             
             {/* Analyze Card - Enhanced with metrics */}
-            <div className="bg-gradient-to-r from-white to-orange-50 rounded-xl border-2 border-orange-200 shadow-xl p-4 hover:shadow-2xl transition-all hover:scale-105">
+            <div className="bg-orange-50 rounded-xl border-2 border-orange-200 p-4 transition-all">
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full flex items-center justify-center flex-shrink-0 shadow-inner">
+                <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <Brain className="w-7 h-7 text-orange-600" />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -217,9 +217,9 @@ const SlidePlatformEcosystem = () => {
             </div>
             
             {/* Improve Card - Enhanced with metrics */}
-            <div className="bg-gradient-to-r from-white to-purple-50 rounded-xl border-2 border-purple-200 shadow-xl p-4 hover:shadow-2xl transition-all hover:scale-105">
+            <div className="bg-purple-50 rounded-xl border-2 border-purple-200 p-4 transition-all">
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center flex-shrink-0 shadow-inner">
+                <div className="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <Zap className="w-7 h-7 text-purple-600" />
                 </div>
                 <div className="min-w-0 flex-1">
