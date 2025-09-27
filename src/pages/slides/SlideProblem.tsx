@@ -236,10 +236,10 @@ const SlideProblem = () => {
               <div className="bg-white/80 rounded-lg p-3 border border-blue-200">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-enterprise-green rounded-full"></div>
+                    <div className="w-2 h-2 bg-pillar-margin rounded-full"></div>
                     <span className="text-xs font-medium w-16">Food Safety</span>
                     <div className="flex-1 bg-gray-200 rounded-full h-2">
-                      <div className="bg-enterprise-green h-2 rounded-full" style={{
+                      <div className="bg-pillar-margin h-2 rounded-full" style={{
                       width: '98%'
                     }}></div>
                     </div>
@@ -247,10 +247,10 @@ const SlideProblem = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-electric-blue rounded-full"></div>
+                    <div className="w-2 h-2 bg-pillar-revenue rounded-full"></div>
                     <span className="text-xs font-medium w-16">Service Quality</span>
                     <div className="flex-1 bg-gray-200 rounded-full h-2">
-                      <div className="bg-electric-blue h-2 rounded-full" style={{
+                      <div className="bg-pillar-revenue h-2 rounded-full" style={{
                       width: '91%'
                     }}></div>
                     </div>
@@ -258,10 +258,10 @@ const SlideProblem = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-pillar-growth rounded-full"></div>
                     <span className="text-xs font-medium w-16">Operational Efficiency</span>
                     <div className="flex-1 bg-gray-200 rounded-full h-2">
-                      <div className="bg-purple-600 h-2 rounded-full" style={{
+                      <div className="bg-pillar-growth h-2 rounded-full" style={{
                       width: '87%'
                     }}></div>
                     </div>
@@ -269,10 +269,10 @@ const SlideProblem = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-subtle-orange rounded-full"></div>
+                    <div className="w-2 h-2 bg-depoint-orange rounded-full"></div>
                     <span className="text-xs font-medium w-16">Customer Satisfaction</span>
                     <div className="flex-1 bg-gray-200 rounded-full h-2">
-                      <div className="bg-subtle-orange h-2 rounded-full" style={{
+                      <div className="bg-depoint-orange h-2 rounded-full" style={{
                       width: '89%'
                     }}></div>
                     </div>
