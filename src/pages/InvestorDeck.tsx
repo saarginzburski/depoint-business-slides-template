@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState } from 'react';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,8 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { slideConfig } from './slides/slideConfig';
 import PDFExporter from '@/components/PDFExporter';
+import { DeckVariationsManager } from '@/components/DeckVariationsManager';
+import { DeckVariationWithSections } from '@/hooks/useDeckVariations';
 import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
 
 // Define section structure
@@ -97,6 +99,25 @@ const InvestorDeck = () => {
   const [selectedSections, setSelectedSections] = useState<Set<string>>(
     new Set(sections.map(section => section.id))
   );
+  const [currentVariation, setCurrentVariation] = useState<DeckVariationWithSections | null>(null);
+
+  // Update selected sections when variation changes
+  useEffect(() => {
+    if (currentVariation) {
+      setSelectedSections(new Set(currentVariation.sections));
+    }
+  }, [currentVariation]);
+
+  const handleVariationSelect = (variation: DeckVariationWithSections | null) => {
+    setCurrentVariation(variation);
+    if (variation) {
+      setDeckName(variation.name);
+    }
+  };
+
+  const handleDeckNameChange = (name: string) => {
+    setDeckName(name);
+  };
 
   const getSlidesBySection = () => {
     const slidesBySection: { [key: string]: typeof slideConfig } = {};
@@ -297,6 +318,13 @@ const InvestorDeck = () => {
             </div>
           </div>
         </div>
+        
+        {/* Deck Variations Manager */}
+        <DeckVariationsManager 
+          sections={sections}
+          onVariationSelect={handleVariationSelect}
+          onDeckNameChange={handleDeckNameChange}
+        />
         
         {/* Section Selection */}
         <div className="mb-8">

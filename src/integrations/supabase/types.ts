@@ -14,7 +14,62 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      deck_variation_sections: {
+        Row: {
+          created_at: string
+          deck_variation_id: string
+          id: string
+          section_id: string
+        }
+        Insert: {
+          created_at?: string
+          deck_variation_id: string
+          id?: string
+          section_id: string
+        }
+        Update: {
+          created_at?: string
+          deck_variation_id?: string
+          id?: string
+          section_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deck_variation_sections_deck_variation_id_fkey"
+            columns: ["deck_variation_id"]
+            isOneToOne: false
+            referencedRelation: "deck_variations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      deck_variations: {
+        Row: {
+          created_at: string
+          id: string
+          is_default: boolean | null
+          name: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          name: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          name?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
