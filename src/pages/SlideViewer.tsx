@@ -3,7 +3,7 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { slideConfig, getSlideInfo } from './slides/slideConfig';
-import PDFExporter from '@/components/PDFExporter';
+import PrintButton from '@/components/PrintButton';
 import { SLIDE_CONFIG } from '@/lib/slideConfig';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -151,9 +151,10 @@ const SlideViewer = () => {
               </span>
             </div>
             
-            <PDFExporter 
-              className="text-gray-300 hover:text-white hover:bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-2"
-              slideComponents={availableSlides.map(slide => slide.component)}
+            <PrintButton 
+              visibleSlides={availableSlides}
+              variant="outline"
+              className="text-gray-300 hover:text-white hover:bg-slate-700/50 border border-slate-600/50"
             />
             
             <Button 

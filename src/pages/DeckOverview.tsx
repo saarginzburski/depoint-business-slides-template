@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { slideConfig } from './slides/slideConfig';
-import PDFExporter from '@/components/PDFExporter';
+import PrintButton from '@/components/PrintButton';
 import { DeckVariationsManager } from '@/components/DeckVariationsManager';
 import { DeckVariationWithSections, useDeckVariations } from '@/hooks/useDeckVariations';
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
@@ -192,15 +192,6 @@ const DeckOverview = () => {
     }
   };
 
-  const handlePrintSelected = () => {
-    if (visibleSlides.length === 0) return;
-    
-    if (typeof window !== 'undefined' && window.open) {
-      const slideComponents = visibleSlides.map(slide => slide.component);
-      const componentParams = slideComponents.join(',');
-      window.open(`/print-deck?components=${componentParams}`, '_blank');
-    }
-  };
 
 
   return (
@@ -272,14 +263,11 @@ const DeckOverview = () => {
                   View Deck
                 </Button>
                 
-                <Button
-                  onClick={handlePrintSelected}
+                <PrintButton 
+                  visibleSlides={visibleSlides}
                   variant="outline"
-                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2 rounded-lg"
-                >
-                  <Printer className="w-4 h-4 mr-2" />
-                  Print Deck
-                </Button>
+                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2"
+                />
               </div>
 
               {/* Right - Section Selection */}
