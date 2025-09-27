@@ -224,7 +224,8 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                       return section?.slides || [];
                     }).flat().sort((a, b) => a - b);
                     if (slides.length > 0) {
-                      window.open(`/deck/slide/${slides[0]}?deckName=${encodeURIComponent(variation.name)}`, '_blank');
+                      const slidesParam = slides.join(',');
+                      window.open(`/deck/slide/${slides[0]}?deckName=${encodeURIComponent(variation.name)}&slides=${slidesParam}`, '_blank');
                     }
                   }}
                   className="text-gray-500 hover:text-green-600"

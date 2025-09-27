@@ -56,6 +56,12 @@ const SlideViewer = () => {
   const currentSlideId = parseInt(slideId || '1');
   const slideInfo = getSlideInfo(currentSlideId);
   const deckName = decodeURIComponent(searchParams.get('deckName') || 'Investor Deck');
+  const slidesParam = searchParams.get('slides');
+  
+  // Get filtered slides if slides parameter is provided
+  const availableSlides = slidesParam 
+    ? slideConfig.filter(slide => slidesParam.split(',').map(Number).includes(slide.id))
+    : slideConfig;
 
   if (!slideInfo) {
     navigate('/deck/slide/1');
@@ -67,15 +73,21 @@ const SlideViewer = () => {
   
   const handleNextSlide = () => {
     if (typeof window !== 'undefined' && navigate) {
-      const nextId = getNextSlideId(currentSlideId);
-      navigate(`/deck/slide/${nextId}?deckName=${encodeURIComponent(deckName)}`);
+      const currentIndex = availableSlides.findIndex(slide => slide.id === currentSlideId);
+      const nextIndex = (currentIndex + 1) % availableSlides.length;
+      const nextId = availableSlides[nextIndex].id;
+      const slidesQuery = slidesParam ? `&slides=${slidesParam}` : '';
+      navigate(`/deck/slide/${nextId}?deckName=${encodeURIComponent(deckName)}${slidesQuery}`);
     }
   };
 
   const handlePrevSlide = () => {
     if (typeof window !== 'undefined' && navigate) {
-      const prevId = getPrevSlideId(currentSlideId);
-      navigate(`/deck/slide/${prevId}?deckName=${encodeURIComponent(deckName)}`);
+      const currentIndex = availableSlides.findIndex(slide => slide.id === currentSlideId);
+      const prevIndex = currentIndex === 0 ? availableSlides.length - 1 : currentIndex - 1;
+      const prevId = availableSlides[prevIndex].id;
+      const slidesQuery = slidesParam ? `&slides=${slidesParam}` : '';
+      navigate(`/deck/slide/${prevId}?deckName=${encodeURIComponent(deckName)}${slidesQuery}`);
     }
   };
 
@@ -128,7 +140,7 @@ const SlideViewer = () => {
           <div className="flex justify-end items-center gap-4">
             <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg px-4 py-2 border border-slate-600/50 max-w-xs">
               <span className="text-white font-medium text-sm truncate block">
-                {currentSlideId} / {slideConfig.length} - {slideInfo.name}
+                {availableSlides.findIndex(slide => slide.id === currentSlideId) + 1} / {availableSlides.length} - {slideInfo.name}
               </span>
             </div>
             
