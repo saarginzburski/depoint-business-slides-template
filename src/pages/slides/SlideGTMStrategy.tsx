@@ -9,7 +9,7 @@ const SlideGTMStrategy = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="Our Proven Go-To-Market Playbook"
-        slideNumber="9"
+        slideNumber="12"
         totalSlides="15"
         logoSrc={depointLogo}
       >

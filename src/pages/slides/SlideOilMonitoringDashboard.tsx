@@ -25,7 +25,7 @@ const SlideOilMonitoringDashboard = () => {
           </div>
         }
         subtitle="💰 Protect Margin – Oil Quality → Food Cost Efficiency"
-        slideNumber="23"
+        slideNumber="24"
         totalSlides="31"
         logoSrc={depointLogo}
       >

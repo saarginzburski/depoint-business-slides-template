@@ -25,7 +25,7 @@ const SlideTaskComplianceDashboard = () => {
           </div>
         }
         subtitle="⚠️ Reduce Risk – Execution Gaps → Avoided Losses & Improved Safety"
-        slideNumber="27"
+        slideNumber="28"
         totalSlides="31"
         logoSrc={depointLogo}
       >

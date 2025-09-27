@@ -9,7 +9,7 @@ const SlideCrossIndustryPlatform = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="The Common DNA of Our Target Industries"
-        slideNumber="12"
+        slideNumber="15"
         totalSlides="15"
         logoSrc={depointLogo}
       >

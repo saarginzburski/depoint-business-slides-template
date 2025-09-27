@@ -10,7 +10,7 @@ const SlidePlatformEcosystem = () => {
       <SlideLayout
         title="The Data Flywheel — Built on Proprietary IP"
         subtitle=""
-        slideNumber="6"
+        slideNumber="9"
         totalSlides="15"
         logoSrc={depointLogo}
       >

@@ -25,7 +25,7 @@ const SlideProductGoldStandardDashboard = () => {
           </div>
         }
         subtitle="🔒 Protect Revenue – Consistent Quality → Customer Retention & Sales"
-        slideNumber="28"
+        slideNumber="29"
         totalSlides="31"
         logoSrc={depointLogo}
       >

@@ -9,7 +9,7 @@ const SlideEnterpriseStack = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="Depoint Bridges Frontline & ERP"
-        slideNumber="17"
+        slideNumber="18"
         totalSlides="15"
         logoSrc={depointLogo}
       >

@@ -100,7 +100,7 @@ const SlideJollibeeOperationBook = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="Jollibee: Fully Digitized Operational Book"
-        slideNumber="7"
+        slideNumber="6"
         totalSlides="31"
         logoSrc={depointLogo}
       >

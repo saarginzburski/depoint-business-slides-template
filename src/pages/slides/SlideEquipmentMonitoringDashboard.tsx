@@ -25,7 +25,7 @@ const SlideEquipmentMonitoringDashboard = () => {
           </div>
         }
         subtitle="⚠️ Reduce Risk – Predictive Maintenance → Shrink & Downtime Avoidance"
-        slideNumber="25"
+        slideNumber="26"
         totalSlides="31"
         logoSrc={depointLogo}
       >

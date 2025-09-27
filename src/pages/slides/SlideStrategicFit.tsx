@@ -9,7 +9,7 @@ const SlideStrategicFit = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="The Ultimate Strategic Asset: Our Data"
-        slideNumber="13"
+        slideNumber="16"
         totalSlides="15"
         logoSrc={depointLogo}
       >

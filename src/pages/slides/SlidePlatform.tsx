@@ -10,7 +10,7 @@ const SlidePlatform = () => {
       <SlideLayout
         title="Built Like SAP, Loved Like WhatsApp"
         subtitle=""
-        slideNumber="4"
+        slideNumber="8"
         totalSlides="15"
         logoSrc={depointLogo}
       >

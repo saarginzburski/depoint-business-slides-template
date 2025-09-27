@@ -10,7 +10,7 @@ const SlideMarketOpportunity = () => {
       <SlideLayout
         title="Defining a $14B Category"
         subtitle=""
-        slideNumber="8"
+        slideNumber="11"
         totalSlides="15"
         logoSrc={depointLogo}
       >

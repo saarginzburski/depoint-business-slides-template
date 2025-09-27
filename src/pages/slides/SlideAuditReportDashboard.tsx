@@ -25,7 +25,7 @@ const SlideAuditReportDashboard = () => {
           </div>
         }
         subtitle="⚠️ Reduce Risk – Compliance → Fine & Liability Avoidance"
-        slideNumber="26"
+        slideNumber="27"
         totalSlides="31"
         logoSrc={depointLogo}
       >

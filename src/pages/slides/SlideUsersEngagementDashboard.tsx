@@ -25,7 +25,7 @@ const SlideUsersEngagementDashboard = () => {
           </div>
         }
         subtitle="📈 Accelerate Growth – Adoption → ROI Realization & Efficiency Gains"
-        slideNumber="30"
+        slideNumber="31"
         totalSlides="31"
         logoSrc={depointLogo}
       >

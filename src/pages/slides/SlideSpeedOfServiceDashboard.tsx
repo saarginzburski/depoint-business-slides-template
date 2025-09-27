@@ -25,7 +25,7 @@ const SlideSpeedOfServiceDashboard = () => {
           </div>
         }
         subtitle="📈 Accelerate Growth – Faster Service → Higher Throughput & Sales"
-        slideNumber="29"
+        slideNumber="30"
         totalSlides="31"
         logoSrc={depointLogo}
       >

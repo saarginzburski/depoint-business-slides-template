@@ -16,7 +16,7 @@ const SlideConsultingPartners = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="Why Partners Love Depoint"
-        slideNumber="17"
+        slideNumber="19"
         totalSlides="28"
         logoSrc={depointLogo}
       >

@@ -9,7 +9,7 @@ const SlideCompetitiveLandscape = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="Designed for a Complexity Others Can't Handle"
-        slideNumber="11"
+        slideNumber="14"
         totalSlides="15"
         logoSrc={depointLogo}
       >

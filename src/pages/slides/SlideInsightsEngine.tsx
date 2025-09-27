@@ -9,7 +9,7 @@ const SlideInsightsEngine = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="We Turn Data Into Foresight"
-        slideNumber="7"
+        slideNumber="10"
         totalSlides="15"
         logoSrc={depointLogo}
       >

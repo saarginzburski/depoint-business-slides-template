@@ -25,7 +25,7 @@ const SlideSalesManagementDashboard = () => {
           </div>
         }
         subtitle="📈 Accelerate Growth – Sales Insights → Revenue Expansion"
-        slideNumber="31"
+        slideNumber="32"
         totalSlides="31"
         logoSrc={depointLogo}
       >
