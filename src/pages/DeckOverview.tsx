@@ -97,7 +97,7 @@ const slideComponents = {
   SlideDashboardSummary: lazy(() => import('./slides/SlideDashboardSummary').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">28</div></div> }))),
 };
 
-const InvestorDeck = () => {
+const DeckOverview = () => {
   const navigate = useNavigate();
   
   const [deckName, setDeckName] = useState('Depoint Business Templates Editor');
@@ -392,4 +392,4 @@ const InvestorDeck = () => {
   );
 };
 
-export default InvestorDeck;
+export default DeckOverview;

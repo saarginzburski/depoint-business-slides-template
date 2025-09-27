@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 import { useEffect, useState } from "react";
 
-import InvestorDeck from "./pages/InvestorDeck";
+import DeckOverview from "./pages/DeckOverview";
 import SlideViewer from "./pages/SlideViewer";
 import PrintableDeck from "./pages/PrintableDeck";
 
@@ -30,9 +30,9 @@ const App = () => {
           <Routes>
             <Route 
               path="/" 
-              element={isDeckPublished ? <Navigate to="/deck/slide/1" replace /> : <InvestorDeck />} 
+              element={isDeckPublished ? <Navigate to="/deck/slide/1" replace /> : <DeckOverview />} 
             />
-            <Route path="/overview" element={<InvestorDeck />} />
+            <Route path="/overview" element={<DeckOverview />} />
             <Route path="/deck/slide/:slideId" element={<SlideViewer />} />
             <Route path="/print-deck" element={<PrintableDeck />} />
             
