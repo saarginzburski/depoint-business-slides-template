@@ -176,12 +176,6 @@ const SlideViewer = () => {
               </span>
             </div>
             
-            <PrintButton 
-              visibleSlides={availableSlides}
-              variant="outline"
-              className="text-gray-300 hover:text-white hover:bg-slate-700/50 border border-slate-600/50"
-            />
-            
             <Button 
               onClick={handleBackToOverview}
               variant="ghost" 
