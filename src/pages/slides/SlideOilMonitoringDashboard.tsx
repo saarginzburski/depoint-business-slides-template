@@ -16,7 +16,7 @@ const SlideOilMonitoringDashboard = () => {
           <div className="flex items-center gap-4">
             <span>Oil Monitoring Dashboard</span>
             <button
-              onClick={() => navigate('/investor-deck/slide/19')}
+              onClick={() => navigate('/investor-deck/slide/21')}
               className="bg-white/90 hover:bg-white border border-gray-300 rounded-lg px-3 py-2 flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 shadow-sm transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -39,7 +39,6 @@ const SlideOilMonitoringDashboard = () => {
             <div className="bg-pillar-margin text-white p-3 rounded">
               <div className="text-sm font-bold">Executive Summary:</div>
               <div className="text-xs">This dashboard = $15,000 annual savings per location through optimized oil management</div>
-              <div className="text-xs text-depoint-orange mt-2 italic font-semibold">💡 Every fryer alert avoided = 200 meals saved from the trash.</div>
             </div>
           </div>
           

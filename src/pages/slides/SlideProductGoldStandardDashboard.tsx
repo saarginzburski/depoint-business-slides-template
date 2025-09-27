@@ -16,7 +16,7 @@ const SlideProductGoldStandardDashboard = () => {
           <div className="flex items-center gap-4">
             <span>Product Gold Standard Dashboard</span>
             <button
-              onClick={() => navigate('/investor-deck/slide/19')}
+              onClick={() => navigate('/investor-deck/slide/21')}
               className="bg-white/90 hover:bg-white border border-gray-300 rounded-lg px-3 py-2 flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 shadow-sm transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -39,9 +39,6 @@ const SlideProductGoldStandardDashboard = () => {
             <div className="bg-pillar-revenue text-white p-3 rounded">
               <div className="text-sm font-bold">Executive Summary:</div>
               <div className="text-xs">This dashboard protects $180,000+ annual revenue per location through quality consistency</div>
-              <div className="text-xs text-depoint-orange mt-2 italic font-semibold flex items-center gap-2">
-                🌍 <span>Your fries taste just as good in Paris as they do in Manila.</span>
-              </div>
             </div>
           </div>
           

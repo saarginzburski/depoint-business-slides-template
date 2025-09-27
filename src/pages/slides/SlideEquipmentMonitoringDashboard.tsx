@@ -16,7 +16,7 @@ const SlideEquipmentMonitoringDashboard = () => {
           <div className="flex items-center gap-4">
             <span>Equipment Monitoring Dashboard</span>
             <button
-              onClick={() => navigate('/investor-deck/slide/19')}
+              onClick={() => navigate('/investor-deck/slide/21')}
               className="bg-white/90 hover:bg-white border border-gray-300 rounded-lg px-3 py-2 flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 shadow-sm transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
