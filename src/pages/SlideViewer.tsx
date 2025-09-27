@@ -153,7 +153,7 @@ const SlideViewer = () => {
             
             <PDFExporter 
               className="text-gray-300 hover:text-white hover:bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-2"
-              slideIds={availableSlides.map(slide => slide.id)}
+              slideComponents={availableSlides.map(slide => slide.component)}
             />
             
             <Button 

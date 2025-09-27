@@ -47,16 +47,25 @@ const PrintableDeck = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   
-  // Get slides to print from URL params (e.g., ?slides=1,2,3 or all)
+  // Get slides to print from URL params (e.g., ?components=SlideCover,SlideProblem or ?slides=1,2,3 or all)
+  const componentsParam = searchParams.get('components');
   const slidesParam = searchParams.get('slides') || 'all';
   const autoprint = searchParams.get('autoprint') === 'true';
   
-  // Determine which slides to render
-  const slidesToRender = slidesParam === 'all' 
-    ? slideConfig 
-    : slideConfig.filter(slide => 
-        slidesParam.split(',').map(Number).includes(slide.id)
-      );
+  // Determine which slides to render - prioritize component names over slide IDs
+  let slidesToRender;
+  if (componentsParam) {
+    const componentNames = componentsParam.split(',');
+    slidesToRender = slideConfig.filter(slide => 
+      componentNames.includes(slide.component)
+    );
+  } else if (slidesParam === 'all') {
+    slidesToRender = slideConfig;
+  } else {
+    slidesToRender = slideConfig.filter(slide => 
+      slidesParam.split(',').map(Number).includes(slide.id)
+    );
+  }
 
   // Auto-print functionality
   useEffect(() => {

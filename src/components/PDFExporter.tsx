@@ -4,15 +4,15 @@ import { Download } from 'lucide-react';
 
 interface PDFExporterProps {
   className?: string;
-  slideIds?: number[];
+  slideComponents?: string[];
 }
 
-const PDFExporter: React.FC<PDFExporterProps> = ({ className, slideIds }) => {
+const PDFExporter: React.FC<PDFExporterProps> = ({ className, slideComponents }) => {
   const handleExport = () => {
-    if (slideIds && slideIds.length > 0) {
-      // Open print deck with selected slides
-      const slideParams = slideIds.join(',');
-      window.open(`/print-deck?slides=${slideParams}&autoprint=true`, '_blank');
+    if (slideComponents && slideComponents.length > 0) {
+      // Open print deck with selected slide components
+      const slideParams = slideComponents.join(',');
+      window.open(`/print-deck?components=${slideParams}&autoprint=true`, '_blank');
     } else {
       // Fallback to current page print
       window.print();

@@ -196,9 +196,9 @@ const DeckOverview = () => {
     if (visibleSlides.length === 0) return;
     
     if (typeof window !== 'undefined' && window.open) {
-      const slideIds = visibleSlides.map(slide => slide.id).sort((a, b) => a - b);
-      const slideParams = slideIds.join(',');
-      window.open(`/print-deck?slides=${slideParams}`, '_blank');
+      const slideComponents = visibleSlides.map(slide => slide.component);
+      const componentParams = slideComponents.join(',');
+      window.open(`/print-deck?components=${componentParams}`, '_blank');
     }
   };
 
