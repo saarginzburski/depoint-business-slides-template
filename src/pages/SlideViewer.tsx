@@ -10,6 +10,10 @@ import { supabase } from '@/integrations/supabase/client';
 // Lazy load all slide components
 const slideComponents = {
   SlideCover: lazy(() => import('./slides/SlideCover')),
+  SlideCover1: lazy(() => import('./slides/SlideCover1')),
+  SlideCover2: lazy(() => import('./slides/SlideCover2')),
+  SlideCover3: lazy(() => import('./slides/SlideCover3')),
+  SlideCover4: lazy(() => import('./slides/SlideCover4')),
   SlideExecutiveSummary: lazy(() => import('./slides/SlideExecutiveSummary')),
   SlidePlatform: lazy(() => import('./slides/SlidePlatform')),
   SlideOurJourney: lazy(() => import('./slides/SlideOurJourney')),

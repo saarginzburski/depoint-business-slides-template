@@ -8,7 +8,11 @@ export interface SlideInfo {
 }
 
 export const slideConfig: SlideInfo[] = [
-  { id: 1, name: "Title", title: "The Intelligence Layer for the Physical Economy", component: "SlideCover", route: "/investor-deck/slide/1" },
+  { id: 1, name: "Cover - Original", title: "The Intelligence Layer for the Physical Economy", component: "SlideCover", route: "/investor-deck/slide/1" },
+  { id: 33, name: "Cover - Bold Hero", title: "The Intelligence Layer for the Physical Economy", component: "SlideCover1", route: "/investor-deck/slide/33" },
+  { id: 34, name: "Cover - Chaos to Intelligence", title: "Every Day Great Execution", component: "SlideCover2", route: "/investor-deck/slide/34" },
+  { id: 35, name: "Cover - EDGE Identity", title: "EDGE - Every Day Great Execution", component: "SlideCover3", route: "/investor-deck/slide/35" },
+  { id: 36, name: "Cover - Industry Symbolic", title: "Turning Operations Into Intelligence", component: "SlideCover4", route: "/investor-deck/slide/36" },
   { id: 2, name: "The Problem", title: "The $1 Trillion Disconnect", component: "SlideProblem", route: "/investor-deck/slide/2" },
   { id: 3, name: "The Solution", title: "From Chaos to Intelligence", component: "SlideSolution", route: "/investor-deck/slide/3" },
   { id: 4, name: "Digitizing Operations", title: "Digitizing the Operations Manual", component: "SlideDigitizingOpsManual", route: "/investor-deck/slide/4" },
