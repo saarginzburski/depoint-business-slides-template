@@ -43,6 +43,44 @@ export type Database = {
           },
         ]
       }
+      deck_variation_slide_orders: {
+        Row: {
+          created_at: string
+          deck_variation_id: string
+          id: string
+          order_index: number
+          section_id: string
+          slide_id: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deck_variation_id: string
+          id?: string
+          order_index: number
+          section_id: string
+          slide_id: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deck_variation_id?: string
+          id?: string
+          order_index?: number
+          section_id?: string
+          slide_id?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deck_variation_slide_orders_deck_variation_id_fkey"
+            columns: ["deck_variation_id"]
+            isOneToOne: false
+            referencedRelation: "deck_variations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       deck_variations: {
         Row: {
           created_at: string

@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen } from 'lucide-react';
+import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
@@ -45,6 +45,14 @@ const sections: Section[] = [
     icon: Monitor,
     slides: Array.from({length: 10}, (_, i) => i + 23),
     color: 'green'
+  },
+  {
+    id: 'hidden',
+    name: 'Hidden',
+    description: 'Slides not shown in presentation',
+    icon: EyeOff,
+    slides: [],
+    color: 'gray'
   }
 ];
 
@@ -302,6 +310,7 @@ const InvestorDeck = () => {
                 blue: isSelected ? 'bg-blue-50 border-blue-300 text-blue-900' : 'bg-white border-gray-200 text-gray-700',
                 slate: isSelected ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-white border-gray-200 text-gray-700',
                 green: isSelected ? 'bg-green-50 border-green-300 text-green-900' : 'bg-white border-gray-200 text-gray-700',
+                gray: isSelected ? 'bg-gray-50 border-gray-300 text-gray-900' : 'bg-white border-gray-200 text-gray-700',
               };
               
               return (

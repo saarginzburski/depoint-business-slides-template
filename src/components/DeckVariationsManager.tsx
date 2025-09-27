@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Copy, Eye, Printer } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Copy, Eye, Printer, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useDeckVariations, DeckVariationWithSections } from '@/hooks/useDeckVariations';
+import { DragDropSlideReorderer } from './DragDropSlideReorderer';
 
 interface Section {
   id: string;
@@ -42,6 +43,7 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [newVariationName, setNewVariationName] = useState('');
   const [selectedSections, setSelectedSections] = useState<Set<string>>(new Set());
+  const [reorderingVariationId, setReorderingVariationId] = useState<string | null>(null);
 
   const handleSelectVariation = (variationId: string) => {
     const variation = variations.find(v => v.id === variationId);
@@ -254,6 +256,15 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                 <Button
                   size="sm"
                   variant="ghost"
+                  onClick={() => setReorderingVariationId(variation.id)}
+                  className="text-gray-500 hover:text-orange-600"
+                  title="Reorder slides"
+                >
+                  <Settings className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
                   onClick={() => handleDuplicateVariation(variation)}
                   className="text-gray-500 hover:text-blue-600"
                   title="Duplicate variation"
@@ -356,6 +367,15 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
             </div>
           )}
         </div>
+        
+        {/* Drag Drop Slide Reorderer Modal */}
+        {reorderingVariationId && (
+          <DragDropSlideReorderer
+            sections={sections}
+            variationId={reorderingVariationId}
+            onClose={() => setReorderingVariationId(null)}
+          />
+        )}
       </CardContent>
     </Card>
   );

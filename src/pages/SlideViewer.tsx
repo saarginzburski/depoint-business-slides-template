@@ -1,10 +1,11 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { slideConfig, getSlideInfo, getNextSlideId, getPrevSlideId } from './slides/slideConfig';
+import { slideConfig, getSlideInfo } from './slides/slideConfig';
 import PDFExporter from '@/components/PDFExporter';
 import { SLIDE_CONFIG } from '@/lib/slideConfig';
+import { supabase } from '@/integrations/supabase/client';
 
 // Lazy load all slide components
 const slideComponents = {
@@ -52,16 +53,22 @@ const SlideViewer = () => {
   const { slideId } = useParams<{ slideId: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [availableSlides, setAvailableSlides] = useState<typeof slideConfig>([]);
   
   const currentSlideId = parseInt(slideId || '1');
   const slideInfo = getSlideInfo(currentSlideId);
   const deckName = decodeURIComponent(searchParams.get('deckName') || 'Investor Deck');
   const slidesParam = searchParams.get('slides');
-  
-  // Get filtered slides if slides parameter is provided
-  const availableSlides = slidesParam 
-    ? slideConfig.filter(slide => slidesParam.split(',').map(Number).includes(slide.id))
-    : slideConfig;
+
+  useEffect(() => {
+    if (slidesParam) {
+      const slideIds = slidesParam.split(',').map(Number);
+      const filteredSlides = slideConfig.filter(slide => slideIds.includes(slide.id));
+      setAvailableSlides(filteredSlides);
+    } else {
+      setAvailableSlides(slideConfig);
+    }
+  }, [slidesParam]);
 
   if (!slideInfo) {
     navigate('/deck/slide/1');
@@ -72,7 +79,7 @@ const SlideViewer = () => {
   const SlideComponent = slideComponents[componentKey];
   
   const handleNextSlide = () => {
-    if (typeof window !== 'undefined' && navigate) {
+    if (typeof window !== 'undefined' && navigate && availableSlides.length > 0) {
       const currentIndex = availableSlides.findIndex(slide => slide.id === currentSlideId);
       const nextIndex = (currentIndex + 1) % availableSlides.length;
       const nextId = availableSlides[nextIndex].id;
@@ -82,7 +89,7 @@ const SlideViewer = () => {
   };
 
   const handlePrevSlide = () => {
-    if (typeof window !== 'undefined' && navigate) {
+    if (typeof window !== 'undefined' && navigate && availableSlides.length > 0) {
       const currentIndex = availableSlides.findIndex(slide => slide.id === currentSlideId);
       const prevIndex = currentIndex === 0 ? availableSlides.length - 1 : currentIndex - 1;
       const prevId = availableSlides[prevIndex].id;
