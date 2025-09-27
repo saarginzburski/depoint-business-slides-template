@@ -2,6 +2,7 @@ import React from 'react';
 import { getSlideStyle } from '@/lib/slideConfig';
 import { FileText, ChevronRight } from 'lucide-react';
 import SlideFooter from '@/components/SlideFooter';
+import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
 
 const SlideAppendices = () => {
   return (
@@ -17,7 +18,7 @@ const SlideAppendices = () => {
       
       {/* Depoint Logo - top right */}
       <div className="absolute top-8 right-8 z-10">
-        <img src="/lovable-uploads/96869f4f-a193-4264-973e-1221a0ec5fb9.png" alt="Depoint" className="h-12" />
+        <img src={depointLogoBlack} alt="Depoint" className="h-12" />
       </div>
       
       {/* Main content */}
