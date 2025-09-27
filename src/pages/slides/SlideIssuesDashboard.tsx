@@ -36,9 +36,9 @@ const SlideIssuesDashboard = () => {
         <div className="w-[70%] flex flex-col min-h-0">
           {/* Executive Summary - Top */}
           <div className="mb-3">
-            <div className="bg-green-50 border-l-4 border-green-500 p-3 rounded">
-              <div className="text-sm font-bold text-green-800">Executive Summary:</div>
-              <div className="text-xs text-green-700">This dashboard saves $280,000+ annually per location by eliminating recurring operational costs</div>
+            <div className="bg-pillar-margin text-white p-3 rounded">
+              <div className="text-sm font-bold">Executive Summary:</div>
+              <div className="text-xs">This dashboard saves $280,000+ annually per location by eliminating recurring operational costs</div>
             </div>
           </div>
           
