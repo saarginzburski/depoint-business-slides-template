@@ -22,22 +22,22 @@ const SlideEnterpriseStack = () => {
           {/* Left Section: Frontline Systems */}
           <div className="flex flex-col items-center gap-6">
             <div className="flex flex-col items-center">
-              <Monitor className="w-8 h-8 text-slate-400 stroke-1 mb-2" />
-              <span className="text-sm text-slate-400">POS</span>
+              <Monitor className="w-8 h-8 text-slate-600 stroke-1 mb-2" />
+              <span className="text-sm text-slate-700">POS</span>
             </div>
             <div className="flex flex-col items-center">
-              <Users className="w-8 h-8 text-slate-400 stroke-1 mb-2" />
-              <span className="text-sm text-slate-400">WFM</span>
+              <Users className="w-8 h-8 text-slate-600 stroke-1 mb-2" />
+              <span className="text-sm text-slate-700">WFM</span>
             </div>
             <div className="flex flex-col items-center">
-              <Wifi className="w-8 h-8 text-slate-400 stroke-1 mb-2" />
-              <span className="text-sm text-slate-400">IoT</span>
+              <Wifi className="w-8 h-8 text-slate-600 stroke-1 mb-2" />
+              <span className="text-sm text-slate-700">IoT</span>
             </div>
           </div>
 
           {/* Arrow Left to Middle - Clean, flat, light gray */}
           <div className="flex flex-col items-center">
-            <span className="text-xs text-gray-400 mb-2 whitespace-nowrap">Frontline Data Capture</span>
+            <span className="text-xs text-gray-600 mb-2 whitespace-nowrap">Frontline Data Capture</span>
             <div className="w-20 h-0.5 bg-gray-300 relative">
               <div className="absolute right-0 top-[-3px] w-0 h-0 border-l-[6px] border-l-gray-300 border-t-[3px] border-t-transparent border-b-[3px] border-b-transparent"></div>
             </div>
@@ -45,7 +45,7 @@ const SlideEnterpriseStack = () => {
 
           {/* Center: Depoint Hero Element - Larger and balanced */}
           <div className="flex flex-col items-center">
-            <div className="bg-blue-600 text-white px-16 py-12 rounded-xl shadow-lg">
+            <div className="bg-blue-600 text-white px-16 py-12 rounded-xl">
               <h2 className="text-4xl font-bold text-center mb-4">Depoint</h2>
               <div className="text-base text-blue-100 text-center leading-relaxed">
                 Mobile-First Usability • Real-Time Visibility • Predictive Intelligence
@@ -55,7 +55,7 @@ const SlideEnterpriseStack = () => {
 
           {/* Arrow Middle to Right - Clean, flat, light gray */}
           <div className="flex flex-col items-center">
-            <span className="text-xs text-gray-400 mb-2 whitespace-nowrap">ERP Enriched in Real Time</span>
+            <span className="text-xs text-gray-600 mb-2 whitespace-nowrap">ERP Enriched in Real Time</span>
             <div className="w-20 h-0.5 bg-gray-300 relative">
               <div className="absolute right-0 top-[-3px] w-0 h-0 border-l-[6px] border-l-gray-300 border-t-[3px] border-t-transparent border-b-[3px] border-b-transparent"></div>
             </div>
@@ -87,7 +87,7 @@ const SlideEnterpriseStack = () => {
           <p className="text-2xl text-slate-900 font-bold mb-2">
             Depoint upgrades ERP from system of record to system of action.
           </p>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-600">
             Puts your frontline at the front of your enterprise.
           </p>
         </div>
