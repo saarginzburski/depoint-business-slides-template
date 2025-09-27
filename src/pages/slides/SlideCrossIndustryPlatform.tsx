@@ -12,6 +12,7 @@ const SlideCrossIndustryPlatform = () => {
         slideNumber="15"
         totalSlides="15"
         logoSrc={depointLogo}
+        componentName="SlideCrossIndustryPlatform"
       >
         <div className="h-full flex flex-col justify-center gap-6 py-6">
         

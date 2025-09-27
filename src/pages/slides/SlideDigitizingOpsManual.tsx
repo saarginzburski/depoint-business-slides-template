@@ -13,7 +13,7 @@ const SlideDigitizingOpsManual = () => {
         slideNumber="4"
         totalSlides="15"
         logoSrc={depointLogo}
-        
+        componentName="SlideDigitizingOpsManual"
       >
         <div className="content-viewport h-full flex flex-col justify-center py-6">
           {/* Subtitle */}

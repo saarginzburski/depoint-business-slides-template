@@ -13,6 +13,7 @@ const SlideFinancial = () => {
         slideNumber="13"
         totalSlides="31"
         logoSrc={depointLogo}
+        componentName="SlideFinancial"
       >
       {/* Two-column narrative layout */}
       <div className="h-full min-h-0 flex gap-6 py-6">

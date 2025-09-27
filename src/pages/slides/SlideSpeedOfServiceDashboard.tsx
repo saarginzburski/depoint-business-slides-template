@@ -28,6 +28,7 @@ const SlideSpeedOfServiceDashboard = () => {
         slideNumber="30"
         totalSlides="31"
         logoSrc={depointLogo}
+        componentName="SlideSpeedOfServiceDashboard"
       >
       <div className="h-full flex gap-4 py-2 px-4 min-h-0">
 

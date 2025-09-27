@@ -13,6 +13,7 @@ const SlideMarketOpportunity = () => {
         slideNumber="11"
         totalSlides="15"
         logoSrc={depointLogo}
+        componentName="SlideMarketOpportunity"
       >
       <div className="h-full flex flex-col justify-center py-6 overflow-hidden">
         

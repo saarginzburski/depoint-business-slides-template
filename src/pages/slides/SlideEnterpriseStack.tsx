@@ -12,6 +12,7 @@ const SlideEnterpriseStack = () => {
         slideNumber="18"
         totalSlides="15"
         logoSrc={depointLogo}
+        componentName="SlideEnterpriseStack"
       >
         <div className="h-full flex flex-col justify-center items-center py-6 max-w-6xl mx-auto">
         

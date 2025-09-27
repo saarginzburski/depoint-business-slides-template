@@ -19,6 +19,7 @@ const SlideConsultingPartners = () => {
         slideNumber="19"
         totalSlides="28"
         logoSrc={depointLogo}
+        componentName="SlideConsultingPartners"
       >
       <div className="h-full flex flex-col justify-center py-6 max-w-6xl mx-auto">
         

@@ -13,6 +13,7 @@ const SlidePlatform = () => {
         slideNumber="8"
         totalSlides="15"
         logoSrc={depointLogo}
+        componentName="SlidePlatform"
       >
       <div className="h-full flex flex-col justify-center py-3 max-w-6xl mx-auto">
         

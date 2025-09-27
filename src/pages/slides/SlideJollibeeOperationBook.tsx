@@ -103,6 +103,7 @@ const SlideJollibeeOperationBook = () => {
         slideNumber="6"
         totalSlides="31"
         logoSrc={depointLogo}
+        componentName="SlideJollibeeOperationBook"
       >
         <div className="content-viewport h-full flex flex-col overflow-auto py-4">
           

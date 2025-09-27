@@ -28,6 +28,7 @@ const SlideIssuesDashboard = () => {
         slideNumber="25"
         totalSlides="31"
         logoSrc={depointLogo}
+        componentName="SlideIssuesDashboard"
       >
       <div className="h-full flex gap-4 py-2 px-4 min-h-0">
 

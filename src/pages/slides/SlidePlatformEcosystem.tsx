@@ -13,6 +13,7 @@ const SlidePlatformEcosystem = () => {
         slideNumber="9"
         totalSlides="15"
         logoSrc={depointLogo}
+        componentName="SlidePlatformEcosystem"
       >
       {/* Redesigned with modern, dynamic flywheel and key statement */}
       <div className="h-full py-6 overflow-hidden">

@@ -87,6 +87,7 @@ const SlideDashboardIntro = () => {
         slideNumber="20"
         totalSlides="31"
         logoSrc={depointLogo}
+        componentName="SlideDashboardIntro"
       >
       <div className="h-full flex flex-col px-6 py-3">
         

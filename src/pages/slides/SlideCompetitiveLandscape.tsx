@@ -12,6 +12,7 @@ const SlideCompetitiveLandscape = () => {
         slideNumber="14"
         totalSlides="15"
         logoSrc={depointLogo}
+        componentName="SlideCompetitiveLandscape"
       >
         <div className="h-full flex flex-col justify-center py-6 max-w-7xl mx-auto">
         
