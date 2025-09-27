@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { slideConfig, getSlideInfo, getNextSlideId, getPrevSlideId } from './slides/slideConfig';
@@ -51,8 +51,11 @@ const slideComponents = {
 const SlideViewer = () => {
   const { slideId } = useParams<{ slideId: string }>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  
   const currentSlideId = parseInt(slideId || '1');
   const slideInfo = getSlideInfo(currentSlideId);
+  const deckName = decodeURIComponent(searchParams.get('deckName') || 'Investor Deck');
 
   if (!slideInfo) {
     navigate('/investor-deck/slide/1');
@@ -65,20 +68,20 @@ const SlideViewer = () => {
   const handleNextSlide = () => {
     if (typeof window !== 'undefined' && navigate) {
       const nextId = getNextSlideId(currentSlideId);
-      navigate(`/investor-deck/slide/${nextId}`);
+      navigate(`/investor-deck/slide/${nextId}?deckName=${encodeURIComponent(deckName)}`);
     }
   };
 
   const handlePrevSlide = () => {
     if (typeof window !== 'undefined' && navigate) {
       const prevId = getPrevSlideId(currentSlideId);
-      navigate(`/investor-deck/slide/${prevId}`);
+      navigate(`/investor-deck/slide/${prevId}?deckName=${encodeURIComponent(deckName)}`);
     }
   };
 
   const handleBackToOverview = () => {
     if (typeof window !== 'undefined' && navigate) {
-      navigate('/investor-deck');
+      navigate('/');
     }
   };
 
@@ -94,7 +97,7 @@ const SlideViewer = () => {
             <img src="/lovable-uploads/96869f4f-a193-4264-973e-1221a0ec5fb9.png" alt="Depoint" className="h-8" />
             <div className="h-6 w-px bg-slate-600"></div>
             <div className="flex items-center gap-2">
-              <span className="text-white font-semibold text-lg">Investor Deck</span>
+              <span className="text-white font-semibold text-lg">{deckName}</span>
             </div>
           </div>
 
@@ -129,6 +132,15 @@ const SlideViewer = () => {
               </span>
             </div>
             
+            <Button 
+              onClick={handleBackToOverview}
+              variant="ghost" 
+              size="sm"
+              className="text-gray-300 hover:text-white hover:bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-2"
+            >
+              <Home className="w-4 h-4 mr-2" />
+              Overview
+            </Button>
           </div>
         </div>
 
