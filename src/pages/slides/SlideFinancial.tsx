@@ -11,7 +11,7 @@ const SlideFinancial = () => {
       <SlideLayout
         title="Capital-Efficient Growth to $1.26M ARR"
         slideNumber="13"
-        totalSlides="32"
+        totalSlides="31"
         logoSrc={depointLogo}
         hideFooter={true}
       >

@@ -26,7 +26,7 @@ const SlideUsersEngagementDashboard = () => {
         }
         subtitle="📈 Accelerate Growth – Adoption → ROI Realization & Efficiency Gains"
         slideNumber="30"
-        totalSlides="32"
+        totalSlides="31"
         logoSrc={depointLogo}
         hideFooter={true}
       >

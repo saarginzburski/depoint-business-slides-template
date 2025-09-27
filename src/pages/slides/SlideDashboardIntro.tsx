@@ -85,7 +85,7 @@ const SlideDashboardIntro = () => {
       <SlideLayout
         title="The Intelligence Layer: Why Dashboards Matter"
         slideNumber="22"
-        totalSlides="32"
+        totalSlides="31"
         logoSrc={depointLogo}
         hideFooter={true}
       >

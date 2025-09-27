@@ -42,8 +42,7 @@ export const slideConfig: SlideInfo[] = [
   // Category 4: Accelerate Growth
   { id: 29, name: "Speed of Service Dashboard", title: "Speed of Service Dashboard", component: "SlideSpeedOfServiceDashboard", route: "/investor-deck/slide/29" },
   { id: 30, name: "Users Engagement Dashboard", title: "Users Engagement Dashboard", component: "SlideUsersEngagementDashboard", route: "/investor-deck/slide/30" },
-  { id: 31, name: "Sales Dashboard", title: "Sales Management Dashboard", component: "SlideSalesManagementDashboard", route: "/investor-deck/slide/31" },
-  { id: 32, name: "Dashboard Summary", title: "Operational Intelligence at a Glance", component: "SlideDashboardSummary", route: "/investor-deck/slide/32" }
+  { id: 31, name: "Sales Dashboard", title: "Sales Management Dashboard", component: "SlideSalesManagementDashboard", route: "/investor-deck/slide/31" }
 ];
 
 export const getTotalSlides = () => slideConfig.length;

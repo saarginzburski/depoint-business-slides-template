@@ -26,7 +26,7 @@ const SlideSalesManagementDashboard = () => {
         }
         subtitle="📈 Accelerate Growth – Sales Insights → Revenue Expansion"
         slideNumber="31"
-        totalSlides="32"
+        totalSlides="31"
         logoSrc={depointLogo}
         hideFooter={true}
       >

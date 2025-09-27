@@ -26,7 +26,7 @@ const SlideTaskComplianceDashboard = () => {
         }
         subtitle="⚠️ Reduce Risk – Execution Gaps → Avoided Losses & Improved Safety"
         slideNumber="27"
-        totalSlides="32"
+        totalSlides="31"
         logoSrc={depointLogo}
         hideFooter={true}
       >

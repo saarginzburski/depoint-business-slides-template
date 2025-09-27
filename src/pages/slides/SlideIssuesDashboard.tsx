@@ -26,7 +26,7 @@ const SlideIssuesDashboard = () => {
         }
         subtitle="💰 Protect Margin – Root Cause Analysis → Cost Avoidance"
         slideNumber="24"
-        totalSlides="32"
+        totalSlides="31"
         logoSrc={depointLogo}
         hideFooter={true}
       >

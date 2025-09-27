@@ -5,7 +5,7 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 import jollibeeLogo from "@/assets/jollibee-logo-new.png";
 const SlideJollibeeCase = () => {
   return <div className="relative w-full h-full">
-      <SlideLayout title="Jollibee: Scale & Complexity Made Simple" slideNumber="6" totalSlides="32" logoSrc={depointLogo} hideFooter={true}>
+      <SlideLayout title="Jollibee: Scale & Complexity Made Simple" slideNumber="7" totalSlides="31" logoSrc={depointLogo} hideFooter={true}>
         <div className="content-viewport h-full flex flex-col overflow-auto">
           
           {/* Header with Logo */}
