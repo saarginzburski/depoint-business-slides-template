@@ -44,10 +44,6 @@ export const slideConfig: SlideInfo[] = [
   { id: 30, name: "Speed of Service Dashboard", title: "Speed of Service Dashboard", component: "SlideSpeedOfServiceDashboard", route: "/investor-deck/slide/30" },
   { id: 31, name: "Users Engagement Dashboard", title: "Users Engagement Dashboard", component: "SlideUsersEngagementDashboard", route: "/investor-deck/slide/31" },
   { id: 32, name: "Sales Dashboard", title: "Sales Management Dashboard", component: "SlideSalesManagementDashboard", route: "/investor-deck/slide/32" },
-  { id: 33, name: "Closing - Continuity", title: "The Intelligence Layer for the Physical Economy", component: "SlideClosing1", route: "/investor-deck/slide/33" },
-  { id: 34, name: "Closing - EDGE Loop", title: "EDGE – Every Day Great Execution", component: "SlideClosing2", route: "/investor-deck/slide/34" },
-  { id: 35, name: "Closing - Growth Focus", title: "Protect Margins. Reduce Risk. Unlock Growth.", component: "SlideClosing3", route: "/investor-deck/slide/35" },
-  { id: 36, name: "Closing - Human-Centric", title: "Execution is People Powered", component: "SlideClosing4", route: "/investor-deck/slide/36" }
 ];
 
 export const getTotalSlides = () => slideConfig.length;

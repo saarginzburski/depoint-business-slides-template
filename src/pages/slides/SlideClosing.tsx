@@ -1,124 +1,83 @@
 import React from 'react';
-import { getSlideStyle } from '@/lib/slideConfig';
-import { User, CheckSquare } from 'lucide-react';
-import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
+import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideClosing = () => {
   return (
-    <div className="relative w-full h-full">
-      <div className="slide-container bg-white text-gray-900 relative overflow-hidden" style={getSlideStyle()}>
-        
-        {/* Background: Consistent Grid with Symbolic Elements */}
-        <div className="absolute inset-0">
-          {/* Consistent grid background across entire slide */}
-          <div className="absolute inset-0" style={{
-            backgroundImage: `
-              linear-gradient(rgba(128, 128, 128, 0.08) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(128, 128, 128, 0.08) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px'
-          }}></div>
-          
-          {/* Symbolic background elements */}
-          <div className="absolute inset-0 flex">
-            {/* Left side - ERP "record" symbols as watermark */}
-            <div className="w-1/2 relative">
-              <div className="absolute inset-0 opacity-8">
-                {/* Spreadsheet shapes */}
-                <div className="absolute top-24 left-20 w-28 h-3 bg-gray-400 rounded"></div>
-                <div className="absolute top-30 left-20 w-24 h-3 bg-gray-400 rounded"></div>
-                <div className="absolute top-36 left-20 w-32 h-3 bg-gray-400 rounded"></div>
-                <div className="absolute top-42 left-20 w-20 h-3 bg-gray-400 rounded"></div>
-                
-                {/* ERP module blocks */}
-                <div className="absolute top-56 left-16 w-20 h-16 bg-gray-300 rounded border border-gray-400"></div>
-                <div className="absolute top-56 left-40 w-20 h-16 bg-gray-300 rounded border border-gray-400"></div>
-                <div className="absolute top-76 left-28 w-20 h-16 bg-gray-300 rounded border border-gray-400"></div>
-                
-                {/* Database/record icons */}
-                <div className="absolute top-100 left-24 w-24 h-2 bg-gray-400 rounded"></div>
-                <div className="absolute top-104 left-24 w-28 h-2 bg-gray-400 rounded"></div>
-                <div className="absolute top-108 left-24 w-20 h-2 bg-gray-400 rounded"></div>
-              </div>
-            </div>
-            
-            {/* Right side - Frontline action icons in Depoint Blue outline */}
-            <div className="w-1/2 relative">
-              <div className="absolute inset-0 opacity-12">
-                {/* Checklist and person silhouettes - outline style */}
-                <div className="absolute top-32 right-32 flex items-center gap-3">
-                  <User className="w-8 h-8 text-[#0060FF] stroke-2" style={{ fill: 'none' }} />
-                  <CheckSquare className="w-6 h-6 text-[#0060FF] stroke-2" style={{ fill: 'none' }} />
-                </div>
-                
-                <div className="absolute top-52 right-24 flex items-center gap-3">
-                  <User className="w-7 h-7 text-[#0060FF] stroke-2" style={{ fill: 'none' }} />
-                  <CheckSquare className="w-5 h-5 text-[#0060FF] stroke-2" style={{ fill: 'none' }} />
-                </div>
-                
-                <div className="absolute top-72 right-40 flex items-center gap-3">
-                  <User className="w-6 h-6 text-[#0060FF] stroke-2" style={{ fill: 'none' }} />
-                  <CheckSquare className="w-5 h-5 text-[#0060FF] stroke-2" style={{ fill: 'none' }} />
-                </div>
-                
-                <div className="absolute top-88 right-28 flex items-center gap-3">
-                  <User className="w-8 h-8 text-[#0060FF] stroke-2" style={{ fill: 'none' }} />
-                  <CheckSquare className="w-6 h-6 text-[#0060FF] stroke-2" style={{ fill: 'none' }} />
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="slide-container relative overflow-hidden bg-background text-foreground" style={{ width: '100%', aspectRatio: '1344 / 816' }}>
+      
+      {/* Subtle grid texture background */}
+      <div className="absolute inset-0">
+        <div className="w-full h-full opacity-5">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="closingGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#closingGrid)" />
+          </svg>
         </div>
+      </div>
 
-        {/* Content Layer */}
-        <div className="h-full relative flex flex-col justify-center items-center text-center z-10 px-12">
-          {/* EDGE - Bold Navy, Large and Central */}
-          <h1 className="text-[#0A0A0A] mb-8" style={{
-            fontSize: '8rem',
-            fontWeight: '900',
-            lineHeight: '1.0',
-            letterSpacing: '0.02em'
-          }}>
-            EDGE
+      {/* Human-centric visual elements - subtle people icons */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-1/4 left-1/4 w-8 h-8 rounded-full border-2 border-current"></div>
+        <div className="absolute top-1/3 right-1/4 w-8 h-8 rounded-full border-2 border-current"></div>
+        <div className="absolute bottom-1/3 left-1/3 w-8 h-8 rounded-full border-2 border-current"></div>
+      </div>
+
+      {/* Main content - centered layout */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-16 z-10">
+        <div className="text-center max-w-5xl">
+          {/* Bold headline centered */}
+          <h1 className="text-6xl font-black text-neutral-navy leading-[0.9] mb-6 tracking-tight">
+            Get to the Point.
           </h1>
           
-          {/* Subheadline - Lighter Grey (#666) */}
-          <h2 className="text-[#666] mb-16" style={{
-            fontSize: '1.75rem',
-            fontWeight: '400',
-            letterSpacing: '0.02em'
-          }}>
-            EDGE — Every Day Great Execution
-          </h2>
-
-          {/* Depoint Logo - Enlarged with Soft Spotlight Glow */}
-          <div className="mb-12 relative">
-            {/* Soft spotlight glow - white fade, low opacity */}
-            <div className="absolute inset-0 bg-gradient-radial from-white/60 via-white/30 to-transparent blur-3xl scale-200"></div>
-            <img src={depointLogoBlack} alt="Depoint" className="h-24 mx-auto filter drop-shadow-lg relative z-10" />
-          </div>
+          {/* Warm accent line */}
+          <div className="w-32 h-1 bg-depoint-orange mx-auto mb-8"></div>
           
-          {/* Tagline - Italic, Larger, Anchors Bottom */}
-          <div className="text-gray-700 italic font-medium relative" style={{
-            fontSize: '1.65rem',
-            lineHeight: '1.4'
-          }}>
-            From <span className="text-gray-500">system of record</span> → to{' '}
-            <span className="text-[#FF5A00] font-bold relative underline decoration-[#0060FF] decoration-2">
-              system of action
-            </span>. Every day.
+          {/* Tagline below headline, smaller and italic */}
+          <p className="text-3xl text-gray-600 italic font-medium leading-relaxed">
+            Protecting brands. Empowering operators. Unlocking growth.
+          </p>
+        </div>
+
+        {/* Contact details centered below with warm approach */}
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
+          <div className="text-center bg-white border border-gray-200 rounded-lg p-8">
+            <div className="text-lg font-bold text-neutral-navy mb-4">Let's Build Your Edge Together</div>
+            <div className="space-y-2 text-gray-700">
+              <div className="font-semibold text-lg">Saar Ginzburski</div>
+              <div className="text-sm text-gray-600 mb-3">CEO & Founder</div>
+              <div className="flex items-center justify-center gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <span>📧</span>
+                  <span>saarg@depoint.ai</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>📱</span>
+                  <span>+972-52-6303332</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Contact Card */}
-        <div className="absolute bottom-8 right-8 z-20">
-          <div className="bg-white border border-gray-200 shadow-lg rounded-lg p-4 w-72">
-            <div className="text-left">
-              <div className="text-gray-900 font-semibold mb-1">Saar Ginzburski</div>
-              <div className="text-gray-600 text-sm mb-3">CEO & Founder</div>
-              <div className="text-gray-500 text-xs uppercase tracking-wide">Q3 2025 • CONFIDENTIAL INVESTOR DECK</div>
-            </div>
-          </div>
+        {/* Depoint logo big at top-center */}
+        <div className="absolute top-20 left-1/2 transform -translate-x-1/2">
+          <img 
+            src={depointLogo} 
+            alt="Depoint" 
+            className="h-32"
+          />
+        </div>
+      </div>
+
+      {/* Clean header strip - same as cover */}
+      <div className="absolute top-0 left-0 right-0 h-16 bg-background border-b border-gray-200 flex items-center justify-end px-8 z-20">
+        <div className="slide-caption text-gray-400 tracking-wide uppercase">
+          Q3 2025 • CONFIDENTIAL INVESTOR DECK
         </div>
       </div>
     </div>
