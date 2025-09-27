@@ -6,7 +6,7 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 const SlideProblem = () => {
   return (
     <div className="relative w-full h-full">
-      <SlideLayout title="The $1 Trillion Disconnect" slideNumber="2" totalSlides="15" logoSrc={depointLogo}>
+      <SlideLayout title="The $1 Trillion Disconnect" slideNumber="2" totalSlides="15" logoSrc={depointLogo} componentName="SlideProblem">
       {/* Reserve space for humor footer so borders are visible */}
       <div className="h-full flex flex-col justify-center py-6 gap-6">
         

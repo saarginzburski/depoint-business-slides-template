@@ -12,6 +12,7 @@ const SlideGTMStrategy = () => {
         slideNumber="12"
         totalSlides="15"
         logoSrc={depointLogo}
+        componentName="SlideGTMStrategy"
       >
         {/* Content focused on the proven process with elite metrics callout */}
         <div className="h-full flex flex-col justify-center gap-6 py-6">

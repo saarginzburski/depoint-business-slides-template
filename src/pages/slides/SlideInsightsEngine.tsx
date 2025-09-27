@@ -12,6 +12,7 @@ const SlideInsightsEngine = () => {
         slideNumber="10"
         totalSlides="15"
         logoSrc={depointLogo}
+        componentName="SlideInsightsEngine"
       >
       {/* Main Content - Simple two-step visual flow */}
       <div className="h-full flex flex-col justify-center py-6">

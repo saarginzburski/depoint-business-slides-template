@@ -15,6 +15,7 @@ interface SlideLayoutProps {
   footerTagline?: string; // Footer tagline (optional override)
   headerHeight?: string; // Header height (optional, defaults to 12%)
   hideFooter?: boolean; // Option to hide the footer for custom footers
+  componentName?: string; // Component name for tagline lookup
 }
 
 const SlideLayout: React.FC<SlideLayoutProps> = ({
@@ -27,10 +28,11 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
   backgroundClass = "bg-gradient-neutral text-neutral-dark",
   headerHeight = "12%", // Default header height, can be adjusted per slide
   footerTagline,
-  hideFooter = false
+  hideFooter = false,
+  componentName
 }) => {
-  // Auto-generate tagline from slide number if not provided
-  const actualTagline = footerTagline || getSlideTagline(parseInt(slideNumber || "1"));
+  // Auto-generate tagline from component name if not provided
+  const actualTagline = footerTagline || (componentName ? getSlideTagline(componentName) : "Depoint: The System of Record for Frontline Execution");
   // Reserve bottom space: 8% for built-in footer, 10% when using custom HumorFooter (hideFooter=true)
   const footerHeight = hideFooter ? "10%" : "8%";
   
@@ -72,6 +74,7 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
           slideNumber={slideNumber}
           totalSlides={totalSlides}
           tagline={actualTagline}
+          componentName={componentName}
         />
       )}
     </div>

@@ -5,15 +5,17 @@ interface SlideFooterProps {
   slideNumber?: string;
   totalSlides?: string;
   tagline?: string;
+  componentName?: string; // Component name for tagline lookup
 }
 
 const SlideFooter: React.FC<SlideFooterProps> = ({ 
   slideNumber = "1", 
   totalSlides = "15", 
-  tagline 
+  tagline,
+  componentName
 }) => {
-  // Use the provided tagline, or get it from slideTaglines based on slide number
-  const displayTagline = tagline || getSlideTagline(parseInt(slideNumber));
+  // Use the provided tagline, or get it from slideTaglines based on component name
+  const displayTagline = tagline || (componentName ? getSlideTagline(componentName) : "Depoint: The System of Record for Frontline Execution");
   
   return (
     <div className="absolute bottom-0 left-0 right-0 h-[8%] z-20 flex items-center justify-between px-16 bg-white/95 backdrop-blur-sm border-t border-gray-200">

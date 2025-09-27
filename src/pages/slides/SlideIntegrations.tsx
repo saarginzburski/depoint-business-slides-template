@@ -12,6 +12,7 @@ const SlideIntegrations = () => {
         slideNumber="17"
         totalSlides="31"
         logoSrc={depointLogoBlack}
+        componentName="SlideIntegrations"
       >
         <div className="content-viewport h-full flex flex-col py-8">
           
