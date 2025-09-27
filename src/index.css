@@ -18,7 +18,7 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
 
-    --primary: 227 100% 55%;        /* Depoint Blue #1E5AF9 */
+    --primary: 221 100% 50%;        /* Depoint Blue #0066FF */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 22 100% 50%;       /* Depoint Orange #FF6A00 */
@@ -28,60 +28,60 @@ All colors MUST be HSL.
     --muted-foreground: 0 0% 45%;
 
     --accent: 0 0% 90%;
-    --accent-foreground: 220 9% 9%; /* Neutral Navy #111827 */
+    --accent-foreground: 0 0% 9%;
 
-    --destructive: 0 84% 50%;       /* Red #DC2626 */
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 227 100% 55%;
+    --ring: 221 100% 50%;
 
-    /* Simplified Monochrome Palette - Only 100/200/400/600 steps */
+    /* Simplified Monochrome Palette */
+    --gray-50: 0 0% 98%;
     --gray-100: 0 0% 96%;
     --gray-200: 0 0% 90%;
+    --gray-300: 0 0% 83%;
     --gray-400: 0 0% 64%;
+    --gray-500: 0 0% 45%;
     --gray-600: 0 0% 32%;
-    --neutral-navy: 220 9% 9%;      /* Neutral Navy #111827 */
+    --gray-700: 0 0% 25%;
+    --gray-800: 0 0% 15%;
+    --gray-900: 0 0% 9%;
     
     /* Brand Accent Colors (use sparingly) */
-    --depoint-blue: 227 100% 55%;   /* #1E5AF9 */
+    --depoint-blue: 221 100% 50%;   /* #0066FF */
     --depoint-orange: 22 100% 50%;  /* #FF6A00 */
     
     /* Strategic Pillar Colors */
-    --pillar-margin: 142 69% 36%;   /* Green #16A34A - Protect Margin */
-    --pillar-risk: 0 84% 50%;       /* Red #DC2626 - Reduce Risk */
-    --pillar-revenue: 227 100% 55%; /* Blue #1E5AF9 - Protect Revenue */
-    --pillar-growth: 271 81% 56%;   /* Purple #7C3AED - Accelerate Growth */
+    --pillar-margin: 142 76% 36%;    /* Green - Protect Margin */
+    --pillar-risk: 14 100% 57%;      /* Red/Orange - Reduce Risk */
+    --pillar-revenue: 221 100% 50%;  /* Blue - Protect Revenue */
+    --pillar-growth: 271 81% 56%;    /* Purple - Accelerate Growth */
     
     /* No shadows - clean minimal design */
     
-    /* Typography Hierarchy - Apple-grade flat design */
+    /* Typography Hierarchy */
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    --text-headline: 2.75rem;   /* 44pt - Bold Headlines */
-    --text-subhead: 1.75rem;    /* 28pt - Semi-bold Subheads */
-    --text-body: 1.125rem;      /* 18pt - Regular Body (min 16pt) */
-    --text-caption: 0.875rem;   /* 14pt - Captions/Footers */
-    --text-data: 4rem;          /* 64pt - Data Highlight */
+    --text-h1: 2.25rem;       /* 36pt - Slide Title */
+    --text-h2: 1.75rem;       /* 28pt - Section Head */
+    --text-h3: 1.25rem;       /* 20pt - Sub-heading */
+    --text-body: 1rem;        /* 16pt - Body Copy */
+    --text-label: 0.75rem;    /* 12pt - Labels/Captions */
+    --text-data: 4rem;        /* 64pt - Data Highlight */
     
-    /* Line Heights - Clean & Readable */
-    --leading-headline: 1.1;
-    --leading-subhead: 1.3;
+    /* Line Heights */
+    --leading-h1: 1.2;
+    --leading-h2: 1.3;
+    --leading-h3: 1.4;
     --leading-body: 1.5;
-    --leading-caption: 1.4;
+    --leading-label: 1.4;
     --leading-data: 1.0;
     
-    /* Professional Spacing - 12-column grid system */
-    --grid-gutter: 1.5rem;      /* 24px gutters */
-    --card-padding: 1.5rem;     /* 24px consistent card padding */
-    --page-margin-top: 4.5rem;  /* 72px */
-    --page-margin-bottom: 3.5rem; /* 56px */
-    --page-margin-x: 4rem;      /* 64px */
-    
-    /* Icon Sizes - Standardized */
-    --icon-sm: 1.5rem;          /* 24px */
-    --icon-md: 2rem;            /* 32px */
-    --icon-lg: 2.5rem;          /* 40px */
+    /* Professional Spacing */
+    --space-section: 3rem;
+    --space-content: 2rem;
+    --space-element: 1rem;
 
     --radius: 0.5rem;
 
@@ -144,21 +144,29 @@ All colors MUST be HSL.
     font-family: var(--font-family);
   }
   
-  /* Apple-grade Typography Classes - No shadows, clean lines */
-  .slide-headline {
+  /* Monochrome Typography Classes */
+  .slide-h1 {
     font-family: var(--font-family);
-    font-size: var(--text-headline);
-    font-weight: 800;
+    font-size: var(--text-h1);
+    font-weight: 700;
     color: hsl(var(--foreground));
-    line-height: var(--leading-headline);
+    line-height: var(--leading-h1);
   }
   
-  .slide-subhead {
+  .slide-h2 {
     font-family: var(--font-family);
-    font-size: var(--text-subhead);
+    font-size: var(--text-h2);
     font-weight: 600;
     color: hsl(var(--foreground));
-    line-height: var(--leading-subhead);
+    line-height: var(--leading-h2);
+  }
+  
+  .slide-h3 {
+    font-family: var(--font-family);
+    font-size: var(--text-h3);
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    line-height: var(--leading-h3);
   }
   
   .slide-body {
@@ -169,47 +177,49 @@ All colors MUST be HSL.
     line-height: var(--leading-body);
   }
   
-  .slide-caption {
+  .slide-label {
     font-family: var(--font-family);
-    font-size: var(--text-caption);
+    font-size: var(--text-label);
     font-weight: 400;
     color: hsl(var(--muted-foreground));
-    line-height: var(--leading-caption);
-  }
-  
-  .slide-caption-italic {
-    font-family: var(--font-family);
-    font-size: var(--text-caption);
-    font-weight: 400;
-    font-style: italic;
-    color: hsl(var(--muted-foreground));
-    line-height: var(--leading-caption);
+    line-height: var(--leading-label);
   }
   
   .slide-data {
     font-family: var(--font-family);
     font-size: var(--text-data);
-    font-weight: 800;
+    font-weight: 700;
     color: hsl(var(--primary));
     line-height: var(--leading-data);
   }
   
-  /* Clean slide container - flat design, no gradients/shadows */
+  /* Clean slide container - no gradients */
   .slide-container {
     width: 100%;
     aspect-ratio: 1344 / 816; /* Legal paper aspect ratio: 1.65:1 */
     background: hsl(var(--background));
-    padding: var(--page-margin-top) var(--page-margin-x) var(--page-margin-bottom) var(--page-margin-x);
+    padding: 2rem 1.5rem 3rem 1.5rem;
     box-sizing: border-box;
     position: relative;
   }
   
-  /* Card standardization - consistent 24px padding */
-  .slide-card {
-    background: hsl(var(--background));
-    border: 1px solid hsl(var(--gray-200));
-    border-radius: var(--radius);
-    padding: var(--card-padding);
+  /* Responsive breakpoints for better mobile/tablet experience */
+  @media (min-width: 640px) {
+    .slide-container {
+      padding: 2.5rem 2rem 3.5rem 2rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .slide-container {
+      padding: 3rem 2.5rem 4rem 2.5rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .slide-container {
+      padding: 3.5rem 4rem 4.5rem 4rem;
+    }
   }
   
   /* Print-specific: Fixed Legal paper dimensions */
@@ -218,7 +228,7 @@ All colors MUST be HSL.
       width: 1344px !important;
       height: 816px !important;
       aspect-ratio: unset !important;
-      padding: 72px 64px 56px 64px !important;
+      padding: 56px 64px 72px 64px !important;
       page-break-after: always;
       page-break-inside: avoid;
     }
@@ -244,23 +254,21 @@ All colors MUST be HSL.
 
 /* Monochrome Utility Classes */
 @layer utilities {
-  /* Simplified Grayscale utilities - Only 100/200/400/600 steps */
+  /* Grayscale utilities */
+  .text-gray-50 { color: hsl(var(--gray-50)); }
   .text-gray-100 { color: hsl(var(--gray-100)); }
   .text-gray-200 { color: hsl(var(--gray-200)); }
+  .text-gray-300 { color: hsl(var(--gray-300)); }
   .text-gray-400 { color: hsl(var(--gray-400)); }
+  .text-gray-500 { color: hsl(var(--gray-500)); }
   .text-gray-600 { color: hsl(var(--gray-600)); }
-  .text-neutral-navy { color: hsl(var(--neutral-navy)); }
+  .text-gray-700 { color: hsl(var(--gray-700)); }
+  .text-gray-800 { color: hsl(var(--gray-800)); }
+  .text-gray-900 { color: hsl(var(--gray-900)); }
   
+  .bg-gray-50 { background-color: hsl(var(--gray-50)); }
   .bg-gray-100 { background-color: hsl(var(--gray-100)); }
   .bg-gray-200 { background-color: hsl(var(--gray-200)); }
-  .bg-gray-400 { background-color: hsl(var(--gray-400)); }
-  .bg-gray-600 { background-color: hsl(var(--gray-600)); }
-  .bg-neutral-navy { background-color: hsl(var(--neutral-navy)); }
-  
-  .border-gray-100 { border-color: hsl(var(--gray-100)); }
-  .border-gray-200 { border-color: hsl(var(--gray-200)); }
-  .border-gray-400 { border-color: hsl(var(--gray-400)); }
-  .border-gray-600 { border-color: hsl(var(--gray-600)); }
   
   /* Strategic accent colors - use sparingly */
   .text-depoint-blue { color: hsl(var(--depoint-blue)); }

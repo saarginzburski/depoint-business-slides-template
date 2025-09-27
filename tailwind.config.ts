@@ -62,41 +62,42 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Simplified grayscale system - Only 100/200/400/600 steps
+				// Monochrome grayscale system
 				gray: {
+					50: 'hsl(var(--gray-50))',
 					100: 'hsl(var(--gray-100))',
 					200: 'hsl(var(--gray-200))',
+					300: 'hsl(var(--gray-300))',
 					400: 'hsl(var(--gray-400))',
+					500: 'hsl(var(--gray-500))',
 					600: 'hsl(var(--gray-600))',
+					700: 'hsl(var(--gray-700))',
+					800: 'hsl(var(--gray-800))',
+					900: 'hsl(var(--gray-900))',
 				},
-				// Strategic brand colors
+				// Strategic brand accents
 				'depoint-blue': 'hsl(var(--depoint-blue))',
 				'depoint-orange': 'hsl(var(--depoint-orange))',
-				'neutral-navy': 'hsl(var(--neutral-navy))',
-				// Strategic pillar colors
-				'pillar-margin': 'hsl(var(--pillar-margin))',
-				'pillar-risk': 'hsl(var(--pillar-risk))',
-				'pillar-revenue': 'hsl(var(--pillar-revenue))',
-				'pillar-growth': 'hsl(var(--pillar-growth))',
 			},
 			fontSize: {
-				'headline': ['2.75rem', '1.1'],    // 44pt Bold Headlines
-				'subhead': ['1.75rem', '1.3'],     // 28pt Semi-bold Subheads  
-				'body': ['1.125rem', '1.5'],       // 18pt Regular Body
-				'caption': ['0.875rem', '1.4'],    // 14pt Captions/Footers
-				'data': ['4rem', '1.0'],           // 64pt Data Highlight
+				'hero': 'var(--text-hero)',
+				'display': 'var(--text-display)',
+				'title': 'var(--text-title)',
+				'subtitle': 'var(--text-subtitle)',
+				'body': 'var(--text-body)',
+				'caption': 'var(--text-caption)',
+				'small': 'var(--text-small)',
 			},
 			spacing: {
-				'gutter': '1.5rem',        // 24px grid gutters
-				'card': '1.5rem',          // 24px card padding
-				'page-top': '4.5rem',      // 72px page margin top
-				'page-bottom': '3.5rem',   // 56px page margin bottom
-				'page-x': '4rem',          // 64px page margin horizontal
-				'icon-sm': '1.5rem',       // 24px standard icon
-				'icon-md': '2rem',         // 32px standard icon
-				'icon-lg': '2.5rem',       // 40px standard icon
+				'section': 'var(--space-section)',
+				'content': 'var(--space-content)',
+				'element': 'var(--space-element)',
 			},
-			// Remove all shadows for flat design
+			boxShadow: {
+				'clean-sm': 'var(--shadow-sm)',
+				'clean-md': 'var(--shadow-md)',
+				'clean-lg': 'var(--shadow-lg)',
+			},
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
 			},

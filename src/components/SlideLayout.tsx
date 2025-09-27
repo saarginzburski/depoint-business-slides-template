@@ -25,7 +25,7 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
   slideNumber = "1",
   totalSlides = "15", 
   logoSrc = "/lovable-uploads/96869f4f-a193-4264-973e-1221a0ec5fb9.png",
-  backgroundClass = "bg-background text-foreground",
+  backgroundClass = "bg-neutral text-neutral-dark",
   headerHeight = "12%", // Default header height, can be adjusted per slide
   footerTagline,
   hideFooter = false,
@@ -41,7 +41,7 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
       className={`slide-container ${backgroundClass} relative overflow-hidden`}
       style={getSlideStyle()}
     >
-      {/* Fixed Header - Clean flat design */}
+      {/* Fixed Header - Dynamic height */}
       <div 
         className="absolute top-0 left-0 right-0 z-10"
         style={{ height: headerHeight }}
@@ -54,9 +54,9 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
         />
       </div>
 
-      {/* Main Content Area - Uses remaining space with proper spacing */}
+      {/* Main Content Area - Uses remaining space, lower z-index */}
       <div 
-        className="absolute left-0 right-0 px-page-x overflow-hidden z-10"
+        className="absolute left-0 right-0 px-16 overflow-hidden z-10"
         style={{ 
           top: headerHeight,
           bottom: footerHeight,
@@ -68,7 +68,7 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
         </div>
       </div>
 
-      {/* Fixed Footer - Flat design, only show if not hidden */}
+      {/* Fixed Footer - 8% height, highest z-index - only show if not hidden */}
       {!hideFooter && (
         <SlideFooter 
           slideNumber={slideNumber}
