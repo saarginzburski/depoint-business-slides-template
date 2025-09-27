@@ -234,7 +234,7 @@ const InvestorDeck = () => {
         {/* Header Section - Compact & Modern */}
         <div className="bg-white border border-gray-200 rounded-xl shadow-sm mb-8">
           <div className="px-8 py-6">
-            {/* Top Row - Logo, Title, and Key Actions */}
+            {/* Top Row - Logo, Title, and Info */}
             <div className="flex items-center justify-between mb-6">
               {/* Left - Logo and Title */}
               <div className="flex items-center gap-4">
@@ -266,7 +266,25 @@ const InvestorDeck = () => {
                 )}
               </div>
 
-              {/* Right - Action Buttons */}
+              {/* Right - Deck Info */}
+              <div className="flex items-center gap-6 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  <span>{visibleSlides.length} Slides Displayed</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  <span>~{Math.ceil(visibleSlides.length * 1.5)} min presentation</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-400">Q3 2025</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Row - All Actions Grouped */}
+            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+              {/* Left - Main Actions */}
               <div className="flex items-center gap-3">
                 <Button 
                   onClick={() => {
@@ -294,10 +312,8 @@ const InvestorDeck = () => {
                   Print All
                 </Button>
               </div>
-            </div>
 
-            {/* Bottom Row - Publish Toggle */}
-            <div className="flex items-center justify-center">
+              {/* Center - Publish Toggle */}
               <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
                 <Globe className="w-4 h-4 text-blue-600" />
                 <Label htmlFor="publish-toggle" className="text-sm font-medium text-gray-700 cursor-pointer">
@@ -319,6 +335,9 @@ const InvestorDeck = () => {
                   {isDeckPublished ? 'Root URL redirects to first slide' : 'Root URL shows overview'}
                 </span>
               </div>
+
+              {/* Right - Secondary Actions - For now empty, can add more later */}
+              <div className="w-40"></div>
             </div>
           </div>
         </div>
