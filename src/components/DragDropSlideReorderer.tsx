@@ -9,6 +9,7 @@ import {
   useSensors,
   closestCorners,
   UniqueIdentifier,
+  useDroppable,
 } from '@dnd-kit/core';
 import {
   SortableContext,
@@ -49,6 +50,12 @@ interface DraggableSlideProps {
   slide: { id: number; name: string; title: string };
   sectionId: string;
   sectionColor: string;
+}
+
+interface DroppableSectionProps {
+  section: Section;
+  slides: { id: number; name: string; title: string }[];
+  children: React.ReactNode;
 }
 
 const DraggableSlide: React.FC<DraggableSlideProps> = ({ slide, sectionId, sectionColor }) => {
@@ -93,6 +100,26 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({ slide, sectionId, secti
         </div>
         <p className="text-xs text-gray-500 truncate mt-1">{slide.title}</p>
       </div>
+    </div>
+  );
+};
+
+const DroppableSection: React.FC<DroppableSectionProps> = ({ section, slides, children }) => {
+  const { isOver, setNodeRef } = useDroppable({
+    id: `section-${section.id}`,
+    data: { sectionId: section.id, type: 'section' }
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={`space-y-2 min-h-[200px] p-3 rounded-lg border-2 border-dashed transition-colors ${
+        isOver 
+          ? 'border-blue-400 bg-blue-50' 
+          : 'border-gray-200'
+      }`}
+    >
+      {children}
     </div>
   );
 };
@@ -266,29 +293,53 @@ export const DragDropSlideReorderer: React.FC<DragDropSlideReordererProps> = ({
     const activeData = active.data.current;
     const overData = over.data.current;
 
-    if (!activeData || !overData) return;
+    if (!activeData) return;
 
     const activeSection = activeData.sectionId;
-    const overSection = overData.sectionId;
     const activeSlide = activeData.slide;
-    const overSlide = overData.slide;
+
+    // Determine target section
+    let targetSection: string;
+    let targetIndex = -1;
+
+    if (overData?.type === 'section') {
+      // Dropping into a section container
+      targetSection = overData.sectionId;
+      targetIndex = -1; // Add to end
+    } else if (overData?.sectionId) {
+      // Dropping onto another slide
+      targetSection = overData.sectionId;
+      const overSlide = overData.slide;
+      targetIndex = sectionSlides[targetSection]?.findIndex(s => s.id === overSlide.id) ?? -1;
+    } else {
+      return; // Invalid drop target
+    }
 
     setSectionSlides(prev => {
       const newSections = { ...prev };
 
-      if (activeSection === overSection) {
+      if (activeSection === targetSection) {
         // Same section - reorder
         const sectionSlides = [...newSections[activeSection]];
         const activeIndex = sectionSlides.findIndex(s => s.id === activeSlide.id);
-        const overIndex = sectionSlides.findIndex(s => s.id === overSlide.id);
         
-        newSections[activeSection] = arrayMove(sectionSlides, activeIndex, overIndex);
+        if (targetIndex === -1) {
+          // Move to end
+          targetIndex = sectionSlides.length - 1;
+        }
+        
+        newSections[activeSection] = arrayMove(sectionSlides, activeIndex, targetIndex);
       } else {
         // Different sections - move
         newSections[activeSection] = newSections[activeSection].filter(s => s.id !== activeSlide.id);
         
-        const overIndex = newSections[overSection].findIndex(s => s.id === overSlide.id);
-        newSections[overSection].splice(overIndex, 0, activeSlide);
+        if (targetIndex === -1) {
+          // Add to end of target section
+          newSections[targetSection].push(activeSlide);
+        } else {
+          // Insert at specific position
+          newSections[targetSection].splice(targetIndex, 0, activeSlide);
+        }
       }
 
       return newSections;
@@ -342,7 +393,7 @@ export const DragDropSlideReorderer: React.FC<DragDropSlideReordererProps> = ({
                     items={sectionSlides[section.id]?.map(slide => `${section.id}-${slide.id}`) || []}
                     strategy={verticalListSortingStrategy}
                   >
-                    <div className="space-y-2 min-h-[200px] p-3 rounded-lg border-2 border-dashed border-gray-200">
+                    <DroppableSection section={section} slides={sectionSlides[section.id] || []}>
                       {sectionSlides[section.id]?.map(slide => (
                         <DraggableSlide
                           key={slide.id}
@@ -351,7 +402,7 @@ export const DragDropSlideReorderer: React.FC<DragDropSlideReordererProps> = ({
                           sectionColor={section.color}
                         />
                       ))}
-                    </div>
+                    </DroppableSection>
                   </SortableContext>
                 </div>
               ))}
