@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { slideConfig } from './slides/slideConfig';
 import PDFExporter from '@/components/PDFExporter';
 import { DeckVariationsManager } from '@/components/DeckVariationsManager';
-import { DeckVariationWithSections } from '@/hooks/useDeckVariations';
+import { DeckVariationWithSections, useDeckVariations } from '@/hooks/useDeckVariations';
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
 import { DraggableSlideGrid } from '@/components/DraggableSlideGrid';
 import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
@@ -108,6 +108,9 @@ const DeckOverview = () => {
   );
   const [currentVariation, setCurrentVariation] = useState<DeckVariationWithSections | null>(null);
 
+  // Use deck variations hook
+  const { updateVariationSections } = useDeckVariations();
+
   // Use slide ordering hook
   const { getOrderedSlidesBySection, getVisibleSlides } = useSlideOrdering(
     currentVariation?.id || null, 
@@ -172,16 +175,21 @@ const DeckOverview = () => {
     }
   };
 
-  const toggleSectionSelection = (sectionId: string) => {
-    setSelectedSections(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(sectionId)) {
-        newSet.delete(sectionId);
-      } else {
-        newSet.add(sectionId);
-      }
-      return newSet;
-    });
+  const toggleSectionSelection = async (sectionId: string) => {
+    const newSet = new Set(selectedSections);
+    if (newSet.has(sectionId)) {
+      newSet.delete(sectionId);
+    } else {
+      newSet.add(sectionId);
+    }
+    
+    setSelectedSections(newSet);
+    
+    // Auto-save to current variation if one exists
+    if (currentVariation) {
+      const sectionsArray = Array.from(newSet);
+      await updateVariationSections(currentVariation.id, sectionsArray);
+    }
   };
 
   const handlePrintSelected = () => {

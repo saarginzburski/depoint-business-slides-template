@@ -160,6 +160,49 @@ export const useDeckVariations = () => {
     }
   };
 
+  const updateVariationSections = async (id: string, sections: string[]) => {
+    try {
+      // Delete existing sections
+      const { error: deleteError } = await supabase
+        .from('deck_variation_sections')
+        .delete()
+        .eq('deck_variation_id', id);
+
+      if (deleteError) throw deleteError;
+
+      // Insert new sections
+      if (sections.length > 0) {
+        const { error: sectionsError } = await supabase
+          .from('deck_variation_sections')
+          .insert(
+            sections.map(sectionId => ({
+              deck_variation_id: id,
+              section_id: sectionId
+            }))
+          );
+
+        if (sectionsError) throw sectionsError;
+      }
+
+      // Update local state
+      setVariations(prev => prev.map(v => 
+        v.id === id ? { ...v, sections } : v
+      ));
+      
+      if (currentVariation?.id === id) {
+        setCurrentVariation(prev => prev ? { ...prev, sections } : null);
+      }
+
+    } catch (error) {
+      console.error('Error updating variation sections:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update sections",
+        variant: "destructive",
+      });
+    }
+  };
+
   const deleteVariation = async (id: string) => {
     try {
       const { error } = await supabase
@@ -196,6 +239,7 @@ export const useDeckVariations = () => {
     loading,
     createVariation,
     updateVariation,
+    updateVariationSections,
     deleteVariation,
     refetch: fetchVariations
   };
