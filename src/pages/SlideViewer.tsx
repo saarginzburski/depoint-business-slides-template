@@ -32,6 +32,7 @@ const slideComponents = {
   SlideClosing: lazy(() => import('./slides/SlideClosing')),
   SlideIntegrations: lazy(() => import('./slides/SlideIntegrations')),
   SlideAppendices: lazy(() => import('./slides/SlideAppendices')),
+  SlideDashboardsDemo: lazy(() => import('./slides/SlideDashboardsDemo')),
   SlideConsultingPartners: lazy(() => import('./slides/SlideConsultingPartners')),
   SlideDashboardIntro: lazy(() => import('./slides/SlideDashboardIntro')),
   SlideTaskComplianceDashboard: lazy(() => import('./slides/SlideTaskComplianceDashboard')),
