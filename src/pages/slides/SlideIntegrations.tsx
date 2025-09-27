@@ -14,10 +14,10 @@ const SlideIntegrations = () => {
         logoSrc={depointLogoBlack}
         hideFooter={true}
       >
-        <div className="content-viewport h-full flex flex-col">
+        <div className="content-viewport h-full flex flex-col py-8">
           
           {/* Subtitle */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <p className="text-lg text-neutral-700 max-w-5xl mx-auto leading-relaxed">
               Depoint is designed to integrate with the platforms you already use — POS, ERP, accounting, IoT devices, HR systems, and more.
             </p>
@@ -29,8 +29,8 @@ const SlideIntegrations = () => {
               
               {/* Depoint - Top 100% Width */}
               <div className="mb-8">
-                <div className="w-full bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl py-6 flex items-center justify-center shadow-xl border border-blue-500/20">
-                  <img src="/lovable-uploads/96869f4f-a193-4264-973e-1221a0ec5fb9.png" alt="Depoint" className="h-8 object-contain" />
+                <div className="w-full bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl py-8 flex items-center justify-center shadow-xl border border-blue-500/20">
+                  <img src="/lovable-uploads/96869f4f-a193-4264-973e-1221a0ec5fb9.png" alt="Depoint" className="h-12 object-contain" />
                 </div>
               </div>
 
