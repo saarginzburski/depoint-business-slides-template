@@ -15,6 +15,11 @@ const SlideAppendices = () => {
         </div>
       </div>
       
+      {/* Depoint Logo - top right */}
+      <div className="absolute top-8 right-8 z-10">
+        <img src="/lovable-uploads/96869f4f-a193-4264-973e-1221a0ec5fb9.png" alt="Depoint" className="h-12" />
+      </div>
+      
       {/* Main content */}
       <div className="h-full relative flex flex-col justify-center items-center text-center z-10">
         
