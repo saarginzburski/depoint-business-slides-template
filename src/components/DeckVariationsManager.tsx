@@ -104,11 +104,29 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
   return (
     <Card className="mb-6 border-blue-200 bg-blue-50/30">
       <CardContent className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-            <Copy className="h-5 w-5 text-blue-600" />
-            Deck Variations
-          </h3>
+        {/* Single row with selector, toggle, and new button */}
+        <div className="flex items-center justify-between gap-4 mb-4">
+          <Select
+            value={currentVariation?.id || ''}
+            onValueChange={handleSelectVariation}
+          >
+            <SelectTrigger className="flex-1">
+              <SelectValue placeholder="Select a deck variation" />
+            </SelectTrigger>
+            <SelectContent>
+              {variations.map((variation) => (
+                <SelectItem key={variation.id} value={variation.id}>
+                  <div className="flex items-center gap-2">
+                    <span>{variation.name}</span>
+                    {variation.is_default && (
+                      <Badge variant="secondary" className="text-xs">Default</Badge>
+                    )}
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           <div className="flex items-center gap-2">
             <Button
               onClick={() => setShowVariationsList(!showVariationsList)}
@@ -131,33 +149,6 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
               New Variation
             </Button>
           </div>
-        </div>
-
-        {/* Current Variation Selector */}
-        <div className="mb-4">
-          <Label className="text-sm font-medium text-gray-700 mb-2 block">
-            Current Variation
-          </Label>
-          <Select
-            value={currentVariation?.id || ''}
-            onValueChange={handleSelectVariation}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a deck variation" />
-            </SelectTrigger>
-            <SelectContent>
-              {variations.map((variation) => (
-                <SelectItem key={variation.id} value={variation.id}>
-                  <div className="flex items-center gap-2">
-                    <span>{variation.name}</span>
-                    {variation.is_default && (
-                      <Badge variant="secondary" className="text-xs">Default</Badge>
-                    )}
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
         </div>
 
         {/* Variations List */}
