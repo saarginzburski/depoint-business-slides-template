@@ -97,9 +97,6 @@ const InvestorDeck = () => {
   const [selectedSections, setSelectedSections] = useState<Set<string>>(
     new Set(sections.map(section => section.id))
   );
-  const [selectedSlides, setSelectedSlides] = useState<Set<number>>(
-    new Set(slideConfig.map(slide => slide.id))
-  );
 
   const getSlidesBySection = () => {
     const slidesBySection: { [key: string]: typeof slideConfig } = {};
@@ -167,48 +164,11 @@ const InvestorDeck = () => {
     });
   };
 
-  const toggleSlideSelection = (slideId: number) => {
-    setSelectedSlides(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(slideId)) {
-        newSet.delete(slideId);
-      } else {
-        newSet.add(slideId);
-      }
-      return newSet;
-    });
-  };
-
-  const toggleSelectAllSlides = () => {
-    const allVisibleSlideIds = visibleSlides.map(slide => slide.id);
-    const allVisibleSelected = allVisibleSlideIds.every(id => selectedSlides.has(id));
-    
-    if (allVisibleSelected) {
-      // Deselect all visible slides
-      setSelectedSlides(prev => {
-        const newSet = new Set(prev);
-        allVisibleSlideIds.forEach(id => newSet.delete(id));
-        return newSet;
-      });
-    } else {
-      // Select all visible slides
-      setSelectedSlides(prev => {
-        const newSet = new Set(prev);
-        allVisibleSlideIds.forEach(id => newSet.add(id));
-        return newSet;
-      });
-    }
-  };
-
   const handlePrintSelected = () => {
-    const visibleSelectedSlides = Array.from(selectedSlides).filter(id => 
-      visibleSlides.some(slide => slide.id === id)
-    );
-    
-    if (visibleSelectedSlides.length === 0) return;
+    if (visibleSlides.length === 0) return;
     
     if (typeof window !== 'undefined' && window.open) {
-      const slideIds = visibleSelectedSlides.sort((a, b) => a - b);
+      const slideIds = visibleSlides.map(slide => slide.id).sort((a, b) => a - b);
       const slideParams = slideIds.join(',');
       window.open(`/print-deck?slides=${slideParams}`, '_blank');
     }
@@ -222,10 +182,6 @@ const InvestorDeck = () => {
     if (checked) {
       window.location.href = '/deck/slide/1';
     }
-  };
-
-  const getSelectedVisibleSlidesCount = () => {
-    return visibleSlides.filter(slide => selectedSlides.has(slide.id)).length;
   };
 
   return (
@@ -372,46 +328,9 @@ const InvestorDeck = () => {
           </div>
         </div>
 
-        {/* Slide Selection Controls */}
-        {visibleSlides.length > 0 && (
-          <div className="mb-8 flex items-center justify-center gap-4">
-            <div className="flex items-center gap-2">
-              <FileText className="w-4 h-4 text-gray-500" />
-              <span className="text-sm text-gray-600">{visibleSlides.length} Slides Displayed</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-gray-500" />
-              <span className="text-sm text-gray-600">~{Math.ceil(visibleSlides.length * 1.5)} min presentation</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4 text-gray-500" />
-              <span className="text-sm text-gray-600">Q3 2025</span>
-            </div>
-          </div>
-        )}
-
         {/* Slides organized by sections */}
         {visibleSlides.length > 0 && (
           <div className="space-y-8">
-            {/* Global slide selection */}
-            <div className="text-center">
-              <Button
-                onClick={toggleSelectAllSlides}
-                variant="ghost"
-                className="text-gray-600 hover:text-gray-800"
-              >
-                {visibleSlides.every(slide => selectedSlides.has(slide.id)) ? (
-                  <CheckSquare className="w-4 h-4 mr-2" />
-                ) : (
-                  <Square className="w-4 h-4 mr-2" />
-                )}
-                {visibleSlides.every(slide => selectedSlides.has(slide.id)) 
-                  ? `Deselect All Visible (${visibleSlides.length}/${visibleSlides.length})`
-                  : `Select All Visible (${getSelectedVisibleSlidesCount()}/${visibleSlides.length})`
-                }
-              </Button>
-            </div>
-
             {/* Slides by section */}
             {Object.entries(slidesBySection).map(([sectionId, sectionSlides]) => {
               const section = sections.find(s => s.id === sectionId);
@@ -436,17 +355,12 @@ const InvestorDeck = () => {
                     {sectionSlides.map(slide => {
                       const componentKey = slide.component as keyof typeof slideComponents;
                       const SlideComponent = slideComponents[componentKey];
-                      const isSelected = selectedSlides.has(slide.id);
                       
                       return (
                         <Card
                           key={slide.id}
-                          className={`relative p-3 transition-all cursor-pointer ${
-                            isSelected 
-                              ? 'ring-2 ring-blue-500 ring-offset-2' 
-                              : 'hover:shadow-md hover:scale-105'
-                          }`}
-                          onClick={() => toggleSlideSelection(slide.id)}
+                          className="relative p-3 transition-all cursor-pointer hover:shadow-md hover:scale-105"
+                          onClick={() => handleSlideClick(slide.id)}
                         >
                           <div 
                             className="w-full aspect-[16/9] bg-white rounded border shadow-sm mb-2 overflow-hidden cursor-pointer"
@@ -466,23 +380,6 @@ const InvestorDeck = () => {
                             <div>
                               <h4 className="text-xs font-medium text-gray-900 truncate">{slide.name}</h4>
                               <p className="text-xs text-gray-500">Slide {slide.id}</p>
-                            </div>
-                            
-                            <div 
-                              className="flex-shrink-0 ml-2"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              {isSelected ? (
-                                <CheckSquare 
-                                  className="w-4 h-4 text-blue-600 cursor-pointer" 
-                                  onClick={() => toggleSlideSelection(slide.id)}
-                                />
-                              ) : (
-                                <Square 
-                                  className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer" 
-                                  onClick={() => toggleSlideSelection(slide.id)}
-                                />
-                              )}
                             </div>
                           </div>
                         </Card>
