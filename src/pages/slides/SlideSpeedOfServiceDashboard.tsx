@@ -11,16 +11,19 @@ const SlideSpeedOfServiceDashboard = () => {
 
   return (
     <div className="relative w-full h-full">
-      {/* Back Button */}
-      <button
-        onClick={() => navigate('/investor-deck/slide/20')}
-        className="absolute top-4 left-4 z-20 bg-white/90 hover:bg-white border border-gray-300 rounded-lg px-3 py-2 flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 shadow-sm transition-all"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Index
-      </button>
       <SlideLayout
-        title="Speed of Service Dashboard"
+        title={
+          <div className="flex items-center gap-4">
+            <span>Speed of Service Dashboard</span>
+            <button
+              onClick={() => navigate('/investor-deck/slide/20')}
+              className="bg-white/90 hover:bg-white border border-gray-300 rounded-lg px-3 py-2 flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 shadow-sm transition-all"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Index
+            </button>
+          </div>
+        }
         subtitle="📈 Accelerate Growth – Faster Service → Higher Throughput & Sales"
         slideNumber="26"
         totalSlides="29"

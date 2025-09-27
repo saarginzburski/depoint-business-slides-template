@@ -6,7 +6,7 @@ import SlideFooter from './SlideFooter';
 
 interface SlideLayoutProps {
   children: React.ReactNode;
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
   slideNumber?: string;
   totalSlides?: string;

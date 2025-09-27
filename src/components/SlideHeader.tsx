@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface SlideHeaderProps {
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
   logoSrc?: string;
   className?: string;
