@@ -29,10 +29,9 @@ const SlideClosing4 = () => {
       {/* Main content - centered layout */}
       <div className="absolute inset-0 flex flex-col items-center justify-center px-16 z-10">
         <div className="text-center max-w-5xl">
-          {/* Bold headline centered - Human focus */}
+          {/* Bold headline centered */}
           <h1 className="text-6xl font-black text-neutral-navy leading-[0.9] mb-6 tracking-tight">
-            Execution is
-            <span className="block text-depoint-blue mt-4">People Powered</span>
+            Get to the Point.
           </h1>
           
           {/* Warm accent line */}
@@ -40,7 +39,7 @@ const SlideClosing4 = () => {
           
           {/* Tagline below headline, smaller and italic */}
           <p className="text-3xl text-gray-600 italic font-medium leading-relaxed">
-            We give every shift the confidence it deserves.
+            Protecting brands. Empowering operators. Unlocking growth.
           </p>
         </div>
 
