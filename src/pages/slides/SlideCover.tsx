@@ -53,22 +53,10 @@ const SlideCover = () => {
         
         {/* ORDER ELEMENTS - Right Side - clean grid */}
         <div className="absolute right-0 inset-y-0 w-1/2 overflow-hidden">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `
-              linear-gradient(hsl(var(--border)) 1px, transparent 1px),
-              linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)
-            `,
-            backgroundSize: '32px 32px',
-            opacity: 0.3
-          }}></div>
+          <div className="absolute inset-0 opacity-10">
+            <div className="w-full h-full border-r border-b border-border bg-white"></div>
+          </div>
         </div>
-      </div>
-
-      {/* Subtle halo/spotlight behind headline */}
-      <div className="absolute inset-0 flex items-center justify-center z-5">
-        <div className="w-full h-full" style={{ 
-          background: 'radial-gradient(ellipse 50% 40% at center 45%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.3) 50%, transparent 80%)'
-        }}></div>
       </div>
 
       {/* Main content - clean headline */}

@@ -173,17 +173,18 @@ const PrintableDeck = () => {
             print-color-adjust: exact !important;
           }
           
-          /* Remove heavy shadows/backdrop filters which cause gray tint in PDFs */
-          [class*="shadow"],
-          [style*="box-shadow"],
+          /* Remove gradients and backdrop filters which cause color issues in PDFs */
+          [class*="gradient"],
+          [style*="gradient"],
           [class*="backdrop-blur"],
           [style*="backdrop-filter"],
           [class*="drop-shadow"],
           [style*="filter:"] {
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+            box-shadow: none !important;
             -webkit-backdrop-filter: none !important;
             backdrop-filter: none !important;
             filter: none !important;
+            background: none !important;
           }
           
           /* Target the printable deck container specifically */

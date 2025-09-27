@@ -16,20 +16,20 @@ const SlideProblem = () => {
         {/* Main Comparison Boxes */}
         <div className="flex gap-6 flex-1">
           {/* LEFT BOX - Current State - Enhanced with Emotional Stress Elements */}
-          <div className="relative flex-1 bg-red-600 rounded-2xl shadow-2xl border-2 border-red-700 overflow-hidden flex flex-col">
+          <div className="relative flex-1 bg-red-600 rounded-2xl border-2 border-red-700 overflow-hidden flex flex-col">
             {/* Red stress overlay for emotional impact */}
             <div className="absolute inset-0 bg-red-900/20 pointer-events-none"></div>
             
             {/* TODAY Tag */}
-            <div className="absolute top-4 right-4 bg-red-800 text-white px-3 py-1 rounded-sm text-xs font-bold transform rotate-6 border-2 border-red-900 shadow-lg">
+            <div className="absolute top-4 right-4 bg-red-800 text-white px-3 py-1 rounded-sm text-xs font-bold transform rotate-6 border-2 border-red-900">
               TODAY ⚠️
             </div>
             
             {/* Header */}
             <div className="p-3 pb-2 flex-shrink-0 relative z-10">
               <div className="flex items-center gap-2 mb-2">
-                <X className="w-5 h-5 text-white drop-shadow-lg" />
-                <h3 className="text-lg font-bold text-white drop-shadow-lg">Chaos Today ⚠️</h3>
+                <X className="w-5 h-5 text-white" />
+                <h3 className="text-lg font-bold text-white">Chaos Today ⚠️</h3>
               </div>
               <p className="text-xs font-semibold text-red-100 uppercase">MESSY. SLOW. RISKY. FRUSTRATING.</p>
             </div>
@@ -45,7 +45,7 @@ const SlideProblem = () => {
             <div className="relative h-full">
                 
                 {/* Excel File - Top Left */}
-                <div className="absolute top-4 left-2 bg-green-50 border-2 border-green-400 rounded-lg p-4 shadow-lg transform rotate-3 z-10">
+                <div className="absolute top-4 left-2 bg-green-50 border-2 border-green-400 rounded-lg p-4 transform rotate-3 z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <FileSpreadsheet className="w-6 h-6 text-green-700" />
                     <span className="text-base font-bold text-green-800">Excel_Audit_v14_FINAL.xlsx</span>
@@ -53,8 +53,7 @@ const SlideProblem = () => {
                   <div className="text-sm text-green-600">Last updated: 2 weeks ago</div>
                 </div>
                 
-                {/* WhatsApp Chat - Top Right */}
-                <div className="absolute top-8 right-4 bg-green-100 border-2 border-green-400 rounded-2xl p-4 shadow-lg transform -rotate-2 z-10">
+                <div className="absolute top-8 right-4 bg-green-100 border-2 border-green-400 rounded-2xl p-4 transform -rotate-2 z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <MessageCircle className="w-5 h-5 text-green-700" />
                     <span className="text-base font-bold text-green-800">WhatsApp Group</span>
@@ -64,7 +63,7 @@ const SlideProblem = () => {
                 </div>
                 
                 {/* Daily Tasks - Center Left */}
-                <div className="absolute top-32 left-8 bg-yellow-100 border border-yellow-400 rounded p-4 shadow-lg transform -rotate-3 z-10">
+                <div className="absolute top-32 left-8 bg-yellow-100 border border-yellow-400 rounded p-4 transform -rotate-3 z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <ClipboardList className="w-5 h-5 text-yellow-700" />
                     <span className="text-base font-semibold text-yellow-800">Daily Tasks</span>
@@ -73,7 +72,7 @@ const SlideProblem = () => {
                 </div>
                 
                 {/* Viber Chat - Center */}
-                <div className="absolute top-28 right-12 bg-purple-100 border-2 border-purple-400 rounded-2xl p-4 shadow-lg transform rotate-1 z-10">
+                <div className="absolute top-28 right-12 bg-purple-100 border-2 border-purple-400 rounded-2xl p-4 transform rotate-1 z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <MessageCircle className="w-5 h-5 text-purple-700" />
                     <span className="text-base font-bold text-purple-800">Viber</span>
@@ -83,7 +82,7 @@ const SlideProblem = () => {
                 </div>
                 
                 {/* Handwritten Notes - Middle Left */}
-                <div className="absolute top-56 left-4 bg-yellow-200 border border-yellow-500 rounded p-4 shadow-lg transform rotate-2 z-10">
+                <div className="absolute top-56 left-4 bg-yellow-200 border border-yellow-500 rounded p-4 transform rotate-2 z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <PenTool className="w-5 h-5 text-gray-700" />
                     <span className="text-base font-bold text-gray-800">Fridge temp logs</span>
@@ -92,7 +91,7 @@ const SlideProblem = () => {
                 </div>
                 
                 {/* Email Chain - Bottom Right */}
-                <div className="absolute bottom-32 right-2 bg-blue-50 border-2 border-blue-400 rounded-lg p-4 shadow-lg transform -rotate-1 z-10">
+                <div className="absolute bottom-32 right-2 bg-blue-50 border-2 border-blue-400 rounded-lg p-4 transform -rotate-1 z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <Mail className="w-5 h-5 text-blue-700" />
                     <span className="text-base font-bold text-blue-800">Email Chain</span>
@@ -101,7 +100,7 @@ const SlideProblem = () => {
                 </div>
                 
                 {/* Additional scattered sticky note for density - only one in middle */}
-                <div className="absolute top-44 right-8 bg-orange-200 border border-orange-400 rounded p-3 shadow-md transform -rotate-6 text-sm text-orange-700">
+                <div className="absolute top-44 right-8 bg-orange-200 border border-orange-400 rounded p-3 transform -rotate-6 text-sm text-orange-700">
                   Call manager ASAP
                 </div>
                 
@@ -146,9 +145,8 @@ const SlideProblem = () => {
           <div className="w-px bg-gray-300 flex-shrink-0"></div>
           
           {/* RIGHT BOX - Depoint Solution - Enhanced with Calm/Relief Elements */}
-          <div className="relative flex-1 bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl shadow-enterprise border border-blue-200 overflow-hidden">
-            {/* Calm blue/green gradient overlay for emotional peace */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 to-green-100/30 pointer-events-none"></div>
+          <div className="relative flex-1 bg-blue-50 rounded-2xl border border-blue-200 overflow-hidden">
+            {/* Clean background overlay */}
             
             {/* Background Pattern - Operations Flywheel (faint) */}
             <div className="absolute inset-0 opacity-5">
@@ -160,7 +158,7 @@ const SlideProblem = () => {
             </div>
             
             {/* LIVE Badge */}
-            <div className="absolute top-4 right-4 bg-enterprise-green text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg animate-pulse">
+            <div className="absolute top-4 right-4 bg-enterprise-green text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
               LIVE ✅
             </div>
             
