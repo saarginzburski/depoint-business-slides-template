@@ -131,7 +131,7 @@ const SlideViewer = () => {
     <div className="w-full h-screen bg-gray-100 flex flex-col items-center justify-center">
       <div className="relative" style={{ width: SLIDE_CONFIG.cssWidth }}>
         {/* Professional Navigation Bar - Fixed Layout */}
-        <div className="grid grid-cols-3 items-center bg-gradient-to-r from-slate-900 to-slate-800 backdrop-blur-sm rounded-xl px-8 py-4 shadow-xl mb-6 border border-slate-700/50">
+        <div className="grid grid-cols-3 items-center bg-slate-900 rounded-xl px-8 py-4 mb-6 border border-slate-700/50">
           {/* Left Section - Logo & Title */}
           <div className="flex items-center gap-6">
             <img src="/lovable-uploads/96869f4f-a193-4264-973e-1221a0ec5fb9.png" alt="Depoint" className="h-8" />
@@ -166,7 +166,7 @@ const SlideViewer = () => {
 
           {/* Right Section - Slide Info & Actions */}
           <div className="flex justify-end items-center gap-4">
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg px-4 py-2 border border-slate-600/50 max-w-xs">
+            <div className="bg-slate-800 rounded-lg px-4 py-2 border border-slate-600/50 max-w-xs">
               <span className="text-white font-medium text-sm truncate block">
                 {availableSlides.findIndex(slide => slide.id === currentSlideId) + 1} / {availableSlides.length} - {slideInfo.name}
               </span>
@@ -191,7 +191,7 @@ const SlideViewer = () => {
         </div>
 
         {/* Slide Container */}
-        <div className="bg-white rounded-lg shadow-2xl overflow-hidden" style={{ height: SLIDE_CONFIG.cssHeight }}>
+        <div className="bg-white rounded-lg overflow-hidden" style={{ height: SLIDE_CONFIG.cssHeight }}>
           <Suspense fallback={
             <div className="w-full h-full flex items-center justify-center">
               <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>

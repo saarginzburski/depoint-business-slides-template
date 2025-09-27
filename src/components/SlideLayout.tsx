@@ -25,7 +25,7 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
   slideNumber = "1",
   totalSlides = "15", 
   logoSrc = "/lovable-uploads/96869f4f-a193-4264-973e-1221a0ec5fb9.png",
-  backgroundClass = "bg-gradient-neutral text-neutral-dark",
+  backgroundClass = "bg-neutral text-neutral-dark",
   headerHeight = "12%", // Default header height, can be adjusted per slide
   footerTagline,
   hideFooter = false,

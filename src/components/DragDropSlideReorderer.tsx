@@ -81,7 +81,7 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({ slide, sectionId, secti
       ref={setNodeRef}
       style={style}
       className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
-        isDragging ? 'opacity-50 scale-105' : 'hover:shadow-md'
+        isDragging ? 'opacity-50 scale-105' : ''
       } ${getSectionStyles(sectionColor).card}`}
       {...attributes}
     >
@@ -410,7 +410,7 @@ export const DragDropSlideReorderer: React.FC<DragDropSlideReordererProps> = ({
 
             <DragOverlay>
               {activeSlide && (
-                <div className="flex items-center gap-3 p-3 rounded-lg border bg-white shadow-lg">
+                <div className="flex items-center gap-3 p-3 rounded-lg border bg-white">
                   <GripVertical className="h-4 w-4 text-gray-400" />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">

@@ -18,7 +18,7 @@ const SlideFooter: React.FC<SlideFooterProps> = ({
   const displayTagline = tagline || (componentName ? getSlideTagline(componentName) : "Depoint: The System of Record for Frontline Execution");
   
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-[8%] z-20 flex items-center justify-between px-16 bg-white/95 backdrop-blur-sm border-t border-gray-200">
+    <div className="absolute bottom-0 left-0 right-0 h-[8%] z-20 flex items-center justify-between px-16 bg-white border-t border-gray-200">
       {/* Left: Slide tagline */}
       <div className="flex-1">
         <div className="slide-body text-gray-700 italic">{displayTagline}</div>

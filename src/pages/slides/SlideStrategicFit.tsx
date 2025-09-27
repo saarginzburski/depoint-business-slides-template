@@ -18,7 +18,7 @@ const SlideStrategicFit = () => {
         
         {/* Hero Statement - Compact */}
         <div className="text-center mb-6">
-          <div className="bg-blue-600 rounded-xl p-6 shadow-2xl text-white relative overflow-hidden">
+          <div className="bg-blue-600 rounded-xl p-6 text-white relative overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <svg className="w-full h-full" viewBox="0 0 600 300" fill="none">
@@ -35,7 +35,7 @@ const SlideStrategicFit = () => {
               
               {/* Data Value Highlights - Compact */}
               <div className="grid grid-cols-2 gap-4 mt-4">
-                <div className="bg-white/15 backdrop-blur-sm rounded-lg p-3 border border-white/20">
+                <div className="bg-white/20 rounded-lg p-3 border border-white/20">
                   <div className="flex items-center gap-2 mb-2">
                     <Brain className="w-5 h-5" />
                     <span className="text-base font-semibold">AI Training Gold</span>
@@ -43,7 +43,7 @@ const SlideStrategicFit = () => {
                   <p className="text-blue-100 text-xs">Millions of real operational tasks provide unmatched training data for enterprise AI models.</p>
                 </div>
                 
-                <div className="bg-white/15 backdrop-blur-sm rounded-lg p-3 border border-white/20">
+                <div className="bg-white/20 rounded-lg p-3 border border-white/20">
                   <div className="flex items-center gap-2 mb-2">
                     <Database className="w-5 h-5" />
                     <span className="text-base font-semibold">Market Intelligence</span>
@@ -59,7 +59,7 @@ const SlideStrategicFit = () => {
         <div className="grid grid-cols-2 gap-6 flex-1">
           
           {/* Left - Market Validation */}
-          <div className="bg-white rounded-xl shadow-card border p-4 h-full flex flex-col">
+          <div className="bg-white rounded-xl border p-4 h-full flex flex-col">
             <h3 className="text-lg font-bold text-gray-900 mb-3">Market Validation</h3>
             <div className="bg-enterprise-green/10 border border-enterprise-green/20 rounded-lg p-3 mb-3">
               <p className="text-sm text-gray-800 font-medium">
@@ -92,7 +92,7 @@ const SlideStrategicFit = () => {
           </div>
           
           {/* Right - Ideal Acquirers */}
-          <div className="bg-white rounded-xl shadow-card border p-4 h-full flex flex-col">
+          <div className="bg-white rounded-xl border p-4 h-full flex flex-col">
             <h3 className="text-lg font-bold text-gray-900 mb-3">Ideal Acquirers</h3>
             <div className="bg-electric-blue/10 border border-electric-blue/20 rounded-lg p-3 mb-3">
               <p className="text-sm text-gray-800 font-medium">

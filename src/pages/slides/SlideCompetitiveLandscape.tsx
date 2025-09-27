@@ -20,7 +20,7 @@ const SlideCompetitiveLandscape = () => {
         <div className="grid grid-cols-2 gap-12 h-full items-center">
           
           {/* Left Column - The Old Way */}
-          <div className="bg-gray-50 rounded-xl p-8 border border-gray-200 shadow-sm h-full flex flex-col justify-center">
+          <div className="bg-gray-50 rounded-xl p-8 border border-gray-200 h-full flex flex-col justify-center">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold text-gray-700 mb-4">The Old Way</h2>
               <h3 className="text-xl text-gray-600 mb-4">(Digital Checklists)</h3>
@@ -69,7 +69,7 @@ const SlideCompetitiveLandscape = () => {
           </div>
           
           {/* Right Column - Depoint */}
-          <div className="bg-blue-600 rounded-xl p-8 shadow-2xl text-white h-full flex flex-col justify-center">
+          <div className="bg-blue-600 rounded-xl p-8 text-white h-full flex flex-col justify-center">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-white mb-4">Depoint</h2>
               <h3 className="text-xl text-blue-100 mb-6">(The Intelligence Engine)</h3>
@@ -83,7 +83,7 @@ const SlideCompetitiveLandscape = () => {
             
             {/* Depoint advantages */}
             <div className="space-y-4">
-              <div className="flex items-start gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+              <div className="flex items-start gap-4 bg-white/20 rounded-lg p-4 border border-white/20">
                 <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Building2 className="w-5 h-5 text-white" />
                 </div>
@@ -93,7 +93,7 @@ const SlideCompetitiveLandscape = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+              <div className="flex items-start gap-4 bg-white/20 rounded-lg p-4 border border-white/20">
                 <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Network className="w-5 h-5 text-white" />
                 </div>
@@ -103,7 +103,7 @@ const SlideCompetitiveLandscape = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+              <div className="flex items-start gap-4 bg-white/20 rounded-lg p-4 border border-white/20">
                 <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Zap className="w-5 h-5 text-white" />
                 </div>

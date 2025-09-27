@@ -104,22 +104,22 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
       <div
         {...listeners}
         {...attributes}
-        className="absolute top-2 right-2 z-10 cursor-grab active:cursor-grabbing p-1 bg-white/80 rounded shadow-sm opacity-60 group-hover:opacity-100 hover:opacity-100 transition-opacity"
+        className="absolute top-2 right-2 z-10 cursor-grab active:cursor-grabbing p-1 bg-white/80 rounded opacity-60 group-hover:opacity-100 hover:opacity-100 transition-opacity"
         onClick={(e) => e.stopPropagation()}
       >
         <GripVertical className="h-3 w-3 text-gray-600" />
       </div>
 
       <div 
-        className="w-full aspect-[16/9] bg-white rounded border shadow-sm mb-2 overflow-hidden cursor-pointer group"
+        className="w-full aspect-[16/9] bg-white rounded border mb-2 overflow-hidden cursor-pointer group"
         onClick={(e) => {
           e.stopPropagation();
           onSlideClick(slide.id);
         }}
       >
         <div className="w-full h-full transform scale-[0.2] origin-top-left" style={{ width: '500%', height: '500%' }}>
-          <Suspense fallback={<div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center"><div className="animate-pulse text-gray-400">{slide.id}</div></div>}>
-            {SlideComponent ? <SlideComponent /> : <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center"><div className="text-gray-400 text-6xl font-bold">{slide.id}</div></div>}
+          <Suspense fallback={<div className="w-full h-full bg-gray-100 flex items-center justify-center"><div className="animate-pulse text-gray-400">{slide.id}</div></div>}>
+            {SlideComponent ? <SlideComponent /> : <div className="w-full h-full bg-gray-100 flex items-center justify-center"><div className="text-gray-400 text-6xl font-bold">{slide.id}</div></div>}
           </Suspense>
         </div>
       </div>
@@ -356,7 +356,7 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
 
       <DragOverlay>
         {activeSlide && (
-          <Card className="p-3 bg-white shadow-lg border-2 border-blue-400 opacity-90">
+          <Card className="p-3 bg-white border-2 border-blue-400 opacity-90">
             <div className="flex items-center gap-3">
               <GripVertical className="h-4 w-4 text-gray-400" />
               <div className="flex-1 min-w-0">

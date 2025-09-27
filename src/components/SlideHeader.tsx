@@ -14,7 +14,7 @@ const SlideHeader: React.FC<SlideHeaderProps> = ({
   className = "" 
 }) => {
   return (
-    <div className={`w-full h-full bg-white/95 backdrop-blur-sm border-b border-gray-200 relative ${className}`}>
+    <div className={`w-full h-full bg-white border-b border-gray-200 relative ${className}`}>
       {/* Title and subtitle - left side with padding */}
       <div className="px-16 h-full flex flex-col justify-center">
         <h1 className="slide-h1 mb-0.5 text-gray-900 leading-tight">{title}</h1>

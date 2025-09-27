@@ -20,17 +20,17 @@ const SlideCover = () => {
         <div className="absolute left-0 inset-y-0 w-1/2 overflow-hidden opacity-60">
           {/* Reduced sticky notes - only 2 main ones */}
           <div className="absolute left-8 bottom-1/3 transform -rotate-8">
-            <div className="bg-yellow-100 border border-yellow-300 p-4 text-sm text-gray-800 shadow-md rotate-6 mb-4">
-              ⚠ Missing Inventory
-            </div>
-            <div className="bg-red-100 border border-red-300 p-4 text-sm text-gray-800 shadow-md -rotate-4 transform translate-x-6">
-              Equipment down #3
-            </div>
+          <div className="bg-yellow-100 border border-yellow-300 p-4 text-sm text-gray-800 rotate-6 mb-4">
+            ⚠ Missing Inventory
+          </div>
+          <div className="bg-red-100 border border-red-300 p-4 text-sm text-gray-800 -rotate-4 transform translate-x-6">
+            Equipment down #3
+          </div>
           </div>
 
           {/* Single checklist - cleaner */}
           <div className="absolute left-6 bottom-24 transform -rotate-2 opacity-70">
-            <div className="bg-background border border-border p-3 shadow-sm text-xs text-muted-foreground">
+            <div className="bg-background border border-border p-3 text-xs text-muted-foreground">
               <div className="font-medium mb-2 text-foreground">Daily Tasks</div>
               <div className="space-y-1">
                 <div>□ Temperature check</div>
@@ -95,15 +95,12 @@ const SlideCover = () => {
             src={depointLogo} 
             alt="Depoint" 
             className="h-32 opacity-95"
-            style={{
-              filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.8)) drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
-            }}
           />
         </div>
       </div>
 
       {/* Clean header strip */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-background/95 backdrop-blur-sm border-b border-border flex items-center justify-end px-8 z-20">
+      <div className="absolute top-0 left-0 right-0 h-16 bg-background border-b border-border flex items-center justify-end px-8 z-20">
         <div className="text-muted-foreground text-sm font-medium tracking-wide">
           Q3 2025 • CONFIDENTIAL INVESTOR DECK
         </div>
