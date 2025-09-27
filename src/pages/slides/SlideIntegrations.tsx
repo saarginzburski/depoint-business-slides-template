@@ -29,7 +29,7 @@ const SlideIntegrations = () => {
               
               {/* Depoint - Top 100% Width */}
               <div className="mb-8">
-                <div className="w-full bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl py-8 flex items-center justify-center shadow-xl border border-blue-500/20">
+                <div className="w-full bg-blue-600 rounded-2xl py-8 flex items-center justify-center border border-blue-500/20">
                   <img src="/lovable-uploads/96869f4f-a193-4264-973e-1221a0ec5fb9.png" alt="Depoint" className="h-12 object-contain" />
                 </div>
               </div>
@@ -38,7 +38,7 @@ const SlideIntegrations = () => {
               <div className="grid grid-cols-5 gap-4">
                 
                 {/* QuickBooks & ERPs */}
-                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 transition-shadow">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
                       <DollarSign className="w-5 h-5 text-blue-600" />
@@ -50,8 +50,7 @@ const SlideIntegrations = () => {
                   </div>
                 </div>
 
-                {/* POS Systems */}
-                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 transition-shadow">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Settings className="w-5 h-5 text-green-600" />
@@ -64,7 +63,7 @@ const SlideIntegrations = () => {
                 </div>
 
                 {/* IoT Devices */}
-                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 transition-shadow">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Thermometer className="w-5 h-5 text-orange-600" />
@@ -77,7 +76,7 @@ const SlideIntegrations = () => {
                 </div>
 
                 {/* HR & WFM */}
-                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 transition-shadow">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Users className="w-5 h-5 text-purple-600" />
@@ -90,7 +89,7 @@ const SlideIntegrations = () => {
                 </div>
 
                 {/* More Integrations */}
-                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="bg-white rounded-xl px-4 py-3 border border-gray-200 transition-shadow">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Zap className="w-5 h-5 text-gray-600" />
@@ -108,19 +107,19 @@ const SlideIntegrations = () => {
           {/* Integration Benefits - Clean Grid */}
           <div className="mb-8">
             <div className="grid grid-cols-2 gap-4 max-w-5xl mx-auto">
-              <div className="flex items-start gap-4 bg-gradient-to-r from-blue-50 to-white rounded-xl p-5 border border-blue-100 shadow-sm">
+              <div className="flex items-start gap-4 bg-blue-50 rounded-xl p-5 border border-blue-100">
                 <ArrowRight className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                 <p className="text-sm font-medium text-gray-800">Unify finance with frontline data</p>
               </div>
-              <div className="flex items-start gap-4 bg-gradient-to-r from-green-50 to-white rounded-xl p-5 border border-green-100 shadow-sm">
+              <div className="flex items-start gap-4 bg-green-50 rounded-xl p-5 border border-green-100">
                 <ArrowRight className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                 <p className="text-sm font-medium text-gray-800">Link transactions with execution compliance</p>
               </div>
-              <div className="flex items-start gap-4 bg-gradient-to-r from-orange-50 to-white rounded-xl p-5 border border-orange-100 shadow-sm">
+              <div className="flex items-start gap-4 bg-orange-50 rounded-xl p-5 border border-orange-100">
                 <ArrowRight className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
                 <p className="text-sm font-medium text-gray-800">Track equipment in real time</p>
               </div>
-              <div className="flex items-start gap-4 bg-gradient-to-r from-purple-50 to-white rounded-xl p-5 border border-purple-100 shadow-sm">
+              <div className="flex items-start gap-4 bg-purple-50 rounded-xl p-5 border border-purple-100">
                 <ArrowRight className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
                 <p className="text-sm font-medium text-gray-800">Connect labor costs to operational results</p>
               </div>
@@ -129,7 +128,7 @@ const SlideIntegrations = () => {
 
           {/* Professional CTA */}
           <div className="text-center">
-            <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl px-8 py-4 shadow-lg">
+            <div className="inline-block bg-blue-600 rounded-xl px-8 py-4">
               <p className="text-lg font-semibold text-white">
                 "Whatever you use, Depoint makes it actionable."
               </p>
