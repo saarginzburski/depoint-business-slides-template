@@ -52,19 +52,20 @@ const PrintableDeck = () => {
   const slidesParam = searchParams.get('slides') || 'all';
   const autoprint = searchParams.get('autoprint') === 'true';
   
-  // Determine which slides to render - prioritize component names over slide IDs
-  let slidesToRender;
+  // Determine which slides to render - preserve the exact order from URL
+  let slidesToRender: typeof slideConfig = [];
   if (componentsParam) {
     const componentNames = componentsParam.split(',');
-    slidesToRender = slideConfig.filter(slide => 
-      componentNames.includes(slide.component)
-    );
+    slidesToRender = componentNames
+      .map((name) => slideConfig.find((s) => s.component === name))
+      .filter((s): s is typeof slideConfig[number] => Boolean(s));
   } else if (slidesParam === 'all') {
     slidesToRender = slideConfig;
   } else {
-    slidesToRender = slideConfig.filter(slide => 
-      slidesParam.split(',').map(Number).includes(slide.id)
-    );
+    const ids = slidesParam.split(',').map(Number);
+    slidesToRender = ids
+      .map((id) => slideConfig.find((s) => s.id === id))
+      .filter((s): s is typeof slideConfig[number] => Boolean(s));
   }
 
   // Auto-print functionality
