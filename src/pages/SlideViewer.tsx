@@ -59,9 +59,16 @@ const SlideViewer = () => {
   const slideInfo = getSlideInfo(currentSlideId);
   const deckName = decodeURIComponent(searchParams.get('deckName') || 'Investor Deck');
   const slidesParam = searchParams.get('slides');
+  const componentsParam = searchParams.get('components');
 
   useEffect(() => {
-    if (slidesParam) {
+    if (componentsParam) {
+      const names = componentsParam.split(',').map((s) => s.trim()).filter(Boolean);
+      const orderedSlides = names
+        .map((name) => slideConfig.find((s) => s.component === name))
+        .filter((s): s is typeof slideConfig[number] => Boolean(s));
+      setAvailableSlides(orderedSlides);
+    } else if (slidesParam && slidesParam !== 'all') {
       const slideIds = slidesParam
         .split(',')
         .map((n) => parseInt(n, 10))
@@ -73,7 +80,16 @@ const SlideViewer = () => {
     } else {
       setAvailableSlides(slideConfig);
     }
-  }, [slidesParam]);
+  }, [componentsParam, slidesParam]);
+
+  useEffect(() => {
+    if (availableSlides.length === 0) return;
+    const idx = availableSlides.findIndex((s) => s.id === currentSlideId);
+    if (idx === -1) {
+      const qs = searchParams.toString();
+      navigate(`/deck/slide/${availableSlides[0].id}?${qs}`);
+    }
+  }, [availableSlides, currentSlideId, navigate, searchParams]);
 
   if (!slideInfo) {
     navigate('/deck/slide/1');
@@ -88,8 +104,8 @@ const SlideViewer = () => {
       const currentIndex = availableSlides.findIndex(slide => slide.id === currentSlideId);
       const nextIndex = (currentIndex + 1) % availableSlides.length;
       const nextId = availableSlides[nextIndex].id;
-      const slidesQuery = slidesParam ? `&slides=${slidesParam}` : '';
-      navigate(`/deck/slide/${nextId}?deckName=${encodeURIComponent(deckName)}${slidesQuery}`);
+      const qs = searchParams.toString();
+      navigate(`/deck/slide/${nextId}?${qs}`);
     }
   };
 
@@ -98,8 +114,8 @@ const SlideViewer = () => {
       const currentIndex = availableSlides.findIndex(slide => slide.id === currentSlideId);
       const prevIndex = currentIndex === 0 ? availableSlides.length - 1 : currentIndex - 1;
       const prevId = availableSlides[prevIndex].id;
-      const slidesQuery = slidesParam ? `&slides=${slidesParam}` : '';
-      navigate(`/deck/slide/${prevId}?deckName=${encodeURIComponent(deckName)}${slidesQuery}`);
+      const qs = searchParams.toString();
+      navigate(`/deck/slide/${prevId}?${qs}`);
     }
   };
 
