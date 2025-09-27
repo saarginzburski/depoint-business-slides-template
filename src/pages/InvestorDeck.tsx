@@ -89,7 +89,7 @@ const slideComponents = {
 const InvestorDeck = () => {
   const navigate = useNavigate();
   
-  const [deckName, setDeckName] = useState('Investor Deck');
+  const [deckName, setDeckName] = useState('Depoint Business Templates Editor');
   const [isEditingName, setIsEditingName] = useState(false);
   const [isDeckPublished, setIsDeckPublished] = useState(() => {
     return localStorage.getItem('isDeckPublished') === 'true';
