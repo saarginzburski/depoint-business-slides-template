@@ -10,6 +10,7 @@ import PDFExporter from '@/components/PDFExporter';
 import { DeckVariationsManager } from '@/components/DeckVariationsManager';
 import { DeckVariationWithSections } from '@/hooks/useDeckVariations';
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
+import { DraggableSlideGrid } from '@/components/DraggableSlideGrid';
 import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
 
 // Define section structure
@@ -317,68 +318,16 @@ const DeckOverview = () => {
         />
         
         
-        {/* Slides organized by sections */}
+        {/* Slides organized by sections with drag and drop */}
         {visibleSlides.length > 0 && (
-          <div className="space-y-8">
-            {/* Slides by section */}
-            {Object.entries(slidesBySection).map(([sectionId, sectionSlides]) => {
-              const section = sections.find(s => s.id === sectionId);
-              if (!section) return null;
-              
-              const Icon = section.icon;
-              const colorClasses = {
-                blue: 'border-blue-200 bg-blue-50',
-                slate: 'border-slate-200 bg-slate-50', 
-                green: 'border-green-200 bg-green-50',
-              };
-              
-              return (
-                <div key={sectionId} className={`border rounded-lg p-6 ${colorClasses[section.color as keyof typeof colorClasses]}`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <Icon className="w-5 h-5 text-gray-700" />
-                    <h3 className="text-lg font-semibold text-gray-900">{section.name}</h3>
-                    <span className="text-sm text-gray-500">({sectionSlides.length} slides)</span>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    {sectionSlides.map(slide => {
-                      const componentKey = slide.component as keyof typeof slideComponents;
-                      const SlideComponent = slideComponents[componentKey];
-                      
-                      return (
-                        <Card
-                          key={slide.id}
-                          className="relative p-3 transition-all cursor-pointer hover:shadow-md hover:scale-105"
-                          onClick={() => handleSlideClick(slide.id)}
-                        >
-                          <div 
-                            className="w-full aspect-[16/9] bg-white rounded border shadow-sm mb-2 overflow-hidden cursor-pointer"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleSlideClick(slide.id);
-                            }}
-                          >
-                            <div className="w-full h-full transform scale-[0.2] origin-top-left" style={{ width: '500%', height: '500%' }}>
-                              <Suspense fallback={<div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center"><div className="animate-pulse text-gray-400">{slide.id}</div></div>}>
-                                {SlideComponent ? <SlideComponent /> : <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center"><div className="text-gray-400 text-6xl font-bold">{slide.id}</div></div>}
-                              </Suspense>
-                            </div>
-                          </div>
-                          
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="text-xs font-medium text-gray-900 truncate">{slide.name}</h4>
-                              <p className="text-xs text-gray-500">Slide {slide.id}</p>
-                            </div>
-                          </div>
-                        </Card>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <DraggableSlideGrid
+            sections={sections}
+            selectedSections={selectedSections}
+            slideComponents={slideComponents}
+            onSlideClick={handleSlideClick}
+            variationId={currentVariation?.id || null}
+            orderedSlidesBySection={slidesBySection}
+          />
         )}
 
         {/* Footer */}
