@@ -1,5 +1,4 @@
 import React from 'react';
-import { MapPin, Users, Building2, CheckCircle, Database, Network } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
 import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
@@ -11,7 +10,7 @@ const SlideJollibeeCase = () => {
       <SlideLayout
         title="Jollibee: Scale & Complexity Made Simple"
         slideNumber="6"
-        totalSlides="15"
+        totalSlides="32"
         logoSrc={depointLogo}
         hideFooter={true}
       >
@@ -47,28 +46,6 @@ const SlideJollibeeCase = () => {
             </div>
           </div>
 
-          {/* Operations Book Grid */}
-          <div className="mb-6">
-            <h3 className="text-xl font-bold text-neutral-800 mb-4 text-center">Operations Book Digitized in Depoint</h3>
-            <div className="grid grid-cols-4 gap-3 max-w-6xl mx-auto">
-              <div className="text-center bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
-                <Users className="w-6 h-6 text-primary mx-auto mb-2" />
-                <p className="text-xs font-medium text-neutral-700">Shift Management</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
-                <CheckCircle className="w-6 h-6 text-primary mx-auto mb-2" />
-                <p className="text-xs font-medium text-neutral-700">Safety Checklists</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
-                <Building2 className="w-6 h-6 text-primary mx-auto mb-2" />
-                <p className="text-xs font-medium text-neutral-700">Golden Standards</p>
-              </div>
-              <div className="text-center bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
-                <Database className="w-6 h-6 text-primary mx-auto mb-2" />
-                <p className="text-xs font-medium text-neutral-700">Oil Management</p>
-              </div>
-            </div>
-          </div>
 
           {/* Results */}
           <div className="mb-4">

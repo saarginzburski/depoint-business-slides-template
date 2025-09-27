@@ -18,6 +18,7 @@ const slideComponents = {
   SlideDigitizingOpsManual: lazy(() => import('./slides/SlideDigitizingOpsManual')),
   SlideFranchisorFranchisee: lazy(() => import('./slides/SlideFranchisorFranchisee')),
   SlideJollibeeCase: lazy(() => import('./slides/SlideJollibeeCase')),
+  SlideJollibeeOperationBook: lazy(() => import('./slides/SlideJollibeeOperationBook')),
   SlidePlatformEcosystem: lazy(() => import('./slides/SlidePlatformEcosystem')),
   SlideInsightsEngine: lazy(() => import('./slides/SlideInsightsEngine')),
   SlideCustomerStories: lazy(() => import('./slides/SlideCustomerStories')),

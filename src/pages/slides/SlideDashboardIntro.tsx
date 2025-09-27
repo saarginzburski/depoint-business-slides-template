@@ -21,8 +21,8 @@ const SlideDashboardIntro = () => {
       iconBg: "bg-green-100",
       iconColor: "text-green-600",
       dashboards: [
-        { name: "Oil Monitoring", slideId: 22, icon: "🛢️" },
-        { name: "Issues Dashboard", slideId: 23, icon: "🔧" }
+        { name: "Oil Monitoring", slideId: 23, icon: "🛢️" },
+        { name: "Issues Dashboard", slideId: 24, icon: "🔧" }
       ]
     },
     {
@@ -37,9 +37,9 @@ const SlideDashboardIntro = () => {
       iconBg: "bg-orange-100",
       iconColor: "text-orange-600",
       dashboards: [
-        { name: "Equipment Monitoring", slideId: 24, icon: "⚙️" },
-        { name: "Audit Report", slideId: 25, icon: "📋" },
-        { name: "Task Compliance", slideId: 26, icon: "✅" }
+        { name: "Equipment Monitoring", slideId: 25, icon: "⚙️" },
+        { name: "Audit Report", slideId: 26, icon: "📋" },
+        { name: "Task Compliance", slideId: 27, icon: "✅" }
       ]
     },
     {
@@ -54,7 +54,7 @@ const SlideDashboardIntro = () => {
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600",
       dashboards: [
-        { name: "Product Gold Standard", slideId: 27, icon: "🏆" }
+        { name: "Product Gold Standard", slideId: 28, icon: "🏆" }
       ]
     },
     {
@@ -69,9 +69,9 @@ const SlideDashboardIntro = () => {
       iconBg: "bg-purple-100",
       iconColor: "text-purple-600",
       dashboards: [
-        { name: "Speed of Service", slideId: 28, icon: "⚡" },
-        { name: "Users Engagement", slideId: 29, icon: "👥" },
-        { name: "Sales Management", slideId: 30, icon: "💼" }
+        { name: "Speed of Service", slideId: 29, icon: "⚡" },
+        { name: "Users Engagement", slideId: 30, icon: "👥" },
+        { name: "Sales Management", slideId: 31, icon: "💼" }
       ]
     }
   ];
@@ -84,8 +84,8 @@ const SlideDashboardIntro = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="The Intelligence Layer: Why Dashboards Matter"
-        slideNumber="21"
-        totalSlides="31"
+        slideNumber="22"
+        totalSlides="32"
         logoSrc={depointLogo}
         hideFooter={true}
       >

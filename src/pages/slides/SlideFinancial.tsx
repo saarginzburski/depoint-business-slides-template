@@ -10,8 +10,8 @@ const SlideFinancial = () => {
     <div className="relative w-full h-full">
       <SlideLayout
         title="Capital-Efficient Growth to $1.26M ARR"
-        slideNumber="10"
-        totalSlides="15"
+        slideNumber="13"
+        totalSlides="32"
         logoSrc={depointLogo}
         hideFooter={true}
       >
