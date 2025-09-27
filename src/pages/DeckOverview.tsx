@@ -273,13 +273,7 @@ const DeckOverview = () => {
                 </Button>
                 
                 <Button
-                  onClick={() => {
-                    if (typeof window !== 'undefined' && window.open) {
-                      const slideIds = slideConfig.map(s => s.id).sort((a, b) => a - b);
-                      const slideParams = slideIds.join(',');
-                      window.open(`/print-deck?slides=${slideParams}`, '_blank');
-                    }
-                  }}
+                  onClick={handlePrintSelected}
                   variant="outline"
                   className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2 rounded-lg"
                 >
