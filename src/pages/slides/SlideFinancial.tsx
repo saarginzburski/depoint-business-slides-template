@@ -46,11 +46,11 @@ const SlideFinancial = () => {
                 </div>
                 
                 <div className="flex flex-col items-center flex-1 max-w-[120px]">
-                  <div className="w-full bg-electric-blue rounded-t-lg mb-3" style={{height: '260px'}}></div>
+                  <div className="w-full bg-depoint-blue rounded-t-lg mb-3" style={{height: '260px'}}></div>
                   <div className="text-center">
-                    <div className="text-sm font-medium text-electric-blue">2025</div>
-                    <div className="text-xs text-electric-blue mb-1">Sep Actual</div>
-                    <div className="text-sm font-bold text-electric-blue">$1.26M</div>
+                    <div className="text-sm font-medium text-depoint-blue">2025</div>
+                    <div className="text-xs text-depoint-blue mb-1">Sep Actual</div>
+                    <div className="text-sm font-bold text-depoint-blue">$1.26M</div>
                   </div>
                 </div>
               </div>
@@ -59,7 +59,7 @@ const SlideFinancial = () => {
           
           {/* Integrated Break-Even Statement */}
           <div className="flex items-center gap-2 px-2">
-            <span className="text-electric-blue text-sm">✓</span>
+            <span className="text-depoint-blue text-sm">✓</span>
             <p className="text-base font-medium text-gray-900">
               Break-Even achieved with a lean, product-focused team.
             </p>
@@ -78,14 +78,14 @@ const SlideFinancial = () => {
               {/* Sales/GTM - 36% */}
               <div className="flex flex-col justify-between py-1 min-h-0 overflow-hidden">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold text-electric-blue text-base">Sales/GTM</span>
+                  <span className="font-semibold text-depoint-blue text-base">Sales/GTM</span>
                   <div className="text-right leading-tight">
-                    <div className="font-semibold text-electric-blue text-base">$1.8M</div>
+                    <div className="font-semibold text-depoint-blue text-base">$1.8M</div>
                     <div className="text-xs text-gray-600">36%</div>
                   </div>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div className="bg-electric-blue h-3 rounded-full" style={{width: '36%'}}></div>
+                  <div className="bg-depoint-blue h-3 rounded-full" style={{width: '36%'}}></div>
                 </div>
                 <div className="text-xs text-gray-600 leading-tight">Expand sales team & partners</div>
               </div>
@@ -93,14 +93,14 @@ const SlideFinancial = () => {
               {/* AI/Dev - 24% */}
               <div className="flex flex-col justify-between py-1 min-h-0 overflow-hidden">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold text-enterprise-green text-base">AI/Dev</span>
+                  <span className="font-semibold text-pillar-margin text-base">AI/Dev</span>
                   <div className="text-right leading-tight">
-                    <div className="font-semibold text-enterprise-green text-base">$1.2M</div>
+                    <div className="font-semibold text-pillar-margin text-base">$1.2M</div>
                     <div className="text-xs text-gray-600">24%</div>
                   </div>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div className="bg-enterprise-green h-3 rounded-full" style={{width: '24%'}}></div>
+                  <div className="bg-pillar-margin h-3 rounded-full" style={{width: '24%'}}></div>
                 </div>
                 <div className="text-xs text-gray-600 leading-tight">Enhance AI & add new modules</div>
               </div>
@@ -108,14 +108,14 @@ const SlideFinancial = () => {
               {/* Partners - 14% */}
               <div className="flex flex-col justify-between py-1 min-h-0 overflow-hidden">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold text-subtle-orange text-base">Partners</span>
+                  <span className="font-semibold text-depoint-orange text-base">Partners</span>
                   <div className="text-right leading-tight">
-                    <div className="font-semibold text-subtle-orange text-base">$0.7M</div>
+                    <div className="font-semibold text-depoint-orange text-base">$0.7M</div>
                     <div className="text-xs text-gray-600">14%</div>
                   </div>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div className="bg-subtle-orange h-3 rounded-full" style={{width: '14%'}}></div>
+                  <div className="bg-depoint-orange h-3 rounded-full" style={{width: '14%'}}></div>
                 </div>
                 <div className="text-xs text-gray-600 leading-tight">Build integrator program</div>
               </div>
@@ -123,14 +123,14 @@ const SlideFinancial = () => {
               {/* Infrastructure - 12% */}
               <div className="flex flex-col justify-between py-1 min-h-0 overflow-hidden">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold text-deep-navy text-base">Infrastructure</span>
+                  <span className="font-semibold text-gray-800 text-base">Infrastructure</span>
                   <div className="text-right leading-tight">
-                    <div className="font-semibold text-deep-navy text-base">$0.6M</div>
+                    <div className="font-semibold text-gray-800 text-base">$0.6M</div>
                     <div className="text-xs text-gray-600">12%</div>
                   </div>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div className="bg-deep-navy h-3 rounded-full" style={{width: '12%'}}></div>
+                  <div className="bg-gray-800 h-3 rounded-full" style={{width: '12%'}}></div>
                 </div>
                 <div className="text-xs text-gray-600 leading-tight">Scale for 10,000+ locations</div>
               </div>
@@ -138,14 +138,14 @@ const SlideFinancial = () => {
               {/* Operations Buffer - 14% */}
               <div className="flex flex-col justify-between py-1 min-h-0 overflow-hidden">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold text-risk-red text-base">Operations Buffer</span>
+                  <span className="font-semibold text-red-600 text-base">Operations Buffer</span>
                   <div className="text-right leading-tight">
-                    <div className="font-semibold text-risk-red text-base">$0.7M</div>
+                    <div className="font-semibold text-red-600 text-base">$0.7M</div>
                     <div className="text-xs text-gray-600">14%</div>
                   </div>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div className="bg-risk-red h-3 rounded-full" style={{width: '14%'}}></div>
+                  <div className="bg-red-600 h-3 rounded-full" style={{width: '14%'}}></div>
                 </div>
                 <div className="text-xs text-gray-600 leading-tight">12+ months runway</div>
               </div>
