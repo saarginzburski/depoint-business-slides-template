@@ -13,7 +13,7 @@ import {
 } from '@dnd-kit/core';
 import {
   SortableContext,
-  verticalListSortingStrategy,
+  rectSortingStrategy,
   useSortable,
   arrayMove,
 } from '@dnd-kit/sortable';
@@ -334,7 +334,7 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
               
               <SortableContext
                 items={sectionSlideList.map(slide => `${section.id}-${slide.id}`)}
-                strategy={verticalListSortingStrategy}
+                strategy={rectSortingStrategy}
               >
                 <DroppableSection section={section} slides={sectionSlideList}>
                   {sectionSlideList.map(slide => (
