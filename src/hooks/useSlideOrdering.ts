@@ -97,19 +97,15 @@ export const useSlideOrdering = (variationId: string | null, sections: Section[]
 
       return visibleSlides;
     } else {
-      // Use custom global ordering - respect the order_index across all sections
+      // Use custom ordering but respect section sequence (deck -> appendices -> demo; exclude hidden)
+      const orderedSections = getOrderedSlidesBySection();
       const visibleSlides: typeof slideConfig = [];
-      
-      slideOrders
-        .sort((a, b) => a.order_index - b.order_index)
-        .forEach(order => {
-          if (selectedSections.has(order.section_id) && order.section_id !== 'hidden') {
-            const slide = slideConfig.find(s => s.id === order.slide_id);
-            if (slide) {
-              visibleSlides.push(slide);
-            }
-          }
-        });
+
+      sections.forEach(section => {
+        if (selectedSections.has(section.id) && section.id !== 'hidden') {
+          visibleSlides.push(...orderedSections[section.id]);
+        }
+      });
 
       return visibleSlides;
     }
