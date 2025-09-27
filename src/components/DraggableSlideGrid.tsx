@@ -95,7 +95,7 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
     <Card
       ref={setNodeRef}
       style={style}
-      className={`relative p-3 transition-all cursor-pointer hover:shadow-md ${
+      className={`group relative p-3 transition-all cursor-pointer hover:shadow-md ${
         isDragging ? 'opacity-50 scale-105 z-50' : 'hover:scale-105'
       }`}
       onClick={() => onSlideClick(slide.id)}
@@ -104,10 +104,10 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
       <div
         {...listeners}
         {...attributes}
-        className="absolute top-2 right-2 z-10 cursor-grab active:cursor-grabbing p-1 bg-white/80 rounded shadow-sm opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity"
+        className="absolute top-2 right-2 z-10 cursor-grab active:cursor-grabbing p-1 bg-white/80 rounded shadow-sm opacity-60 group-hover:opacity-100 hover:opacity-100 transition-opacity"
         onClick={(e) => e.stopPropagation()}
       >
-        <GripVertical className="h-3 w-3 text-gray-400" />
+        <GripVertical className="h-3 w-3 text-gray-600" />
       </div>
 
       <div 
