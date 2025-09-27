@@ -1,16 +1,23 @@
 import React from 'react';
 import { Brain, DollarSign, AlertTriangle, Shield, TrendingUp } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import SlideLayout from '@/components/SlideLayout';
 import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideDashboardIntro = () => {
+  const navigate = useNavigate();
+
+  const handleDashboardClick = (slideId: number) => {
+    navigate(`/investor-deck/slide/${slideId}`);
+  };
+
   return (
     <div className="relative w-full h-full">
       <SlideLayout
         title="The Intelligence Layer: Why Dashboards Matter"
-        slideNumber="19"
-        totalSlides="29"
+        slideNumber="20"
+        totalSlides="31"
         logoSrc={depointLogo}
         hideFooter={true}
       >
@@ -55,8 +62,18 @@ const SlideDashboardIntro = () => {
               </div>
             </div>
             <div className="space-y-2 text-sm text-gray-700 flex-1">
-              <div>• Oil Monitoring Dashboard</div>
-              <div>• Issues Dashboard</div>
+              <button 
+                onClick={() => handleDashboardClick(22)}
+                className="w-full text-left hover:text-green-700 hover:bg-green-50 p-2 rounded transition-colors cursor-pointer"
+              >
+                • Oil Monitoring Dashboard
+              </button>
+              <button 
+                onClick={() => handleDashboardClick(23)}
+                className="w-full text-left hover:text-green-700 hover:bg-green-50 p-2 rounded transition-colors cursor-pointer"
+              >
+                • Issues Dashboard
+              </button>
             </div>
           </div>
           
@@ -72,9 +89,24 @@ const SlideDashboardIntro = () => {
               </div>
             </div>
             <div className="space-y-2 text-sm text-gray-700 flex-1">
-              <div>• Equipment Monitoring Dashboard</div>
-              <div>• Audit Report Dashboard</div>
-              <div>• Task Compliance Dashboard</div>
+              <button 
+                onClick={() => handleDashboardClick(24)}
+                className="w-full text-left hover:text-orange-700 hover:bg-orange-50 p-2 rounded transition-colors cursor-pointer"
+              >
+                • Equipment Monitoring Dashboard
+              </button>
+              <button 
+                onClick={() => handleDashboardClick(25)}
+                className="w-full text-left hover:text-orange-700 hover:bg-orange-50 p-2 rounded transition-colors cursor-pointer"
+              >
+                • Audit Report Dashboard
+              </button>
+              <button 
+                onClick={() => handleDashboardClick(26)}
+                className="w-full text-left hover:text-orange-700 hover:bg-orange-50 p-2 rounded transition-colors cursor-pointer"
+              >
+                • Task Compliance Dashboard
+              </button>
             </div>
           </div>
           
@@ -90,7 +122,12 @@ const SlideDashboardIntro = () => {
               </div>
             </div>
             <div className="space-y-2 text-sm text-gray-700 flex-1">
-              <div>• Product Gold Standard Dashboard</div>
+              <button 
+                onClick={() => handleDashboardClick(27)}
+                className="w-full text-left hover:text-blue-700 hover:bg-blue-50 p-2 rounded transition-colors cursor-pointer"
+              >
+                • Product Gold Standard Dashboard
+              </button>
             </div>
           </div>
           
@@ -106,9 +143,24 @@ const SlideDashboardIntro = () => {
               </div>
             </div>
             <div className="space-y-2 text-sm text-gray-700 flex-1">
-              <div>• Speed of Service Dashboard</div>
-              <div>• Users Engagement Dashboard</div>
-              <div>• Sales Management Dashboard</div>
+              <button 
+                onClick={() => handleDashboardClick(28)}
+                className="w-full text-left hover:text-purple-700 hover:bg-purple-50 p-2 rounded transition-colors cursor-pointer"
+              >
+                • Speed of Service Dashboard
+              </button>
+              <button 
+                onClick={() => handleDashboardClick(29)}
+                className="w-full text-left hover:text-purple-700 hover:bg-purple-50 p-2 rounded transition-colors cursor-pointer"
+              >
+                • Users Engagement Dashboard
+              </button>
+              <button 
+                onClick={() => handleDashboardClick(30)}
+                className="w-full text-left hover:text-purple-700 hover:bg-purple-50 p-2 rounded transition-colors cursor-pointer"
+              >
+                • Sales Management Dashboard
+              </button>
             </div>
           </div>
           
