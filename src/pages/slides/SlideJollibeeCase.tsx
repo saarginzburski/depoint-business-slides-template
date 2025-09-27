@@ -49,8 +49,8 @@ const SlideJollibeeCase = () => {
                 <div className="text-xs text-neutral-600 mt-1">Across all franchisee stores</div>
               </div>
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 text-center">
-                <div className="text-2xl font-black text-blue-600 mb-1">Full Rollout</div>
-                <div className="text-sm font-semibold text-neutral-700">Three Weeks Deployment</div>
+                <div className="text-2xl font-black text-blue-600 mb-1">3 Weeks</div>
+                <div className="text-sm font-semibold text-neutral-700">Full Onboarding Deployment</div>
                 <div className="text-xs text-neutral-600 mt-1">184 franchisees, 7,000+ employees</div>
               </div>
             </div>
