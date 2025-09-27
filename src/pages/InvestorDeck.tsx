@@ -9,6 +9,7 @@ import { slideConfig } from './slides/slideConfig';
 import PDFExporter from '@/components/PDFExporter';
 import { DeckVariationsManager } from '@/components/DeckVariationsManager';
 import { DeckVariationWithSections } from '@/hooks/useDeckVariations';
+import { useSlideOrdering } from '@/hooks/useSlideOrdering';
 import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
 
 // Define section structure
@@ -106,6 +107,12 @@ const InvestorDeck = () => {
   );
   const [currentVariation, setCurrentVariation] = useState<DeckVariationWithSections | null>(null);
 
+  // Use slide ordering hook
+  const { getOrderedSlidesBySection, getVisibleSlides } = useSlideOrdering(
+    currentVariation?.id || null, 
+    sections
+  );
+
   // Update selected sections when variation changes
   useEffect(() => {
     if (currentVariation) {
@@ -124,32 +131,18 @@ const InvestorDeck = () => {
     setDeckName(name);
   };
 
-  const getSlidesBySection = () => {
-    const slidesBySection: { [key: string]: typeof slideConfig } = {};
-    
-    sections.forEach(section => {
-      if (selectedSections.has(section.id)) {
-        slidesBySection[section.id] = slideConfig.filter(slide => 
-          section.slides.includes(slide.id)
-        );
-      }
-    });
-    
-    return slidesBySection;
-  };
-
-  const getVisibleSlides = () => {
-    const visibleSlideIds = new Set<number>();
-    sections.forEach(section => {
-      if (selectedSections.has(section.id)) {
-        section.slides.forEach(slideId => visibleSlideIds.add(slideId));
-      }
-    });
-    return slideConfig.filter(slide => visibleSlideIds.has(slide.id));
-  };
-
-  const slidesBySection = getSlidesBySection();
-  const visibleSlides = getVisibleSlides();
+  // Get slides organized by section using hook
+  const orderedSlidesBySection = getOrderedSlidesBySection();
+  
+  // Get visible slides based on selected sections using hook
+  const visibleSlides = getVisibleSlides(selectedSections);
+  
+  // Filter ordered slides by selected sections for display
+  const slidesBySection = Object.fromEntries(
+    Object.entries(orderedSlidesBySection).filter(([sectionId]) => 
+      selectedSections.has(sectionId)
+    )
+  );
 
   const handleSlideClick = (slideId: number) => {
     if (typeof window !== 'undefined' && navigate) {
