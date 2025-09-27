@@ -115,39 +115,78 @@ const SlideDashboardIntro = () => {
           {dashboardCategories.map((category, categoryIndex) => {
             const IconComponent = category.icon;
             return (
-              <div key={categoryIndex} className={`${category.bgColor} rounded-lg shadow-lg border-2 ${category.borderColor} p-3 flex flex-col hover:shadow-xl transition-all duration-200`}>
-                {/* Category Header - Compact */}
-                <div className="flex items-center gap-2 mb-3">
-                  <div className={`w-8 h-8 ${category.iconBg} rounded-lg flex items-center justify-center`}>
-                    <IconComponent className={`w-4 h-4 ${category.iconColor}`} />
+              <div key={categoryIndex} className={`${category.bgColor} rounded-lg shadow-lg border-2 ${category.borderColor} p-4 flex flex-col hover:shadow-xl transition-all duration-200 h-full`}>
+                {/* Category Header - Better spacing */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`w-10 h-10 ${category.iconBg} rounded-lg flex items-center justify-center`}>
+                    <IconComponent className={`w-5 h-5 ${category.iconColor}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className={`text-sm font-bold ${category.titleColor} leading-tight`}>{category.title}</h3>
-                    <p className={`text-xs ${category.subtitleColor}`}>{category.subtitle}</p>
+                    <h3 className={`text-base font-bold ${category.titleColor} leading-tight mb-1`}>{category.title}</h3>
+                    <p className={`text-xs ${category.subtitleColor} leading-tight`}>{category.subtitle}</p>
                   </div>
                 </div>
                 
-                {/* Dashboard Buttons - Compact */}
-                <div className="space-y-2 flex-1">
+                {/* Dashboard Buttons - Larger with better spacing */}
+                <div className="space-y-3 mb-4">
                   {category.dashboards.map((dashboard, dashIndex) => (
                     <button
                       key={dashIndex}
                       onClick={() => handleDashboardClick(dashboard.slideId)}
-                      className={`w-full ${category.buttonColor} hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 rounded-lg px-3 py-2 text-white text-xs font-medium`}
+                      className={`w-full ${category.buttonColor} hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 rounded-lg px-4 py-3 text-white text-sm font-medium`}
                     >
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">{dashboard.icon}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-base">{dashboard.icon}</span>
                           <span className="truncate">{dashboard.name}</span>
                         </div>
-                        <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-200 flex-shrink-0" />
+                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200 flex-shrink-0" />
                       </div>
                     </button>
                   ))}
                 </div>
+
+                {/* Blurred Placeholder Dashboards - Suggest more exist */}
+                <div className="space-y-2 mb-4 flex-1">
+                  {Array.from({ length: 3 - category.dashboards.length }).map((_, index) => (
+                    <div
+                      key={`placeholder-${index}`}
+                      className={`w-full ${category.buttonColor} opacity-30 blur-sm rounded-lg px-4 py-3 text-white text-sm font-medium pointer-events-none animate-pulse`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-base">📊</span>
+                          <span className="truncate">Additional Dashboard</span>
+                        </div>
+                        <ChevronRight className="w-4 h-4 flex-shrink-0" />
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {/* Extra placeholders for visual balance */}
+                  <div className={`w-full ${category.buttonColor} opacity-20 blur-sm rounded-lg px-4 py-2 text-white text-xs font-medium pointer-events-none`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">⚡</span>
+                        <span className="truncate">More insights...</span>
+                      </div>
+                      <div className="w-3 h-3 bg-white/30 rounded-full"></div>
+                    </div>
+                  </div>
+                  
+                  <div className={`w-full ${category.buttonColor} opacity-15 blur-sm rounded-lg px-4 py-2 text-white text-xs font-medium pointer-events-none`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">📈</span>
+                        <span className="truncate">Advanced analytics</span>
+                      </div>
+                      <div className="w-3 h-3 bg-white/30 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
                 
-                {/* Stats Footer - Compact */}
-                <div className="mt-2 pt-2 border-t border-gray-200">
+                {/* Stats Footer - Better positioning */}
+                <div className="mt-auto pt-3 border-t border-gray-200">
                   <div className="flex items-center justify-between text-xs text-gray-500">
                     <span className="flex items-center gap-1">
                       <BarChart3 className="w-3 h-3" />
