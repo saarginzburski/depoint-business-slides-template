@@ -14,18 +14,18 @@ const SlideHeader: React.FC<SlideHeaderProps> = ({
   className = "" 
 }) => {
   return (
-    <div className={`w-full h-full bg-white border-b border-gray-200 relative ${className}`}>
-      {/* Title and subtitle - left side with padding */}
-      <div className="px-16 h-full flex flex-col justify-center">
-        <h1 className="slide-h1 mb-0.5 text-gray-900 leading-tight">{title}</h1>
+    <div className={`w-full h-full bg-background border-b border-gray-200 relative ${className}`}>
+      {/* Title and subtitle - left side with standardized padding */}
+      <div className="px-page-x h-full flex flex-col justify-center">
+        <h1 className="slide-headline mb-1 text-foreground leading-tight">{title}</h1>
         {/* Subtitle */}
         {subtitle && (
-          <p className="slide-body text-gray-600 leading-snug">{subtitle}</p>
+          <p className="slide-subhead text-muted-foreground leading-snug">{subtitle}</p>
         )}
       </div>
       
-      {/* Logo - absolutely positioned to right edge of entire header */}
-      <div className="absolute top-0 right-0 h-full flex items-center pr-4">
+      {/* Logo - absolutely positioned to right edge with proper spacing */}
+      <div className="absolute top-0 right-0 h-full flex items-center pr-gutter">
         <img src={logoSrc} alt="Depoint" className="h-12" />
       </div>
     </div>
