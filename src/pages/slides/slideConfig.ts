@@ -27,9 +27,9 @@ export const slideConfig: SlideInfo[] = [
   { id: 17, name: "Platform Integrations", title: "Plug Into Any Platform", component: "SlideIntegrations", route: "/investor-deck/slide/17" },
   { id: 18, name: "Enterprise Stack", title: "Depoint Bridges Frontline & ERP", component: "SlideEnterpriseStack", route: "/investor-deck/slide/18" },
   { id: 19, name: "Consulting Partners", title: "Why Consulting Partners Love Depoint", component: "SlideConsultingPartners", route: "/investor-deck/slide/19" },
-  { id: 20, name: "Appendices", title: "Appendices", component: "SlideAppendices", route: "/investor-deck/slide/20" },
+  { id: 20, name: "Dashboard Intelligence", title: "The Intelligence Layer: Why Dashboards Matter", component: "SlideDashboardIntro", route: "/investor-deck/slide/20" },
   { id: 21, name: "Contact", title: "EDGE — Every Day Great Execution", component: "SlideClosing", route: "/investor-deck/slide/21" },
-  { id: 22, name: "Dashboard Intelligence", title: "The Intelligence Layer: Why Dashboards Matter", component: "SlideDashboardIntro", route: "/investor-deck/slide/22" },
+  { id: 22, name: "Appendices", title: "Appendices", component: "SlideAppendices", route: "/investor-deck/slide/22" },
   // Category 1: Protect Margin
   { id: 23, name: "Oil Monitoring Dashboard", title: "Oil Monitoring Dashboard", component: "SlideOilMonitoringDashboard", route: "/investor-deck/slide/23" },
   { id: 24, name: "Issues Dashboard", title: "Issues Dashboard", component: "SlideIssuesDashboard", route: "/investor-deck/slide/24" },
