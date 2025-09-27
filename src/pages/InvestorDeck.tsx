@@ -40,7 +40,7 @@ const sections: Section[] = [
   },
   {
     id: 'demo',
-    name: 'Dashboard Demo',
+    name: 'Demo',
     description: 'Live dashboard demonstrations (10 slides)', 
     icon: Monitor,
     slides: Array.from({length: 10}, (_, i) => i + 23),
