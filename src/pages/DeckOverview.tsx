@@ -107,10 +107,8 @@ const DeckOverview = () => {
   const [selectedSections, setSelectedSections] = useState<Set<string>>(
     new Set(sections.map(section => section.id))
   );
-  const [currentVariation, setCurrentVariation] = useState<DeckVariationWithSections | null>(null);
-
   // Use deck variations hook
-  const { updateVariationSections } = useDeckVariations();
+  const { currentVariation, setCurrentVariation, updateVariationSections } = useDeckVariations();
 
   // Use slide ordering hook
   const { getOrderedSlidesBySection, getVisibleSlides } = useSlideOrdering(
