@@ -24,7 +24,7 @@ const SlideMarketOpportunity = () => {
           {/* Visual Funnel Design - Reduced spacing */}
           <div className="relative max-w-4xl mx-auto">
             {/* TAM - Widest */}
-            <div className="bg-white border-2 border-electric-blue/30 rounded-xl p-4 mb-3 shadow-lg" style={{backgroundColor: 'white'}}>
+            <div className="bg-white border-2 border-electric-blue/30 rounded-xl p-4 mb-3" style={{backgroundColor: 'white'}}>
               <div className="flex items-center justify-center gap-3">
                 <Globe className="w-6 h-6 text-electric-blue" />
                 <div>
@@ -36,7 +36,7 @@ const SlideMarketOpportunity = () => {
             </div>
             
             {/* SAM - Middle */}
-            <div className="bg-white border-2 border-enterprise-green/30 rounded-xl p-4 mb-3 mx-6 shadow-lg" style={{backgroundColor: 'white'}}>
+            <div className="bg-white border-2 border-enterprise-green/30 rounded-xl p-4 mb-3 mx-6" style={{backgroundColor: 'white'}}>
               <div className="flex items-center justify-center gap-3">
                 <Building2 className="w-6 h-6 text-enterprise-green" />
                 <div>
@@ -48,7 +48,7 @@ const SlideMarketOpportunity = () => {
             </div>
             
             {/* Beachhead - Sharpest point */}
-            <div className="bg-white border-2 border-subtle-orange/30 rounded-xl p-3 mx-12 shadow-lg" style={{backgroundColor: 'white'}}>
+            <div className="bg-white border-2 border-subtle-orange/30 rounded-xl p-3 mx-12" style={{backgroundColor: 'white'}}>
               <div className="flex items-center justify-center gap-3">
                 <Target className="w-5 h-5 text-subtle-orange" />
                 <div>
@@ -62,14 +62,14 @@ const SlideMarketOpportunity = () => {
         
         {/* Key Messages - Compact */}
         <div className="grid grid-cols-2 gap-6 mt-4">
-          <div className="bg-white border border-blue-200 rounded-xl p-4 shadow-lg" style={{backgroundColor: 'white'}}>
+          <div className="bg-white border border-blue-200 rounded-xl p-4" style={{backgroundColor: 'white'}}>
             <h3 className="text-base font-bold text-electric-blue mb-2">We're Not Just Capturing Market Share. We're Creating the Market.</h3>
             <div className="text-xs text-gray-700 leading-relaxed">
               The system of record that connects HQ strategy to frontline execution. Our conservative, bottom-up SAM is $1.26B, based on enterprise locations and proven ACV.
             </div>
           </div>
           
-          <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-lg" style={{backgroundColor: 'white'}}>
+          <div className="bg-white border border-gray-200 rounded-xl p-4" style={{backgroundColor: 'white'}}>
             <h3 className="text-base font-bold text-neutral-dark mb-2">The True $14B+ TAM:</h3>
             <div className="text-xs text-gray-700 leading-relaxed">
               <strong>Consolidating spend from adjacent, multi-billion dollar markets.</strong> We replace point solutions for compliance, analytics, and tasking, becoming the central operational platform, just as SAP did for the back office.

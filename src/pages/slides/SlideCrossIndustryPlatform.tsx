@@ -17,7 +17,7 @@ const SlideCrossIndustryPlatform = () => {
         <div className="h-full flex flex-col justify-center gap-6 py-6">
         
         {/* 7 DNA Bullets - Hero Section */}
-        <div className="flex-1 bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+        <div className="flex-1 bg-white rounded-xl border border-gray-200 p-6">
           <div className="grid grid-cols-2 gap-8 h-full max-w-6xl mx-auto">
             
             {/* Left Column - 3 bullets */}
@@ -117,7 +117,7 @@ const SlideCrossIndustryPlatform = () => {
         </div>
 
         {/* Industry Roadmap - Proof Points */}
-        <div className="bg-gray-50 rounded-xl p-5 shadow-sm">
+        <div className="bg-gray-50 rounded-xl p-5">
           <h3 className="text-lg font-bold text-neutral-dark text-center mb-4">Industries built on this DNA.</h3>
           
           {/* Connected Blocks */}
@@ -130,7 +130,7 @@ const SlideCrossIndustryPlatform = () => {
               
               {/* QSR - Green (Live Production) */}
               <div className="text-center relative">
-                <div className="w-12 h-12 bg-enterprise-green rounded-full flex items-center justify-center mx-auto mb-2 shadow-md border-4 border-white relative z-10">
+                <div className="w-12 h-12 bg-enterprise-green rounded-full flex items-center justify-center mx-auto mb-2 border-4 border-white relative z-10">
                   <div className="text-lg">🍔</div>
                 </div>
                 <h4 className="font-bold text-sm text-neutral-dark mb-1">QSR</h4>
@@ -142,7 +142,7 @@ const SlideCrossIndustryPlatform = () => {
 
               {/* Supermarkets - Blue */}
               <div className="text-center relative">
-                <div className="w-12 h-12 bg-electric-blue rounded-full flex items-center justify-center mx-auto mb-2 shadow-md border-4 border-white relative z-10">
+                <div className="w-12 h-12 bg-electric-blue rounded-full flex items-center justify-center mx-auto mb-2 border-4 border-white relative z-10">
                   <div className="text-lg">🏪</div>
                 </div>
                 <h4 className="font-bold text-sm text-neutral-dark mb-1">Supermarkets</h4>
@@ -154,7 +154,7 @@ const SlideCrossIndustryPlatform = () => {
 
               {/* Fuel - Orange */}
               <div className="text-center relative">
-                <div className="w-12 h-12 bg-subtle-orange rounded-full flex items-center justify-center mx-auto mb-2 shadow-md border-4 border-white relative z-10">
+                <div className="w-12 h-12 bg-subtle-orange rounded-full flex items-center justify-center mx-auto mb-2 border-4 border-white relative z-10">
                   <div className="text-lg">⛽</div>
                 </div>
                 <h4 className="font-bold text-sm text-neutral-dark mb-1">Fuel</h4>
@@ -166,7 +166,7 @@ const SlideCrossIndustryPlatform = () => {
 
               {/* Distribution - Gray */}
               <div className="text-center relative">
-                <div className="w-12 h-12 bg-slate-gray rounded-full flex items-center justify-center mx-auto mb-2 shadow-md border-4 border-white relative z-10">
+                <div className="w-12 h-12 bg-slate-gray rounded-full flex items-center justify-center mx-auto mb-2 border-4 border-white relative z-10">
                   <div className="text-lg">📦</div>
                 </div>
                 <h4 className="font-bold text-sm text-neutral-dark mb-1">Distribution</h4>

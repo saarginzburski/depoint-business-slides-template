@@ -26,7 +26,7 @@ const SlideSolution = () => {
         {/* 4 Key Metrics - Properly sized for readability */}
         <div className="grid grid-cols-4 gap-5 max-w-6xl mx-auto">
           {/* Protect Margin */}
-          <div className="bg-green-50 rounded-xl p-5 text-center border-2 border-green-200 shadow-lg">
+          <div className="bg-green-50 rounded-xl p-5 text-center border-2 border-green-200">
             <div className="flex items-center justify-center mb-3">
               <DollarSign className="w-7 h-7 text-green-600" />
             </div>
@@ -36,7 +36,7 @@ const SlideSolution = () => {
           </div>
           
           {/* Reduce Risk */}
-          <div className="bg-orange-50 rounded-xl p-5 text-center border-2 border-orange-200 shadow-lg">
+          <div className="bg-orange-50 rounded-xl p-5 text-center border-2 border-orange-200">
             <div className="flex items-center justify-center mb-3">
               <AlertTriangle className="w-7 h-7 text-orange-600" />
             </div>
@@ -46,7 +46,7 @@ const SlideSolution = () => {
           </div>
           
           {/* Protect Revenue */}
-          <div className="bg-blue-50 rounded-xl p-5 text-center border-2 border-blue-200 shadow-lg">
+          <div className="bg-blue-50 rounded-xl p-5 text-center border-2 border-blue-200">
             <div className="flex items-center justify-center mb-3">
               <Shield className="w-7 h-7 text-blue-600" />
             </div>
@@ -56,7 +56,7 @@ const SlideSolution = () => {
           </div>
           
           {/* Accelerate Growth */}
-          <div className="bg-purple-50 rounded-xl p-5 text-center border-2 border-purple-200 shadow-lg">
+          <div className="bg-purple-50 rounded-xl p-5 text-center border-2 border-purple-200">
             <div className="flex items-center justify-center mb-3">
               <TrendingUp className="w-7 h-7 text-purple-600" />
             </div>
@@ -67,7 +67,7 @@ const SlideSolution = () => {
         </div>
 
         {/* Business Impact Statement */}
-        <div className="bg-white rounded-xl shadow-card border p-5 max-w-6xl mx-auto">
+        <div className="bg-white rounded-xl border p-5 max-w-6xl mx-auto">
           <h3 className="text-xl font-bold text-center mb-5 text-neutral-dark">What This Means for Your Business</h3>
           <div className="grid grid-cols-2 gap-4">
             

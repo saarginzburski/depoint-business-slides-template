@@ -28,7 +28,7 @@ const SlideDigitizingOpsManual = () => {
             
             {/* Left Side - Paper Manual */}
             <div className="text-center">
-              <div className="bg-gray-100 rounded-xl p-6 border-2 border-gray-300 shadow-lg transition-none">
+              <div className="bg-gray-100 rounded-xl p-6 border-2 border-gray-300 transition-none">
                 <FileText className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-gray-700 mb-2">Traditional Manual</h3>
                 <p className="text-lg text-gray-600 font-medium">Static, complex, quickly outdated</p>
@@ -37,7 +37,7 @@ const SlideDigitizingOpsManual = () => {
 
             {/* Right Side - Depoint Digital */}
             <div className="text-center">
-              <div className="bg-white rounded-xl p-6 border-2 border-primary/20 shadow-lg transition-none">
+              <div className="bg-white rounded-xl p-6 border-2 border-primary/20 transition-none">
                 <Smartphone className="w-16 h-16 text-primary mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-primary mb-2">Depoint Platform</h3>
                 <p className="text-lg text-primary font-medium">Always updated. Always executed.</p>

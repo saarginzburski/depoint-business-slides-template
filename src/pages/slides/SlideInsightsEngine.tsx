@@ -27,7 +27,7 @@ const SlideInsightsEngine = () => {
             </div>
             
             {/* Temperature Graph */}
-            <div className="bg-white rounded-xl shadow-card border p-4 flex-1 flex flex-col">
+            <div className="bg-white rounded-xl border p-4 flex-1 flex flex-col">
               <div className="flex items-center gap-2 mb-3">
                 <Thermometer className="w-4 h-4 text-electric-blue" />
                 <span className="text-sm font-medium text-gray-700">Store #127 - Freezer Unit Temperature</span>
@@ -79,7 +79,7 @@ const SlideInsightsEngine = () => {
             
             {/* Mobile Notification Mockup */}
             <div className="flex justify-center flex-1">
-              <div className="w-64 bg-gray-900 rounded-2xl p-2 shadow-2xl flex flex-col">
+              <div className="w-64 bg-gray-900 rounded-2xl p-2 flex flex-col">
                 {/* Phone Header */}
                 <div className="flex justify-between items-center mb-4 text-white">
                   <div className="text-sm">9:41</div>

@@ -23,7 +23,7 @@ const SlideFinancial = () => {
           <h2 className="text-xl font-bold text-gray-900 mb-4">Proven Momentum</h2>
           
           {/* Clean ARR Chart - Hero Visual */}
-          <div className="bg-white rounded-xl shadow-lg border p-3 mb-3 flex-1">
+          <div className="bg-white rounded-xl border p-3 mb-3 flex-1">
             <div className="h-full flex flex-col">
               {/* Chart area - maximize space usage */}
               <div className="flex-1 flex items-end justify-center gap-3 mb-3 mt-1 px-3">
@@ -71,7 +71,7 @@ const SlideFinancial = () => {
           <h2 className="text-xl font-bold text-gray-900 mb-3">The Ask: $5M</h2>
           
           {/* Use of Funds */}
-          <div className="bg-white rounded-xl shadow-lg border p-4 flex-1 mb-2 min-h-0 overflow-hidden flex flex-col">
+          <div className="bg-white rounded-xl border p-4 flex-1 mb-2 min-h-0 overflow-hidden flex flex-col">
             <h3 className="text-base font-bold text-gray-800 mb-3 leading-tight">How We'll Invest</h3>
             {/* Evenly distribute 5 items to always fit height */}
             <div className="grid grid-rows-5 gap-2 flex-1 min-h-0">
@@ -153,7 +153,7 @@ const SlideFinancial = () => {
           </div>
           
           {/* ROI Outcome - Prominent Bottom */}
-          <div className="bg-green-600 text-white rounded-xl p-3 shadow-xl">
+          <div className="bg-green-600 text-white rounded-xl p-3">
             <div className="text-center">
               <div className="text-2xl font-bold mb-1">~4x Return</div>
               <div className="text-xs opacity-90">Projected ROI on GTM Investment within 24 months</div>
