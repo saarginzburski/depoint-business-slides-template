@@ -91,7 +91,7 @@ const SlideInsightsEngine = () => {
                 </div>
                 
                 {/* Notification */}
-                <div className="bg-white rounded-xl p-3 shadow-lg flex-1">
+                <div className="bg-white rounded-xl p-3 flex-1">
                   <div className="flex items-start gap-2">
                     <div className="w-8 h-8 bg-risk-red rounded-full flex items-center justify-center flex-shrink-0">
                       <AlertTriangle className="w-4 h-4 text-white" />
