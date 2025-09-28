@@ -30,40 +30,40 @@ const SlideFranchisorFranchisee = () => {
                 <div className="flex items-start gap-3">
                   <Eye className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Total Visibility</h4>
-                    <p className="text-xs text-muted-foreground">Monitor every store's compliance in real time — no waiting for audits.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Total Visibility</h4>
+                    <p className="text-sm text-muted-foreground">Monitor every store's compliance in real time — no waiting for audits.</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <RefreshCw className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Instant Standards Updates</h4>
-                    <p className="text-xs text-muted-foreground">Push new ops changes across 1,000+ stores overnight.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Instant Standards Updates</h4>
+                    <p className="text-sm text-muted-foreground">Push new ops changes across 1,000+ stores overnight.</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <Shield className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Audit Replacement</h4>
-                    <p className="text-xs text-muted-foreground">Continuous execution data replaces costly, inconsistent compliance audits.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Audit Replacement</h4>
+                    <p className="text-sm text-muted-foreground">Continuous execution data replaces costly, inconsistent compliance audits.</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <Coins className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Royalty & Ad Fund Compliance</h4>
-                    <p className="text-xs text-muted-foreground">Track financial obligations alongside ops performance.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Royalty & Ad Fund Compliance</h4>
+                    <p className="text-sm text-muted-foreground">Track financial obligations alongside ops performance.</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <Trophy className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Brand Consistency</h4>
-                    <p className="text-xs text-muted-foreground">Protect reputation by enforcing Golden Standards across all franchisees.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Brand Consistency</h4>
+                    <p className="text-sm text-muted-foreground">Protect reputation by enforcing Golden Standards across all franchisees.</p>
                   </div>
                 </div>
               </div>
@@ -80,40 +80,40 @@ const SlideFranchisorFranchisee = () => {
                 <div className="flex items-start gap-3">
                   <CheckSquare className="w-6 h-6 text-secondary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Simplified Daily Execution</h4>
-                    <p className="text-xs text-muted-foreground">A mobile app that guides staff, no training required.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Simplified Daily Execution</h4>
+                    <p className="text-sm text-muted-foreground">A mobile app that guides staff, no training required.</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <DollarSign className="w-6 h-6 text-secondary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Margin Protection</h4>
-                    <p className="text-xs text-muted-foreground">Reduce fines, waste, and shrinkage with automated compliance.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Margin Protection</h4>
+                    <p className="text-sm text-muted-foreground">Reduce fines, waste, and shrinkage with automated compliance.</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <Clock className="w-6 h-6 text-secondary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Labor Efficiency</h4>
-                    <p className="text-xs text-muted-foreground">Compare staffing costs to revenue in real time to optimize shifts.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Labor Efficiency</h4>
+                    <p className="text-sm text-muted-foreground">Compare staffing costs to revenue in real time to optimize shifts.</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <Lock className="w-6 h-6 text-secondary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Data Independence</h4>
-                    <p className="text-xs text-muted-foreground">Franchisee data separated from franchisor and other franchisees.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Data Independence</h4>
+                    <p className="text-sm text-muted-foreground">Franchisee data separated from franchisor and other franchisees.</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <GraduationCap className="w-6 h-6 text-secondary mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-foreground text-sm mb-1">Staff Retention</h4>
-                    <p className="text-xs text-muted-foreground">Micro-learning & guided execution reduce turnover and onboarding costs.</p>
+                    <h4 className="font-bold text-foreground text-base mb-1">Staff Retention</h4>
+                    <p className="text-sm text-muted-foreground">Micro-learning & guided execution reduce turnover and onboarding costs.</p>
                   </div>
                 </div>
               </div>
