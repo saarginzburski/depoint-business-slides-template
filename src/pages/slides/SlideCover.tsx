@@ -50,7 +50,7 @@ const SlideCover1 = () => {
       {/* Clean header strip */}
       <div className="absolute top-0 left-0 right-0 h-16 bg-background border-b border-gray-200 flex items-center justify-end px-8 z-20">
         <div className="slide-caption text-gray-400 tracking-wide uppercase">
-          Q3 2025 • CONFIDENTIAL INVESTOR DECK
+          Q3 2025 • CONFIDENTIAL
         </div>
       </div>
     </div>

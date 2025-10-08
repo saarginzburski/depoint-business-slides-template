@@ -26,7 +26,7 @@ const SlideFooter: React.FC<SlideFooterProps> = ({
       
       {/* Right: Company info - consistent styling */}
       <div className="slide-label tracking-wide text-gray-400 uppercase">
-        Q3 2025 • CONFIDENTIAL INVESTOR DECK
+        Q3 2025 • CONFIDENTIAL
       </div>
     </div>
   );
