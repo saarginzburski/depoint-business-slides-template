@@ -23,17 +23,17 @@ const SlideCover1 = () => {
       <div className="absolute inset-0 flex flex-col items-center justify-center px-16 z-10">
         <div className="text-center max-w-6xl">
           {/* Large headline centered */}
-          <h1 className="text-8xl font-black text-neutral-navy leading-[0.9] mb-6 tracking-tight">
+          <h1 className="text-7xl font-black text-neutral-navy leading-[1.1] mb-6 tracking-tight">
             The Intelligence Layer
-            <span className="block text-7xl text-depoint-blue mt-4">for the Physical Economy</span>
+            <span className="block text-depoint-blue mt-2">for Franchise Operations</span>
           </h1>
           
           {/* Single accent line under headline */}
           <div className="w-32 h-1 bg-depoint-orange mx-auto mb-12"></div>
           
           {/* Subtitle below in smaller type */}
-          <p className="text-4xl text-gray-600 font-medium leading-relaxed">
-            Protecting margins, reducing risk, unlocking growth.
+          <p className="text-3xl text-gray-600 font-medium leading-relaxed">
+            Total visibility. Consistent execution. Protected margins — across every brand, region, and store.
           </p>
         </div>
 
