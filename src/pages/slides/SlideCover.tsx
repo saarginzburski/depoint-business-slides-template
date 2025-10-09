@@ -33,7 +33,8 @@ const SlideCover1 = () => {
           
           {/* Subtitle below in smaller type */}
           <p className="text-3xl text-gray-600 font-medium leading-relaxed">
-            Total visibility. Consistent execution. Protected margins — across every brand, region, and store.
+            Total visibility. Consistent execution. Protected margins<br />
+            across every brand, region, and store.
           </p>
         </div>
 
