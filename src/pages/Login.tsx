@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,7 +7,15 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 import { Shield, Chrome } from 'lucide-react';
 
 const Login: React.FC = () => {
-  const { signInWithGoogle, loading } = useAuth();
+  const { signInWithGoogle, loading, isAuthorized } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect to overview if already authenticated
+  useEffect(() => {
+    if (isAuthorized) {
+      navigate('/overview', { replace: true });
+    }
+  }, [isAuthorized, navigate]);
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-slate-50">
