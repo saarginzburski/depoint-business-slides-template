@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 
 export interface KeyboardShortcut {
   key: string;
-  ctrl?: boolean;
-  meta?: boolean;
+  ctrlOrCmd?: boolean;
   shift?: boolean;
   alt?: boolean;
-  action: () => void;
+  handler: (event: KeyboardEvent) => void;
   description?: string;
+  preventDefault?: boolean;
 }
 
 export const useKeyboardShortcuts = (
@@ -20,36 +20,34 @@ export const useKeyboardShortcuts = (
     const handleKeyDown = (event: KeyboardEvent) => {
       // Don't trigger shortcuts when user is typing in an input
       const target = event.target as HTMLElement;
-      if (
+      const isInInput =
         target.tagName === 'INPUT' ||
         target.tagName === 'TEXTAREA' ||
-        target.isContentEditable
-      ) {
-        // Allow Command Palette shortcut even in inputs
-        if (!(event.key === 'k' && (event.ctrlKey || event.metaKey))) {
-          return;
-        }
-      }
+        target.isContentEditable;
 
       for (const shortcut of shortcuts) {
         const keyMatches = event.key.toLowerCase() === shortcut.key.toLowerCase();
-        const ctrlMatches = !!shortcut.ctrl === event.ctrlKey;
-        const metaMatches = !!shortcut.meta === event.metaKey;
         const shiftMatches = !!shortcut.shift === event.shiftKey;
         const altMatches = !!shortcut.alt === event.altKey;
 
         // Handle Ctrl/Meta as interchangeable (for cross-platform)
-        const modifierMatches =
-          (shortcut.ctrl || shortcut.meta) ? (event.ctrlKey || event.metaKey) : (!event.ctrlKey && !event.metaKey);
+        const modifierMatches = shortcut.ctrlOrCmd
+          ? (event.ctrlKey || event.metaKey)
+          : (!event.ctrlKey && !event.metaKey);
 
-        if (
-          keyMatches &&
-          ((shortcut.ctrl || shortcut.meta) ? modifierMatches : (ctrlMatches && metaMatches)) &&
-          shiftMatches &&
-          altMatches
-        ) {
-          event.preventDefault();
-          shortcut.action();
+        if (keyMatches && modifierMatches && shiftMatches && altMatches) {
+          // Allow Command Palette shortcut even in inputs
+          const allowInInput = shortcut.key === 'k' && shortcut.ctrlOrCmd;
+          
+          if (isInInput && !allowInInput) {
+            continue;
+          }
+
+          if (shortcut.preventDefault !== false) {
+            event.preventDefault();
+          }
+          
+          shortcut.handler(event);
           break;
         }
       }
@@ -60,18 +58,22 @@ export const useKeyboardShortcuts = (
   }, [shortcuts, enabled]);
 };
 
-// Pre-defined shortcuts
-export const commonShortcuts = {
-  commandPalette: { key: 'k', meta: true, description: 'Open command palette' },
+// Pre-defined shortcut keys (handlers must be provided by the consumer)
+export const commonShortcutKeys = {
+  commandPalette: { key: 'k', ctrlOrCmd: true, description: 'Open command palette' },
   hide: { key: 'h', description: 'Hide selected slides' },
   restore: { key: 'r', description: 'Restore hidden slides' },
-  duplicate: { key: 'd', meta: true, description: 'Duplicate selected slides' },
+  duplicate: { key: 'd', ctrlOrCmd: true, description: 'Duplicate selected slides' },
   delete: { key: 'Delete', description: 'Delete selected slides' },
-  selectAll: { key: 'a', meta: true, description: 'Select all slides' },
+  selectAll: { key: 'a', ctrlOrCmd: true, description: 'Select all slides' },
   escape: { key: 'Escape', description: 'Clear selection / Close dialogs' },
   arrowUp: { key: 'ArrowUp', description: 'Navigate up' },
   arrowDown: { key: 'ArrowDown', description: 'Navigate down' },
   arrowLeft: { key: 'ArrowLeft', description: 'Navigate left' },
   arrowRight: { key: 'ArrowRight', description: 'Navigate right' },
+  enter: { key: 'Enter', description: 'View slide' },
+  space: { key: ' ', description: 'Preview slide' },
+  moveUp: { key: 'ArrowUp', ctrlOrCmd: true, description: 'Move slide up' },
+  moveDown: { key: 'ArrowDown', ctrlOrCmd: true, description: 'Move slide down' },
 };
 

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
-import DeckOverview from "./pages/DeckOverview";
+import DeckOverviewNew from "./pages/DeckOverviewNew";
 import SlideViewer from "./pages/SlideViewer";
 import PrintableDeck from "./pages/PrintableDeck";
 
@@ -40,7 +40,7 @@ const App = () => {
                 path="/" 
                 element={
                   <ProtectedRoute>
-                    {isDeckPublished ? <Navigate to="/deck/slide/1" replace /> : <DeckOverview />}
+                    {isDeckPublished ? <Navigate to="/deck/slide/1" replace /> : <DeckOverviewNew />}
                   </ProtectedRoute>
                 } 
               />
@@ -48,7 +48,7 @@ const App = () => {
                 path="/overview" 
                 element={
                   <ProtectedRoute>
-                    <DeckOverview />
+                    <DeckOverviewNew />
                   </ProtectedRoute>
                 } 
               />
