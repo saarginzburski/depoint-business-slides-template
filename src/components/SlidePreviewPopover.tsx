@@ -1,115 +1,124 @@
-import React, { Suspense, useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 interface SlidePreviewPopoverProps {
   slide: {
-    id: number;
-    name: string;
+    id: string;
     title: string;
-    component: string;
+    section: string;
+    tags: string[];
   };
-  slideComponent: React.LazyExoticComponent<any>;
-  anchorEl: HTMLElement | null;
-  position: 'left' | 'right' | 'top' | 'bottom';
+  position: { x: number; y: number };
+  onClose: () => void;
 }
 
 export const SlidePreviewPopover: React.FC<SlidePreviewPopoverProps> = ({
   slide,
-  slideComponent: SlideComponent,
-  anchorEl,
-  position = 'right',
+  position,
+  onClose,
 }) => {
-  const [coords, setCoords] = useState({ top: 0, left: 0 });
   const popoverRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!anchorEl || !popoverRef.current) return;
+  // Adjust position to keep popover in viewport
+  const adjustedPosition = React.useMemo(() => {
+    if (!popoverRef.current) return position;
 
-    const anchorRect = anchorEl.getBoundingClientRect();
-    const popoverRect = popoverRef.current.getBoundingClientRect();
+    const popoverWidth = 320;
+    const popoverHeight = 200;
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    let top = 0;
-    let left = 0;
+    let { x, y } = position;
 
-    switch (position) {
-      case 'right':
-        left = anchorRect.right + 16;
-        top = anchorRect.top + (anchorRect.height / 2) - (popoverRect.height / 2);
-        // Fallback to left if not enough space
-        if (left + popoverRect.width > viewportWidth) {
-          left = anchorRect.left - popoverRect.width - 16;
-        }
-        break;
-      case 'left':
-        left = anchorRect.left - popoverRect.width - 16;
-        top = anchorRect.top + (anchorRect.height / 2) - (popoverRect.height / 2);
-        break;
-      case 'top':
-        top = anchorRect.top - popoverRect.height - 16;
-        left = anchorRect.left + (anchorRect.width / 2) - (popoverRect.width / 2);
-        break;
-      case 'bottom':
-        top = anchorRect.bottom + 16;
-        left = anchorRect.left + (anchorRect.width / 2) - (popoverRect.width / 2);
-        break;
+    // Keep within horizontal bounds
+    if (x + popoverWidth > viewportWidth - 16) {
+      x = viewportWidth - popoverWidth - 16;
     }
+    if (x < 16) x = 16;
 
-    // Ensure popover stays within viewport
-    if (top < 16) top = 16;
-    if (top + popoverRect.height > viewportHeight - 16) {
-      top = viewportHeight - popoverRect.height - 16;
+    // Keep within vertical bounds
+    if (y + popoverHeight > viewportHeight - 16) {
+      y = viewportHeight - popoverHeight - 16;
     }
-    if (left < 16) left = 16;
-    if (left + popoverRect.width > viewportWidth - 16) {
-      left = viewportWidth - popoverRect.width - 16;
-    }
+    if (y < 16) y = 16;
 
-    setCoords({ top, left });
-  }, [anchorEl, position]);
+    return { x, y };
+  }, [position]);
 
-  if (!anchorEl) return null;
+  // Close on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
 
   return (
     <>
-      {/* Invisible backdrop */}
-      <div className="fixed inset-0 z-30 pointer-events-none" />
+      {/* Invisible backdrop to detect mouse leave */}
+      <div 
+        className="fixed inset-0 z-30 pointer-events-auto" 
+        onClick={onClose}
+      />
 
       {/* Preview Popover */}
       <Card
         ref={popoverRef}
-        className="fixed z-40 w-[480px] shadow-elevation-5 border-2 border-primary/20 animate-fade-in overflow-hidden"
-        style={{ top: coords.top, left: coords.left }}
+        className="fixed z-40 w-80 shadow-elevation-5 border-2 border-primary-600 bg-white animate-fade-in"
+        style={{ 
+          top: `${adjustedPosition.y}px`, 
+          left: `${adjustedPosition.x}px` 
+        }}
+        onMouseEnter={(e) => e.stopPropagation()}
       >
-        {/* Slide Preview */}
-        <div className="relative w-full aspect-[16/9] bg-neutral-900 overflow-hidden">
-          <div
-            className="w-full h-full transform scale-[0.3] origin-top-left"
-            style={{ width: '333%', height: '333%' }}
-          >
-            <Suspense
-              fallback={
-                <div className="w-full h-full bg-neutral-800 flex items-center justify-center">
-                  <div className="animate-pulse text-neutral-600 text-6xl">{slide.id}</div>
-                </div>
-              }
-            >
-              <SlideComponent />
-            </Suspense>
+        {/* Slide Preview Placeholder */}
+        <div className="relative w-full aspect-[16/9] bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center border-b border-neutral-200">
+          <div className="text-center">
+            <div className="text-6xl font-bold text-primary-600 mb-2">
+              {slide.id}
+            </div>
+            <div className="text-sm text-primary-700 uppercase tracking-wide">
+              Preview
+            </div>
           </div>
         </div>
 
         {/* Slide Info */}
-        <div className="px-4 py-3 bg-surface border-t border-neutral-200">
-          <div className="flex items-center justify-between mb-1">
-            <h4 className="text-body-medium font-semibold text-neutral-900">{slide.name}</h4>
-            <Badge className="bg-neutral-100 text-neutral-700 text-label-small">
+        <div className="px-4 py-3">
+          <div className="flex items-start justify-between mb-2">
+            <h4 className="text-sm font-semibold text-neutral-900 flex-1 pr-2">
+              {slide.title}
+            </h4>
+            <Badge className="bg-primary-100 text-primary-700 text-xs flex-shrink-0">
               Slide {slide.id}
             </Badge>
           </div>
-          <p className="text-body-small text-neutral-600">{slide.title}</p>
+          
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-medium text-neutral-500 uppercase">
+              {slide.section}
+            </span>
+          </div>
+
+          {slide.tags && slide.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {slide.tags.slice(0, 3).map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-2 py-0.5 text-xs bg-neutral-100 text-neutral-600 rounded"
+                >
+                  {tag}
+                </span>
+              ))}
+              {slide.tags.length > 3 && (
+                <span className="px-2 py-0.5 text-xs text-neutral-500">
+                  +{slide.tags.length - 3} more
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </Card>
     </>
