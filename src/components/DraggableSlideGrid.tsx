@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState, useEffect, useRef } from 'react';
 import {
   DndContext,
   DragEndEvent,
@@ -26,6 +26,7 @@ import { slideConfig } from '@/pages/slides/slideConfig';
 import { db } from '@/integrations/firebase/client';
 import { collection, addDoc, getDocs, deleteDoc, query, where } from 'firebase/firestore';
 import { toast } from '@/hooks/use-toast';
+import { SlidePreviewPopover } from '@/components/SlidePreviewPopover';
 
 interface Section {
   id: string;
@@ -106,6 +107,37 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
   const SlideComponent = slideComponents[componentKey];
   const isHidden = sectionId === 'hidden';
 
+  // Hover preview state with delay
+  const [showPreview, setShowPreview] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDragging) return;
+    
+    setAnchorEl(e.currentTarget);
+    hoverTimeoutRef.current = setTimeout(() => {
+      setShowPreview(true);
+    }, 800); // 800ms delay before showing preview
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    setShowPreview(false);
+    setAnchorEl(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleToggleVisibility = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isHidden) {
@@ -118,18 +150,24 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
   };
 
   return (
-    <Card
-      ref={setNodeRef}
-      style={style}
-      className={`group relative overflow-hidden rounded-xl border transition-standard ${
-        isSelected 
-          ? 'ring-2 ring-primary border-primary shadow-elevation-2' 
-          : 'border-neutral-200 hover:border-neutral-300'
-      } ${
-        isDragging ? 'opacity-40 scale-105' : 'hover:shadow-elevation-2'
-      }`}
-      onContextMenu={(e) => onContextMenu?.(e, slide.id)}
-    >
+    <>
+      <Card
+        ref={(node) => {
+          setNodeRef(node);
+          cardRef.current = node;
+        }}
+        style={style}
+        className={`group relative overflow-hidden rounded-xl border transition-standard animate-slide-enter ${
+          isSelected 
+            ? 'ring-2 ring-primary border-primary shadow-elevation-2' 
+            : 'border-neutral-200 hover:border-neutral-300'
+        } ${
+          isDragging ? 'opacity-40 scale-105' : 'hover:shadow-elevation-2'
+        }`}
+        onContextMenu={(e) => onContextMenu?.(e, slide.id)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
       {/* Multi-Select Checkbox */}
       {onToggleSelection && (
         <div className="absolute top-2 left-2 z-10">
@@ -209,7 +247,18 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
         <h4 className="text-body-small font-medium text-neutral-900 truncate">{slide.name}</h4>
         <p className="text-label-small text-neutral-600">Slide {slide.id}</p>
       </div>
-    </Card>
+      </Card>
+
+      {/* Hover Preview Popover */}
+      {showPreview && !isDragging && anchorEl && SlideComponent && (
+        <SlidePreviewPopover
+          slide={slide}
+          slideComponent={SlideComponent}
+          anchorEl={anchorEl}
+          position="right"
+        />
+      )}
+    </>
   );
 };
 
