@@ -579,8 +579,23 @@
     }
   }
 
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .animate-slide-enter {
     animation: slide-enter 300ms var(--ease-emphasized) forwards;
+  }
+
+  .animate-slide-down {
+    animation: slide-down 200ms var(--ease-standard) forwards;
   }
 
   .animate-slide-exit {

@@ -8,7 +8,8 @@ interface CommandItem {
   description?: string;
   icon?: React.ComponentType<{ className?: string }>;
   shortcut?: string;
-  category: 'slide' | 'deck' | 'action' | 'navigation';
+  category: 'slide' | 'deck' | 'variant' | 'action' | 'navigation';
+  badge?: string; // e.g., "Default", "Active"
   onSelect: () => void;
 }
 
@@ -46,6 +47,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     const groups: Record<string, CommandItem[]> = {
       slide: [],
       deck: [],
+      variant: [],
       action: [],
       navigation: [],
     };
@@ -120,6 +122,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       case 'slide':
         return Hash;
       case 'deck':
+      case 'variant':
         return Layers;
       default:
         return Command;
@@ -132,6 +135,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         return 'Slides';
       case 'deck':
         return 'Decks';
+      case 'variant':
+        return 'Variants';
       case 'action':
         return 'Actions';
       case 'navigation':
@@ -230,8 +235,15 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
                             {/* Label and Description */}
                             <div className="flex-1 text-left min-w-0">
-                              <div className="text-body-medium font-medium truncate">
-                                {cmd.label}
+                              <div className="flex items-center gap-2">
+                                <span className="text-body-medium font-medium truncate">
+                                  {cmd.label}
+                                </span>
+                                {cmd.badge && (
+                                  <span className="flex-shrink-0 px-1.5 py-0.5 text-xs bg-primary-100 text-primary-700 rounded">
+                                    {cmd.badge}
+                                  </span>
+                                )}
                               </div>
                               {cmd.description && (
                                 <div className="text-body-small text-neutral-600 truncate">
