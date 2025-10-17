@@ -286,7 +286,7 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                         <Badge variant="secondary" className="text-xs">Default</Badge>
                       )}
                       <div className="flex gap-1">
-                        {variation.sections.map(sectionId => {
+                        {variation.sections.filter(sectionId => sectionId !== 'hidden').map(sectionId => {
                           const section = sections.find(s => s.id === sectionId);
                           return section ? (
                             <Badge
@@ -395,7 +395,7 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                       Select Sections
                     </Label>
                     <div className="grid grid-cols-1 gap-2">
-                      {sections.map((section) => (
+                      {sections.filter(s => s.id !== 'hidden').map((section) => (
                         <div key={section.id} className="flex items-center space-x-2">
                           <Checkbox
                             id={`section-${section.id}`}

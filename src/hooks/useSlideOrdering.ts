@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/integrations/firebase/client';
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { slideConfig } from '@/pages/slides/slideConfig';
 import { toast } from '@/hooks/use-toast';
 
@@ -32,15 +33,23 @@ export const useSlideOrdering = (variationId: string | null, sections: Section[]
 
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('deck_variation_slide_orders')
-        .select('*')
-        .eq('deck_variation_id', variationId)
-        .order('order_index');
+      const ordersQuery = query(
+        collection(db, 'deck_variation_slide_orders'),
+        where('deck_variation_id', '==', variationId),
+        orderBy('order_index', 'asc')
+      );
+      const ordersSnapshot = await getDocs(ordersQuery);
+      
+      const orders: SlideOrder[] = ordersSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          slide_id: data.slide_id,
+          section_id: data.section_id,
+          order_index: data.order_index
+        };
+      });
 
-      if (error) throw error;
-
-      setSlideOrders(data || []);
+      setSlideOrders(orders);
     } catch (error) {
       console.error('Error loading slide orders:', error);
       toast({

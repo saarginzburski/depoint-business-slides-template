@@ -10,7 +10,7 @@ export interface SlideInfo {
 export const slideConfig: SlideInfo[] = [
   { id: 1, name: "Cover", title: "The Intelligence Layer for the Physical Economy", component: "SlideCover", route: "/investor-deck/slide/1" },
   { id: 2, name: "The Problem", title: "The $1 Trillion Disconnect", component: "SlideProblem", route: "/investor-deck/slide/2" },
-  { id: 3, name: "The Solution", title: "From Chaos to Intelligence", component: "SlideSolution", route: "/investor-deck/slide/3" },
+  { id: 3, name: "The Solution", title: "From Chaos to Control", component: "SlideSolution", route: "/investor-deck/slide/3" },
   { id: 4, name: "Digitizing Operations", title: "Digitizing the Operations Manual", component: "SlideDigitizingOpsManual", route: "/investor-deck/slide/4" },
   { id: 5, name: "Franchisor & Franchisee", title: "One Platform. Two Perspectives. Shared Growth.", component: "SlideFranchisorFranchisee", route: "/investor-deck/slide/5" },
   { id: 6, name: "Jollibee Operational Book", title: "Jollibee: Fully Digitized Operational Book", component: "SlideJollibeeOperationBook", route: "/investor-deck/slide/6" },

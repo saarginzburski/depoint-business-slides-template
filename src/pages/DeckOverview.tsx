@@ -104,14 +104,15 @@ const DeckOverview = () => {
   
   const [deckName, setDeckName] = useState('Depoint Business Templates Editor');
   const [isEditingName, setIsEditingName] = useState(false);
+  // Hidden section is always included and cannot be toggled
   const [selectedSections, setSelectedSections] = useState<Set<string>>(
-    new Set(sections.map(section => section.id))
+    new Set([...sections.map(section => section.id)])
   );
   // Use deck variations hook
   const { currentVariation, setCurrentVariation, updateVariationSections } = useDeckVariations();
 
   // Use slide ordering hook
-  const { getOrderedSlidesBySection, getVisibleSlides } = useSlideOrdering(
+  const { getOrderedSlidesBySection, getVisibleSlides, refetch } = useSlideOrdering(
     currentVariation?.id || null, 
     sections
   );
@@ -178,12 +179,20 @@ const DeckOverview = () => {
   };
 
   const toggleSectionSelection = async (sectionId: string) => {
+    // Hidden section cannot be toggled - it's always visible
+    if (sectionId === 'hidden') {
+      return;
+    }
+    
     const newSet = new Set(selectedSections);
     if (newSet.has(sectionId)) {
       newSet.delete(sectionId);
     } else {
       newSet.add(sectionId);
     }
+    
+    // Always ensure hidden section is included
+    newSet.add('hidden');
     
     setSelectedSections(newSet);
     
@@ -276,14 +285,14 @@ const DeckOverview = () => {
 
               {/* Right - Section Selection */}
               <div className="flex items-center gap-2">
-                {sections.map(section => {
+                {/* Toggleable sections (Hidden section not shown as it's always visible) */}
+                {sections.filter(s => s.id !== 'hidden').map(section => {
                   const Icon = section.icon;
                   const isSelected = selectedSections.has(section.id);
                   const colorClasses = {
                     blue: isSelected ? 'bg-blue-50 border-blue-300 text-blue-900' : 'bg-white border-gray-200 text-gray-700',
                     slate: isSelected ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-white border-gray-200 text-gray-700',
                     green: isSelected ? 'bg-green-50 border-green-300 text-green-900' : 'bg-white border-gray-200 text-gray-700',
-                    gray: isSelected ? 'bg-gray-50 border-gray-300 text-gray-900' : 'bg-white border-gray-200 text-gray-700',
                   };
                   
                   return (
@@ -321,6 +330,7 @@ const DeckOverview = () => {
             onSlideClick={handleSlideClick}
             variationId={currentVariation?.id || null}
             orderedSlidesBySection={slidesBySection}
+            onOrdersChanged={refetch}
           />
         )}
 

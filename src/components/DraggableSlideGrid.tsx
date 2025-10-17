@@ -20,9 +20,10 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { GripVertical } from 'lucide-react';
+import { GripVertical, Eye, EyeOff } from 'lucide-react';
 import { slideConfig } from '@/pages/slides/slideConfig';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/integrations/firebase/client';
+import { collection, addDoc, getDocs, deleteDoc, query, where } from 'firebase/firestore';
 import { toast } from '@/hooks/use-toast';
 
 interface Section {
@@ -48,6 +49,7 @@ interface DraggableSlideGridProps {
   onSlideClick: (slideId: number) => void;
   variationId: string | null;
   orderedSlidesBySection: Record<string, SlideData[]>;
+  onOrdersChanged?: () => void;
 }
 
 interface DraggableSlideProps {
@@ -56,6 +58,7 @@ interface DraggableSlideProps {
   sectionColor: string;
   slideComponents: Record<string, React.LazyExoticComponent<any>>;
   onSlideClick: (slideId: number) => void;
+  onMoveSlide: (slideId: number, fromSection: string, toSection: string) => void;
 }
 
 interface DroppableSectionProps {
@@ -69,7 +72,8 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
   sectionId, 
   sectionColor, 
   slideComponents, 
-  onSlideClick 
+  onSlideClick,
+  onMoveSlide
 }) => {
   const {
     attributes,
@@ -90,28 +94,29 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
 
   const componentKey = slide.component as keyof typeof slideComponents;
   const SlideComponent = slideComponents[componentKey];
+  const isHidden = sectionId === 'hidden';
+
+  const handleToggleVisibility = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isHidden) {
+      // Move to first non-hidden section (main-deck by default)
+      onMoveSlide(slide.id, sectionId, 'main-deck');
+    } else {
+      // Move to hidden section
+      onMoveSlide(slide.id, sectionId, 'hidden');
+    }
+  };
 
   return (
     <Card
       ref={setNodeRef}
       style={style}
-      className={`group relative p-3 transition-all cursor-pointer hover:shadow-md ${
+      className={`group relative p-3 transition-all hover:shadow-md ${
         isDragging ? 'opacity-50 scale-105 z-50' : 'hover:scale-105'
       }`}
-      onClick={() => onSlideClick(slide.id)}
     >
-      {/* Drag Handle */}
-      <div
-        {...listeners}
-        {...attributes}
-        className="absolute top-2 right-2 z-10 cursor-grab active:cursor-grabbing p-1 bg-white/80 rounded opacity-60 group-hover:opacity-100 hover:opacity-100 transition-opacity"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <GripVertical className="h-3 w-3 text-gray-600" />
-      </div>
-
       <div 
-        className="w-full aspect-[16/9] bg-white rounded border mb-2 overflow-hidden cursor-pointer group"
+        className="w-full aspect-[16/9] bg-white rounded border mb-2 overflow-hidden cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
           onSlideClick(slide.id);
@@ -124,11 +129,48 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
         </div>
       </div>
       
-      <div className="flex items-center justify-between">
-        <div>
-          <h4 className="text-xs font-medium text-gray-900 truncate">{slide.name}</h4>
-          <p className="text-xs text-gray-500">Slide {slide.id}</p>
-        </div>
+      {/* Slide Info */}
+      <div className="mb-2">
+        <h4 className="text-xs font-medium text-gray-900 truncate">{slide.name}</h4>
+        <p className="text-xs text-gray-500">Slide {slide.id}</p>
+      </div>
+
+      {/* Actions Bar */}
+      <div className="flex items-center gap-2 pt-2 border-t">
+        {/* Drag Handle */}
+        <button
+          {...listeners}
+          {...attributes}
+          className="flex items-center gap-1 px-2 py-1 text-xs text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors cursor-grab active:cursor-grabbing"
+          onClick={(e) => e.stopPropagation()}
+          title="Drag to reorder"
+        >
+          <GripVertical className="h-3 w-3" />
+          <span>Move</span>
+        </button>
+
+        {/* Hide/Show Toggle */}
+        <button
+          onClick={handleToggleVisibility}
+          className={`flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors ${
+            isHidden 
+              ? 'text-green-600 hover:text-green-900 hover:bg-green-50' 
+              : 'text-orange-600 hover:text-orange-900 hover:bg-orange-50'
+          }`}
+          title={isHidden ? 'Show slide' : 'Hide slide'}
+        >
+          {isHidden ? (
+            <>
+              <Eye className="h-3 w-3" />
+              <span>Show</span>
+            </>
+          ) : (
+            <>
+              <EyeOff className="h-3 w-3" />
+              <span>Hide</span>
+            </>
+          )}
+        </button>
       </div>
     </Card>
   );
@@ -140,10 +182,15 @@ const DroppableSection: React.FC<DroppableSectionProps> = ({ section, slides, ch
     data: { sectionId: section.id, type: 'section' }
   });
 
+  // Use single column layout for hidden section, multi-column for regular sections
+  const gridClasses = section.id === 'hidden' 
+    ? 'grid grid-cols-1 gap-3' 
+    : 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4';
+
   return (
     <div
       ref={setNodeRef}
-      className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 min-h-[200px] p-4 rounded-lg border-2 border-dashed transition-colors ${
+      className={`${gridClasses} min-h-[200px] p-4 rounded-lg border-2 border-dashed transition-colors ${
         isOver 
           ? 'border-blue-400 bg-blue-50' 
           : 'border-transparent'
@@ -160,7 +207,8 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
   slideComponents,
   onSlideClick,
   variationId,
-  orderedSlidesBySection
+  orderedSlidesBySection,
+  onOrdersChanged
 }) => {
   const [sectionSlides, setSectionSlides] = useState<Record<string, SlideData[]>>(orderedSlidesBySection);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -183,37 +231,46 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
 
     try {
       // Delete existing orders
-      await supabase
-        .from('deck_variation_slide_orders')
-        .delete()
-        .eq('deck_variation_id', variationId);
+      const ordersQuery = query(
+        collection(db, 'deck_variation_slide_orders'),
+        where('deck_variation_id', '==', variationId)
+      );
+      const ordersSnapshot = await getDocs(ordersQuery);
+      const deletePromises = ordersSnapshot.docs.map(doc => deleteDoc(doc.ref));
+      await Promise.all(deletePromises);
 
       // Create new orders
-      const newOrders: { deck_variation_id: string; slide_id: number; section_id: string; order_index: number; }[] = [];
+      const now = new Date().toISOString();
+      const insertPromises: Promise<any>[] = [];
       
       Object.entries(newSectionSlides).forEach(([sectionId, slides]) => {
         slides.forEach((slide, index) => {
-          newOrders.push({
-            deck_variation_id: variationId,
-            slide_id: slide.id,
-            section_id: sectionId,
-            order_index: index
-          });
+          insertPromises.push(
+            addDoc(collection(db, 'deck_variation_slide_orders'), {
+              deck_variation_id: variationId,
+              slide_id: slide.id,
+              section_id: sectionId,
+              order_index: index,
+              created_at: now,
+              updated_at: now
+            })
+          );
         });
       });
 
-      if (newOrders.length > 0) {
-        const { error } = await supabase
-          .from('deck_variation_slide_orders')
-          .insert(newOrders);
-
-        if (error) throw error;
+      if (insertPromises.length > 0) {
+        await Promise.all(insertPromises);
       }
 
       toast({
         title: "Auto-saved",
         description: "Slide order updated",
       });
+
+      // Trigger refetch to update stats
+      if (onOrdersChanged) {
+        onOrdersChanged();
+      }
     } catch (error) {
       console.error('Error auto-saving slide orders:', error);
       toast({
@@ -222,6 +279,26 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
         variant: "destructive",
       });
     }
+  };
+
+  const handleMoveSlide = async (slideId: number, fromSection: string, toSection: string) => {
+    const newSectionSlides = { ...sectionSlides };
+    
+    // Find and remove the slide from the source section
+    const slideToMove = newSectionSlides[fromSection]?.find(s => s.id === slideId);
+    if (!slideToMove) return;
+    
+    newSectionSlides[fromSection] = newSectionSlides[fromSection].filter(s => s.id !== slideId);
+    
+    // Add the slide to the target section at the end
+    if (!newSectionSlides[toSection]) {
+      newSectionSlides[toSection] = [];
+    }
+    newSectionSlides[toSection] = [...newSectionSlides[toSection], slideToMove];
+    
+    // Update state and auto-save
+    setSectionSlides(newSectionSlides);
+    await autoSaveSlideOrders(newSectionSlides);
   };
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -298,8 +375,9 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
       Object.keys(sectionSlides).some(sectionId => `${sectionId}-${slide.id}` === activeId)
     ) : null;
 
-  // Filter sections by selected sections
-  const visibleSections = sections.filter(section => selectedSections.has(section.id));
+  // Split sections: regular sections and hidden section
+  const regularSections = sections.filter(section => section.id !== 'hidden' && selectedSections.has(section.id));
+  const hiddenSection = sections.find(section => section.id === 'hidden');
 
   return (
     <DndContext
@@ -308,50 +386,103 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="space-y-8">
-        {visibleSections.map(section => {
-          const sectionSlideList = sectionSlides[section.id] || [];
-          if (sectionSlideList.length === 0) return null;
-          
-          const Icon = section.icon;
-          const colorClasses = {
-            blue: 'border-blue-200 bg-blue-50',
-            slate: 'border-slate-200 bg-slate-50', 
-            green: 'border-green-200 bg-green-50',
-            gray: 'border-gray-200 bg-gray-50',
-          };
-          
-          return (
-            <div key={section.id} className={`border rounded-lg p-6 ${colorClasses[section.color as keyof typeof colorClasses]}`}>
-              <div className="flex items-center gap-3 mb-4">
-                <Icon className="w-5 h-5 text-gray-700" />
-                <h3 className="text-lg font-semibold text-gray-900">{section.name}</h3>
-                <span className="text-sm text-gray-500">({sectionSlideList.length} slides)</span>
-                <Badge variant="outline" className="text-xs">
-                  Drag & Drop Enabled
-                </Badge>
+      <div className="flex gap-6">
+        {/* Left side - Regular sections */}
+        <div className="flex-1 space-y-8">
+          {regularSections.map(section => {
+            const sectionSlideList = sectionSlides[section.id] || [];
+            if (sectionSlideList.length === 0) return null;
+            
+            const Icon = section.icon;
+            const colorClasses = {
+              blue: 'border-blue-200 bg-blue-50',
+              slate: 'border-slate-200 bg-slate-50', 
+              green: 'border-green-200 bg-green-50',
+            };
+            
+            return (
+              <div key={section.id} className={`border rounded-lg p-6 ${colorClasses[section.color as keyof typeof colorClasses]}`}>
+                <div className="flex items-center gap-3 mb-4">
+                  <Icon className="w-5 h-5 text-gray-700" />
+                  <h3 className="text-lg font-semibold text-gray-900">{section.name}</h3>
+                  <span className="text-sm text-gray-500">({sectionSlideList.length} slides)</span>
+                  <Badge variant="outline" className="text-xs">
+                    Drag & Drop Enabled
+                  </Badge>
+                </div>
+                
+                <SortableContext
+                  items={sectionSlideList.map(slide => `${section.id}-${slide.id}`)}
+                  strategy={rectSortingStrategy}
+                >
+                  <DroppableSection section={section} slides={sectionSlideList}>
+                    {sectionSlideList.map(slide => (
+                      <DraggableSlide
+                        key={slide.id}
+                        slide={slide}
+                        sectionId={section.id}
+                        sectionColor={section.color}
+                        slideComponents={slideComponents}
+                        onSlideClick={onSlideClick}
+                        onMoveSlide={handleMoveSlide}
+                      />
+                    ))}
+                  </DroppableSection>
+                </SortableContext>
               </div>
-              
-              <SortableContext
-                items={sectionSlideList.map(slide => `${section.id}-${slide.id}`)}
-                strategy={rectSortingStrategy}
-              >
-                <DroppableSection section={section} slides={sectionSlideList}>
-                  {sectionSlideList.map(slide => (
-                    <DraggableSlide
-                      key={slide.id}
-                      slide={slide}
-                      sectionId={section.id}
-                      sectionColor={section.color}
-                      slideComponents={slideComponents}
-                      onSlideClick={onSlideClick}
-                    />
-                  ))}
-                </DroppableSection>
-              </SortableContext>
+            );
+          })}
+        </div>
+
+        {/* Right side - Hidden section (sticky/floating) */}
+        {hiddenSection && (
+          <div className="w-80 shrink-0">
+            <div className="sticky top-6">
+              {(() => {
+                const sectionSlideList = sectionSlides[hiddenSection.id] || [];
+                const Icon = hiddenSection.icon;
+                
+                return (
+                  <div className="border-2 border-gray-300 bg-gray-50 rounded-lg p-6 shadow-lg">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Icon className="w-5 h-5 text-gray-700" />
+                      <h3 className="text-lg font-semibold text-gray-900">{hiddenSection.name}</h3>
+                      <span className="text-sm text-gray-500">({sectionSlideList.length})</span>
+                    </div>
+                    <p className="text-xs text-gray-600 mb-4">
+                      Drag slides here to hide them from the presentation
+                    </p>
+                    
+                    <SortableContext
+                      items={sectionSlideList.map(slide => `${hiddenSection.id}-${slide.id}`)}
+                      strategy={rectSortingStrategy}
+                    >
+                      <DroppableSection section={hiddenSection} slides={sectionSlideList}>
+                        {sectionSlideList.length === 0 ? (
+                          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center text-gray-400">
+                            Drop slides here
+                          </div>
+                        ) : (
+                          sectionSlideList.map(slide => (
+                            <DraggableSlide
+                              key={slide.id}
+                              slide={slide}
+                              sectionId={hiddenSection.id}
+                              sectionColor={hiddenSection.color}
+                              slideComponents={slideComponents}
+                              onSlideClick={onSlideClick}
+                              onMoveSlide={handleMoveSlide}
+                            />
+                          ))
+                        )}
+                      </DroppableSection>
+                    </SortableContext>
+                  </div>
+                );
+              })()}
             </div>
-          );
-        })}
+          </div>
+        )}
       </div>
 
       <DragOverlay>

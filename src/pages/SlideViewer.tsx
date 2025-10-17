@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { slideConfig, getSlideInfo } from './slides/slideConfig';
 import PrintButton from '@/components/PrintButton';
 import { SLIDE_CONFIG } from '@/lib/slideConfig';
-import { supabase } from '@/integrations/supabase/client';
 
 // Lazy load all slide components
 const slideComponents = {

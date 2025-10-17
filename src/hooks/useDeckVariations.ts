@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/integrations/firebase/client';
+import { 
+  collection, 
+  doc,
+  getDocs, 
+  addDoc, 
+  updateDoc, 
+  deleteDoc, 
+  query, 
+  where,
+  orderBy,
+  Timestamp 
+} from 'firebase/firestore';
 import { toast } from '@/hooks/use-toast';
+import type { DeckVariationWithSections } from '@/integrations/firebase/types';
 
-export interface DeckVariation {
-  id: string;
-  name: string;
-  user_id: string | null;
-  is_default: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface DeckVariationWithSections extends DeckVariation {
-  sections: string[];
-}
+export type { DeckVariationWithSections };
 
 export const useDeckVariations = () => {
   const [variations, setVariations] = useState<DeckVariationWithSections[]>([]);
@@ -25,27 +27,32 @@ export const useDeckVariations = () => {
       setLoading(true);
       
       // Fetch variations
-      const { data: variationsData, error: variationsError } = await supabase
-        .from('deck_variations')
-        .select('*')
-        .order('created_at', { ascending: true });
-
-      if (variationsError) throw variationsError;
-
+      const variationsQuery = query(
+        collection(db, 'deck_variations'),
+        orderBy('created_at', 'asc')
+      );
+      const variationsSnapshot = await getDocs(variationsQuery);
+      
       // Fetch sections for each variation
       const variationsWithSections: DeckVariationWithSections[] = [];
       
-      for (const variation of variationsData || []) {
-        const { data: sectionsData, error: sectionsError } = await supabase
-          .from('deck_variation_sections')
-          .select('section_id')
-          .eq('deck_variation_id', variation.id);
-
-        if (sectionsError) throw sectionsError;
-
+      for (const variationDoc of variationsSnapshot.docs) {
+        const variationData = variationDoc.data();
+        
+        // Fetch sections for this variation
+        const sectionsQuery = query(
+          collection(db, 'deck_variation_sections'),
+          where('deck_variation_id', '==', variationDoc.id)
+        );
+        const sectionsSnapshot = await getDocs(sectionsQuery);
+        
         variationsWithSections.push({
-          ...variation,
-          sections: sectionsData?.map(s => s.section_id) || []
+          id: variationDoc.id,
+          name: variationData.name,
+          is_default: variationData.is_default || false,
+          created_at: variationData.created_at,
+          updated_at: variationData.updated_at,
+          sections: sectionsSnapshot.docs.map(doc => doc.data().section_id)
         });
       }
 
@@ -83,26 +90,26 @@ export const useDeckVariations = () => {
 
   const createVariation = async (name: string, sections: string[]) => {
     try {
-      const { data: variation, error: variationError } = await supabase
-        .from('deck_variations')
-        .insert([{ name, user_id: null }])
-        .select()
-        .single();
-
-      if (variationError) throw variationError;
+      const now = new Date().toISOString();
+      
+      // Create variation document
+      const variationRef = await addDoc(collection(db, 'deck_variations'), {
+        name,
+        is_default: false,
+        created_at: now,
+        updated_at: now
+      });
 
       // Insert sections
       if (sections.length > 0) {
-        const { error: sectionsError } = await supabase
-          .from('deck_variation_sections')
-          .insert(
-            sections.map(sectionId => ({
-              deck_variation_id: variation.id,
-              section_id: sectionId
-            }))
-          );
-
-        if (sectionsError) throw sectionsError;
+        const sectionPromises = sections.map(sectionId => 
+          addDoc(collection(db, 'deck_variation_sections'), {
+            deck_variation_id: variationRef.id,
+            section_id: sectionId,
+            created_at: now
+          })
+        );
+        await Promise.all(sectionPromises);
       }
 
       await fetchVariations();
@@ -112,7 +119,7 @@ export const useDeckVariations = () => {
         description: "Deck variation created successfully",
       });
 
-      return variation;
+      return { id: variationRef.id, name };
     } catch (error) {
       console.error('Error creating variation:', error);
       toast({
@@ -126,34 +133,34 @@ export const useDeckVariations = () => {
 
   const updateVariation = async (id: string, name: string, sections: string[]) => {
     try {
+      const now = new Date().toISOString();
+      
       // Update variation name
-      const { error: variationError } = await supabase
-        .from('deck_variations')
-        .update({ name })
-        .eq('id', id);
-
-      if (variationError) throw variationError;
+      const variationRef = doc(db, 'deck_variations', id);
+      await updateDoc(variationRef, { 
+        name,
+        updated_at: now
+      });
 
       // Delete existing sections
-      const { error: deleteError } = await supabase
-        .from('deck_variation_sections')
-        .delete()
-        .eq('deck_variation_id', id);
-
-      if (deleteError) throw deleteError;
+      const sectionsQuery = query(
+        collection(db, 'deck_variation_sections'),
+        where('deck_variation_id', '==', id)
+      );
+      const sectionsSnapshot = await getDocs(sectionsQuery);
+      const deletePromises = sectionsSnapshot.docs.map(doc => deleteDoc(doc.ref));
+      await Promise.all(deletePromises);
 
       // Insert new sections
       if (sections.length > 0) {
-        const { error: sectionsError } = await supabase
-          .from('deck_variation_sections')
-          .insert(
-            sections.map(sectionId => ({
-              deck_variation_id: id,
-              section_id: sectionId
-            }))
-          );
-
-        if (sectionsError) throw sectionsError;
+        const insertPromises = sections.map(sectionId =>
+          addDoc(collection(db, 'deck_variation_sections'), {
+            deck_variation_id: id,
+            section_id: sectionId,
+            created_at: now
+          })
+        );
+        await Promise.all(insertPromises);
       }
 
       await fetchVariations();
@@ -174,26 +181,27 @@ export const useDeckVariations = () => {
 
   const updateVariationSections = async (id: string, sections: string[]) => {
     try {
+      const now = new Date().toISOString();
+      
       // Delete existing sections
-      const { error: deleteError } = await supabase
-        .from('deck_variation_sections')
-        .delete()
-        .eq('deck_variation_id', id);
-
-      if (deleteError) throw deleteError;
+      const sectionsQuery = query(
+        collection(db, 'deck_variation_sections'),
+        where('deck_variation_id', '==', id)
+      );
+      const sectionsSnapshot = await getDocs(sectionsQuery);
+      const deletePromises = sectionsSnapshot.docs.map(doc => deleteDoc(doc.ref));
+      await Promise.all(deletePromises);
 
       // Insert new sections
       if (sections.length > 0) {
-        const { error: sectionsError } = await supabase
-          .from('deck_variation_sections')
-          .insert(
-            sections.map(sectionId => ({
-              deck_variation_id: id,
-              section_id: sectionId
-            }))
-          );
-
-        if (sectionsError) throw sectionsError;
+        const insertPromises = sections.map(sectionId =>
+          addDoc(collection(db, 'deck_variation_sections'), {
+            deck_variation_id: id,
+            section_id: sectionId,
+            created_at: now
+          })
+        );
+        await Promise.all(insertPromises);
       }
 
       // Update local state
@@ -217,12 +225,28 @@ export const useDeckVariations = () => {
 
   const deleteVariation = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('deck_variations')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
+      // Delete the variation document (cascade deletes handled by app)
+      // First delete related sections
+      const sectionsQuery = query(
+        collection(db, 'deck_variation_sections'),
+        where('deck_variation_id', '==', id)
+      );
+      const sectionsSnapshot = await getDocs(sectionsQuery);
+      const sectionDeletePromises = sectionsSnapshot.docs.map(doc => deleteDoc(doc.ref));
+      await Promise.all(sectionDeletePromises);
+      
+      // Delete related slide orders
+      const ordersQuery = query(
+        collection(db, 'deck_variation_slide_orders'),
+        where('deck_variation_id', '==', id)
+      );
+      const ordersSnapshot = await getDocs(ordersQuery);
+      const orderDeletePromises = ordersSnapshot.docs.map(doc => deleteDoc(doc.ref));
+      await Promise.all(orderDeletePromises);
+      
+      // Delete the variation itself
+      const variationRef = doc(db, 'deck_variations', id);
+      await deleteDoc(variationRef);
 
       await fetchVariations();
       

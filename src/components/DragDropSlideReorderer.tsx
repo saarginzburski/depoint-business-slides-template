@@ -23,7 +23,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { GripVertical, Save, X } from 'lucide-react';
 import { slideConfig } from '@/pages/slides/slideConfig';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/integrations/firebase/client';
+import { collection, addDoc, getDocs, deleteDoc, query, where, orderBy } from 'firebase/firestore';
 import { toast } from '@/hooks/use-toast';
 
 interface Section {
@@ -169,13 +170,21 @@ export const DragDropSlideReorderer: React.FC<DragDropSlideReordererProps> = ({
 
   const loadSlideOrders = async () => {
     try {
-      const { data: orders, error } = await supabase
-        .from('deck_variation_slide_orders')
-        .select('*')
-        .eq('deck_variation_id', variationId)
-        .order('order_index');
-
-      if (error) throw error;
+      const ordersQuery = query(
+        collection(db, 'deck_variation_slide_orders'),
+        where('deck_variation_id', '==', variationId),
+        orderBy('order_index', 'asc')
+      );
+      const ordersSnapshot = await getDocs(ordersQuery);
+      
+      const orders = ordersSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          slide_id: data.slide_id,
+          section_id: data.section_id,
+          order_index: data.order_index
+        };
+      });
 
       // Initialize with default section assignments
       const initialSections: Record<string, { id: number; name: string; title: string; }[]> = {};
@@ -235,31 +244,35 @@ export const DragDropSlideReorderer: React.FC<DragDropSlideReordererProps> = ({
       setSaving(true);
 
       // Delete existing orders
-      await supabase
-        .from('deck_variation_slide_orders')
-        .delete()
-        .eq('deck_variation_id', variationId);
+      const ordersQuery = query(
+        collection(db, 'deck_variation_slide_orders'),
+        where('deck_variation_id', '==', variationId)
+      );
+      const ordersSnapshot = await getDocs(ordersQuery);
+      const deletePromises = ordersSnapshot.docs.map(doc => deleteDoc(doc.ref));
+      await Promise.all(deletePromises);
 
       // Create new orders
-      const newOrders: { deck_variation_id: string; slide_id: number; section_id: string; order_index: number; }[] = [];
+      const now = new Date().toISOString();
+      const insertPromises: Promise<any>[] = [];
       
       Object.entries(sectionSlides).forEach(([sectionId, slides]) => {
         slides.forEach((slide, index) => {
-          newOrders.push({
-            deck_variation_id: variationId,
-            slide_id: slide.id,
-            section_id: sectionId,
-            order_index: index
-          });
+          insertPromises.push(
+            addDoc(collection(db, 'deck_variation_slide_orders'), {
+              deck_variation_id: variationId,
+              slide_id: slide.id,
+              section_id: sectionId,
+              order_index: index,
+              created_at: now,
+              updated_at: now
+            })
+          );
         });
       });
 
-      if (newOrders.length > 0) {
-        const { error } = await supabase
-          .from('deck_variation_slide_orders')
-          .insert(newOrders);
-
-        if (error) throw error;
+      if (insertPromises.length > 0) {
+        await Promise.all(insertPromises);
       }
 
       toast({
