@@ -396,7 +396,22 @@ const DeckOverviewNew = () => {
   };
   
   const handlePrintDeck = () => {
-    navigate('/printable');
+    // Get all visible slides excluding hidden sections
+    const visibleSlides = allSlides.filter(s => 
+      s.status === 'visible' && !hiddenSections.has(s.section)
+    );
+    
+    if (visibleSlides.length > 0) {
+      // Navigate to print view with slide IDs
+      const slideIds = visibleSlides.map(s => s.id).join(',');
+      navigate(`/print-deck?slides=${slideIds}&deckName=${encodeURIComponent(deckName)}`);
+    } else {
+      toast({
+        title: 'No slides to print',
+        description: 'All sections are hidden or no visible slides available',
+        variant: 'destructive',
+      });
+    }
   };
   
   return (
