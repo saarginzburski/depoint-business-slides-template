@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/integrations/firebase/client';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, addDoc, deleteDoc } from 'firebase/firestore';
 import { slideConfig } from '@/pages/slides/slideConfig';
 import { toast } from '@/hooks/use-toast';
 
@@ -120,11 +120,104 @@ export const useSlideOrdering = (variationId: string | null, sections: Section[]
     }
   };
 
+  const updateSlideOrders = async (newOrders: Record<string, typeof slideConfig>) => {
+    if (!variationId) {
+      return;
+    }
+
+    try {
+      // Delete existing orders
+      const ordersQuery = query(
+        collection(db, 'deck_variation_slide_orders'),
+        where('deck_variation_id', '==', variationId)
+      );
+      const ordersSnapshot = await getDocs(ordersQuery);
+      const deletePromises = ordersSnapshot.docs.map(doc => deleteDoc(doc.ref));
+      await Promise.all(deletePromises);
+
+      // Create new orders
+      const now = new Date().toISOString();
+      const insertPromises: Promise<any>[] = [];
+      
+      Object.entries(newOrders).forEach(([sectionId, slides]) => {
+        slides.forEach((slide, index) => {
+          insertPromises.push(
+            addDoc(collection(db, 'deck_variation_slide_orders'), {
+              deck_variation_id: variationId,
+              slide_id: slide.id,
+              section_id: sectionId,
+              order_index: index,
+              created_at: now,
+              updated_at: now
+            })
+          );
+        });
+      });
+
+      if (insertPromises.length > 0) {
+        await Promise.all(insertPromises);
+      }
+
+      await loadSlideOrders();
+    } catch (error) {
+      console.error('Error updating slide orders:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update slide orders",
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
+
+  const moveSlideToSection = async (slideId: string, targetSection: string) => {
+    if (!variationId) {
+      return;
+    }
+
+    try {
+      const orderedSections = getOrderedSlidesBySection();
+      const slideIdNum = parseInt(slideId);
+      
+      // Find and remove the slide from its current section
+      let slideData: typeof slideConfig[0] | null = null;
+      Object.entries(orderedSections).forEach(([sectionId, slides]) => {
+        const index = slides.findIndex(s => s.id === slideIdNum);
+        if (index !== -1) {
+          slideData = slides[index];
+          orderedSections[sectionId] = slides.filter(s => s.id !== slideIdNum);
+        }
+      });
+
+      // If slide not found in ordered sections, get from slideConfig
+      if (!slideData) {
+        slideData = slideConfig.find(s => s.id === slideIdNum) || null;
+      }
+
+      // Add to target section
+      if (slideData && orderedSections[targetSection]) {
+        orderedSections[targetSection].push(slideData);
+      }
+
+      await updateSlideOrders(orderedSections);
+    } catch (error) {
+      console.error('Error moving slide to section:', error);
+      toast({
+        title: "Error",
+        description: "Failed to move slide",
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
+
   return {
     slideOrders,
     loading,
     getOrderedSlidesBySection,
     getVisibleSlides,
+    updateSlideOrders,
+    moveSlideToSection,
     refetch: loadSlideOrders
   };
 };

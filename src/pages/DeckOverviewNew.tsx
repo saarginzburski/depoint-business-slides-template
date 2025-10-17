@@ -15,6 +15,7 @@ import { SlideContextMenu } from '@/components/SlideContextMenu';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { Slide, Variant } from '@/types/deck';
 import { toast } from '@/hooks/use-toast';
+import { slideConfig } from '@/pages/slides/slideConfig';
 
 // Lazy load all slide components for thumbnails
 const slideComponents = {
@@ -113,15 +114,29 @@ const DeckOverviewNew = () => {
       description: 'Hidden slides',
       color: 'gray',
       slides: [],
+    },
+    {
+      id: 'archived',
+      name: 'Archived',
+      description: 'Archived slides',
+      color: 'gray',
+      slides: [],
     }
   ];
 
   // Hooks
   const { currentVariation, variations, setCurrentVariation } = useDeckVariations();
-  const { getOrderedSlidesBySection, getVisibleSlides, refetch } = useSlideOrdering(
+  const { getOrderedSlidesBySection, getVisibleSlides, updateSlideOrders, moveSlideToSection, refetch } = useSlideOrdering(
     currentVariantId,
     sections
   );
+  
+  // Sync currentVariantId with currentVariation from hook
+  useEffect(() => {
+    if (currentVariation && !currentVariantId) {
+      setCurrentVariantId(currentVariation.id);
+    }
+  }, [currentVariation, currentVariantId]);
   
   // Get ordered slides from Firebase
   const orderedSlidesBySection = getOrderedSlidesBySection();
@@ -133,22 +148,35 @@ const DeckOverviewNew = () => {
     // Go through each section and add its slides
     Object.entries(orderedSlidesBySection).forEach(([sectionId, sectionSlides]) => {
       sectionSlides.forEach((slideConfig, index) => {
+        // Determine status based on section
+        let status: 'visible' | 'hidden' | 'archived' = 'visible';
+        if (sectionId === 'hidden') {
+          status = 'hidden';
+        } else if (sectionId === 'archived') {
+          status = 'archived';
+        }
+        
         slides.push({
           id: slideConfig.id.toString(),
+          deckId: currentVariantId || '',
+          variantId: currentVariantId || '',
           title: slideConfig.title,
+          name: slideConfig.name,
+          component: slideConfig.component,
           section: sectionId as any,
-          status: 'visible' as 'visible' | 'hidden' | 'archived',
+          status: status,
           order: index,
           thumbnailUrl: `/placeholder.svg`,
           tags: slideConfig.tags || [],
+          thumbUrl: `/placeholder.svg`,
+          updatedAt: new Date().toISOString(),
           createdAt: new Date(),
-          updatedAt: new Date(),
         });
       });
     });
     
     return slides;
-  }, [orderedSlidesBySection]);
+  }, [orderedSlidesBySection, currentVariantId]);
   
   // Filter slides by active section and search query
   const getFilteredSlides = (): Slide[] => {
@@ -485,6 +513,44 @@ const DeckOverviewNew = () => {
                 onContextMenu={handleContextMenu}
                 viewMode={viewMode}
                 showCheckboxes={selectedSlideIds.size > 0}
+                slideComponents={slideComponents}
+                onReorder={async (reorderedSlides) => {
+                  if (!currentVariantId) {
+                    toast({
+                      title: 'Error',
+                      description: 'No variant selected',
+                      variant: 'destructive',
+                    });
+                    return;
+                  }
+                  
+                  try {
+                    // Get current sections
+                    const orderedSections = getOrderedSlidesBySection();
+                    
+                    // Convert reordered slides back to slide config format
+                    const slideConfigMap = new Map(slideConfig.map(s => [s.id, s]));
+                    
+                    // Update only the current section with new order
+                    const reorderedSection = reorderedSlides.map(slide => 
+                      slideConfigMap.get(parseInt(slide.id))
+                    ).filter(Boolean) as typeof slideConfig;
+                    
+                    orderedSections[activeSection] = reorderedSection;
+                    
+                    await updateSlideOrders(orderedSections);
+                    toast({
+                      title: 'Slides reordered',
+                      description: 'The new order has been saved',
+                    });
+                  } catch (error) {
+                    toast({
+                      title: 'Error',
+                      description: 'Failed to reorder slides',
+                      variant: 'destructive',
+                    });
+                  }
+                }}
               />
             )}
           </div>
@@ -581,19 +647,47 @@ const DeckOverviewNew = () => {
       {/* Context Menu */}
       {contextMenu && (
         <SlideContextMenu
-          position={{ x: contextMenu.x, y: contextMenu.y }}
-          slideId={contextMenu.slideId}
-          isMultiSelect={selectedSlideIds.size > 1}
+          x={contextMenu.x}
+          y={contextMenu.y}
+          isHidden={allSlides.find(s => s.id === contextMenu.slideId)?.status === 'hidden'}
           onClose={() => setContextMenu(null)}
-          onAddToDeck={() => {
-            toast({ title: 'Slide added to deck' });
-            setContextMenu(null);
-            refetch();
+          onAddToDeck={async () => {
+            try {
+              if (contextMenu) {
+                await moveSlideToSection(contextMenu.slideId, 'main');
+                toast({ title: 'Slide added to deck' });
+              }
+            } catch (error) {
+              // Error already handled in hook
+            } finally {
+              setContextMenu(null);
+            }
           }}
-          onRemoveFromDeck={() => {
-            toast({ title: 'Slide removed from deck' });
-            setContextMenu(null);
-            refetch();
+          onRemoveFromDeck={async () => {
+            if (!currentVariantId) {
+              toast({
+                title: 'Error',
+                description: 'No variant selected',
+                variant: 'destructive',
+              });
+              setContextMenu(null);
+              return;
+            }
+            
+            try {
+              if (contextMenu) {
+                await moveSlideToSection(contextMenu.slideId, 'hidden');
+                toast({ title: 'Slide removed from deck' });
+              }
+            } catch (error) {
+              toast({
+                title: 'Error',
+                description: 'Failed to remove slide',
+                variant: 'destructive',
+              });
+            } finally {
+              setContextMenu(null);
+            }
           }}
           onDuplicate={() => {
             toast({ title: 'Slide duplicated' });
@@ -602,6 +696,12 @@ const DeckOverviewNew = () => {
           }}
           onRename={() => {
             toast({ title: 'Rename slide' });
+            setContextMenu(null);
+          }}
+          onPreview={() => {
+            if (contextMenu) {
+              navigate(`/deck/slide/${contextMenu.slideId}`);
+            }
             setContextMenu(null);
           }}
           onDelete={() => {

@@ -149,14 +149,14 @@ export const SlideContextMenu: React.FC<SlideContextMenuProps> = ({
       {/* Context Menu */}
       <div
         ref={menuRef}
-        className="fixed z-50 min-w-[220px] bg-surface rounded-lg shadow-elevation-3 border border-neutral-200 py-2 animate-fade-in"
+        className="fixed z-50 min-w-[220px] bg-white rounded-lg shadow-elevation-3 border border-neutral-200 py-2 animate-fade-in"
         style={{ left: x, top: y }}
       >
         {menuItems.map((item, index) => {
           const Icon = item.icon;
           
           return (
-            <React.Fragment key={item.id}>
+            <div key={item.id}>
               {/* Divider before delete */}
               {index === menuItems.length - 1 && (
                 <div className="my-1 border-t border-neutral-200" />
@@ -180,7 +180,7 @@ export const SlideContextMenu: React.FC<SlideContextMenuProps> = ({
                   </kbd>
                 )}
               </button>
-            </React.Fragment>
+            </div>
           );
         })}
       </div>

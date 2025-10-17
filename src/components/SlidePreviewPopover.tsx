@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Suspense } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -8,15 +8,18 @@ interface SlidePreviewPopoverProps {
     title: string;
     section: string;
     tags: string[];
+    component: string;
   };
   position: { x: number; y: number };
   onClose: () => void;
+  slideComponent?: React.LazyExoticComponent<any>;
 }
 
 export const SlidePreviewPopover: React.FC<SlidePreviewPopoverProps> = ({
   slide,
   position,
   onClose,
+  slideComponent: SlideComponent,
 }) => {
   const popoverRef = useRef<HTMLDivElement>(null);
 
@@ -57,31 +60,48 @@ export const SlidePreviewPopover: React.FC<SlidePreviewPopoverProps> = ({
 
   return (
     <>
-      {/* Invisible backdrop to detect mouse leave */}
-      <div 
-        className="fixed inset-0 z-30 pointer-events-auto" 
-        onClick={onClose}
-      />
-
-      {/* Preview Popover */}
+      {/* Preview Popover - No backdrop, just the popover */}
       <Card
         ref={popoverRef}
-        className="fixed z-40 w-80 shadow-elevation-5 border-2 border-primary-600 bg-white animate-fade-in"
+        className="fixed z-50 w-96 shadow-elevation-5 border-2 border-primary-600 bg-white animate-fade-in"
         style={{ 
           top: `${adjustedPosition.y}px`, 
           left: `${adjustedPosition.x}px` 
         }}
-        onMouseEnter={(e) => e.stopPropagation()}
+        onMouseLeave={onClose}
       >
-        {/* Slide Preview Placeholder */}
-        <div className="relative w-full aspect-[16/9] bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center border-b border-neutral-200">
-          <div className="text-center">
-            <div className="text-6xl font-bold text-primary-600 mb-2">
-              {slide.id}
-            </div>
-            <div className="text-sm text-primary-700 uppercase tracking-wide">
-              Preview
-            </div>
+        {/* Slide Preview - Larger than thumbnail */}
+        <div className="relative w-full aspect-[16/9] bg-neutral-900 overflow-hidden border-b border-neutral-200">
+          <div className="w-full h-full transform scale-[0.35] origin-top-left" style={{ width: '285%', height: '285%' }}>
+            <Suspense
+              fallback={
+                <div className="w-full h-full bg-neutral-800 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-6xl font-bold text-neutral-600 mb-2">
+                      {slide.id}
+                    </div>
+                    <div className="text-sm text-neutral-500 uppercase tracking-wide">
+                      Loading...
+                    </div>
+                  </div>
+                </div>
+              }
+            >
+              {SlideComponent ? (
+                <SlideComponent />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-6xl font-bold text-neutral-600 mb-2">
+                      {slide.id}
+                    </div>
+                    <div className="text-sm text-neutral-500 uppercase tracking-wide">
+                      Preview
+                    </div>
+                  </div>
+                </div>
+              )}
+            </Suspense>
           </div>
         </div>
 
