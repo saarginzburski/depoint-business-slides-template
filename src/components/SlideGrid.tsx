@@ -177,7 +177,7 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
   // Grid view
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4" role="list" aria-label="Slides">
         {slides.map((slide) => {
           const isSelected = selectedSlideIds.has(slide.id);
           const isHovered = hoveredSlideId === slide.id;
@@ -195,6 +195,10 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
               onContextMenu={(e) => handleContextMenu(slide.id, e)}
               onMouseEnter={(e) => handleMouseEnter(slide.id, e)}
               onMouseLeave={handleMouseLeave}
+              role="listitem"
+              aria-label={`${slide.title}${isSelected ? ', selected' : ''}`}
+              aria-selected={isSelected}
+              tabIndex={0}
             >
               {/* Drag Handle (top-left corner) */}
               <div className="absolute top-2 left-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing">
