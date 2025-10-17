@@ -349,17 +349,19 @@ const DeckOverviewNew = () => {
             
             <div className="border-t border-neutral-200">
               <SectionsNav
-                activeSection={activeSection}
-                onSelectSection={(section) => setActiveSection(section as Section)}
-                mainCount={allSlides.filter(s => s.section === 'main' && s.status === 'visible').length}
-                demoCount={allSlides.filter(s => s.section === 'demo' && s.status === 'visible').length}
-                appendixCount={allSlides.filter(s => s.section === 'appendix' && s.status === 'visible').length}
-                hiddenCount={hiddenSlidesCount}
-                archivedCount={archivedSlidesCount}
-                onDrop={(section, slideIds) => {
+                sections={[
+                  { key: 'main', label: 'Main Deck', count: allSlides.filter(s => s.section === 'main' && s.status === 'visible').length },
+                  { key: 'demo', label: 'Demo', count: allSlides.filter(s => s.section === 'demo' && s.status === 'visible').length },
+                  { key: 'appendix', label: 'Appendices', count: allSlides.filter(s => s.section === 'appendix' && s.status === 'visible').length },
+                  { key: 'hidden', label: 'Hidden', count: hiddenSlidesCount },
+                  { key: 'archived', label: 'Archived', count: archivedSlidesCount },
+                ]}
+                activeSectionKey={activeSection as any}
+                onSelect={(key) => setActiveSection(key as Section)}
+                onDrop={(slideIds, targetSection) => {
                   toast({
                     title: 'Slides moved',
-                    description: `Moved ${slideIds.length} slides to ${section}`,
+                    description: `Moved ${slideIds.length} slides to ${targetSection}`,
                   });
                   refetch();
                 }}
@@ -399,28 +401,61 @@ const DeckOverviewNew = () => {
       <HiddenSlidesDrawer
         isOpen={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        activeTab="hidden"
-        onTabChange={() => {}}
-        slides={allSlides.filter(s => s.status === 'hidden' || s.status === 'archived')}
-        selectedSlideIds={Array.from(selectedSlideIds)}
-        onToggleSelection={(id) => toggleSlideSelection(id, true)}
-        searchQuery={''}
-        onSearchChange={() => {}}
-        onRestoreSlides={async (ids) => {
+        hiddenSlides={allSlides
+          .filter(s => s.status === 'hidden')
+          .map(s => ({
+            id: parseInt(s.id),
+            name: s.title,
+            title: s.title,
+            component: `Slide${s.id}`,
+            sectionId: s.section,
+            lastEdited: s.updatedAt,
+            hiddenAt: s.updatedAt,
+          }))}
+        archivedSlides={allSlides
+          .filter(s => s.status === 'archived')
+          .map(s => ({
+            id: parseInt(s.id),
+            name: s.title,
+            title: s.title,
+            component: `Slide${s.id}`,
+            sectionId: s.section,
+            lastEdited: s.updatedAt,
+            hiddenAt: s.updatedAt,
+          }))}
+        allSlides={allSlides.map(s => ({
+          id: parseInt(s.id),
+          name: s.title,
+          title: s.title,
+          component: `Slide${s.id}`,
+          sectionId: s.section,
+          lastEdited: s.updatedAt,
+          hiddenAt: s.updatedAt,
+        }))}
+        onRestoreSlides={(slideIds, targetSection) => {
           toast({
             title: 'Slides restored',
-            description: `Restored ${ids.length} slides`,
+            description: `Restored ${slideIds.length} slides to ${targetSection}`,
           });
           refetch();
         }}
-        onDeleteSlides={async (ids) => {
+        onDeleteSlides={(slideIds) => {
           toast({
             title: 'Slides deleted',
-            description: `Deleted ${ids.length} slides`,
+            description: `Deleted ${slideIds.length} slides`,
             variant: 'destructive',
           });
           refetch();
         }}
+        onPreviewSlide={(slideId) => {
+          navigate(`/deck/slide/${slideId}`);
+        }}
+        slideComponents={{}}
+        sections={[
+          { id: 'main', name: 'Main Deck' },
+          { id: 'demo', name: 'Demo' },
+          { id: 'appendix', name: 'Appendices' },
+        ]}
       />
       
       {/* Command Palette */}
