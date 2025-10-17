@@ -2,6 +2,14 @@
 
 This project is configured to deploy to Firebase Hosting.
 
+## ⚠️ IMPORTANT: Hosting Site Configuration
+
+**This project ALWAYS deploys to the specific hosting site: `depoint-deck-editor`**
+
+- Firebase Project: `depoint-project-2024`
+- Hosting Site: `depoint-deck-editor` (NOT the default site)
+- This is configured in `.firebaserc` and `firebase.json`
+
 ## Prerequisites
 
 1. **Firebase CLI** installed globally (already done)
@@ -11,7 +19,8 @@ This project is configured to deploy to Firebase Hosting.
 
 2. **Firebase Project** created
    - Project ID: `depoint-project-2024`
-   - Already configured in `.firebaserc`
+   - Hosting Site: `depoint-deck-editor`
+   - Already configured in `.firebaserc` and `firebase.json`
 
 ## First Time Setup
 
@@ -50,8 +59,8 @@ npm run deploy
 
 This will:
 1. Build the production version (`vite build`)
-2. Deploy to Firebase Hosting
-3. Your site will be live at: `https://depoint-project-2024.web.app`
+2. Deploy to Firebase Hosting (site: `depoint-deck-editor`)
+3. Your site will be live at: `https://depoint-deck-editor.web.app`
 
 ### Preview Deployment
 
@@ -71,11 +80,11 @@ If you prefer to run commands separately:
 # 1. Build the project
 npm run build
 
-# 2. Deploy to Firebase Hosting
-firebase deploy --only hosting
+# 2. Deploy to Firebase Hosting (depoint-deck-editor site)
+firebase deploy --only hosting:deck-editor
 
 # 3. Or deploy to a preview channel
-firebase hosting:channel:deploy preview
+firebase hosting:channel:deploy preview --only deck-editor
 ```
 
 ## Configuration Files
@@ -113,6 +122,14 @@ firebase functions:log
 # Rollback to previous version (via console)
 # Go to: https://console.firebase.google.com/project/depoint-project-2024/hosting
 ```
+
+## 🌐 Expected URLs
+
+After deployment to `depoint-deck-editor` site:
+- **Production**: `https://depoint-deck-editor.web.app`
+- **Alternative**: `https://depoint-deck-editor.firebaseapp.com`
+
+**⚠️ Note**: This is NOT the default site URL. We're using a specific hosting site called `depoint-deck-editor`.
 
 ## Custom Domain Setup
 
@@ -180,7 +197,7 @@ npm run build
 ### Deployment takes too long
 Firebase Hosting usually deploys in 30-60 seconds. If it's taking longer:
 - Check your internet connection
-- Try deploying only hosting: `firebase deploy --only hosting`
+- Try deploying only the deck-editor site: `firebase deploy --only hosting:deck-editor`
 
 ## Support
 

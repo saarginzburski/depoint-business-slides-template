@@ -1,5 +1,7 @@
 {
   "hosting": {
+    "target": "deck-editor",
+    "site": "depoint-deck-editor",
     "public": "dist",
     "ignore": [
       "firebase.json",

@@ -1,6 +1,15 @@
 {
   "projects": {
     "default": "depoint-project-2024"
+  },
+  "targets": {
+    "depoint-project-2024": {
+      "hosting": {
+        "deck-editor": [
+          "depoint-deck-editor"
+        ]
+      }
+    }
   }
 }
 
