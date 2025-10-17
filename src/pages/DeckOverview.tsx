@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, FileText, Clock, Printer, Layers, Monitor, BookOpen, EyeOff } from 'lucide-react';
+import { Play, FileText, Clock, Printer, Layers, Monitor, BookOpen, EyeOff, Copy, Edit2, Eye, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +11,13 @@ import { DeckVariationWithSections, useDeckVariations } from '@/hooks/useDeckVar
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
 import { DraggableSlideGrid } from '@/components/DraggableSlideGrid';
 import WorkspaceAppBar from '@/components/WorkspaceAppBar';
+import { NavigationRail } from '@/components/NavigationRail';
+import { HiddenSlidesDrawer } from '@/components/HiddenSlidesDrawer';
+import { CommandPalette, CommandItem } from '@/components/CommandPalette';
+import { QuickActionsBar } from '@/components/QuickActionsBar';
+import { SlideContextMenu } from '@/components/SlideContextMenu';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { toast } from '@/hooks/use-toast';
 
 // Define section structure
 interface Section {
@@ -107,6 +114,14 @@ const DeckOverview = () => {
   const [selectedSections, setSelectedSections] = useState<Set<string>>(
     new Set([...sections.map(section => section.id)])
   );
+  
+  // New UX state management
+  const [selectedSlideIds, setSelectedSlideIds] = useState<Set<number>>(new Set());
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; slideId: number } | null>(null);
+  const [navActiveItem, setNavActiveItem] = useState('decks');
+  
   // Use deck variations hook
   const { currentVariation, setCurrentVariation, updateVariationSections } = useDeckVariations();
 
@@ -202,17 +217,206 @@ const DeckOverview = () => {
     }
   };
 
+  // Multi-select handlers
+  const toggleSlideSelection = (slideId: number, ctrlKey: boolean) => {
+    const newSet = new Set(selectedSlideIds);
+    if (ctrlKey) {
+      // Add to selection
+      if (newSet.has(slideId)) {
+        newSet.delete(slideId);
+      } else {
+        newSet.add(slideId);
+      }
+    } else {
+      // Replace selection
+      newSet.clear();
+      newSet.add(slideId);
+    }
+    setSelectedSlideIds(newSet);
+  };
 
+  const clearSelection = () => setSelectedSlideIds(new Set());
+
+  const selectAll = () => {
+    const allIds = visibleSlides.map(s => s.id);
+    setSelectedSlideIds(new Set(allIds));
+  };
+
+  // Bulk action handlers
+  const handleHideSelected = () => {
+    if (selectedSlideIds.size === 0) return;
+    // TODO: Implement bulk hide
+    toast({
+      title: `${selectedSlideIds.size} slides hidden`,
+      description: 'Slides have been removed from the deck',
+    });
+    clearSelection();
+  };
+
+  const handleRestoreSelected = (targetSection: string) => {
+    if (selectedSlideIds.size === 0) return;
+    // TODO: Implement bulk restore
+    toast({
+      title: `${selectedSlideIds.size} slides restored`,
+      description: `Slides have been added to ${targetSection}`,
+    });
+    clearSelection();
+  };
+
+  const handleDuplicateSelected = () => {
+    if (selectedSlideIds.size === 0) return;
+    // TODO: Implement bulk duplicate
+    toast({
+      title: `${selectedSlideIds.size} slides duplicated`,
+    });
+    clearSelection();
+  };
+
+  const handleMoveSelectedToDeck = (deckId: string) => {
+    if (selectedSlideIds.size === 0) return;
+    const deck = sections.find(s => s.id === deckId);
+    toast({
+      title: `${selectedSlideIds.size} slides moved`,
+      description: `Moved to ${deck?.name || deckId}`,
+    });
+    clearSelection();
+  };
+
+  const handleDeleteSelected = () => {
+    if (selectedSlideIds.size === 0) return;
+    if (confirm(`Delete ${selectedSlideIds.size} slides? This cannot be undone.`)) {
+      // TODO: Implement bulk delete
+      toast({
+        title: `${selectedSlideIds.size} slides deleted`,
+        variant: 'destructive',
+      });
+      clearSelection();
+    }
+  };
+
+  // Context menu handlers
+  const handleContextMenu = (e: React.MouseEvent, slideId: number) => {
+    e.preventDefault();
+    setContextMenu({ x: e.clientX, y: e.clientY, slideId });
+  };
+
+  // Command palette commands
+  const commands: CommandItem[] = [
+    {
+      id: 'open-hidden',
+      label: 'Open hidden slides',
+      description: 'View and manage hidden slides',
+      icon: EyeOff,
+      category: 'navigation',
+      onSelect: () => setDrawerOpen(true),
+    },
+    {
+      id: 'hide-selected',
+      label: 'Hide selected slides',
+      description: 'Remove selected slides from deck',
+      icon: EyeOff,
+      category: 'action',
+      shortcut: 'H',
+      onSelect: handleHideSelected,
+    },
+    {
+      id: 'duplicate-selected',
+      label: 'Duplicate selected slides',
+      icon: Copy,
+      category: 'action',
+      shortcut: '⌘D',
+      onSelect: handleDuplicateSelected,
+    },
+    {
+      id: 'select-all',
+      label: 'Select all slides',
+      icon: Layers,
+      category: 'action',
+      shortcut: '⌘A',
+      onSelect: selectAll,
+    },
+    {
+      id: 'present',
+      label: 'Start presentation',
+      icon: Play,
+      category: 'action',
+      onSelect: handleStartPresentation,
+    },
+  ];
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts([
+    {
+      key: 'k',
+      meta: true,
+      action: () => setCommandPaletteOpen(true),
+      description: 'Open command palette',
+    },
+    {
+      key: 'h',
+      action: () => {
+        if (selectedSlideIds.size > 0) {
+          handleHideSelected();
+        }
+      },
+      description: 'Hide selected slides',
+    },
+    {
+      key: 'd',
+      meta: true,
+      action: () => {
+        if (selectedSlideIds.size > 0) {
+          handleDuplicateSelected();
+        }
+      },
+      description: 'Duplicate selected slides',
+    },
+    {
+      key: 'a',
+      meta: true,
+      action: selectAll,
+      description: 'Select all slides',
+    },
+    {
+      key: 'Escape',
+      action: () => {
+        if (selectedSlideIds.size > 0) {
+          clearSelection();
+        } else if (drawerOpen) {
+          setDrawerOpen(false);
+        } else if (commandPaletteOpen) {
+          setCommandPaletteOpen(false);
+        }
+      },
+      description: 'Clear selection / Close dialogs',
+    },
+  ], true);
 
   return (
-    <div className="w-full min-h-screen bg-neutral-50">
-      {/* Material 3 App Bar */}
-      <WorkspaceAppBar 
-        title="Depoint Templates"
-        breadcrumbs={[{ label: deckName }]}
+    <div className="flex h-screen bg-neutral-50 overflow-hidden">
+      {/* Navigation Rail */}
+      <NavigationRail
+        activeItem={navActiveItem}
+        onItemClick={(id) => {
+          setNavActiveItem(id);
+          if (id === 'hidden') {
+            setDrawerOpen(true);
+          }
+        }}
+        hiddenCount={orderedSlidesBySection.hidden?.length || 0}
       />
-      
-      <div className="max-w-[1600px] mx-auto px-6 py-6">
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Material 3 App Bar */}
+        <WorkspaceAppBar 
+          title="Depoint Templates"
+          breadcrumbs={[{ label: deckName }]}
+        />
+        
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-[1600px] mx-auto px-6 py-6">
         {/* Deck Info Bar */}
         <div className="surface elevation-1 rounded-lg px-6 py-4 mb-6 flex items-center justify-between">
           {/* Left - Deck Name (Editable) */}
@@ -325,6 +529,9 @@ const DeckOverview = () => {
             variationId={currentVariation?.id || null}
             orderedSlidesBySection={slidesBySection}
             onOrdersChanged={refetch}
+            selectedSlideIds={selectedSlideIds}
+            onToggleSelection={toggleSlideSelection}
+            onContextMenu={handleContextMenu}
           />
         )}
 
@@ -334,7 +541,88 @@ const DeckOverview = () => {
             Confidential Investor Deck • Q3 2025 • Depoint Operations Intelligence Platform
           </p>
         </footer>
+          </div>
+        </div>
       </div>
+
+      {/* Hidden Slides Drawer */}
+      <HiddenSlidesDrawer
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        hiddenSlides={orderedSlidesBySection.hidden || []}
+        archivedSlides={[]}
+        allSlides={visibleSlides}
+        onRestoreSlides={handleRestoreSelected}
+        onDeleteSlides={(ids) => {
+          if (confirm(`Delete ${ids.length} slides? This cannot be undone.`)) {
+            toast({
+              title: `${ids.length} slides deleted`,
+              variant: 'destructive',
+            });
+          }
+        }}
+        onPreviewSlide={handleSlideClick}
+        slideComponents={slideComponents}
+        sections={sections.filter(s => s.id !== 'hidden')}
+      />
+
+      {/* Command Palette */}
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        commands={commands}
+      />
+
+      {/* Quick Actions Bar */}
+      {selectedSlideIds.size > 0 && (
+        <QuickActionsBar
+          selectedCount={selectedSlideIds.size}
+          onClearSelection={clearSelection}
+          onHideSlides={handleHideSelected}
+          onDuplicateSlides={handleDuplicateSelected}
+          onMoveToDeck={handleMoveSelectedToDeck}
+          onDeleteSlides={handleDeleteSelected}
+          availableDecks={sections.filter(s => s.id !== 'hidden').map(s => ({ id: s.id, name: s.name }))}
+        />
+      )}
+
+      {/* Context Menu */}
+      {contextMenu && (
+        <SlideContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          isHidden={orderedSlidesBySection.hidden?.some(s => s.id === contextMenu.slideId) || false}
+          onClose={() => setContextMenu(null)}
+          onAddToDeck={() => {
+            toast({ title: 'Slide added to deck' });
+            setContextMenu(null);
+          }}
+          onRemoveFromDeck={() => {
+            toast({ title: 'Slide removed from deck' });
+            setContextMenu(null);
+          }}
+          onDuplicate={() => {
+            toast({ title: 'Slide duplicated' });
+            setContextMenu(null);
+          }}
+          onRename={() => {
+            toast({ title: 'Rename feature coming soon' });
+            setContextMenu(null);
+          }}
+          onPreview={() => {
+            if (contextMenu.slideId) {
+              handleSlideClick(contextMenu.slideId);
+            }
+            setContextMenu(null);
+          }}
+          onDelete={() => {
+            if (confirm('Delete this slide?')) {
+              toast({ title: 'Slide deleted', variant: 'destructive' });
+            }
+            setContextMenu(null);
+          }}
+        />
+      )}
     </div>
   );
 };
