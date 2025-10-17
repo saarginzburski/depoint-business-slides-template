@@ -111,63 +111,77 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
     <Card
       ref={setNodeRef}
       style={style}
-      className={`group relative p-3 transition-all hover:shadow-md ${
-        isDragging ? 'opacity-50 scale-105 z-50' : 'hover:scale-105'
+      className={`group relative overflow-hidden rounded-xl border border-neutral-200 bg-surface transition-standard ${
+        isDragging ? 'opacity-40 shadow-elevation-2 scale-105' : 'hover:shadow-elevation-2 hover:border-neutral-300'
       }`}
     >
+      {/* Slide Preview */}
       <div 
-        className="w-full aspect-[16/9] bg-white rounded border mb-2 overflow-hidden cursor-pointer"
+        className="relative w-full aspect-[16/9] bg-neutral-50 overflow-hidden cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
           onSlideClick(slide.id);
         }}
       >
         <div className="w-full h-full transform scale-[0.2] origin-top-left" style={{ width: '500%', height: '500%' }}>
-          <Suspense fallback={<div className="w-full h-full bg-gray-100 flex items-center justify-center"><div className="animate-pulse text-gray-400">{slide.id}</div></div>}>
-            {SlideComponent ? <SlideComponent /> : <div className="w-full h-full bg-gray-100 flex items-center justify-center"><div className="text-gray-400 text-6xl font-bold">{slide.id}</div></div>}
+          <Suspense fallback={
+            <div className="w-full h-full bg-neutral-100 flex items-center justify-center">
+              <div className="animate-pulse text-neutral-400 text-6xl">{slide.id}</div>
+            </div>
+          }>
+            {SlideComponent ? (
+              <SlideComponent />
+            ) : (
+              <div className="w-full h-full bg-neutral-100 flex items-center justify-center">
+                <div className="text-neutral-400 text-6xl font-bold">{slide.id}</div>
+              </div>
+            )}
           </Suspense>
         </div>
+        
+        {/* Hover Overlay - Drive-style */}
+        <div className="absolute inset-0 bg-neutral-900/0 group-hover:bg-neutral-900/5 transition-standard pointer-events-none" />
       </div>
       
       {/* Slide Info */}
-      <div className="mb-2">
-        <h4 className="text-xs font-medium text-gray-900 truncate">{slide.name}</h4>
-        <p className="text-xs text-gray-500">Slide {slide.id}</p>
+      <div className="px-3 py-2 border-t border-neutral-200">
+        <h4 className="text-body-small font-medium text-neutral-900 truncate">{slide.name}</h4>
+        <p className="text-label-small text-neutral-600">Slide {slide.id}</p>
       </div>
 
-      {/* Actions Bar */}
-      <div className="flex items-center gap-2 pt-2 border-t">
+      {/* Actions Bar - Drive-style hover actions */}
+      <div className="flex items-center gap-1 px-2 py-2 border-t border-neutral-200 bg-surface">
         {/* Drag Handle */}
         <button
           {...listeners}
           {...attributes}
-          className="flex items-center gap-1 px-2 py-1 text-xs text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors cursor-grab active:cursor-grabbing"
+          className="flex items-center gap-1.5 px-2 py-1.5 text-label-small font-medium text-neutral-600 hover:text-primary hover:bg-primary/10 rounded-lg transition-standard cursor-grab active:cursor-grabbing"
           onClick={(e) => e.stopPropagation()}
           title="Drag to reorder"
         >
-          <GripVertical className="h-3 w-3" />
-          <span>Move</span>
+          <GripVertical className="h-4 w-4" />
+          <span>Reorder</span>
         </button>
 
         {/* Hide/Show Toggle */}
         <button
           onClick={handleToggleVisibility}
-          className={`flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors ${
+          className={`flex items-center gap-1.5 px-2 py-1.5 text-label-small font-medium rounded-lg transition-standard ${
             isHidden 
-              ? 'text-green-600 hover:text-green-900 hover:bg-green-50' 
-              : 'text-orange-600 hover:text-orange-900 hover:bg-orange-50'
+              ? 'text-green-700 hover:text-green-900 hover:bg-green-50' 
+              : 'text-neutral-600 hover:text-primary hover:bg-primary/10'
           }`}
-          title={isHidden ? 'Show slide' : 'Hide slide'}
+          title={isHidden ? 'Add slide to deck' : 'Remove slide from deck'}
         >
           {isHidden ? (
             <>
-              <Eye className="h-3 w-3" />
-              <span>Show</span>
+              <Eye className="h-4 w-4" />
+              <span>Add to deck</span>
             </>
           ) : (
             <>
-              <EyeOff className="h-3 w-3" />
-              <span>Hide</span>
+              <EyeOff className="h-4 w-4" />
+              <span>Remove</span>
             </>
           )}
         </button>
@@ -190,13 +204,19 @@ const DroppableSection: React.FC<DroppableSectionProps> = ({ section, slides, ch
   return (
     <div
       ref={setNodeRef}
-      className={`${gridClasses} min-h-[200px] p-4 rounded-lg border-2 border-dashed transition-colors ${
+      className={`${gridClasses} min-h-[200px] p-6 rounded-xl transition-standard ${
         isOver 
-          ? 'border-blue-400 bg-blue-50' 
-          : 'border-transparent'
+          ? 'bg-primary/5 ring-2 ring-primary/30 ring-offset-2' 
+          : 'bg-transparent'
       }`}
     >
-      {children}
+      {slides.length === 0 ? (
+        <div className="col-span-full flex items-center justify-center min-h-[160px] text-body-small text-neutral-500 italic">
+          Drop slides to include
+        </div>
+      ) : (
+        children
+      )}
     </div>
   );
 };
@@ -388,26 +408,21 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
     >
       <div className="flex gap-6">
         {/* Left side - Regular sections */}
-        <div className="flex-1 space-y-8">
+        <div className="flex-1 space-y-6">
           {regularSections.map(section => {
             const sectionSlideList = sectionSlides[section.id] || [];
             if (sectionSlideList.length === 0) return null;
             
             const Icon = section.icon;
-            const colorClasses = {
-              blue: 'border-blue-200 bg-blue-50',
-              slate: 'border-slate-200 bg-slate-50', 
-              green: 'border-green-200 bg-green-50',
-            };
             
             return (
-              <div key={section.id} className={`border rounded-lg p-6 ${colorClasses[section.color as keyof typeof colorClasses]}`}>
-                <div className="flex items-center gap-3 mb-4">
-                  <Icon className="w-5 h-5 text-gray-700" />
-                  <h3 className="text-lg font-semibold text-gray-900">{section.name}</h3>
-                  <span className="text-sm text-gray-500">({sectionSlideList.length} slides)</span>
-                  <Badge variant="outline" className="text-xs">
-                    Drag & Drop Enabled
+              <div key={section.id} className="bg-surface border border-neutral-200 rounded-xl shadow-elevation-1 overflow-hidden">
+                {/* Section Header - Pinned Style */}
+                <div className="sticky top-0 z-10 flex items-center gap-3 px-6 py-4 bg-surface border-b border-neutral-200">
+                  <Icon className="w-5 h-5 text-neutral-600" />
+                  <h3 className="text-title-medium font-medium text-neutral-900">{section.name}</h3>
+                  <Badge className="bg-neutral-100 text-neutral-700 text-label-small px-2 py-0.5 rounded-full border-0">
+                    {sectionSlideList.length}
                   </Badge>
                 </div>
                 
@@ -443,14 +458,17 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
                 const Icon = hiddenSection.icon;
                 
                 return (
-                  <div className="border-2 border-gray-300 bg-gray-50 rounded-lg p-6 shadow-lg">
-                    <div className="flex items-center gap-3 mb-4">
-                      <Icon className="w-5 h-5 text-gray-700" />
-                      <h3 className="text-lg font-semibold text-gray-900">{hiddenSection.name}</h3>
-                      <span className="text-sm text-gray-500">({sectionSlideList.length})</span>
+                  <div className="bg-surface border-2 border-neutral-300 rounded-xl shadow-elevation-2 overflow-hidden">
+                    {/* Hidden Section Header */}
+                    <div className="flex items-center gap-3 px-4 py-4 bg-neutral-100 border-b border-neutral-300">
+                      <Icon className="w-5 h-5 text-neutral-600" />
+                      <h3 className="text-title-medium font-medium text-neutral-900">{hiddenSection.name}</h3>
+                      <Badge className="bg-neutral-200 text-neutral-700 text-label-small px-2 py-0.5 rounded-full border-0">
+                        {sectionSlideList.length}
+                      </Badge>
                     </div>
-                    <p className="text-xs text-gray-600 mb-4">
-                      Drag slides here to hide them from the presentation
+                    <p className="px-4 py-3 text-body-small text-neutral-600 bg-neutral-50 border-b border-neutral-200">
+                      Drop slides to exclude
                     </p>
                     
                     <SortableContext
@@ -458,23 +476,17 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
                       strategy={rectSortingStrategy}
                     >
                       <DroppableSection section={hiddenSection} slides={sectionSlideList}>
-                        {sectionSlideList.length === 0 ? (
-                          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center text-gray-400">
-                            Drop slides here
-                          </div>
-                        ) : (
-                          sectionSlideList.map(slide => (
-                            <DraggableSlide
-                              key={slide.id}
-                              slide={slide}
-                              sectionId={hiddenSection.id}
-                              sectionColor={hiddenSection.color}
-                              slideComponents={slideComponents}
-                              onSlideClick={onSlideClick}
-                              onMoveSlide={handleMoveSlide}
-                            />
-                          ))
-                        )}
+                        {sectionSlideList.map(slide => (
+                          <DraggableSlide
+                            key={slide.id}
+                            slide={slide}
+                            sectionId={hiddenSection.id}
+                            sectionColor={hiddenSection.color}
+                            slideComponents={slideComponents}
+                            onSlideClick={onSlideClick}
+                            onMoveSlide={handleMoveSlide}
+                          />
+                        ))}
                       </DroppableSection>
                     </SortableContext>
                   </div>
