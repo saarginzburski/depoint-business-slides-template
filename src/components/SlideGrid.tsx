@@ -75,12 +75,6 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
     transition,
   };
 
-  // Handle native drag for cross-section drops
-  const handleDragStart = (e: React.DragEvent) => {
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('slideIds', slide.id);
-  };
-
   return (
     <Card
       ref={setNodeRef}
@@ -99,17 +93,21 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onDragStart={handleDragStart}
-      draggable={true}
       role="listitem"
       aria-label={`${slide.title}${isSelected ? ', selected' : ''}`}
       aria-selected={isSelected}
       tabIndex={0}
     >
-      {/* Drag Handle */}
+      {/* Drag Handle - supports both within-section reordering and cross-section moving */}
       <div
         {...attributes}
         {...listeners}
+        draggable
+        onDragStart={(e) => {
+          // For native HTML5 drag to sections
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('slideIds', slide.id);
+        }}
         className="absolute top-2 left-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing"
       >
         <div className="p-1 bg-white rounded shadow-sm">
