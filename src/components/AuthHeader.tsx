@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { LogOut, User } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,39 +27,50 @@ const AuthHeader: React.FC = () => {
     : user.email?.substring(0, 2).toUpperCase() || 'U';
 
   return (
-    <div className="fixed top-4 right-4 z-50">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 bg-white shadow-md hover:shadow-lg transition-shadow"
-          >
-            <Avatar className="h-8 w-8">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          className="hover-bg rounded-full p-1 h-auto transition-standard"
+          title={user.displayName || user.email || 'Account'}
+        >
+          <Avatar className="h-8 w-8 cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all">
+            <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'} />
+            <AvatarFallback className="bg-primary text-white text-xs font-medium">
+              {userInitials}
+            </AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-72 elevation-2">
+        <DropdownMenuLabel className="font-normal py-3">
+          <div className="flex items-center gap-3">
+            <Avatar className="h-10 w-10">
               <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'} />
-              <AvatarFallback className="bg-blue-600 text-white text-xs">
+              <AvatarFallback className="bg-primary text-white text-sm">
                 {userInitials}
               </AvatarFallback>
             </Avatar>
-            <span className="hidden sm:inline text-sm font-medium">
-              {user.displayName || user.email}
-            </span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-64">
-          <DropdownMenuLabel className="font-normal">
-            <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">{user.displayName || 'User'}</p>
-              <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+            <div className="flex flex-col space-y-0.5">
+              <p className="text-body-medium font-medium text-neutral-900 leading-tight">
+                {user.displayName || 'User'}
+              </p>
+              <p className="text-body-small text-neutral-600 leading-tight">
+                {user.email}
+              </p>
             </div>
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={signOut} className="cursor-pointer text-red-600 focus:text-red-600">
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem 
+          onClick={signOut} 
+          className="cursor-pointer text-error focus:text-error focus:bg-error/10 transition-colors py-2.5"
+        >
+          <LogOut className="mr-2 h-4 w-4" />
+          <span className="text-label-large">Sign out</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

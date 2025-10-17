@@ -2,83 +2,133 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Material 3 Design System for Google Workspace alignment
+   Based on depoint-design-tokens.json */
 
 @layer base {
 :root {
-    /* Apple-grade Flat Design System */
-    --background: 0 0% 100%;
-    --foreground: 210 18% 9%;       /* Neutral Navy #111827 */
+    /* ===== Material 3 Color System ===== */
+    /* Google Workspace Primary */
+    --background: 0 0% 97.3%;          /* #F8F9FA - neutral50 */
+    --foreground: 211 12% 13%;         /* #202124 - neutral900 */
     
-    --card: 0 0% 100%;
-    --card-foreground: 210 18% 9%;
+    --card: 0 0% 100%;                 /* #FFFFFF - neutral0 */
+    --card-foreground: 211 12% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 18% 9%;
+    --popover-foreground: 211 12% 13%;
 
-    --primary: 221 96% 56%;         /* Primary Blue #1E5AF9 */
+    /* Google Blue */
+    --primary: 217 89% 51%;            /* #1A73E8 - Google Workspace Blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 22 100% 50%;       /* Accent Orange #FF6A00 */
+    /* Depoint Orange (tertiary accent) */
+    --secondary: 33 100% 47%;          /* #F29900 - Depoint Orange */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 96%;
+    /* Neutral surfaces */
+    --muted: 220 13% 91%;              /* #E8EAED */
     --muted-foreground: 0 0% 45%;
 
-    --accent: 0 0% 90%;
-    --accent-foreground: 210 18% 9%;
+    --accent: 220 13% 91%;
+    --accent-foreground: 211 12% 13%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 4 90% 58%;          /* #EA4335 - Google Red */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 221 96% 56%;
+    --border: 220 13% 91%;             /* #E8EAED */
+    --input: 220 13% 91%;
+    --ring: 217 89% 51%;               /* Match primary */
 
-    /* Simplified Grayscale - Only 100/200/400/600 steps */
-    --gray-100: 0 0% 96%;           /* Lightest gray */
-    --gray-200: 0 0% 90%;           /* Light border gray */
-    --gray-400: 0 0% 64%;           /* Medium text gray */
-    --gray-600: 0 0% 32%;           /* Dark text gray */
+    /* ===== Material 3 Surface Elevation ===== */
+    --elevation-0: 0 0% 100%;          /* Surface level 0 */
+    --elevation-1: 0 0% 100%;          /* Cards, slightly elevated */
+    --elevation-2: 0 0% 100%;          /* Menus, dialogs */
     
-    /* Brand Accent Colors (exact specs) */
-    --depoint-blue: 221 96% 56%;    /* Primary Blue #1E5AF9 */
-    --depoint-orange: 22 100% 50%;  /* Accent Orange #FF6A00 */
-    --neutral-navy: 210 18% 9%;     /* Neutral Navy #111827 */
+    /* ===== Google Workspace Grayscale ===== */
+    --neutral-0: 0 0% 100%;            /* #FFFFFF */
+    --neutral-50: 0 0% 97.3%;          /* #F8F9FA */
+    --neutral-100: 220 13% 91%;        /* #E8EAED */
+    --neutral-200: 220 9% 85%;         /* #DADCE0 */
+    --neutral-300: 218 11% 80%;        /* #C1C5CB */
+    --neutral-400: 220 9% 65%;         /* #9AA0A6 */
+    --neutral-500: 220 8% 55%;         /* #80868B */
+    --neutral-600: 218 11% 45%;        /* #5F6368 */
+    --neutral-700: 217 12% 38%;        /* #3C4043 */
+    --neutral-800: 212 11% 25%;        /* #292A2D */
+    --neutral-900: 211 12% 13%;        /* #202124 */
     
-    /* Strategic Pillar Colors (exact specs) */
-    --pillar-margin: 142 76% 36%;    /* Green #16A34A - Protect Margin */
-    --pillar-risk: 0 74% 42%;        /* Red #DC2626 - Reduce Risk */
-    --pillar-revenue: 221 96% 56%;   /* Blue #1E5AF9 - Protect Revenue */
-    --pillar-growth: 262 83% 58%;    /* Purple #7C3AED - Accelerate Growth */
+    /* ===== Depoint Brand Colors ===== */
+    --depoint-orange: 33 100% 47%;     /* #F29900 */
+    --depoint-orange-light: 33 100% 90%;
     
-    /* No shadows - clean minimal design */
+    /* ===== Semantic Colors (Google style) ===== */
+    --success: 137 55% 45%;            /* #34A853 - Google Green */
+    --warning: 45 100% 50%;            /* #FBBC04 - Google Yellow */
+    --error: 4 90% 58%;                /* #EA4335 - Google Red */
+    --info: 217 89% 51%;               /* #1A73E8 - Google Blue */
     
-    /* Typography Hierarchy (exact design specs) */
-    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    --text-headline: 2.75rem;   /* 44pt - Headlines (Bold) */
-    --text-subhead: 1.75rem;    /* 28pt - Subheads (Semi-bold) */
-    --text-body: 1.125rem;      /* 18pt - Body (Regular, minimum 16pt) */
-    --text-caption: 0.875rem;   /* 14pt - Captions/footers */
-    --text-data: 4rem;          /* 64pt - Data Highlight */
+    /* ===== Typography System (Google Sans / Roboto) ===== */
+    --font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-monospace: 'Roboto Mono', 'Menlo', 'Consolas', monospace;
     
-    /* Line Heights */
-    --leading-headline: 1.1;
-    --leading-subhead: 1.25;
-    --leading-body: 1.5;
-    --leading-caption: 1.4;
-    --leading-data: 1.0;
+    /* Material 3 Type Scale */
+    --text-display-large: 3.562rem;    /* 57px */
+    --text-display-medium: 2.812rem;   /* 45px */
+    --text-display-small: 2.25rem;     /* 36px */
+    --text-headline-large: 2rem;       /* 32px */
+    --text-headline-medium: 1.75rem;   /* 28px */
+    --text-headline-small: 1.5rem;     /* 24px */
+    --text-title-large: 1.375rem;      /* 22px */
+    --text-title-medium: 1rem;         /* 16px */
+    --text-title-small: 0.875rem;      /* 14px */
+    --text-label-large: 0.875rem;      /* 14px */
+    --text-label-medium: 0.75rem;      /* 12px */
+    --text-label-small: 0.687rem;      /* 11px */
+    --text-body-large: 1rem;           /* 16px */
+    --text-body-medium: 0.875rem;      /* 14px */
+    --text-body-small: 0.75rem;        /* 12px */
     
-    /* Professional Spacing (12-column grid system) */
-    --grid-gutter: 1.5rem;      /* 24px gutters */
-    --page-margin-top: 4.5rem;   /* 72px */
-    --page-margin-bottom: 3.5rem; /* 56px */
-    --page-margin-sides: 4rem;   /* 64px */
-    --card-padding: 1.5rem;      /* 24px consistent card padding */
+    /* ===== Spacing Scale (4px base) ===== */
+    --space-1: 0.25rem;                /* 4px */
+    --space-2: 0.5rem;                 /* 8px */
+    --space-3: 0.75rem;                /* 12px */
+    --space-4: 1rem;                   /* 16px */
+    --space-5: 1.25rem;                /* 20px */
+    --space-6: 1.5rem;                 /* 24px */
+    --space-8: 2rem;                   /* 32px */
+    --space-10: 2.5rem;                /* 40px */
+    --space-12: 3rem;                  /* 48px */
+    --space-16: 4rem;                  /* 64px */
+    
+    /* ===== Border Radius (Material 3) ===== */
+    --radius-none: 0;
+    --radius-sm: 0.25rem;              /* 4px */
+    --radius-md: 0.5rem;               /* 8px */
+    --radius-lg: 0.75rem;              /* 12px - cards */
+    --radius-xl: 1rem;                 /* 16px */
+    --radius-full: 9999px;
 
-    --radius: 0.5rem;
+    /* ===== Elevation Shadows (Material 3) ===== */
+    --shadow-1: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-2: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-3: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-4: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-5: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+    /* ===== Motion Easing (Material 3) ===== */
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+    --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+    
+    /* ===== Duration ===== */
+    --duration-short: 100ms;
+    --duration-medium: 200ms;
+    --duration-long: 300ms;
+    --duration-extra-long: 500ms;
+
+    --radius: 0.75rem;                 /* 12px - cards */
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 25%;
@@ -87,7 +137,7 @@ All colors MUST be HSL.
     --sidebar-accent: 0 0% 96%;
     --sidebar-accent-foreground: 0 0% 9%;
     --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 221 100% 50%;
+    --sidebar-ring: 217 89% 51%;
   }
 
   .dark {
@@ -137,47 +187,145 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-family);
+    font-size: var(--text-body-medium);
+    line-height: 1.429;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Apple-grade Typography Classes */
+  /* ===== Material 3 Typography Classes ===== */
+  .text-display-large {
+    font-size: var(--text-display-large);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.25px;
+  }
+  
+  .text-display-medium {
+    font-size: var(--text-display-medium);
+    font-weight: 400;
+    line-height: 1.16;
+  }
+  
+  .text-headline-large {
+    font-size: var(--text-headline-large);
+    font-weight: 400;
+    line-height: 1.25;
+  }
+  
+  .text-headline-medium {
+    font-size: var(--text-headline-medium);
+    font-weight: 400;
+    line-height: 1.29;
+  }
+  
+  .text-headline-small {
+    font-size: var(--text-headline-small);
+    font-weight: 400;
+    line-height: 1.33;
+  }
+  
+  .text-title-large {
+    font-size: var(--text-title-large);
+    font-weight: 400;
+    line-height: 1.27;
+  }
+  
+  .text-title-medium {
+    font-size: var(--text-title-medium);
+    font-weight: 500;
+    line-height: 1.50;
+    letter-spacing: 0.1px;
+  }
+  
+  .text-title-small {
+    font-size: var(--text-title-small);
+    font-weight: 500;
+    line-height: 1.43;
+    letter-spacing: 0.1px;
+  }
+  
+  .text-body-large {
+    font-size: var(--text-body-large);
+    font-weight: 400;
+    line-height: 1.50;
+    letter-spacing: 0.5px;
+  }
+  
+  .text-body-medium {
+    font-size: var(--text-body-medium);
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: 0.25px;
+  }
+  
+  .text-body-small {
+    font-size: var(--text-body-small);
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: 0.4px;
+  }
+  
+  .text-label-large {
+    font-size: var(--text-label-large);
+    font-weight: 500;
+    line-height: 1.43;
+    letter-spacing: 0.1px;
+  }
+  
+  .text-label-medium {
+    font-size: var(--text-label-medium);
+    font-weight: 500;
+    line-height: 1.33;
+    letter-spacing: 0.5px;
+  }
+  
+  .text-label-small {
+    font-size: var(--text-label-small);
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Slide-specific typography (for presentation mode) */
   .slide-headline {
     font-family: var(--font-family);
-    font-size: var(--text-headline);
+    font-size: 2.75rem;
     font-weight: 700;
     color: hsl(var(--foreground));
-    line-height: var(--leading-headline);
+    line-height: 1.1;
   }
   
   .slide-subhead {
     font-family: var(--font-family);
-    font-size: var(--text-subhead);
+    font-size: 1.75rem;
     font-weight: 600;
     color: hsl(var(--foreground));
-    line-height: var(--leading-subhead);
+    line-height: 1.25;
   }
   
   .slide-body {
     font-family: var(--font-family);
-    font-size: var(--text-body);
+    font-size: 1.125rem;
     font-weight: 400;
     color: hsl(var(--foreground));
-    line-height: var(--leading-body);
+    line-height: 1.5;
   }
   
   .slide-caption {
     font-family: var(--font-family);
-    font-size: var(--text-caption);
+    font-size: 0.875rem;
     font-weight: 400;
     color: hsl(var(--muted-foreground));
-    line-height: var(--leading-caption);
+    line-height: 1.4;
   }
   
   .slide-data {
     font-family: var(--font-family);
-    font-size: var(--text-data);
+    font-size: 4rem;
     font-weight: 700;
     color: hsl(var(--primary));
-    line-height: var(--leading-data);
+    line-height: 1.0;
   }
   
   /* Apple-grade slide container - flat, clean, no shadows */
@@ -239,48 +387,83 @@ All colors MUST be HSL.
   }
 }
 
-/* Apple-grade Flat Utility Classes */
+/* Material 3 Utility Classes */
 @layer utilities {
-  /* Simplified grayscale utilities - only 100/200/400/600 steps */
-  .text-gray-100 { color: hsl(var(--gray-100)); }
-  .text-gray-200 { color: hsl(var(--gray-200)); }
-  .text-gray-400 { color: hsl(var(--gray-400)); }
-  .text-gray-600 { color: hsl(var(--gray-600)); }
+  /* ===== Material 3 Elevation/Shadows ===== */
+  .elevation-0 { box-shadow: none; }
+  .elevation-1 { box-shadow: var(--shadow-1); }
+  .elevation-2 { box-shadow: var(--shadow-2); }
+  .elevation-3 { box-shadow: var(--shadow-3); }
+  .elevation-4 { box-shadow: var(--shadow-4); }
+  .elevation-5 { box-shadow: var(--shadow-5); }
   
-  .bg-gray-100 { background-color: hsl(var(--gray-100)); }
-  .bg-gray-200 { background-color: hsl(var(--gray-200)); }
-  .bg-gray-400 { background-color: hsl(var(--gray-400)); }
-  .bg-gray-600 { background-color: hsl(var(--gray-600)); }
+  /* ===== Material 3 Surfaces ===== */
+  .surface { background-color: hsl(var(--card)); }
+  .surface-variant { background-color: hsl(var(--muted)); }
   
-  /* Strategic accent colors - exact specs */
-  .text-depoint-blue { color: hsl(var(--depoint-blue)); }
+  /* ===== Workspace Colors ===== */
+  .text-neutral-0 { color: hsl(var(--neutral-0)); }
+  .text-neutral-50 { color: hsl(var(--neutral-50)); }
+  .text-neutral-100 { color: hsl(var(--neutral-100)); }
+  .text-neutral-200 { color: hsl(var(--neutral-200)); }
+  .text-neutral-300 { color: hsl(var(--neutral-300)); }
+  .text-neutral-400 { color: hsl(var(--neutral-400)); }
+  .text-neutral-500 { color: hsl(var(--neutral-500)); }
+  .text-neutral-600 { color: hsl(var(--neutral-600)); }
+  .text-neutral-700 { color: hsl(var(--neutral-700)); }
+  .text-neutral-800 { color: hsl(var(--neutral-800)); }
+  .text-neutral-900 { color: hsl(var(--neutral-900)); }
+  
+  .bg-neutral-0 { background-color: hsl(var(--neutral-0)); }
+  .bg-neutral-50 { background-color: hsl(var(--neutral-50)); }
+  .bg-neutral-100 { background-color: hsl(var(--neutral-100)); }
+  .bg-neutral-200 { background-color: hsl(var(--neutral-200)); }
+  .bg-neutral-300 { background-color: hsl(var(--neutral-300)); }
+  .bg-neutral-400 { background-color: hsl(var(--neutral-400)); }
+  .bg-neutral-500 { background-color: hsl(var(--neutral-500)); }
+  .bg-neutral-600 { background-color: hsl(var(--neutral-600)); }
+  .bg-neutral-700 { background-color: hsl(var(--neutral-700)); }
+  .bg-neutral-800 { background-color: hsl(var(--neutral-800)); }
+  .bg-neutral-900 { background-color: hsl(var(--neutral-900)); }
+  
+  /* ===== Depoint Brand Colors ===== */
   .text-depoint-orange { color: hsl(var(--depoint-orange)); }
-  .text-neutral-navy { color: hsl(var(--neutral-navy)); }
-  .bg-depoint-blue { background-color: hsl(var(--depoint-blue)); }
   .bg-depoint-orange { background-color: hsl(var(--depoint-orange)); }
-  .bg-neutral-navy { background-color: hsl(var(--neutral-navy)); }
-  .border-depoint-blue { border-color: hsl(var(--depoint-blue)); }
+  .bg-depoint-orange-light { background-color: hsl(var(--depoint-orange-light)); }
   .border-depoint-orange { border-color: hsl(var(--depoint-orange)); }
-  .border-neutral-navy { border-color: hsl(var(--neutral-navy)); }
   
-  /* Strategic Pillar Colors */
-  .text-pillar-margin { color: hsl(var(--pillar-margin)); }
-  .text-pillar-risk { color: hsl(var(--pillar-risk)); }
-  .text-pillar-revenue { color: hsl(var(--pillar-revenue)); }
-  .text-pillar-growth { color: hsl(var(--pillar-growth)); }
-  .bg-pillar-margin { background-color: hsl(var(--pillar-margin)); }
-  .bg-pillar-risk { background-color: hsl(var(--pillar-risk)); }
-  .bg-pillar-revenue { background-color: hsl(var(--pillar-revenue)); }
-  .bg-pillar-growth { background-color: hsl(var(--pillar-growth)); }
-  .border-pillar-margin { border-color: hsl(var(--pillar-margin)); }
-  .border-pillar-risk { border-color: hsl(var(--pillar-risk)); }
-  .border-pillar-revenue { border-color: hsl(var(--pillar-revenue)); }
-  .border-pillar-growth { border-color: hsl(var(--pillar-growth)); }
+  /* ===== Semantic Colors ===== */
+  .text-success { color: hsl(var(--success)); }
+  .text-warning { color: hsl(var(--warning)); }
+  .text-error { color: hsl(var(--error)); }
+  .text-info { color: hsl(var(--info)); }
   
-  /* NO SHADOWS - Apple-grade flat design */
+  .bg-success { background-color: hsl(var(--success)); }
+  .bg-warning { background-color: hsl(var(--warning)); }
+  .bg-error { background-color: hsl(var(--error)); }
+  .bg-info { background-color: hsl(var(--info)); }
   
-  /* Fade-in animation for slide elements */
-  @keyframes fade-in {
+  /* ===== Material 3 Motion Classes ===== */
+  .transition-standard {
+    transition-timing-function: var(--ease-standard);
+    transition-duration: var(--duration-medium);
+  }
+  
+  .transition-emphasized {
+    transition-timing-function: var(--ease-emphasized);
+    transition-duration: var(--duration-medium);
+  }
+  
+  .transition-short {
+    transition-duration: var(--duration-short);
+  }
+  
+  .transition-long {
+    transition-duration: var(--duration-long);
+  }
+  
+  /* ===== Material 3 Animations ===== */
+  @keyframes fade-in-up {
     from {
       opacity: 0;
       transform: translateY(10px);
@@ -291,8 +474,63 @@ All colors MUST be HSL.
     }
   }
   
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+  
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
   .animate-fade-in {
-    animation: fade-in 0.8s ease-out forwards;
+    animation: fade-in-up var(--duration-medium) var(--ease-standard) forwards;
     opacity: 0;
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--neutral-100)) 0%,
+      hsl(var(--neutral-200)) 50%,
+      hsl(var(--neutral-100)) 100%
+    );
+    background-size: 1000px 100%;
+  }
+  
+  .animate-slide-in-right {
+    animation: slide-in-right var(--duration-medium) var(--ease-emphasized) forwards;
+    opacity: 0;
+  }
+  
+  /* ===== Material 3 Interactive States ===== */
+  .hover-lift {
+    transition: transform var(--duration-short) var(--ease-standard), 
+                box-shadow var(--duration-short) var(--ease-standard);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-3);
+  }
+  
+  .hover-bg:hover {
+    background-color: hsl(var(--neutral-100));
+  }
+  
+  .active-scale:active {
+    transform: scale(0.98);
   }
 }

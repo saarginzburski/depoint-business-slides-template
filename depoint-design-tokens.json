@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "brand": "Depoint",
+    "scale": "Material3",
+    "version": "1.0.0"
+  },
+  "font": {
+    "family": {
+      "value": "Google Sans, Roboto, Arial, sans-serif"
+    },
+    "monospace": {
+      "value": "Roboto Mono, Menlo, Consolas, monospace"
+    }
+  },
+  "typography": {
+    "bodyMedium": {
+      "fontSize": 14,
+      "lineHeight": 20,
+      "fontWeight": 400
+    }
+  },
+  "color": {
+    "palette": {
+      "primary": {
+        "value": "#1A73E8"
+      },
+      "tertiary": {
+        "value": "#F29900"
+      },
+      "neutral0": {
+        "value": "#FFFFFF"
+      },
+      "neutral50": {
+        "value": "#F8F9FA"
+      },
+      "neutral900": {
+        "value": "#202124"
+      }
+    }
+  }
+}
