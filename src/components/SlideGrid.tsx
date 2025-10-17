@@ -30,9 +30,12 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
   const handleMouseEnter = (slideId: string, event: React.MouseEvent) => {
     setHoveredSlideId(slideId);
     
+    // Capture the rect immediately before React cleans up the event
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    
     // Start preview timer
     hoverTimeoutRef.current = setTimeout(() => {
-      const rect = event.currentTarget.getBoundingClientRect();
       setPreviewPosition({
         x: rect.right + 16,
         y: rect.top,
