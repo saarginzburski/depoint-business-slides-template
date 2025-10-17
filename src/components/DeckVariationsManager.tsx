@@ -98,10 +98,10 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
 
   if (loading) {
     return (
-      <Card className="mb-6">
+      <Card className="mb-6 surface elevation-1">
         <CardContent className="p-6">
           <div className="flex items-center justify-center">
-            <div className="text-gray-500">Loading deck variations...</div>
+            <div className="text-body-medium text-neutral-500 animate-shimmer">Loading deck variations...</div>
           </div>
         </CardContent>
       </Card>
@@ -109,7 +109,7 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
   }
 
   return (
-    <Card className="mb-6 border-blue-200 bg-blue-50/30">
+    <Card className="mb-6 surface elevation-1 border-neutral-200">
       <CardContent className="p-6">
         {/* Single row with selector, actions, toggle, and new button */}
         <div className="flex items-center justify-between gap-4 mb-4">
@@ -118,16 +118,18 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
               value={currentVariation?.id || ''}
               onValueChange={handleSelectVariation}
             >
-              <SelectTrigger className="flex-1 max-w-xs">
-                <SelectValue placeholder="Select a deck variation" />
+              <SelectTrigger className="flex-1 max-w-xs border-neutral-300 hover-bg transition-standard">
+                <SelectValue placeholder="Select deck variation" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="elevation-2">
                 {variations.map((variation) => (
                   <SelectItem key={variation.id} value={variation.id}>
                     <div className="flex items-center gap-2">
-                      <span>{variation.name}</span>
+                      <span className="text-body-medium">{variation.name}</span>
                       {variation.is_default && (
-                        <Badge variant="secondary" className="text-xs">Default</Badge>
+                        <Badge variant="secondary" className="text-label-small bg-depoint-orange-light text-depoint-orange border-0">
+                          default
+                        </Badge>
                       )}
                     </div>
                   </SelectItem>
@@ -151,8 +153,8 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                       window.open(`/deck/slide/${slides[0]}?deckName=${encodeURIComponent(currentVariation.name)}&slides=${slidesParam}`, '_blank');
                     }
                   }}
-                  className="text-gray-500 hover:text-green-600"
-                  title="View variation"
+                  className="text-neutral-600 hover-bg transition-standard rounded-full"
+                  title="Present"
                 >
                   <Eye className="h-4 w-4" />
                 </Button>
@@ -169,8 +171,8 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                       window.open(`/print-deck?slides=${slideParams}`, '_blank');
                     }
                   }}
-                  className="text-gray-500 hover:text-purple-600"
-                  title="Print variation"
+                  className="text-neutral-600 hover-bg transition-standard rounded-full"
+                  title="Print"
                 >
                   <Printer className="h-4 w-4" />
                 </Button>
@@ -178,8 +180,8 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                   size="sm"
                   variant="ghost"
                   onClick={() => handleDuplicateVariation(currentVariation)}
-                  className="text-gray-500 hover:text-blue-600"
-                  title="Duplicate variation"
+                  className="text-neutral-600 hover-bg transition-standard rounded-full"
+                  title="Duplicate"
                 >
                   <Copy className="h-4 w-4" />
                 </Button>
@@ -187,8 +189,8 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                   size="sm"
                   variant="ghost"
                   onClick={() => setEditingId(currentVariation.id)}
-                  className="text-gray-500 hover:text-blue-600"
-                  title="Edit variation name"
+                  className="text-neutral-600 hover-bg transition-standard rounded-full"
+                  title="Rename"
                 >
                   <Edit2 className="h-4 w-4" />
                 </Button>

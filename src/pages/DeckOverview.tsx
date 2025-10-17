@@ -1,18 +1,16 @@
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Eye, FileText, Clock, Printer, CheckSquare, Square, Layers, Monitor, BookOpen, EyeOff } from 'lucide-react';
+import { Play, FileText, Clock, Printer, Layers, Monitor, BookOpen, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 import { slideConfig } from './slides/slideConfig';
 import PrintButton from '@/components/PrintButton';
 import { DeckVariationsManager } from '@/components/DeckVariationsManager';
 import { DeckVariationWithSections, useDeckVariations } from '@/hooks/useDeckVariations';
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
 import { DraggableSlideGrid } from '@/components/DraggableSlideGrid';
-import AuthHeader from '@/components/AuthHeader';
-import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
+import WorkspaceAppBar from '@/components/WorkspaceAppBar';
 
 // Define section structure
 interface Section {
@@ -207,113 +205,105 @@ const DeckOverview = () => {
 
 
   return (
-    <div className="w-full min-h-screen bg-slate-50">
-      {/* Auth Header - Fixed position in top right */}
-      <AuthHeader />
+    <div className="w-full min-h-screen bg-neutral-50">
+      {/* Material 3 App Bar */}
+      <WorkspaceAppBar 
+        title="Depoint Templates"
+        breadcrumbs={[{ label: deckName }]}
+      />
       
-      <div className="container mx-auto px-6 py-8">
-        {/* Header Section - Compact & Modern */}
-        <div className="bg-white border border-gray-200 rounded-xl shadow-sm mb-8">
-          <div className="px-8 py-6">
-            {/* Top Row - Logo, Title, and Info */}
-            <div className="flex items-center justify-between mb-6">
-              {/* Left - Logo and Title */}
-              <div className="flex items-center gap-4">
-                <img src={depointLogoBlack} alt="Depoint" className="h-8" />
-                <div className="h-6 w-px bg-gray-300"></div>
-                {isEditingName ? (
-                  <input
-                    type="text"
-                    value={deckName}
-                    onChange={(e) => setDeckName(e.target.value)}
-                    onBlur={() => setIsEditingName(false)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === 'Escape') {
-                        setIsEditingName(false);
-                      }
-                    }}
-                    className="text-2xl font-semibold text-gray-900 bg-transparent border-b-2 border-blue-500 outline-none min-w-0"
-                    autoFocus
-                    style={{ width: `${Math.max(deckName.length * 0.6, 8)}em` }}
-                  />
-                ) : (
-                  <h1 
-                    className="text-2xl font-semibold text-gray-900 cursor-pointer hover:text-blue-600 transition-colors"
-                    onClick={() => setIsEditingName(true)}
-                    title="Click to edit deck name"
-                  >
-                    {deckName}
-                  </h1>
-                )}
+      <div className="max-w-[1600px] mx-auto px-6 py-6">
+        {/* Deck Info Bar */}
+        <div className="surface elevation-1 rounded-lg px-6 py-4 mb-6 flex items-center justify-between">
+          {/* Left - Deck Name (Editable) */}
+          <div className="flex items-center gap-4">
+            {isEditingName ? (
+              <input
+                type="text"
+                value={deckName}
+                onChange={(e) => setDeckName(e.target.value)}
+                onBlur={() => setIsEditingName(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === 'Escape') {
+                    setIsEditingName(false);
+                  }
+                }}
+                className="text-title-large font-medium text-neutral-900 bg-transparent border-b-2 border-primary outline-none transition-standard"
+                autoFocus
+                style={{ width: `${Math.max(deckName.length * 0.7, 10)}ch` }}
+              />
+            ) : (
+              <h1 
+                className="text-title-large font-medium text-neutral-900 cursor-pointer hover-bg px-2 py-1 -ml-2 rounded transition-standard"
+                onClick={() => setIsEditingName(true)}
+                title="Click to edit deck name"
+              >
+                {deckName}
+              </h1>
+            )}
+            
+            {/* Deck Stats */}
+            <div className="flex items-center gap-4 text-body-small text-neutral-600 border-l border-neutral-200 pl-4">
+              <div className="flex items-center gap-1.5">
+                <FileText className="h-4 w-4" />
+                <span>{visibleSlides.length} slides</span>
               </div>
-
-              {/* Right - Deck Info */}
-              <div className="flex items-center gap-6 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
-                  <span>{visibleSlides.length} Slides Displayed</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  <span>~{Math.ceil(visibleSlides.length * 1.5)} min presentation</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-400">Q3 2025</span>
-                </div>
+              <div className="flex items-center gap-1.5">
+                <Clock className="h-4 w-4" />
+                <span>~{Math.ceil(visibleSlides.length * 1.5)} min</span>
               </div>
             </div>
+          </div>
 
-            {/* Bottom Row - All Actions Grouped */}
-            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-              {/* Left - Main Actions */}
-              <div className="flex items-center gap-3">
-                <Button 
-                  onClick={() => {
-                    const firstSlide = visibleSlides.length > 0 ? visibleSlides[0].id : 1;
-                    const slidesParam = visibleSlides.map(s => s.id).join(',');
-                    const slidesQuery = slidesParam ? `&slides=${slidesParam}` : '';
-                    navigate(`/deck/slide/${firstSlide}?deckName=${encodeURIComponent(deckName)}${slidesQuery}`);
-                  }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all"
+          {/* Right - Primary Actions */}
+          <div className="flex items-center gap-3">
+            <PrintButton 
+              visibleSlides={visibleSlides}
+              variant="outline"
+              className="border-neutral-300 text-neutral-700 hover-bg"
+            />
+            
+            <Button 
+              onClick={() => {
+                const firstSlide = visibleSlides.length > 0 ? visibleSlides[0].id : 1;
+                const slidesParam = visibleSlides.map(s => s.id).join(',');
+                const slidesQuery = slidesParam ? `&slides=${slidesParam}` : '';
+                navigate(`/deck/slide/${firstSlide}?deckName=${encodeURIComponent(deckName)}${slidesQuery}`);
+              }}
+              className="bg-primary hover:bg-primary/90 text-white elevation-1 hover-lift transition-standard"
+            >
+              <Play className="w-4 h-4 mr-2" />
+              Present
+            </Button>
+          </div>
+        </div>
+
+        {/* Section Filter Chips */}
+        <div className="mb-6">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-label-medium text-neutral-600 mr-2">Sections:</span>
+            {sections.filter(s => s.id !== 'hidden').map(section => {
+              const Icon = section.icon;
+              const isSelected = selectedSections.has(section.id);
+              
+              return (
+                <Badge
+                  key={section.id}
+                  onClick={() => toggleSectionSelection(section.id)}
+                  className={`
+                    cursor-pointer transition-all hover-lift px-3 py-1.5
+                    ${isSelected 
+                      ? 'bg-primary text-white hover:bg-primary/90' 
+                      : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300'
+                    }
+                  `}
+                  variant={isSelected ? "default" : "outline"}
                 >
-                  <Play className="w-4 h-4 mr-2" />
-                  View Deck
-                </Button>
-                
-                <PrintButton 
-                  visibleSlides={visibleSlides}
-                  variant="outline"
-                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2"
-                />
-              </div>
-
-              {/* Right - Section Selection */}
-              <div className="flex items-center gap-2">
-                {/* Toggleable sections (Hidden section not shown as it's always visible) */}
-                {sections.filter(s => s.id !== 'hidden').map(section => {
-                  const Icon = section.icon;
-                  const isSelected = selectedSections.has(section.id);
-                  const colorClasses = {
-                    blue: isSelected ? 'bg-blue-50 border-blue-300 text-blue-900' : 'bg-white border-gray-200 text-gray-700',
-                    slate: isSelected ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-white border-gray-200 text-gray-700',
-                    green: isSelected ? 'bg-green-50 border-green-300 text-green-900' : 'bg-white border-gray-200 text-gray-700',
-                  };
-                  
-                  return (
-                    <Button
-                      key={section.id}
-                      onClick={() => toggleSectionSelection(section.id)}
-                      variant="outline"
-                      size="sm"
-                      className={`transition-all ${colorClasses[section.color as keyof typeof colorClasses]}`}
-                    >
-                      <Icon className="w-4 h-4 mr-2" />
-                      {section.name}
-                    </Button>
-                  );
-                })}
-              </div>
-            </div>
+                  <Icon className="w-3.5 h-3.5 mr-1.5" />
+                  {section.name}
+                </Badge>
+              );
+            })}
           </div>
         </div>
         
@@ -339,11 +329,11 @@ const DeckOverview = () => {
         )}
 
         {/* Footer */}
-        <div className="text-center mt-16 py-8 border-t border-gray-200">
-          <p className="text-gray-500 text-sm">
+        <footer className="text-center mt-16 py-6 border-t border-neutral-200">
+          <p className="text-body-small text-neutral-500">
             Confidential Investor Deck • Q3 2025 • Depoint Operations Intelligence Platform
           </p>
-        </div>
+        </footer>
       </div>
     </div>
   );
