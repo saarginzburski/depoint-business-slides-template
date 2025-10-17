@@ -313,7 +313,15 @@ const DeckOverviewNew = () => {
                   id: v.id,
                   name: v.name,
                   isDefault: v.is_default,
-                  slideCount: visibleSlidesCount,
+                  countBySection: {
+                    main: allSlides.filter(s => s.section === 'main' && s.status === 'visible').length,
+                    demo: allSlides.filter(s => s.section === 'demo' && s.status === 'visible').length,
+                    appendix: allSlides.filter(s => s.section === 'appendix' && s.status === 'visible').length,
+                    hidden: hiddenSlidesCount,
+                    archived: archivedSlidesCount,
+                  },
+                  updatedAt: new Date().toISOString(),
+                  order: 0,
                 }))}
                 activeVariantId={currentVariantId || ''}
                 onSelect={(id) => {
