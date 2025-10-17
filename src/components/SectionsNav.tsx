@@ -73,6 +73,10 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
             <div
               key={section.key}
               className={`group relative w-full flex items-center gap-3 px-4 py-2.5 transition-standard ${
+                isSectionHidden && isToggleable
+                  ? 'opacity-50'
+                  : ''
+              } ${
                 isActive
                   ? 'bg-primary/10 text-primary'
                   : isStatus
@@ -88,7 +92,7 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
               <button
                 onClick={() => onSelect(section.key)}
                 className="flex-1 flex items-center gap-3 text-left"
-                aria-label={`${section.label} section`}
+                aria-label={`${section.label} section${isSectionHidden ? ' (hidden from presentation)' : ''}`}
                 aria-current={isActive ? 'page' : undefined}
               >
                 {/* Active Indicator */}
@@ -108,7 +112,9 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
                 {section.count > 0 && (
                   <Badge
                     className={`flex-shrink-0 px-2 py-0.5 text-label-small rounded-full ${
-                      isActive
+                      isSectionHidden && isToggleable
+                        ? 'bg-neutral-100 text-neutral-400 line-through'
+                        : isActive
                         ? 'bg-primary text-white'
                         : isStatus
                         ? 'bg-neutral-100 text-neutral-600'

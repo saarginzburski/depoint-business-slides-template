@@ -84,7 +84,18 @@ const DeckOverviewNew = () => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; slideId: string } | null>(null);
   const [navActiveItem, setNavActiveItem] = useState('decks');
-  const [hiddenSections, setHiddenSections] = useState<Set<Section>>(new Set());
+  const [hiddenSections, setHiddenSections] = useState<Set<Section>>(() => {
+    // Load hidden sections from localStorage
+    const saved = localStorage.getItem('hiddenSections');
+    if (saved) {
+      try {
+        return new Set(JSON.parse(saved));
+      } catch (e) {
+        return new Set();
+      }
+    }
+    return new Set();
+  });
   
   // Define sections for the hook
   const sections = [
@@ -366,8 +377,21 @@ const DeckOverviewNew = () => {
   
   // Navigation handlers
   const handleViewDeck = () => {
-    if (filteredSlides.length > 0) {
-      navigate(`/deck/slide/${filteredSlides[0].id}`);
+    // Get all visible slides excluding hidden sections
+    const visibleSlides = allSlides.filter(s => 
+      s.status === 'visible' && !hiddenSections.has(s.section)
+    );
+    
+    if (visibleSlides.length > 0) {
+      // Navigate to first visible slide with slide IDs in URL
+      const slideIds = visibleSlides.map(s => s.id).join(',');
+      navigate(`/deck/slide/${visibleSlides[0].id}?slides=${slideIds}&deckName=${encodeURIComponent(deckName)}`);
+    } else {
+      toast({
+        title: 'No slides to show',
+        description: 'All sections are hidden or no visible slides available',
+        variant: 'destructive',
+      });
     }
   };
   
@@ -498,6 +522,8 @@ const DeckOverviewNew = () => {
                         description: `${sectionKey} will be excluded from presentations`,
                       });
                     }
+                    // Save to localStorage
+                    localStorage.setItem('hiddenSections', JSON.stringify(Array.from(next)));
                     return next;
                   });
                 }}
