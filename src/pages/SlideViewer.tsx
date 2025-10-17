@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { slideConfig, getSlideInfo } from './slides/slideConfig';
 import PrintButton from '@/components/PrintButton';
 import { SLIDE_CONFIG } from '@/lib/slideConfig';
+import AuthHeader from '@/components/AuthHeader';
 
 // Lazy load all slide components
 const slideComponents = {
@@ -128,6 +129,9 @@ const SlideViewer = () => {
 
   return (
     <div className="w-full h-screen bg-gray-100 flex flex-col items-center justify-center">
+      {/* Auth Header - Fixed position in top right */}
+      <AuthHeader />
+      
       <div className="relative" style={{ width: SLIDE_CONFIG.cssWidth }}>
         {/* Professional Navigation Bar - Fixed Layout */}
         <div className="grid grid-cols-3 items-center bg-slate-900 rounded-xl px-8 py-4 mb-6 border border-slate-700/50">

@@ -11,6 +11,7 @@ import { DeckVariationsManager } from '@/components/DeckVariationsManager';
 import { DeckVariationWithSections, useDeckVariations } from '@/hooks/useDeckVariations';
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
 import { DraggableSlideGrid } from '@/components/DraggableSlideGrid';
+import AuthHeader from '@/components/AuthHeader';
 import depointLogoBlack from '@/assets/Depoint-Logo-black.png';
 
 // Define section structure
@@ -207,6 +208,9 @@ const DeckOverview = () => {
 
   return (
     <div className="w-full min-h-screen bg-slate-50">
+      {/* Auth Header - Fixed position in top right */}
+      <AuthHeader />
+      
       <div className="container mx-auto px-6 py-8">
         {/* Header Section - Compact & Modern */}
         <div className="bg-white border border-gray-200 rounded-xl shadow-sm mb-8">
