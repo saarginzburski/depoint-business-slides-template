@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Layers } from 'lucide-react';
 import { useDeckVariations } from '@/hooks/useDeckVariations';
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
-import { NavigationRail } from '@/components/NavigationRail';
 import { VariantsNav } from '@/components/VariantsNav';
 import { SectionsNav } from '@/components/SectionsNav';
 import { TopAppBar } from '@/components/TopAppBar';
@@ -83,7 +82,6 @@ const DeckOverviewNew = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; slideId: string } | null>(null);
-  const [navActiveItem, setNavActiveItem] = useState('decks');
   const [hiddenSections, setHiddenSections] = useState<Set<Section>>(() => {
     // Load hidden sections from localStorage
     const saved = localStorage.getItem('hiddenSections');
@@ -416,20 +414,8 @@ const DeckOverviewNew = () => {
   
   return (
     <div className="flex h-screen bg-neutral-50 overflow-hidden">
-      {/* Left Navigation Rail */}
-      <NavigationRail
-        activeItem={navActiveItem}
-        onItemClick={(item) => {
-          setNavActiveItem(item);
-          if (item === 'hidden') {
-            setDrawerOpen(true);
-          }
-        }}
-        hiddenCount={hiddenSlidesCount}
-      />
-      
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="w-full flex flex-col overflow-hidden">
         {/* Top App Bar */}
         <TopAppBar
           deckName={deckName}
