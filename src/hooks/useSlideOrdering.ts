@@ -71,14 +71,14 @@ export const useSlideOrdering = (variationId: string | null, sections: Section[]
     });
 
     if (slideOrders.length === 0) {
-      // Use default ordering
+      // Use default ordering - assign all slides from slideConfig to their sections
       sections.forEach(section => {
         orderedSections[section.id] = slideConfig.filter(slide => 
           section.slides.includes(slide.id)
-        );
+        ).sort((a, b) => a.id - b.id); // Sort by ID to maintain order
       });
     } else {
-      // Use custom ordering
+      // Use custom ordering from database
       slideOrders
         .sort((a, b) => a.order_index - b.order_index)
         .forEach(order => {
@@ -87,6 +87,19 @@ export const useSlideOrdering = (variationId: string | null, sections: Section[]
             orderedSections[order.section_id].push(slide);
           }
         });
+      
+      // Add any slides from slideConfig that aren't in the database yet
+      // This ensures all 32 slides are always shown
+      const assignedSlideIds = new Set(slideOrders.map(o => o.slide_id));
+      slideConfig.forEach(slide => {
+        if (!assignedSlideIds.has(slide.id)) {
+          // Find which section this slide should be in based on default config
+          const defaultSection = sections.find(s => s.slides.includes(slide.id));
+          if (defaultSection && orderedSections[defaultSection.id]) {
+            orderedSections[defaultSection.id].push(slide);
+          }
+        }
+      });
     }
 
     return orderedSections;

@@ -248,12 +248,16 @@ export const useDeckVariations = () => {
       const variationRef = doc(db, 'deck_variations', id);
       await deleteDoc(variationRef);
 
+      // Fetch updated variations list
       await fetchVariations();
       
       toast({
         title: "Success",
         description: "Deck variation deleted successfully",
       });
+      
+      // Return the ID of deleted variation so caller can handle redirect
+      return id;
     } catch (error) {
       console.error('Error deleting variation:', error);
       toast({
@@ -261,6 +265,7 @@ export const useDeckVariations = () => {
         description: "Failed to delete deck variation",
         variant: "destructive",
       });
+      throw error;
     }
   };
 

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Layers } from 'lucide-react';
 import { useDeckVariations } from '@/hooks/useDeckVariations';
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
+import { useSections } from '@/hooks/useSections';
 import { VariantsNav } from '@/components/VariantsNav';
 import { SectionsNav } from '@/components/SectionsNav';
 import { TopAppBar } from '@/components/TopAppBar';
@@ -11,7 +12,9 @@ import { HiddenSlidesDrawer } from '@/components/HiddenSlidesDrawer';
 import { CommandPalette } from '@/components/CommandPalette';
 import { QuickActionsBar } from '@/components/QuickActionsBar';
 import { SlideContextMenu } from '@/components/SlideContextMenu';
+import { SlidesViewer } from '@/components/SlidesViewer';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { useGridScrollRestoration } from '@/hooks/useGridScrollRestoration';
 import { Slide, Variant } from '@/types/deck';
 import { toast } from '@/hooks/use-toast';
 import { slideConfig } from '@/pages/slides/slideConfig';
@@ -68,6 +71,7 @@ const DeckOverviewNew = () => {
   const variantIdFromUrl = searchParams.get('variant');
   const sectionFromUrl = (searchParams.get('section') || 'main') as Section;
   const searchQueryFromUrl = searchParams.get('q') || '';
+  const slideIdFromUrl = searchParams.get('slide');
   
   // Core state
   const [deckName, setDeckName] = useState('Business Presentation Template');
@@ -95,48 +99,36 @@ const DeckOverviewNew = () => {
     return new Set();
   });
   
-  // Define sections for the hook
-  const sections = [
-    {
-      id: 'main',
-      name: 'Main Deck',
-      description: 'Core presentation',
-      color: 'blue',
-      slides: Array.from({length: 21}, (_, i) => i + 1),
-    },
-    {
-      id: 'appendix', 
-      name: 'Appendices',
-      description: 'Supporting documentation',
-      color: 'slate',
-      slides: [22],
-    },
-    {
-      id: 'demo',
-      name: 'Demo',
-      description: 'Dashboard demonstrations', 
-      color: 'green',
-      slides: Array.from({length: 10}, (_, i) => i + 23),
-    },
-    {
-      id: 'hidden',
-      name: 'Hidden',
-      description: 'Hidden slides',
-      color: 'gray',
-      slides: [],
-    },
-    {
-      id: 'archived',
-      name: 'Archived',
-      description: 'Archived slides',
-      color: 'gray',
-      slides: [],
-    }
-  ];
-
+  // Scroll restoration
+  const { saveScrollPosition, restoreScrollPosition } = useGridScrollRestoration();
+  const gridScrollContainerRef = React.useRef<HTMLDivElement>(null);
+  
   // Hooks
-  const { currentVariation, variations, setCurrentVariation } = useDeckVariations();
-  const { getOrderedSlidesBySection, getVisibleSlides, updateSlideOrders, moveSlideToSection, refetch } = useSlideOrdering(
+  const { currentVariation, variations, setCurrentVariation, deleteVariation, refetch } = useDeckVariations();
+  
+  // Section management hook
+  const { 
+    getAllSections, 
+    addSection, 
+    deleteSection, 
+    reorderSections 
+  } = useSections(currentVariantId);
+  
+  const allSectionsData = getAllSections();
+  
+  // Convert to format expected by useSlideOrdering
+  const sections = allSectionsData.map(s => ({
+    id: s.id,
+    name: s.name,
+    description: s.description,
+    color: s.color,
+    slides: s.key === 'main' ? Array.from({length: 21}, (_, i) => i + 1) :
+            s.key === 'appendix' ? [22] :
+            s.key === 'demo' ? Array.from({length: 10}, (_, i) => i + 23) :
+            [],
+  }));
+  
+  const { getOrderedSlidesBySection, getVisibleSlides, updateSlideOrders, moveSlideToSection, refetch: refetchSlides } = useSlideOrdering(
     currentVariantId,
     sections
   );
@@ -147,6 +139,22 @@ const DeckOverviewNew = () => {
       setCurrentVariantId(currentVariation.id);
     }
   }, [currentVariation, currentVariantId]);
+  
+  // Handle variant deletion - redirect to default or first variant if current one is deleted
+  useEffect(() => {
+    if (currentVariantId && variations.length > 0) {
+      const currentExists = variations.find(v => v.id === currentVariantId);
+      if (!currentExists) {
+        // Current variant was deleted, switch to default or first variant
+        const defaultVariant = variations.find(v => v.is_default);
+        const targetVariant = defaultVariant || variations[0];
+        if (targetVariant) {
+          setCurrentVariantId(targetVariant.id);
+          setCurrentVariation(targetVariant);
+        }
+      }
+    }
+  }, [variations, currentVariantId, setCurrentVariation]);
   
   // Get ordered slides from Firebase
   const orderedSlidesBySection = getOrderedSlidesBySection();
@@ -236,8 +244,16 @@ const DeckOverviewNew = () => {
     if (currentVariantId) params.set('variant', currentVariantId);
     if (activeSection !== 'main') params.set('section', activeSection);
     if (searchQuery) params.set('q', searchQuery);
+    if (slideIdFromUrl) params.set('slide', slideIdFromUrl);
     setSearchParams(params, { replace: true });
-  }, [currentVariantId, activeSection, searchQuery, setSearchParams]);
+  }, [currentVariantId, activeSection, searchQuery, slideIdFromUrl, setSearchParams]);
+  
+  // Restore scroll position when returning from viewer
+  useEffect(() => {
+    if (!slideIdFromUrl && gridScrollContainerRef.current) {
+      restoreScrollPosition(activeSection, gridScrollContainerRef.current);
+    }
+  }, [slideIdFromUrl, activeSection, restoreScrollPosition]);
   
   // Multi-select handlers
   const toggleSlideSelection = (slideId: string, isCtrlOrCmd: boolean) => {
@@ -270,6 +286,96 @@ const DeckOverviewNew = () => {
     setContextMenu({ x, y, slideId });
   };
   
+  // Viewer handlers
+  const openSlideViewer = (slideId: string) => {
+    // Save current scroll position
+    if (gridScrollContainerRef.current) {
+      saveScrollPosition(activeSection, gridScrollContainerRef.current.scrollTop);
+    }
+    
+    const params = new URLSearchParams(searchParams);
+    params.set('slide', slideId);
+    setSearchParams(params);
+  };
+  
+  const closeSlideViewer = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete('slide');
+    setSearchParams(params);
+  };
+  
+  const handleViewerNext = () => {
+    if (!slideIdFromUrl) return;
+    const currentIndex = filteredSlides.findIndex(s => s.id === slideIdFromUrl);
+    if (currentIndex < filteredSlides.length - 1) {
+      const nextSlide = filteredSlides[currentIndex + 1];
+      const params = new URLSearchParams(searchParams);
+      params.set('slide', nextSlide.id);
+      setSearchParams(params);
+    }
+  };
+  
+  const handleViewerPrev = () => {
+    if (!slideIdFromUrl) return;
+    const currentIndex = filteredSlides.findIndex(s => s.id === slideIdFromUrl);
+    if (currentIndex > 0) {
+      const prevSlide = filteredSlides[currentIndex - 1];
+      const params = new URLSearchParams(searchParams);
+      params.set('slide', prevSlide.id);
+      setSearchParams(params);
+    }
+  };
+  
+  const handleViewerJump = (slideId: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('slide', slideId);
+    setSearchParams(params);
+  };
+  
+  const handleViewerMoveTo = async (slideId: string, sectionKey: string) => {
+    try {
+      await moveSlideToSection(slideId, sectionKey);
+      toast({
+        title: 'Slide moved',
+        description: `Moved to ${sectionKey}`,
+      });
+    } catch (error) {
+      // Error handled in hook
+    }
+  };
+  
+  const handleViewerDuplicate = (slideId: string) => {
+    toast({
+      title: 'Slide duplicated',
+      description: 'Created a duplicate of this slide',
+    });
+    refetchSlides();
+  };
+  
+  const handleViewerHide = async (slideId: string) => {
+    try {
+      await moveSlideToSection(slideId, 'hidden');
+      toast({
+        title: 'Slide hidden',
+        description: 'Slide removed from deck',
+      });
+    } catch (error) {
+      // Error handled in hook
+    }
+  };
+  
+  const handleViewerRestore = async (slideId: string) => {
+    try {
+      await moveSlideToSection(slideId, 'main');
+      toast({
+        title: 'Slide restored',
+        description: 'Slide added back to deck',
+      });
+    } catch (error) {
+      // Error handled in hook
+    }
+  };
+  
   // Bulk action handlers
   const handleHideSelected = async () => {
     toast({
@@ -277,7 +383,7 @@ const DeckOverviewNew = () => {
       description: `${selectedSlideIds.size} slides moved to hidden section`,
     });
     clearSelection();
-    refetch();
+    refetchSlides();
   };
   
   const handleRestoreSelected = async () => {
@@ -286,7 +392,7 @@ const DeckOverviewNew = () => {
       description: `${selectedSlideIds.size} slides added back to deck`,
     });
     clearSelection();
-    refetch();
+    refetchSlides();
   };
   
   const handleDuplicateSelected = async () => {
@@ -295,7 +401,7 @@ const DeckOverviewNew = () => {
       description: `Created ${selectedSlideIds.size} duplicate slides`,
     });
     clearSelection();
-    refetch();
+    refetchSlides();
   };
   
   const handleMoveSelectedToSection = async (section: 'main' | 'demo' | 'appendix') => {
@@ -304,7 +410,7 @@ const DeckOverviewNew = () => {
       description: `Moved ${selectedSlideIds.size} slides to ${section}`,
     });
     clearSelection();
-    refetch();
+    refetchSlides();
   };
   
   const handleMoveSelectedToVariant = async (variantId: string) => {
@@ -314,7 +420,7 @@ const DeckOverviewNew = () => {
       description: `Moved ${selectedSlideIds.size} slides to ${variant?.name}`,
     });
     clearSelection();
-    refetch();
+    refetchSlides();
   };
   
   const handleDeleteSelected = async () => {
@@ -324,7 +430,7 @@ const DeckOverviewNew = () => {
       variant: 'destructive',
     });
     clearSelection();
-    refetch();
+    refetchSlides();
   };
   
   // Command palette commands
@@ -381,9 +487,11 @@ const DeckOverviewNew = () => {
     );
     
     if (visibleSlides.length > 0) {
-      // Navigate to first visible slide with slide IDs in URL
-      const slideIds = visibleSlides.map(s => s.id).join(',');
-      navigate(`/deck/slide/${visibleSlides[0].id}?slides=${slideIds}&deckName=${encodeURIComponent(deckName)}`);
+      // Open first visible slide in viewer with fullscreen mode
+      const params = new URLSearchParams(searchParams);
+      params.set('slide', visibleSlides[0].id);
+      params.set('fullscreen', 'true');
+      setSearchParams(params);
     } else {
       toast({
         title: 'No slides to show',
@@ -486,8 +594,13 @@ const DeckOverviewNew = () => {
                   refetch();
                 }}
                 onDelete={async (id) => {
-                  toast({ title: 'Variant deleted', variant: 'destructive' });
-                  refetch();
+                  try {
+                    await deleteVariation(id);
+                    // After deletion, variations will be updated by the hook
+                    // useEffect below will handle switching to another variant
+                  } catch (error) {
+                    // Error already handled in hook
+                  }
                 }}
                 onReorder={async (fromIndex, toIndex) => {
                   refetch();
@@ -497,15 +610,18 @@ const DeckOverviewNew = () => {
             
             <div className="border-t border-neutral-200">
               <SectionsNav
-                sections={[
-                  { key: 'main', label: 'Main Deck', count: allSlides.filter(s => s.section === 'main' && s.status === 'visible').length },
-                  { key: 'demo', label: 'Demo', count: allSlides.filter(s => s.section === 'demo' && s.status === 'visible').length },
-                  { key: 'appendix', label: 'Appendices', count: allSlides.filter(s => s.section === 'appendix' && s.status === 'visible').length },
-                  { key: 'hidden', label: 'Hidden', count: hiddenSlidesCount },
-                  { key: 'archived', label: 'Archived', count: archivedSlidesCount },
-                ]}
+                sections={allSectionsData.map(s => ({
+                  key: s.key,
+                  label: s.name,
+                  count: allSlides.filter(slide => slide.section === s.key && slide.status === 'visible').length,
+                  id: s.id,
+                  icon: s.icon,
+                  is_default: s.is_default,
+                  locked: s.locked,
+                  order_index: s.order_index,
+                }))}
                 activeSectionKey={activeSection}
-                onSelect={(key) => setActiveSection(key)}
+                onSelect={(key) => setActiveSection(key as Section)}
                 hiddenSections={hiddenSections}
                 onToggleSectionVisibility={(sectionKey) => {
                   setHiddenSections(prev => {
@@ -556,34 +672,76 @@ const DeckOverviewNew = () => {
                     });
                   }
                 }}
+                onAddSection={addSection}
+                onDeleteSection={async (sectionId) => {
+                  // Move all slides from this section to main before deleting
+                  const slidesInSection = allSlides.filter(s => s.section === sectionId);
+                  for (const slide of slidesInSection) {
+                    await moveSlideToSection(slide.id, 'main');
+                  }
+                  await deleteSection(sectionId);
+                  refetchSlides();
+                }}
+                onReorderSections={reorderSections}
               />
             </div>
           </div>
           
-          {/* Main Content - Slide Grid */}
-          <div className="flex-1 overflow-auto p-6">
-            {filteredSlides.length === 0 ? (
-              <div className="flex items-center justify-center h-full">
-                <div className="text-center">
-                  <Layers className="w-16 h-16 mx-auto mb-4 text-neutral-300" />
-                  <h3 className="text-lg font-medium text-neutral-700 mb-2">
-                    No slides found
-                  </h3>
-                  <p className="text-neutral-500">
-                    {searchQuery ? 'Try a different search' : 'Add slides to get started'}
-                  </p>
+          {/* Main Content - Slide Grid or Viewer */}
+          {slideIdFromUrl ? (
+            <SlidesViewer
+              slides={filteredSlides}
+              currentSlideId={slideIdFromUrl}
+              slideComponents={slideComponents}
+              onClose={closeSlideViewer}
+              onPrev={handleViewerPrev}
+              onNext={handleViewerNext}
+              onJump={handleViewerJump}
+              onMoveTo={handleViewerMoveTo}
+              onDuplicate={handleViewerDuplicate}
+              onHide={handleViewerHide}
+              onRestore={handleViewerRestore}
+              deckName={deckName}
+            />
+          ) : (
+            <div 
+              ref={gridScrollContainerRef}
+              className="flex-1 overflow-auto p-6"
+              onScroll={(e) => {
+                const target = e.currentTarget;
+                saveScrollPosition(activeSection, target.scrollTop);
+              }}
+            >
+              {filteredSlides.length === 0 ? (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center">
+                    <Layers className="w-16 h-16 mx-auto mb-4 text-neutral-300" />
+                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                      No slides found
+                    </h3>
+                    <p className="text-neutral-500">
+                      {searchQuery ? 'Try a different search' : 'Add slides to get started'}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <SlideGrid
-                slides={filteredSlides}
-                selectedSlideIds={selectedSlideIds}
-                onToggleSelection={toggleSlideSelection}
-                onContextMenu={handleContextMenu}
-                viewMode={viewMode}
-                showCheckboxes={selectedSlideIds.size > 0}
-                slideComponents={slideComponents}
-                onReorder={async (reorderedSlides) => {
+              ) : (
+                <SlideGrid
+                  slides={filteredSlides}
+                  selectedSlideIds={selectedSlideIds}
+                  onToggleSelection={(slideId, isCtrlOrCmd) => {
+                    if (!isCtrlOrCmd) {
+                      // Single click without modifier - open viewer
+                      openSlideViewer(slideId);
+                    } else {
+                      // Ctrl/Cmd click - toggle selection
+                      toggleSlideSelection(slideId, isCtrlOrCmd);
+                    }
+                  }}
+                  onContextMenu={handleContextMenu}
+                  viewMode={viewMode}
+                  showCheckboxes={selectedSlideIds.size > 0}
+                  slideComponents={slideComponents}
+                  onReorder={async (reorderedSlides) => {
                   if (!currentVariantId) {
                     toast({
                       title: 'Error',
@@ -620,9 +778,10 @@ const DeckOverviewNew = () => {
                     });
                   }
                 }}
-              />
-            )}
-          </div>
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
       
@@ -666,7 +825,7 @@ const DeckOverviewNew = () => {
             title: 'Slides restored',
             description: `Restored ${slideIds.length} slides to ${targetSection}`,
           });
-          refetch();
+          refetchSlides();
         }}
         onDeleteSlides={(slideIds) => {
           toast({
@@ -674,7 +833,7 @@ const DeckOverviewNew = () => {
             description: `Deleted ${slideIds.length} slides`,
             variant: 'destructive',
           });
-          refetch();
+          refetchSlides();
         }}
         onPreviewSlide={(slideId) => {
           navigate(`/deck/slide/${slideId}`);
@@ -761,7 +920,7 @@ const DeckOverviewNew = () => {
           onDuplicate={() => {
             toast({ title: 'Slide duplicated' });
             setContextMenu(null);
-            refetch();
+            refetchSlides();
           }}
           onRename={() => {
             toast({ title: 'Rename slide' });
@@ -776,7 +935,7 @@ const DeckOverviewNew = () => {
           onDelete={() => {
             toast({ title: 'Slide deleted', variant: 'destructive' });
             setContextMenu(null);
-            refetch();
+            refetchSlides();
           }}
         />
       )}

@@ -44,10 +44,6 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
     v.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const totalSlides = (variant: Variant) => {
-    return Object.values(variant.countBySection).reduce((sum, count) => sum + count, 0);
-  };
-
   const handleContextMenu = (e: React.MouseEvent, variantId: string) => {
     e.preventDefault();
     e.stopPropagation();
@@ -120,7 +116,6 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
           filteredVariants.map((variant) => {
             const isActive = variant.id === activeVariantId;
             const isEditing = editingId === variant.id;
-            const slideCount = totalSlides(variant);
 
             return (
               <div
@@ -187,9 +182,6 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
                           <Star className="h-3 w-3 text-depoint-orange fill-depoint-orange flex-shrink-0" />
                         )}
                       </div>
-                      <p className="text-label-small text-neutral-600">
-                        {slideCount} slides
-                      </p>
                     </div>
                   )}
 

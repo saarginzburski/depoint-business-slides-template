@@ -94,8 +94,8 @@ export const HiddenSlidesDrawer: React.FC<HiddenSlidesDrawerProps> = ({
     switch (sortBy) {
       case 'recent':
         result.sort((a, b) => {
-          const dateA = a.hiddenAt || a.lastEdited || new Date(0);
-          const dateB = b.hiddenAt || b.lastEdited || new Date(0);
+          const dateA = new Date(a.hiddenAt || a.lastEdited || 0);
+          const dateB = new Date(b.hiddenAt || b.lastEdited || 0);
           return dateB.getTime() - dateA.getTime();
         });
         break;

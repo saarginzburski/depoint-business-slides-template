@@ -58,9 +58,23 @@
     --neutral-800: 212 11% 25%;        /* #292A2D */
     --neutral-900: 211 12% 13%;        /* #202124 */
     
+    /* ===== Simplified Gray Scale (for Tailwind gray utility) ===== */
+    --gray-100: 220 13% 91%;           /* #E8EAED - Same as neutral-100 */
+    --gray-200: 220 9% 85%;            /* #DADCE0 - Same as neutral-200 */
+    --gray-400: 220 9% 65%;            /* #9AA0A6 - Same as neutral-400 */
+    --gray-600: 218 11% 45%;           /* #5F6368 - Same as neutral-600 */
+    
     /* ===== Depoint Brand Colors ===== */
+    --depoint-blue: 217 89% 51%;       /* #1A73E8 - Google Workspace Blue */
     --depoint-orange: 33 100% 47%;     /* #F29900 */
     --depoint-orange-light: 33 100% 90%;
+    --neutral-navy: 211 12% 13%;       /* #202124 - Deep navy for text */
+    
+    /* ===== Strategic Pillar Colors ===== */
+    --pillar-margin: 33 100% 47%;      /* #F29900 - Orange for Protect Margin */
+    --pillar-risk: 4 90% 58%;          /* #EA4335 - Red for Reduce Risk */
+    --pillar-revenue: 217 89% 51%;     /* #1A73E8 - Blue for Protect Revenue */
+    --pillar-growth: 137 55% 45%;      /* #34A853 - Green for Accelerate Growth */
     
     /* ===== Semantic Colors (Google style) ===== */
     --success: 137 55% 45%;            /* #34A853 - Google Green */
@@ -427,10 +441,35 @@
   .bg-neutral-900 { background-color: hsl(var(--neutral-900)); }
   
   /* ===== Depoint Brand Colors ===== */
+  .text-depoint-blue { color: hsl(var(--depoint-blue)); }
+  .bg-depoint-blue { background-color: hsl(var(--depoint-blue)); }
+  .border-depoint-blue { border-color: hsl(var(--depoint-blue)); }
+  
   .text-depoint-orange { color: hsl(var(--depoint-orange)); }
   .bg-depoint-orange { background-color: hsl(var(--depoint-orange)); }
   .bg-depoint-orange-light { background-color: hsl(var(--depoint-orange-light)); }
   .border-depoint-orange { border-color: hsl(var(--depoint-orange)); }
+  
+  .text-neutral-navy { color: hsl(var(--neutral-navy)); }
+  .bg-neutral-navy { background-color: hsl(var(--neutral-navy)); }
+  .border-neutral-navy { border-color: hsl(var(--neutral-navy)); }
+  
+  /* ===== Strategic Pillar Colors ===== */
+  .text-pillar-margin { color: hsl(var(--pillar-margin)); }
+  .bg-pillar-margin { background-color: hsl(var(--pillar-margin)); }
+  .border-pillar-margin { border-color: hsl(var(--pillar-margin)); }
+  
+  .text-pillar-risk { color: hsl(var(--pillar-risk)); }
+  .bg-pillar-risk { background-color: hsl(var(--pillar-risk)); }
+  .border-pillar-risk { border-color: hsl(var(--pillar-risk)); }
+  
+  .text-pillar-revenue { color: hsl(var(--pillar-revenue)); }
+  .bg-pillar-revenue { background-color: hsl(var(--pillar-revenue)); }
+  .border-pillar-revenue { border-color: hsl(var(--pillar-revenue)); }
+  
+  .text-pillar-growth { color: hsl(var(--pillar-growth)); }
+  .bg-pillar-growth { background-color: hsl(var(--pillar-growth)); }
+  .border-pillar-growth { border-color: hsl(var(--pillar-growth)); }
   
   /* ===== Semantic Colors ===== */
   .text-success { color: hsl(var(--success)); }

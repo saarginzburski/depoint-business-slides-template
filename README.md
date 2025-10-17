@@ -62,6 +62,48 @@ This project is built with:
 
 ## How can I deploy this project?
 
+### Automatic Deployment (Recommended)
+
+This project is configured for **automatic deployment to Firebase Hosting** via GitHub Actions.
+
+**Deployment triggers:**
+- ✅ Push to `main` branch → Deploys to production
+- ✅ Pull Request → Creates preview deployment
+- ✅ Manual trigger → Can be run from GitHub Actions tab
+
+**Setup (One-time):**
+
+1. Generate a Firebase CI token:
+   ```bash
+   firebase login:ci
+   ```
+
+2. Add the token to GitHub Secrets:
+   - Go to your repository **Settings** → **Secrets and variables** → **Actions**
+   - Click **New repository secret**
+   - Name: `FIREBASE_TOKEN`
+   - Value: Paste the token from step 1
+
+3. Push to `main` branch - deployment starts automatically!
+
+**Live Site:** https://depoint-deck-editor.web.app
+
+For detailed setup instructions, see [`.github/FIREBASE_DEPLOYMENT_SETUP.md`](.github/FIREBASE_DEPLOYMENT_SETUP.md)
+
+### Manual Deployment
+
+You can also deploy manually:
+
+```bash
+# Build and deploy to production
+npm run deploy
+
+# Deploy to preview channel
+npm run deploy:preview
+```
+
+### Lovable Deployment
+
 Simply open [Lovable](https://lovable.dev/projects/8672d2b0-a663-499d-a67c-b2f797d882a2) and click on Share -> Publish.
 
 ## Can I connect a custom domain to my Lovable project?

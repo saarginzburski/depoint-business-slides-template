@@ -169,8 +169,8 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
 
       {/* Slide Info */}
       <div className="p-3">
-        <h3 className="text-sm font-medium text-neutral-900 truncate" title={slide.title}>
-          {slide.title}
+        <h3 className="text-sm font-medium text-neutral-900 truncate" title={`#${slide.id} - ${slide.title}`}>
+          #{slide.id} - {slide.title}
         </h3>
         {slide.tags && slide.tags.length > 0 && (
           <div className="flex items-center gap-1 mt-2 flex-wrap">
