@@ -480,12 +480,33 @@ const DeckOverviewNew = () => {
                 ]}
                 activeSectionKey={activeSection as any}
                 onSelect={(key) => setActiveSection(key as Section)}
-                onDrop={(slideIds, targetSection) => {
-                  toast({
-                    title: 'Slides moved',
-                    description: `Moved ${slideIds.length} slides to ${targetSection}`,
-                  });
-                  refetch();
+                onDrop={async (slideIds, targetSection) => {
+                  if (!currentVariantId) {
+                    toast({
+                      title: 'Error',
+                      description: 'No variant selected',
+                      variant: 'destructive',
+                    });
+                    return;
+                  }
+                  
+                  try {
+                    // Move each slide to the target section
+                    for (const slideId of slideIds) {
+                      await moveSlideToSection(slideId, targetSection);
+                    }
+                    
+                    toast({
+                      title: 'Slides moved',
+                      description: `Moved ${slideIds.length} slide${slideIds.length > 1 ? 's' : ''} to ${targetSection}`,
+                    });
+                  } catch (error) {
+                    toast({
+                      title: 'Error',
+                      description: 'Failed to move slides',
+                      variant: 'destructive',
+                    });
+                  }
                 }}
               />
             </div>

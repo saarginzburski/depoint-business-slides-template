@@ -75,6 +75,12 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
     transition,
   };
 
+  // Handle native drag for cross-section drops
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('slideIds', slide.id);
+  };
+
   return (
     <Card
       ref={setNodeRef}
@@ -93,6 +99,8 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onDragStart={handleDragStart}
+      draggable={true}
       role="listitem"
       aria-label={`${slide.title}${isSelected ? ', selected' : ''}`}
       aria-selected={isSelected}
