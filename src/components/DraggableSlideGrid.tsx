@@ -20,7 +20,8 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { GripVertical, Eye, EyeOff } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { GripVertical, Eye, EyeOff, Copy } from 'lucide-react';
 import { slideConfig } from '@/pages/slides/slideConfig';
 import { db } from '@/integrations/firebase/client';
 import { collection, addDoc, getDocs, deleteDoc, query, where } from 'firebase/firestore';
@@ -50,6 +51,9 @@ interface DraggableSlideGridProps {
   variationId: string | null;
   orderedSlidesBySection: Record<string, SlideData[]>;
   onOrdersChanged?: () => void;
+  selectedSlideIds?: Set<number>;
+  onToggleSelection?: (slideId: number, ctrlKey: boolean) => void;
+  onContextMenu?: (e: React.MouseEvent, slideId: number) => void;
 }
 
 interface DraggableSlideProps {
@@ -59,6 +63,9 @@ interface DraggableSlideProps {
   slideComponents: Record<string, React.LazyExoticComponent<any>>;
   onSlideClick: (slideId: number) => void;
   onMoveSlide: (slideId: number, fromSection: string, toSection: string) => void;
+  isSelected?: boolean;
+  onToggleSelection?: (slideId: number, ctrlKey: boolean) => void;
+  onContextMenu?: (e: React.MouseEvent, slideId: number) => void;
 }
 
 interface DroppableSectionProps {
@@ -73,7 +80,10 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
   sectionColor, 
   slideComponents, 
   onSlideClick,
-  onMoveSlide
+  onMoveSlide,
+  isSelected = false,
+  onToggleSelection,
+  onContextMenu
 }) => {
   const {
     attributes,
@@ -99,8 +109,8 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
   const handleToggleVisibility = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isHidden) {
-      // Move to first non-hidden section (main-deck by default)
-      onMoveSlide(slide.id, sectionId, 'main-deck');
+      // Move to first non-hidden section (deck by default)
+      onMoveSlide(slide.id, sectionId, 'deck');
     } else {
       // Move to hidden section
       onMoveSlide(slide.id, sectionId, 'hidden');
@@ -111,16 +121,67 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
     <Card
       ref={setNodeRef}
       style={style}
-      className={`group relative overflow-hidden rounded-xl border border-neutral-200 bg-surface transition-standard ${
-        isDragging ? 'opacity-40 shadow-elevation-2 scale-105' : 'hover:shadow-elevation-2 hover:border-neutral-300'
+      className={`group relative overflow-hidden rounded-xl border transition-standard ${
+        isSelected 
+          ? 'ring-2 ring-primary border-primary shadow-elevation-2' 
+          : 'border-neutral-200 hover:border-neutral-300'
+      } ${
+        isDragging ? 'opacity-40 scale-105' : 'hover:shadow-elevation-2'
       }`}
+      onContextMenu={(e) => onContextMenu?.(e, slide.id)}
     >
+      {/* Multi-Select Checkbox */}
+      {onToggleSelection && (
+        <div className="absolute top-2 left-2 z-10">
+          <Checkbox
+            checked={isSelected}
+            onCheckedChange={() => onToggleSelection(slide.id, false)}
+            className="bg-surface shadow-sm border-neutral-400 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleSelection(slide.id, e.ctrlKey || e.metaKey);
+            }}
+          />
+        </div>
+      )}
+
+      {/* Icon-Only Hover Toolbar */}
+      <div className="absolute top-2 right-2 z-10 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* Drag Handle */}
+        <button
+          {...listeners}
+          {...attributes}
+          className="h-8 w-8 p-0 bg-surface/90 backdrop-blur-sm hover:bg-primary/10 rounded-full shadow-sm flex items-center justify-center transition-standard cursor-grab active:cursor-grabbing"
+          onClick={(e) => e.stopPropagation()}
+          title="Drag to reorder"
+        >
+          <GripVertical className="h-4 w-4 text-neutral-700" />
+        </button>
+
+        {/* Hide/Show Toggle */}
+        <button
+          onClick={handleToggleVisibility}
+          className={`h-8 w-8 p-0 backdrop-blur-sm rounded-full shadow-sm flex items-center justify-center transition-standard ${
+            isHidden 
+              ? 'bg-green-50/90 hover:bg-green-100 text-green-700' 
+              : 'bg-surface/90 hover:bg-primary/10 text-neutral-700'
+          }`}
+          title={isHidden ? 'Add to deck' : 'Remove from deck'}
+        >
+          {isHidden ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+        </button>
+      </div>
+
       {/* Slide Preview */}
       <div 
         className="relative w-full aspect-[16/9] bg-neutral-50 overflow-hidden cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
-          onSlideClick(slide.id);
+          if (onToggleSelection && (e.ctrlKey || e.metaKey)) {
+            onToggleSelection(slide.id, true);
+          } else {
+            onSlideClick(slide.id);
+          }
         }}
       >
         <div className="w-full h-full transform scale-[0.2] origin-top-left" style={{ width: '500%', height: '500%' }}>
@@ -147,44 +208,6 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
       <div className="px-3 py-2 border-t border-neutral-200">
         <h4 className="text-body-small font-medium text-neutral-900 truncate">{slide.name}</h4>
         <p className="text-label-small text-neutral-600">Slide {slide.id}</p>
-      </div>
-
-      {/* Actions Bar - Drive-style hover actions */}
-      <div className="flex items-center gap-1 px-2 py-2 border-t border-neutral-200 bg-surface">
-        {/* Drag Handle */}
-        <button
-          {...listeners}
-          {...attributes}
-          className="flex items-center gap-1.5 px-2 py-1.5 text-label-small font-medium text-neutral-600 hover:text-primary hover:bg-primary/10 rounded-lg transition-standard cursor-grab active:cursor-grabbing"
-          onClick={(e) => e.stopPropagation()}
-          title="Drag to reorder"
-        >
-          <GripVertical className="h-4 w-4" />
-          <span>Reorder</span>
-        </button>
-
-        {/* Hide/Show Toggle */}
-        <button
-          onClick={handleToggleVisibility}
-          className={`flex items-center gap-1.5 px-2 py-1.5 text-label-small font-medium rounded-lg transition-standard ${
-            isHidden 
-              ? 'text-green-700 hover:text-green-900 hover:bg-green-50' 
-              : 'text-neutral-600 hover:text-primary hover:bg-primary/10'
-          }`}
-          title={isHidden ? 'Add slide to deck' : 'Remove slide from deck'}
-        >
-          {isHidden ? (
-            <>
-              <Eye className="h-4 w-4" />
-              <span>Add to deck</span>
-            </>
-          ) : (
-            <>
-              <EyeOff className="h-4 w-4" />
-              <span>Remove</span>
-            </>
-          )}
-        </button>
       </div>
     </Card>
   );
@@ -228,7 +251,10 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
   onSlideClick,
   variationId,
   orderedSlidesBySection,
-  onOrdersChanged
+  onOrdersChanged,
+  selectedSlideIds = new Set(),
+  onToggleSelection,
+  onContextMenu
 }) => {
   const [sectionSlides, setSectionSlides] = useState<Record<string, SlideData[]>>(orderedSlidesBySection);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -440,6 +466,9 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
                         slideComponents={slideComponents}
                         onSlideClick={onSlideClick}
                         onMoveSlide={handleMoveSlide}
+                        isSelected={selectedSlideIds.has(slide.id)}
+                        onToggleSelection={onToggleSelection}
+                        onContextMenu={onContextMenu}
                       />
                     ))}
                   </DroppableSection>
@@ -485,6 +514,9 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
                             slideComponents={slideComponents}
                             onSlideClick={onSlideClick}
                             onMoveSlide={handleMoveSlide}
+                            isSelected={selectedSlideIds.has(slide.id)}
+                            onToggleSelection={onToggleSelection}
+                            onContextMenu={onContextMenu}
                           />
                         ))}
                       </DroppableSection>
