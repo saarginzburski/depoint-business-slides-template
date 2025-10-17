@@ -79,8 +79,10 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
     <Card
       ref={setNodeRef}
       style={style}
+      {...attributes}
+      {...listeners}
       className={`
-        relative group cursor-pointer transition-all duration-200
+        relative group cursor-move transition-all duration-200
         ${isSelected ? 'ring-2 ring-primary-600 bg-primary-50/30' : 'hover:elevation-2'}
         ${isHovered ? 'elevation-1' : ''}
         ${isDragging ? 'opacity-50' : ''}
@@ -98,17 +100,20 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
       aria-selected={isSelected}
       tabIndex={0}
     >
-      {/* Drag Handle - supports both within-section reordering and cross-section moving */}
+      {/* Drag Handle for cross-section moving (overrides dnd-kit) */}
       <div
-        {...attributes}
-        {...listeners}
         draggable
         onDragStart={(e) => {
-          // For native HTML5 drag to sections
+          e.stopPropagation();
           e.dataTransfer.effectAllowed = 'move';
           e.dataTransfer.setData('slideIds', slide.id);
+          e.dataTransfer.setData('text/plain', slide.id);
+        }}
+        onMouseDown={(e) => {
+          e.stopPropagation();
         }}
         className="absolute top-2 left-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing"
+        title="Drag to section labels to move between sections"
       >
         <div className="p-1 bg-white rounded shadow-sm">
           <GripVertical className="w-4 h-4 text-neutral-600" />

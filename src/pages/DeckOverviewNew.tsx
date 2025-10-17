@@ -84,6 +84,7 @@ const DeckOverviewNew = () => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; slideId: string } | null>(null);
   const [navActiveItem, setNavActiveItem] = useState('decks');
+  const [hiddenSections, setHiddenSections] = useState<Set<Section>>(new Set());
   
   // Define sections for the hook
   const sections = [
@@ -478,8 +479,28 @@ const DeckOverviewNew = () => {
                   { key: 'hidden', label: 'Hidden', count: hiddenSlidesCount },
                   { key: 'archived', label: 'Archived', count: archivedSlidesCount },
                 ]}
-                activeSectionKey={activeSection as any}
-                onSelect={(key) => setActiveSection(key as Section)}
+                activeSectionKey={activeSection}
+                onSelect={(key) => setActiveSection(key)}
+                hiddenSections={hiddenSections}
+                onToggleSectionVisibility={(sectionKey) => {
+                  setHiddenSections(prev => {
+                    const next = new Set(prev);
+                    if (next.has(sectionKey as Section)) {
+                      next.delete(sectionKey as Section);
+                      toast({
+                        title: 'Section shown',
+                        description: `${sectionKey} will be included in presentations`,
+                      });
+                    } else {
+                      next.add(sectionKey as Section);
+                      toast({
+                        title: 'Section hidden',
+                        description: `${sectionKey} will be excluded from presentations`,
+                      });
+                    }
+                    return next;
+                  });
+                }}
                 onDrop={async (slideIds, targetSection) => {
                   if (!currentVariantId) {
                     toast({
