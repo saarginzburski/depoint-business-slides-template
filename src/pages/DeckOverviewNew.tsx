@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Layers } from 'lucide-react';
-import { slideConfig } from './slides/slideConfig';
 import { useDeckVariations } from '@/hooks/useDeckVariations';
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
 import { NavigationRail } from '@/components/NavigationRail';
@@ -44,25 +43,71 @@ const DeckOverviewNew = () => {
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; slideId: string } | null>(null);
   const [navActiveItem, setNavActiveItem] = useState('decks');
   
+  // Define sections for the hook
+  const sections = [
+    {
+      id: 'main',
+      name: 'Main Deck',
+      description: 'Core presentation',
+      color: 'blue',
+      slides: Array.from({length: 21}, (_, i) => i + 1),
+    },
+    {
+      id: 'appendix', 
+      name: 'Appendices',
+      description: 'Supporting documentation',
+      color: 'slate',
+      slides: [22],
+    },
+    {
+      id: 'demo',
+      name: 'Demo',
+      description: 'Dashboard demonstrations', 
+      color: 'green',
+      slides: Array.from({length: 10}, (_, i) => i + 23),
+    },
+    {
+      id: 'hidden',
+      name: 'Hidden',
+      description: 'Hidden slides',
+      color: 'gray',
+      slides: [],
+    }
+  ];
+
   // Hooks
   const { currentVariation, variations, setCurrentVariation } = useDeckVariations();
-  const { getOrderedSlidesBySection, refetch } = useSlideOrdering(
+  const { getOrderedSlidesBySection, getVisibleSlides, refetch } = useSlideOrdering(
     currentVariantId,
-    [] // sections will be handled differently now
+    sections
   );
   
-  // Convert slide config to Slide type
-  const allSlides: Slide[] = slideConfig.map((config) => ({
-    id: config.id.toString(),
-    title: config.title,
-    section: config.section || 'main',
-    status: 'visible' as 'visible' | 'hidden' | 'archived',
-    order: config.id,
-    thumbnailUrl: `/placeholder.svg`, // TODO: Generate actual thumbnails
-    tags: config.tags || [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }));
+  // Get ordered slides from Firebase
+  const orderedSlidesBySection = getOrderedSlidesBySection();
+  
+  // Convert slide config to Slide type using the ordered data
+  const allSlides: Slide[] = React.useMemo(() => {
+    const slides: Slide[] = [];
+    
+    // Go through each section and add its slides
+    Object.entries(orderedSlidesBySection).forEach(([sectionId, sectionSlides]) => {
+      sectionSlides.forEach((slideConfig, index) => {
+        slides.push({
+          id: slideConfig.id.toString(),
+          title: slideConfig.title,
+          section: sectionId as any,
+          status: 'visible' as 'visible' | 'hidden' | 'archived',
+          order: index,
+          thumbnailUrl: `/placeholder.svg`,
+          tags: slideConfig.tags || [],
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+      });
+    });
+    
+    return slides;
+  }, [orderedSlidesBySection]);
   
   // Filter slides by active section and search query
   const getFilteredSlides = (): Slide[] => {
