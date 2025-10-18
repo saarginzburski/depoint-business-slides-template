@@ -103,7 +103,7 @@ const DeckOverviewNew = () => {
   // Scroll restoration
   const { saveScrollPosition, restoreScrollPosition } = useGridScrollRestoration();
   const gridScrollContainerRef = React.useRef<HTMLDivElement>(null);
-  
+
   // Hooks
   const { currentVariation, variations, setCurrentVariation, deleteVariation, refetch } = useDeckVariations();
   
@@ -303,7 +303,16 @@ const DeckOverviewNew = () => {
     const params = new URLSearchParams(searchParams);
     params.delete('slide');
     setSearchParams(params);
+    // Reset presentation mode when closing viewer
+    setIsPresentationMode(false);
   };
+
+  // Reset presentation mode when navigating away from slide viewer
+  useEffect(() => {
+    if (!slideIdFromUrl && isPresentationMode) {
+      setIsPresentationMode(false);
+    }
+  }, [slideIdFromUrl, isPresentationMode]);
   
   const handleViewerNext = () => {
     if (!slideIdFromUrl) return;
@@ -638,7 +647,7 @@ const DeckOverviewNew = () => {
                       });
                     } else {
                       next.add(sectionKey as Section);
-                      toast({
+                  toast({
                         title: 'Section hidden',
                         description: `${sectionKey} will be excluded from presentations`,
                       });
@@ -718,22 +727,22 @@ const DeckOverviewNew = () => {
                 saveScrollPosition(activeSection, target.scrollTop);
               }}
             >
-              {filteredSlides.length === 0 ? (
-                <div className="flex items-center justify-center h-full">
-                  <div className="text-center">
-                    <Layers className="w-16 h-16 mx-auto mb-4 text-neutral-300" />
-                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
-                      No slides found
-                    </h3>
-                    <p className="text-neutral-500">
-                      {searchQuery ? 'Try a different search' : 'Add slides to get started'}
-                    </p>
-                  </div>
+            {filteredSlides.length === 0 ? (
+              <div className="flex items-center justify-center h-full">
+                <div className="text-center">
+                  <Layers className="w-16 h-16 mx-auto mb-4 text-neutral-300" />
+                  <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                    No slides found
+                  </h3>
+                  <p className="text-neutral-500">
+                    {searchQuery ? 'Try a different search' : 'Add slides to get started'}
+                  </p>
                 </div>
-              ) : (
-                <SlideGrid
-                  slides={filteredSlides}
-                  selectedSlideIds={selectedSlideIds}
+              </div>
+            ) : (
+              <SlideGrid
+                slides={filteredSlides}
+                selectedSlideIds={selectedSlideIds}
                   onToggleSelection={(slideId, isCtrlOrCmd) => {
                     if (!isCtrlOrCmd) {
                       // Single click without modifier - open viewer
@@ -743,10 +752,10 @@ const DeckOverviewNew = () => {
                       toggleSlideSelection(slideId, isCtrlOrCmd);
                     }
                   }}
-                  onContextMenu={handleContextMenu}
-                  viewMode={viewMode}
-                  showCheckboxes={selectedSlideIds.size > 0}
-                  slideComponents={slideComponents}
+                onContextMenu={handleContextMenu}
+                viewMode={viewMode}
+                showCheckboxes={selectedSlideIds.size > 0}
+                slideComponents={slideComponents}
                   onReorder={async (reorderedSlides) => {
                   if (!currentVariantId) {
                     toast({
@@ -784,9 +793,9 @@ const DeckOverviewNew = () => {
                     });
                   }
                 }}
-                />
-              )}
-            </div>
+              />
+            )}
+          </div>
           )}
         </div>
       </div>
@@ -889,12 +898,12 @@ const DeckOverviewNew = () => {
             try {
               if (contextMenu) {
                 await moveSlideToSection(contextMenu.slideId, 'main');
-                toast({ title: 'Slide added to deck' });
+            toast({ title: 'Slide added to deck' });
               }
             } catch (error) {
               // Error already handled in hook
             } finally {
-              setContextMenu(null);
+            setContextMenu(null);
             }
           }}
           onRemoveFromDeck={async () => {
@@ -911,7 +920,7 @@ const DeckOverviewNew = () => {
             try {
               if (contextMenu) {
                 await moveSlideToSection(contextMenu.slideId, 'hidden');
-                toast({ title: 'Slide removed from deck' });
+            toast({ title: 'Slide removed from deck' });
               }
             } catch (error) {
               toast({
@@ -920,7 +929,7 @@ const DeckOverviewNew = () => {
                 variant: 'destructive',
               });
             } finally {
-              setContextMenu(null);
+            setContextMenu(null);
             }
           }}
           onDuplicate={() => {

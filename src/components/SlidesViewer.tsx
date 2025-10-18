@@ -113,6 +113,15 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
 
+  // Cleanup: Reset presentation mode when component unmounts
+  useEffect(() => {
+    return () => {
+      if (isPresentationMode) {
+        onPresentationModeChange?.(false);
+      }
+    };
+  }, [isPresentationMode, onPresentationModeChange]);
+
   // Auto-enter fullscreen if requested via URL param
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -158,6 +167,7 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
           e.preventDefault();
           if (isPresentationMode) {
             setIsPresentationMode(false);
+            onPresentationModeChange?.(false);
           } else if (document.fullscreenElement) {
             document.exitFullscreen();
           } else {
@@ -217,7 +227,7 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentSlideId, isHidden, isPresentationMode, onPrev, onNext, onClose, onHide, onRestore, onDuplicate, onMoveTo, toggleFullscreen, togglePresentationMode]);
+  }, [currentSlideId, isHidden, isPresentationMode, onPrev, onNext, onClose, onHide, onRestore, onDuplicate, onMoveTo, toggleFullscreen, togglePresentationMode, onPresentationModeChange]);
 
   // Scroll filmstrip to show current slide
   useEffect(() => {
