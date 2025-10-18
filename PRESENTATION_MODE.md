@@ -1,7 +1,7 @@
 # Presentation Mode Feature
 
 ## Overview
-Added a full-screen presentation mode to `SlidesViewer` that hides all UI elements (top bar and filmstrip) for a clean, distraction-free presentation experience.
+Added a full-screen presentation mode that hides **all** UI elements (app top bar, left sidebar, viewer top bar, and filmstrip) for a completely clean, distraction-free presentation experience where the slide takes up 100% of the screen.
 
 ## Features
 
@@ -12,10 +12,12 @@ Added a full-screen presentation mode to `SlidesViewer` that hides all UI elemen
 
 ### 2. **UI Behavior**
    When presentation mode is active:
-   - ✅ Top navigation bar is completely hidden
-   - ✅ Filmstrip at the bottom is hidden
-   - ✅ "Show Filmstrip" toggle button is hidden
-   - ✅ Only the slide content is visible with minimal padding
+   - ✅ **App top bar** is completely hidden (search, filters, view/print buttons)
+   - ✅ **Left sidebar** is completely hidden (variants and sections navigation)
+   - ✅ **Viewer top bar** is completely hidden (deck name, slide count, navigation controls)
+   - ✅ **Filmstrip** at the bottom is hidden
+   - ✅ **"Show Filmstrip" toggle button** is hidden
+   - ✅ **Only the slide content** is visible, taking up 100% of the screen
    - ✅ Background remains neutral-50 for better contrast
 
 ### 3. **Navigation in Presentation Mode**
@@ -48,8 +50,11 @@ Added a full-screen presentation mode to `SlidesViewer` that hides all UI elemen
 
 ### Files Modified
 - `src/components/SlidesViewer.tsx`
+- `src/pages/DeckOverviewNew.tsx`
 
 ### Key Changes
+
+#### SlidesViewer.tsx
 1. **State Management**
    ```typescript
    const [isPresentationMode, setIsPresentationMode] = useState(false);
@@ -57,29 +62,60 @@ Added a full-screen presentation mode to `SlidesViewer` that hides all UI elemen
    const hintTimeoutRef = useRef<NodeJS.Timeout | null>(null);
    ```
 
-2. **Keyboard Handler Updates**
+2. **New Prop Interface**
+   ```typescript
+   interface SlidesViewerProps {
+     // ... existing props
+     onPresentationModeChange?: (isPresenting: boolean) => void;
+   }
+   ```
+
+3. **Parent Communication**
+   - Calls `onPresentationModeChange` callback when presentation mode toggles
+   - Parent component (DeckOverviewNew) handles hiding app-level UI
+
+4. **Keyboard Handler Updates**
    - Added `P` key handler for toggling presentation mode
    - Updated `ESC` key handler with priority logic
 
-3. **Conditional Rendering**
-   - Top bar: `{!isPresentationMode && (<TopBar />)}`
+5. **Conditional Rendering (Viewer Level)**
+   - Viewer top bar: `{!isPresentationMode && (<ViewerTopBar />)}`
    - Filmstrip: `{!isPresentationMode && showFilmstrip && (<Filmstrip />)}`
    - Show Filmstrip button: `{!isPresentationMode && !showFilmstrip && (<Button />)}`
 
-4. **Mouse Movement Detection**
+6. **Mouse Movement Detection**
    - useEffect hook listens for mouse movement in presentation mode
    - Automatically shows/hides hint based on activity
 
-5. **New Icon**
+7. **New Icon**
    - Added `Presentation` from lucide-react icons
+
+#### DeckOverviewNew.tsx
+1. **State Management**
+   ```typescript
+   const [isPresentationMode, setIsPresentationMode] = useState(false);
+   ```
+
+2. **Conditional Rendering (App Level)**
+   - App top bar: `{!isPresentationMode && (<TopAppBar />)}`
+   - Left sidebar: `{!isPresentationMode && (<LeftSidebar />)}`
+
+3. **Callback Prop**
+   - Passes `onPresentationModeChange={setIsPresentationMode}` to SlidesViewer
+   - Enables SlidesViewer to control app-level UI visibility
 
 ## User Experience
 
 ### Entering Presentation Mode
 1. User clicks the Presentation button (📊 icon) OR presses `P`
-2. Top bar and filmstrip fade out
-3. Hint appears for 3 seconds showing navigation instructions
-4. User can navigate with arrow keys
+2. **All UI elements instantly disappear:**
+   - App top bar vanishes
+   - Left sidebar (variants & sections) vanishes
+   - Viewer top bar vanishes
+   - Filmstrip vanishes
+3. Slide takes up 100% of the screen with only minimal padding
+4. Hint appears for 3 seconds showing navigation instructions
+5. User can navigate with arrow keys
 
 ### During Presentation
 - Move mouse → hint reappears briefly
@@ -92,13 +128,16 @@ Added a full-screen presentation mode to `SlidesViewer` that hides all UI elemen
 - UI elements smoothly fade back in
 
 ## Benefits
-- ✅ Clean, distraction-free presentation experience
+- ✅ **Truly full-screen experience** - slide takes up 100% of the screen
+- ✅ **Zero distractions** - all UI elements completely hidden
+- ✅ **Professional presentation mode** - perfect for client meetings, demos, pitches
 - ✅ Intuitive keyboard shortcuts
-- ✅ Helpful on-screen guidance
+- ✅ Helpful on-screen guidance that auto-hides
 - ✅ Works independently from fullscreen mode
-- ✅ Can be combined with fullscreen for best experience
-- ✅ Smooth animations and transitions
-- ✅ Maintains all functionality (navigation, etc.)
+- ✅ Can be combined with fullscreen for maximum immersion
+- ✅ Instant toggle - no animations to wait for
+- ✅ Maintains all functionality (navigation, shortcuts, etc.)
+- ✅ Easy exit with ESC key
 
 ## Future Enhancements (Optional)
 - [ ] Auto-advance timer option

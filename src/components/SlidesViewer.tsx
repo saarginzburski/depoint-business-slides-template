@@ -25,6 +25,7 @@ interface SlidesViewerProps {
   onHide: (id: string) => void;
   onRestore: (id: string) => void;
   deckName: string;
+  onPresentationModeChange?: (isPresenting: boolean) => void;
 }
 
 export const SlidesViewer: React.FC<SlidesViewerProps> = ({
@@ -40,6 +41,7 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
   onHide,
   onRestore,
   deckName,
+  onPresentationModeChange,
 }) => {
   const [showFilmstrip, setShowFilmstrip] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -76,9 +78,11 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
         setShowPresentationHint(false);
         if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
       }
+      // Notify parent component about presentation mode change
+      onPresentationModeChange?.(newState);
       return newState;
     });
-  }, []);
+  }, [onPresentationModeChange]);
 
   // Show hint on mouse movement in presentation mode
   useEffect(() => {

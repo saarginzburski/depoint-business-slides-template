@@ -86,6 +86,7 @@ const DeckOverviewNew = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; slideId: string } | null>(null);
+  const [isPresentationMode, setIsPresentationMode] = useState(false);
   const [hiddenSections, setHiddenSections] = useState<Set<Section>>(() => {
     // Load hidden sections from localStorage
     const saved = localStorage.getItem('hiddenSections');
@@ -524,7 +525,8 @@ const DeckOverviewNew = () => {
     <div className="flex h-screen bg-neutral-50 overflow-hidden">
       {/* Main Content Area */}
       <div className="w-full flex flex-col overflow-hidden">
-        {/* Top App Bar */}
+        {/* Top App Bar - Hidden in presentation mode */}
+        {!isPresentationMode && (
         <TopAppBar
           deckName={deckName}
           onDeckNameChange={setDeckName}
@@ -545,10 +547,12 @@ const DeckOverviewNew = () => {
           onViewDeck={handleViewDeck}
           onPrintDeck={handlePrintDeck}
         />
+        )}
         
         {/* Content with Sidebar */}
         <div className="flex-1 flex overflow-hidden">
-          {/* Left Sidebar - Variants & Sections */}
+          {/* Left Sidebar - Variants & Sections - Hidden in presentation mode */}
+          {!isPresentationMode && (
           <div className="w-64 bg-white border-r border-neutral-200 flex flex-col overflow-hidden">
             <div className="p-4 border-b border-neutral-200">
               <h2 className="text-sm font-medium text-neutral-700 uppercase tracking-wide">
@@ -686,6 +690,7 @@ const DeckOverviewNew = () => {
               />
             </div>
           </div>
+          )}
           
           {/* Main Content - Slide Grid or Viewer */}
           {slideIdFromUrl ? (
@@ -702,6 +707,7 @@ const DeckOverviewNew = () => {
               onHide={handleViewerHide}
               onRestore={handleViewerRestore}
               deckName={deckName}
+              onPresentationModeChange={setIsPresentationMode}
             />
           ) : (
             <div 
