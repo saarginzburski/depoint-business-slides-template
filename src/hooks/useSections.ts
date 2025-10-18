@@ -88,11 +88,13 @@ const PREDEFINED_ICONS = [
 
 export const useSections = (variationId: string | null) => {
   const [customSections, setCustomSections] = useState<CustomSection[]>([]);
+  const [sectionOrder, setSectionOrder] = useState<string[]>([]);  // Ordered list of section IDs
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (variationId) {
       loadCustomSections();
+      loadSectionOrder();
     }
   }, [variationId]);
 
@@ -121,10 +123,36 @@ export const useSections = (variationId: string | null) => {
     }
   };
 
+  const loadSectionOrder = async () => {
+    if (!variationId) return;
+
+    try {
+      const orderQuery = query(
+        collection(db, 'deck_variation_section_order'),
+        where('deck_variation_id', '==', variationId)
+      );
+      const orderSnapshot = await getDocs(orderQuery);
+      
+      if (orderSnapshot.empty) {
+        setSectionOrder([]);
+      } else {
+        const orderDoc = orderSnapshot.docs[0];
+        const order = orderDoc.data().section_ids || [];
+        setSectionOrder(order);
+      }
+    } catch (error) {
+      console.error('Error loading section order:', error);
+      setSectionOrder([]);
+    }
+  };
+
   const getAllSections = () => {
-    // Merge default sections with custom sections and sort by order_index
-    const allSections = [
-      ...DEFAULT_SECTIONS.map(s => ({
+    // Create a map of all sections by ID
+    const sectionsMap = new Map();
+    
+    // Add default sections
+    DEFAULT_SECTIONS.forEach(s => {
+      sectionsMap.set(s.key, {
         key: s.key,
         name: s.name,
         description: s.description,
@@ -134,8 +162,12 @@ export const useSections = (variationId: string | null) => {
         order_index: s.order_index,
         locked: s.locked,
         id: s.key,
-      })),
-      ...customSections.map(s => ({
+      });
+    });
+    
+    // Add custom sections
+    customSections.forEach(s => {
+      const customSection = {
         key: s.id,
         name: s.name,
         description: s.description,
@@ -143,12 +175,55 @@ export const useSections = (variationId: string | null) => {
         icon: s.icon,
         is_default: false,
         order_index: s.order_index,
-        locked: false,
+        locked: false, // Custom sections are never locked
         id: s.id,
-      })),
-    ].sort((a, b) => a.order_index - b.order_index);
-
-    return allSections;
+      };
+      sectionsMap.set(s.id, customSection);
+    });
+    
+    // Separate sections into regular and status sections
+    const statusSectionKeys = ['hidden', 'archived'];
+    const regularSections: typeof sectionsMap extends Map<any, infer V> ? V[] : never[] = [];
+    const statusSections: typeof sectionsMap extends Map<any, infer V> ? V[] : never[] = [];
+    
+    // If we have a saved order, use it for regular sections only
+    if (sectionOrder && sectionOrder.length > 0) {
+      // Filter order to exclude status sections
+      const regularOrder = sectionOrder.filter(id => !statusSectionKeys.includes(id));
+      
+      regularOrder.forEach(id => {
+        const section = sectionsMap.get(id);
+        if (section) {
+          regularSections.push(section);
+        }
+      });
+      
+      // Add any new sections that aren't in the saved order
+      sectionsMap.forEach((section, id) => {
+        if (!sectionOrder.includes(id) && !statusSectionKeys.includes(id)) {
+          regularSections.push(section);
+        }
+      });
+    } else {
+      // Use default order for regular sections
+      sectionsMap.forEach((section, id) => {
+        if (!statusSectionKeys.includes(id)) {
+          regularSections.push(section);
+        }
+      });
+      regularSections.sort((a, b) => a.order_index - b.order_index);
+    }
+    
+    // Always add status sections at the end in fixed order
+    statusSectionKeys.forEach(key => {
+      const section = sectionsMap.get(key);
+      if (section) {
+        statusSections.push(section);
+      }
+    });
+    
+    // Return regular sections followed by status sections
+    return [...regularSections, ...statusSections];
   };
 
   const addSection = async (name: string, description: string) => {
@@ -176,14 +251,45 @@ export const useSections = (variationId: string | null) => {
         updated_at: now,
       });
 
+      const newSectionId = docRef.id;
+
+      // Reload custom sections first
       await loadCustomSections();
+
+      // Add the new section to the order
+      const currentOrder = sectionOrder.length > 0 ? sectionOrder : allSections.map(s => s.id);
+      const newOrder = [...currentOrder, newSectionId];
+      
+      // Save the updated order
+      const orderQuery = query(
+        collection(db, 'deck_variation_section_order'),
+        where('deck_variation_id', '==', variationId)
+      );
+      const orderSnapshot = await getDocs(orderQuery);
+      
+      if (orderSnapshot.empty) {
+        await addDoc(collection(db, 'deck_variation_section_order'), {
+          deck_variation_id: variationId,
+          section_ids: newOrder,
+          created_at: now,
+          updated_at: now,
+        });
+      } else {
+        const orderDoc = orderSnapshot.docs[0];
+        await updateDoc(orderDoc.ref, {
+          section_ids: newOrder,
+          updated_at: now,
+        });
+      }
+      
+      await loadSectionOrder();
 
       toast({
         title: 'Section created',
         description: `${name} has been added`,
       });
 
-      return docRef.id;
+      return newSectionId;
     } catch (error) {
       console.error('Error adding section:', error);
       toast({
@@ -230,6 +336,27 @@ export const useSections = (variationId: string | null) => {
 
       await loadCustomSections();
 
+      // Remove from order array
+      if (sectionOrder.length > 0) {
+        const newOrder = sectionOrder.filter(id => id !== sectionId);
+        
+        const orderQuery = query(
+          collection(db, 'deck_variation_section_order'),
+          where('deck_variation_id', '==', variationId)
+        );
+        const orderSnapshot = await getDocs(orderQuery);
+        
+        if (!orderSnapshot.empty) {
+          const orderDoc = orderSnapshot.docs[0];
+          await updateDoc(orderDoc.ref, {
+            section_ids: newOrder,
+            updated_at: new Date().toISOString(),
+          });
+        }
+        
+        await loadSectionOrder();
+      }
+
       toast({
         title: 'Section deleted',
       });
@@ -248,19 +375,37 @@ export const useSections = (variationId: string | null) => {
     if (!variationId) return;
 
     try {
-      // Only update custom sections
-      const customUpdates = newOrder.filter(item => !item.is_default);
+      // Save the complete order as an array of section IDs
+      const sectionIds = newOrder.map(item => item.id);
       
-      const updatePromises = customUpdates.map(item => {
-        const sectionRef = doc(db, 'deck_variation_custom_sections', item.id);
-        return updateDoc(sectionRef, {
-          order_index: item.order_index,
-          updated_at: new Date().toISOString(),
+      // Check if order document exists
+      const orderQuery = query(
+        collection(db, 'deck_variation_section_order'),
+        where('deck_variation_id', '==', variationId)
+      );
+      const orderSnapshot = await getDocs(orderQuery);
+      
+      const now = new Date().toISOString();
+      
+      if (orderSnapshot.empty) {
+        // Create new order document
+        await addDoc(collection(db, 'deck_variation_section_order'), {
+          deck_variation_id: variationId,
+          section_ids: sectionIds,
+          created_at: now,
+          updated_at: now,
         });
-      });
-
-      await Promise.all(updatePromises);
-      await loadCustomSections();
+      } else {
+        // Update existing order document
+        const orderDoc = orderSnapshot.docs[0];
+        await updateDoc(orderDoc.ref, {
+          section_ids: sectionIds,
+          updated_at: now,
+        });
+      }
+      
+      // Reload the section order
+      await loadSectionOrder();
 
       toast({
         title: 'Sections reordered',

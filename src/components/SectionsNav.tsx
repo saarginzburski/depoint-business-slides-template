@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layers, Monitor, BookOpen, EyeOff, Archive, Eye, Plus, GripVertical, Edit2, Trash2, Lock } from 'lucide-react';
+import { Layers, Monitor, BookOpen, EyeOff, Archive, Eye, Plus, ChevronUp, ChevronDown, Edit2, Trash2, Lock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Section, SectionKey } from '@/types/deck';
@@ -78,7 +78,6 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
   onDeleteSection,
 }) => {
   const [dragOver, setDragOver] = useState<string | null>(null);
-  const [draggedSectionId, setDraggedSectionId] = useState<string | null>(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; sectionId: string } | null>(null);
 
@@ -105,57 +104,63 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
     }
   };
 
-  // Section reorder handlers
-  const handleSectionDragStart = (e: React.DragEvent, sectionId: string, isLocked: boolean) => {
-    if (isLocked) {
-      e.preventDefault();
-      return;
-    }
-    setDraggedSectionId(sectionId);
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('sectionId', sectionId);
-  };
-
-  const handleSectionDragEnd = () => {
-    setDraggedSectionId(null);
-    setDragOver(null);
-  };
-
-  const handleSectionDragOver = (e: React.DragEvent, targetSectionId: string) => {
-    e.preventDefault();
-    // Only for section reordering
-    if (draggedSectionId && e.dataTransfer.types.includes('sectionid')) {
-      e.dataTransfer.dropEffect = 'move';
-    }
-  };
-
-  const handleSectionDrop = (e: React.DragEvent, targetSectionId: string) => {
-    e.preventDefault();
+  // Section reorder handlers using arrows
+  const handleMoveUp = async (sectionId: string) => {
+    if (!onReorderSections) return;
     
-    const sourceSectionId = e.dataTransfer.getData('sectionId');
-    if (!sourceSectionId || sourceSectionId === targetSectionId || !onReorderSections) {
-      return;
-    }
-
-    // Find source and target indices
-    const sourceIndex = sections.findIndex(s => (s.id || s.key) === sourceSectionId);
-    const targetIndex = sections.findIndex(s => (s.id || s.key) === targetSectionId);
-
-    if (sourceIndex === -1 || targetIndex === -1) return;
-
-    // Reorder sections
-    const reordered = [...sections];
-    const [movedSection] = reordered.splice(sourceIndex, 1);
-    reordered.splice(targetIndex, 0, movedSection);
-
-    // Create new order array with updated indices
-    const newOrder = reordered.map((section, index) => ({
+    const currentIndex = sections.findIndex(s => (s.id || s.key) === sectionId);
+    
+    if (currentIndex <= 0) return;
+    
+    const previousSection = sections[currentIndex - 1];
+    if (previousSection.locked) return;
+    
+    // Swap with previous section
+    const newSections = [...sections];
+    [newSections[currentIndex - 1], newSections[currentIndex]] = 
+      [newSections[currentIndex], newSections[currentIndex - 1]];
+    
+    // Create new order array
+    const newOrder = newSections.map((section, index) => ({
       id: section.id || section.key,
       order_index: index,
-      is_default: section.is_default || false,
+      is_default: section.is_default !== false,
     }));
+    
+    try {
+      await onReorderSections(newOrder);
+    } catch (error) {
+      console.error('Error during reorder:', error);
+    }
+  };
 
-    onReorderSections(newOrder);
+  const handleMoveDown = async (sectionId: string) => {
+    if (!onReorderSections) return;
+    
+    const currentIndex = sections.findIndex(s => (s.id || s.key) === sectionId);
+    
+    if (currentIndex === -1 || currentIndex >= sections.length - 1) return;
+    
+    const nextSection = sections[currentIndex + 1];
+    if (nextSection.locked) return;
+    
+    // Swap with next section
+    const newSections = [...sections];
+    [newSections[currentIndex], newSections[currentIndex + 1]] = 
+      [newSections[currentIndex + 1], newSections[currentIndex]];
+    
+    // Create new order array
+    const newOrder = newSections.map((section, index) => ({
+      id: section.id || section.key,
+      order_index: index,
+      is_default: section.is_default !== false,
+    }));
+    
+    try {
+      await onReorderSections(newOrder);
+    } catch (error) {
+      console.error('Error during reorder:', error);
+    }
   };
 
   // Context menu handlers
@@ -206,27 +211,33 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
             const isActive = activeSectionKey === section.key;
             const Icon = getIconComponent(section.icon || section.key);
             const isStatus = section.key === 'hidden' || section.key === 'archived';
-            const isDropTarget = dragOver === section.key;
+            const isDropTarget = dragOver === section.key; // For slide drops
             const isToggleable = toggleableSections.includes(section.key);
             const isSectionHidden = hiddenSections.has(section.key);
-            const isLocked = section.locked || false;
-            const isDefault = section.is_default !== false; // Default to true for backward compat
-            const isDragging = draggedSectionId === sectionId;
+            const isLocked = section.locked === true; // Only true if explicitly true
+            const isDefault = section.is_default !== false;
+            
+            // Check if this is the first status section (to add divider)
+            const prevSection = index > 0 ? sections[index - 1] : null;
+            const isFirstStatusSection = isStatus && prevSection && prevSection.key !== 'hidden' && prevSection.key !== 'archived';
+            
+            // Check adjacent sections for locked status
+            const prevLocked = index > 0 ? (sections[index - 1].locked === true) : false;
+            const nextLocked = index < sections.length - 1 ? (sections[index + 1].locked === true) : false;
+            
+            const canMoveUp = index > 0 && !isLocked && !prevLocked;
+            const canMoveDown = index < sections.length - 1 && !isLocked && !nextLocked;
 
             return (
+              <div key={sectionId}>
+                {/* Divider before status sections */}
+                {isFirstStatusSection && (
+                  <div className="my-2 mx-4 border-t border-neutral-200" />
+                )}
+                
               <div
-                key={sectionId}
-                draggable={!isLocked}
-                onDragStart={(e) => handleSectionDragStart(e, sectionId, isLocked)}
-                onDragEnd={handleSectionDragEnd}
-                onDragOver={(e) => handleSectionDragOver(e, sectionId)}
-                onDrop={(e) => handleSectionDrop(e, sectionId)}
-                className={`group relative w-full flex items-center gap-2 px-4 py-2.5 transition-standard ${
-                  isDragging ? 'opacity-50' : ''
-                } ${
-                  isSectionHidden && isToggleable
-                    ? 'opacity-50'
-                    : ''
+                className={`group relative w-full flex items-center gap-2 px-4 py-2.5 transition-colors ${
+                  isSectionHidden && isToggleable ? 'opacity-50' : ''
                 } ${
                   isActive
                     ? 'bg-primary/10 text-primary'
@@ -243,13 +254,37 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
                 )}
 
-                {/* Drag Handle (only for non-locked sections) */}
+                {/* Reorder Arrows (only for non-locked sections) */}
                 {!isLocked && onReorderSections && (
-                  <div
-                    className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing"
-                    title="Drag to reorder"
-                  >
-                    <GripVertical className="w-3.5 h-3.5 text-neutral-400" />
+                  <div className="flex flex-col gap-0.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleMoveUp(sectionId);
+                      }}
+                      disabled={!canMoveUp}
+                      className={`p-0.5 rounded hover:bg-neutral-200 transition-colors ${
+                        !canMoveUp ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'
+                      }`}
+                      title={canMoveUp ? 'Move section up' : 'Cannot move up'}
+                      aria-label="Move section up"
+                    >
+                      <ChevronUp className="w-3 h-3 text-neutral-600" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleMoveDown(sectionId);
+                      }}
+                      disabled={!canMoveDown}
+                      className={`p-0.5 rounded hover:bg-neutral-200 transition-colors ${
+                        !canMoveDown ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'
+                      }`}
+                      title={canMoveDown ? 'Move section down' : 'Cannot move down'}
+                      aria-label="Move section down"
+                    >
+                      <ChevronDown className="w-3 h-3 text-neutral-600" />
+                    </button>
                   </div>
                 )}
 
@@ -317,10 +352,11 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
                   )}
                 </div>
 
-                {/* Drop indicator */}
+                {/* Drop indicator for slides */}
                 {isDropTarget && (
                   <div className="absolute inset-0 border-2 border-primary/50 rounded-lg pointer-events-none" />
                 )}
+              </div>
               </div>
             );
           })}
@@ -330,7 +366,7 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
         {sections.some((s) => s.count > 0) && (
           <div className="px-4 py-3 border-t border-neutral-200">
             <p className="text-label-small text-neutral-500 leading-relaxed">
-              Drag slides to sections to move them
+              💡 Drag slides to sections to move them. Use ↑↓ arrows to reorder sections.
             </p>
           </div>
         )}
