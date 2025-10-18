@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useCallback, useState, useRef } from 'react';
-import { ChevronLeft, ChevronRight, X, Grid3x3, MoreVertical, Eye, EyeOff, Copy, Trash2, MoveRight, Maximize } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Grid3x3, MoreVertical, Eye, EyeOff, Copy, Trash2, MoveRight, Maximize, Presentation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slide } from '@/types/deck';
 import { FilmstripThumb } from './FilmstripThumb';
@@ -43,7 +43,10 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
 }) => {
   const [showFilmstrip, setShowFilmstrip] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isPresentationMode, setIsPresentationMode] = useState(false);
+  const [showPresentationHint, setShowPresentationHint] = useState(false);
   const viewerContainerRef = useRef<HTMLDivElement>(null);
+  const hintTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const currentIndex = slides.findIndex(s => s.id === currentSlideId);
   const currentSlide = slides[currentIndex];
   const isHidden = currentSlide?.status === 'hidden';
@@ -56,6 +59,45 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
       document.exitFullscreen();
     }
   }, []);
+
+  // Presentation mode handler
+  const togglePresentationMode = useCallback(() => {
+    setIsPresentationMode(prev => {
+      const newState = !prev;
+      if (newState) {
+        // Show hint when entering presentation mode
+        setShowPresentationHint(true);
+        // Auto-hide after 3 seconds
+        if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
+        hintTimeoutRef.current = setTimeout(() => {
+          setShowPresentationHint(false);
+        }, 3000);
+      } else {
+        setShowPresentationHint(false);
+        if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
+      }
+      return newState;
+    });
+  }, []);
+
+  // Show hint on mouse movement in presentation mode
+  useEffect(() => {
+    if (!isPresentationMode) return;
+
+    const handleMouseMove = () => {
+      setShowPresentationHint(true);
+      if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
+      hintTimeoutRef.current = setTimeout(() => {
+        setShowPresentationHint(false);
+      }, 2000);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
+    };
+  }, [isPresentationMode]);
 
   // Track fullscreen state
   useEffect(() => {
@@ -110,7 +152,9 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
           break;
         case 'Escape':
           e.preventDefault();
-          if (document.fullscreenElement) {
+          if (isPresentationMode) {
+            setIsPresentationMode(false);
+          } else if (document.fullscreenElement) {
             document.exitFullscreen();
           } else {
             onClose();
@@ -120,6 +164,11 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
         case 'F':
           e.preventDefault();
           toggleFullscreen();
+          break;
+        case 'p':
+        case 'P':
+          e.preventDefault();
+          togglePresentationMode();
           break;
         case 'o':
         case 'O':
@@ -164,7 +213,7 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentSlideId, isHidden, onPrev, onNext, onClose, onHide, onRestore, onDuplicate, onMoveTo, toggleFullscreen]);
+  }, [currentSlideId, isHidden, isPresentationMode, onPrev, onNext, onClose, onHide, onRestore, onDuplicate, onMoveTo, toggleFullscreen, togglePresentationMode]);
 
   // Scroll filmstrip to show current slide
   useEffect(() => {
@@ -196,7 +245,8 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
       className="flex-1 flex flex-col bg-neutral-50 overflow-hidden animate-in fade-in duration-200" 
       role="document"
     >
-      {/* Top Viewer Bar */}
+      {/* Top Viewer Bar - Hidden in presentation mode */}
+      {!isPresentationMode && (
       <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-neutral-200">
         <div className="flex items-center gap-4">
           <h2 className="text-lg font-medium text-neutral-900">{deckName}</h2>
@@ -276,6 +326,17 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* Presentation Mode Button */}
+          <Button 
+            onClick={togglePresentationMode} 
+            variant="outline" 
+            size="sm" 
+            aria-label="Start presentation mode"
+            title="Presentation mode (P) - Hide all UI"
+          >
+            <Presentation className="w-4 h-4" />
+          </Button>
+
           {/* Fullscreen Button */}
           <Button 
             onClick={toggleFullscreen} 
@@ -299,6 +360,7 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
           </Button>
         </div>
       </div>
+      )}
 
       {/* Slide Canvas - Container that scales to 100% height */}
       <div className="flex-1 flex items-center justify-center p-2 sm:p-4 lg:p-6 overflow-hidden">
@@ -363,8 +425,8 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
         </div>
       </div>
 
-      {/* Filmstrip */}
-      {showFilmstrip && (
+      {/* Filmstrip - Hidden in presentation mode */}
+      {!isPresentationMode && showFilmstrip && (
         <div className="bg-white border-t border-neutral-200 p-4 animate-in slide-in-from-bottom duration-200">
           <div className="flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: 'thin' }}>
             {slides.map((slide) => (
@@ -385,8 +447,8 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
         </div>
       )}
 
-      {/* Filmstrip Toggle (when hidden) */}
-      {!showFilmstrip && (
+      {/* Filmstrip Toggle (when hidden) - Hidden in presentation mode */}
+      {!isPresentationMode && !showFilmstrip && (
         <Button
           onClick={() => setShowFilmstrip(true)}
           variant="outline"
@@ -395,6 +457,23 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
         >
           Show Filmstrip (O)
         </Button>
+      )}
+
+      {/* Presentation Mode Hint */}
+      {isPresentationMode && showPresentationHint && (
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-6 py-3 rounded-lg shadow-lg animate-in fade-in slide-in-from-bottom-2 duration-300 pointer-events-none">
+          <div className="flex items-center gap-4 text-sm">
+            <span className="flex items-center gap-2">
+              <ChevronLeft className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4" />
+              Navigate
+            </span>
+            <span className="text-neutral-400">•</span>
+            <span>ESC to exit</span>
+            <span className="text-neutral-400">•</span>
+            <span>P for menu</span>
+          </div>
+        </div>
       )}
     </div>
   );
