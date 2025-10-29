@@ -1,59 +1,70 @@
 // Slide configuration for dynamic loading
 export interface SlideInfo {
-  id: number;
-  name: string; // Changed from 'title' to 'name' - this will be the descriptive name shown in navigation
-  title: string; // Keep title for slide content
-  component: string;
+  id: string;  // Stable component name - never changes when slides are reordered
+  name: string; // Descriptive name shown in navigation
+  title: string; // Title displayed on the slide
+  component: string; // Same as id - the React component name
+  displayOrder: number; // Numeric order for UI display (can change)
   route: string;
 }
 
 export const slideConfig: SlideInfo[] = [
-  { id: 1, name: "Cover", title: "The Intelligence Layer for the Physical Economy", component: "SlideCover", route: "/investor-deck/slide/1" },
-  { id: 2, name: "The Problem", title: "The $1 Trillion Disconnect", component: "SlideProblem", route: "/investor-deck/slide/2" },
-  { id: 3, name: "The Solution", title: "From Chaos to Control", component: "SlideSolution", route: "/investor-deck/slide/3" },
-  { id: 4, name: "Digitizing Operations", title: "Digitizing the Operations Manual", component: "SlideDigitizingOpsManual", route: "/investor-deck/slide/4" },
-  { id: 5, name: "Franchisor & Franchisee", title: "One Platform. Two Perspectives. Shared Growth.", component: "SlideFranchisorFranchisee", route: "/investor-deck/slide/5" },
-  { id: 6, name: "Jollibee Operational Book", title: "Jollibee: Fully Digitized Operational Book", component: "SlideJollibeeOperationBook", route: "/investor-deck/slide/6" },
-  { id: 7, name: "Jollibee Case Study", title: "Jollibee: Scale & Complexity Made Simple", component: "SlideJollibeeCase", route: "/investor-deck/slide/7" },
-  { id: 8, name: "The Platform", title: "Built Like SAP, Loved Like WhatsApp", component: "SlidePlatform", route: "/investor-deck/slide/8" },
-  { id: 9, name: "The AI Engine", title: "The Data Flywheel — Built on Proprietary IP", component: "SlidePlatformEcosystem", route: "/investor-deck/slide/9" },
-  { id: 10, name: "How It Works", title: "We Turn Data Into Foresight", component: "SlideInsightsEngine", route: "/investor-deck/slide/10" },
-  { id: 11, name: "Market Opportunity", title: "Defining a $14B Category", component: "SlideMarketOpportunity", route: "/investor-deck/slide/11" },
-  { id: 12, name: "The Playbook", title: "Our Proven Go-To-Market Playbook", component: "SlideGTMStrategy", route: "/investor-deck/slide/12" },
-  { id: 13, name: "The Economics", title: "Capital-Efficient Growth & The Plan", component: "SlideFinancial", route: "/investor-deck/slide/13" },
-  { id: 14, name: "Why We Win", title: "Built for a Complexity Others Can't Handle", component: "SlideCompetitiveLandscape", route: "/investor-deck/slide/14" },
-  { id: 15, name: "The Vision", title: "One Platform, Every Frontline Industry", component: "SlideCrossIndustryPlatform", route: "/investor-deck/slide/15" },
-  { id: 16, name: "The Strategic Value", title: "The Ultimate Strategic Asset: Our Data", component: "SlideStrategicFit", route: "/investor-deck/slide/16" },
-  { id: 17, name: "Platform Integrations", title: "Plug Into Any Platform", component: "SlideIntegrations", route: "/investor-deck/slide/17" },
-  { id: 18, name: "Enterprise Stack", title: "Depoint Bridges Frontline & ERP", component: "SlideEnterpriseStack", route: "/investor-deck/slide/18" },
-  { id: 19, name: "Consulting Partners", title: "Why Consulting Partners Love Depoint", component: "SlideConsultingPartners", route: "/investor-deck/slide/19" },
-  { id: 20, name: "Dashboard Intelligence", title: "The Intelligence Layer: Why Dashboards Matter", component: "SlideDashboardIntro", route: "/investor-deck/slide/20" },
-  { id: 21, name: "Contact", title: "EDGE — Every Day Great Execution", component: "SlideClosing", route: "/investor-deck/slide/21" },
-  { id: 22, name: "Appendices", title: "Appendices", component: "SlideAppendices", route: "/investor-deck/slide/22" },
-  { id: 23, name: "Dashboards Demo", title: "Dashboards Demo", component: "SlideDashboardsDemo", route: "/investor-deck/slide/23" },
+  { id: "SlideCover", component: "SlideCover", displayOrder: 1, name: "Cover", title: "The Intelligence Layer for the Physical Economy", route: "/investor-deck/slide/1" },
+  { id: "SlideProblem", component: "SlideProblem", displayOrder: 2, name: "The Problem", title: "The $1 Trillion Disconnect", route: "/investor-deck/slide/2" },
+  { id: "SlideSolution", component: "SlideSolution", displayOrder: 3, name: "The Solution", title: "From Chaos to Control", route: "/investor-deck/slide/3" },
+  { id: "SlideDigitizingOpsManual", component: "SlideDigitizingOpsManual", displayOrder: 4, name: "Digitizing Operations", title: "Digitizing the Operations Manual", route: "/investor-deck/slide/4" },
+  { id: "SlideFranchisorFranchisee", component: "SlideFranchisorFranchisee", displayOrder: 5, name: "Franchisor & Franchisee", title: "One Platform. Two Perspectives. Shared Growth.", route: "/investor-deck/slide/5" },
+  { id: "SlideRealityNotChecklists", component: "SlideRealityNotChecklists", displayOrder: 6, name: "Reality Not Checklists", title: "Is this just another checklists app?", route: "/investor-deck/slide/6" },
+  { id: "SlideJollibeeOperationBook", component: "SlideJollibeeOperationBook", displayOrder: 7, name: "Jollibee Operational Book", title: "Jollibee: Fully Digitized Operational Book", route: "/investor-deck/slide/7" },
+  { id: "SlideJollibeeCase", component: "SlideJollibeeCase", displayOrder: 8, name: "Jollibee Case Study", title: "Jollibee: Scale & Complexity Made Simple", route: "/investor-deck/slide/8" },
+  { id: "SlideWhatsNext", component: "SlideWhatsNext", displayOrder: 9, name: "What's Next", title: "What's Next", route: "/investor-deck/slide/9" },
+  { id: "SlidePlatform", component: "SlidePlatform", displayOrder: 10, name: "The Platform", title: "Built Like SAP, Loved Like WhatsApp", route: "/investor-deck/slide/10" },
+  { id: "SlidePlatformEcosystem", component: "SlidePlatformEcosystem", displayOrder: 11, name: "The AI Engine", title: "The Data Flywheel — Built on Proprietary IP", route: "/investor-deck/slide/11" },
+  { id: "SlideInsightsEngine", component: "SlideInsightsEngine", displayOrder: 12, name: "How It Works", title: "We Turn Data Into Foresight", route: "/investor-deck/slide/12" },
+  { id: "SlideMarketOpportunity", component: "SlideMarketOpportunity", displayOrder: 13, name: "Market Opportunity", title: "Defining a $14B Category", route: "/investor-deck/slide/13" },
+  { id: "SlideGTMStrategy", component: "SlideGTMStrategy", displayOrder: 14, name: "The Playbook", title: "Our Proven Go-To-Market Playbook", route: "/investor-deck/slide/14" },
+  { id: "SlideFinancial", component: "SlideFinancial", displayOrder: 15, name: "The Economics", title: "Capital-Efficient Growth & The Plan", route: "/investor-deck/slide/15" },
+  { id: "SlideCompetitiveLandscape", component: "SlideCompetitiveLandscape", displayOrder: 16, name: "Why We Win", title: "Built for a Complexity Others Can't Handle", route: "/investor-deck/slide/16" },
+  { id: "SlideCrossIndustryPlatform", component: "SlideCrossIndustryPlatform", displayOrder: 17, name: "The Vision", title: "One Platform, Every Frontline Industry", route: "/investor-deck/slide/17" },
+  { id: "SlideStrategicFit", component: "SlideStrategicFit", displayOrder: 18, name: "The Strategic Value", title: "The Ultimate Strategic Asset: Our Data", route: "/investor-deck/slide/18" },
+  { id: "SlideIntegrations", component: "SlideIntegrations", displayOrder: 19, name: "Platform Integrations", title: "Plug Into Any Platform", route: "/investor-deck/slide/19" },
+  { id: "SlideEnterpriseStack", component: "SlideEnterpriseStack", displayOrder: 20, name: "Enterprise Stack", title: "Depoint Bridges Frontline & ERP", route: "/investor-deck/slide/20" },
+  { id: "SlideArchitectureOverview", component: "SlideArchitectureOverview", displayOrder: 21, name: "Architecture Overview", title: "Depoint Platform: A Strategic Architecture Overview", route: "/investor-deck/slide/21" },
+  { id: "SlideConsultingPartners", component: "SlideConsultingPartners", displayOrder: 22, name: "Consulting Partners", title: "Why Consulting Partners Love Depoint", route: "/investor-deck/slide/22" },
+  { id: "SlideDashboardIntro", component: "SlideDashboardIntro", displayOrder: 23, name: "Dashboard Intelligence", title: "The Intelligence Layer: Why Dashboards Matter", route: "/investor-deck/slide/23" },
+  { id: "SlideClosing", component: "SlideClosing", displayOrder: 24, name: "Contact", title: "EDGE — Every Day Great Execution", route: "/investor-deck/slide/24" },
+  { id: "SlideAppendices", component: "SlideAppendices", displayOrder: 25, name: "Appendices", title: "Appendices", route: "/investor-deck/slide/25" },
+  { id: "SlideDashboardsDemo", component: "SlideDashboardsDemo", displayOrder: 26, name: "Dashboards Demo", title: "Dashboards Demo", route: "/investor-deck/slide/26" },
   // Category 1: Protect Margin
-  { id: 24, name: "Oil Monitoring Dashboard", title: "Oil Monitoring Dashboard", component: "SlideOilMonitoringDashboard", route: "/investor-deck/slide/24" },
-  { id: 25, name: "Issues Dashboard", title: "Issues Dashboard", component: "SlideIssuesDashboard", route: "/investor-deck/slide/25" },
+  { id: "SlideOilMonitoringDashboard", component: "SlideOilMonitoringDashboard", displayOrder: 27, name: "Oil Monitoring Dashboard", title: "Oil Monitoring Dashboard", route: "/investor-deck/slide/27" },
+  { id: "SlideIssuesDashboard", component: "SlideIssuesDashboard", displayOrder: 28, name: "Issues Dashboard", title: "Issues Dashboard", route: "/investor-deck/slide/28" },
   // Category 2: Reduce Risk
-  { id: 26, name: "Equipment Monitoring Dashboard", title: "Equipment Monitoring Dashboard", component: "SlideEquipmentMonitoringDashboard", route: "/investor-deck/slide/26" },
-  { id: 27, name: "Audit Report Dashboard", title: "Audit Report Dashboard", component: "SlideAuditReportDashboard", route: "/investor-deck/slide/27" },
-  { id: 28, name: "Task Compliance Dashboard", title: "Task Compliance Dashboard", component: "SlideTaskComplianceDashboard", route: "/investor-deck/slide/28" },
+  { id: "SlideEquipmentMonitoringDashboard", component: "SlideEquipmentMonitoringDashboard", displayOrder: 29, name: "Equipment Monitoring Dashboard", title: "Equipment Monitoring Dashboard", route: "/investor-deck/slide/29" },
+  { id: "SlideAuditReportDashboard", component: "SlideAuditReportDashboard", displayOrder: 30, name: "Audit Report Dashboard", title: "Audit Report Dashboard", route: "/investor-deck/slide/30" },
+  { id: "SlideTaskComplianceDashboard", component: "SlideTaskComplianceDashboard", displayOrder: 31, name: "Task Compliance Dashboard", title: "Task Compliance Dashboard", route: "/investor-deck/slide/31" },
   // Category 3: Protect Revenue
-  { id: 29, name: "Product Gold Standard Dashboard", title: "Product Gold Standard Dashboard", component: "SlideProductGoldStandardDashboard", route: "/investor-deck/slide/29" },
+  { id: "SlideProductGoldStandardDashboard", component: "SlideProductGoldStandardDashboard", displayOrder: 32, name: "Product Gold Standard Dashboard", title: "Product Gold Standard Dashboard", route: "/investor-deck/slide/32" },
   // Category 4: Accelerate Growth
-  { id: 30, name: "Speed of Service Dashboard", title: "Speed of Service Dashboard", component: "SlideSpeedOfServiceDashboard", route: "/investor-deck/slide/30" },
-  { id: 31, name: "Users Engagement Dashboard", title: "Users Engagement Dashboard", component: "SlideUsersEngagementDashboard", route: "/investor-deck/slide/31" },
-  { id: 32, name: "Sales Dashboard", title: "Sales Management Dashboard", component: "SlideSalesManagementDashboard", route: "/investor-deck/slide/32" },
+  { id: "SlideSpeedOfServiceDashboard", component: "SlideSpeedOfServiceDashboard", displayOrder: 33, name: "Speed of Service Dashboard", title: "Speed of Service Dashboard", route: "/investor-deck/slide/33" },
+  { id: "SlideUsersEngagementDashboard", component: "SlideUsersEngagementDashboard", displayOrder: 34, name: "Users Engagement Dashboard", title: "Users Engagement Dashboard", route: "/investor-deck/slide/34" },
+  { id: "SlideSalesManagementDashboard", component: "SlideSalesManagementDashboard", displayOrder: 35, name: "Sales Dashboard", title: "Sales Management Dashboard", route: "/investor-deck/slide/35" },
 ];
 
 export const getTotalSlides = () => slideConfig.length;
-export const getSlideInfo = (id: number) => slideConfig.find(slide => slide.id === id);
-export const getNextSlideId = (currentId: number) => {
+
+export const getSlideInfo = (id: string) => slideConfig.find(slide => slide.id === id);
+
+// Get slide by displayOrder (for URL routes like /slide/1)
+export const getSlideInfoByOrder = (displayOrder: number) => 
+  slideConfig.find(slide => slide.displayOrder === displayOrder);
+
+export const getNextSlideId = (currentId: string) => {
   const index = slideConfig.findIndex(s => s.id === currentId);
   const nextIndex = index === -1 ? 0 : (index + 1) % slideConfig.length;
   return slideConfig[nextIndex].id;
 };
-export const getPrevSlideId = (currentId: number) => {
+
+export const getPrevSlideId = (currentId: string) => {
   const index = slideConfig.findIndex(s => s.id === currentId);
   const prevIndex = index === -1 ? slideConfig.length - 1 : (index - 1 + slideConfig.length) % slideConfig.length;
   return slideConfig[prevIndex].id;

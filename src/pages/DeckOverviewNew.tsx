@@ -18,6 +18,13 @@ import { useGridScrollRestoration } from '@/hooks/useGridScrollRestoration';
 import { Slide, Variant } from '@/types/deck';
 import { toast } from '@/hooks/use-toast';
 import { slideConfig } from '@/pages/slides/slideConfig';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { migrateCustomSections } from '@/utils/migrateSections';
+import { migrateSlideIdsToComponentNames, checkMigrationNeeded } from '@/utils/migrateSlideIds';
 
 // Lazy load all slide components for thumbnails
 const slideComponents = {
@@ -29,8 +36,10 @@ const slideComponents = {
   SlideSolution: lazy(() => import('./slides/SlideSolution').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">3</div></div> }))),
   SlideDigitizingOpsManual: lazy(() => import('./slides/SlideDigitizingOpsManual').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">4</div></div> }))),
   SlideFranchisorFranchisee: lazy(() => import('./slides/SlideFranchisorFranchisee').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">5</div></div> }))),
-  SlideJollibeeOperationBook: lazy(() => import('./slides/SlideJollibeeOperationBook').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">6</div></div> }))),
+  SlideRealityNotChecklists: lazy(() => import('./slides/SlideRealityNotChecklists').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">6</div></div> }))),
+  SlideJollibeeOperationBook: lazy(() => import('./slides/SlideJollibeeOperationBook').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">7</div></div> }))),
   SlideJollibeeCase: lazy(() => import('./slides/SlideJollibeeCase').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">7</div></div> }))),
+  SlideWhatsNext: lazy(() => import('./slides/SlideWhatsNext').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">9</div></div> }))),
   SlidePlatformEcosystem: lazy(() => import('./slides/SlidePlatformEcosystem').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">6</div></div> }))),
   SlideInsightsEngine: lazy(() => import('./slides/SlideInsightsEngine').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">7</div></div> }))),
   SlideCustomerStories: lazy(() => import('./slides/SlideCustomerStories').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">8</div></div> }))),
@@ -56,6 +65,7 @@ const slideComponents = {
   SlideTaskComplianceDashboard: lazy(() => import('./slides/SlideTaskComplianceDashboard').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">26</div></div> }))),
   SlideUsersEngagementDashboard: lazy(() => import('./slides/SlideUsersEngagementDashboard').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">27</div></div> }))),
   SlideEnterpriseStack: lazy(() => import('./slides/SlideEnterpriseStack').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">18</div></div> }))),
+  SlideArchitectureOverview: lazy(() => import('./slides/SlideArchitectureOverview').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">20</div></div> }))),
   SlideAuditReportDashboard: lazy(() => import('./slides/SlideAuditReportDashboard').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">25</div></div> }))),
   SlideDashboardSummary: lazy(() => import('./slides/SlideDashboardSummary').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">28</div></div> }))),
 };
@@ -87,6 +97,9 @@ const DeckOverviewNew = () => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; slideId: string } | null>(null);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
+  const [createVariantDialogOpen, setCreateVariantDialogOpen] = useState(false);
+  const [newVariantName, setNewVariantName] = useState('');
+  const [selectedSectionsForVariant, setSelectedSectionsForVariant] = useState<Set<string>>(new Set());
   const [hiddenSections, setHiddenSections] = useState<Set<Section>>(() => {
     // Load hidden sections from localStorage
     const saved = localStorage.getItem('hiddenSections');
@@ -105,27 +118,77 @@ const DeckOverviewNew = () => {
   const gridScrollContainerRef = React.useRef<HTMLDivElement>(null);
 
   // Hooks
-  const { currentVariation, variations, setCurrentVariation, deleteVariation, refetch } = useDeckVariations();
+  const { currentVariation, variations, setCurrentVariation, deleteVariation, createVariation, updateVariation, refetch } = useDeckVariations();
   
-  // Section management hook
+  // Section management hook - sections are now global, shared across all variants
   const { 
     getAllSections, 
     addSection, 
     deleteSection, 
-    reorderSections 
-  } = useSections(currentVariantId);
+    reorderSections,
+    refetch: refetchSections 
+  } = useSections();
+  
+  // Auto-migrate old sections on first load
+  useEffect(() => {
+    const hasRunMigration = localStorage.getItem('sections_migration_completed');
+    if (!hasRunMigration) {
+      migrateCustomSections()
+        .then((result) => {
+          if (result && result.migrated > 0) {
+            // Refetch sections to show the migrated ones
+            refetchSections();
+          }
+          localStorage.setItem('sections_migration_completed', 'true');
+        })
+        .catch((error) => {
+          console.error('Auto-migration failed:', error);
+        });
+    }
+  }, []);
+  
+  // Auto-migrate slide IDs from numbers to component names
+  useEffect(() => {
+    const hasRunSlideIdMigration = localStorage.getItem('slide_ids_migration_completed');
+    if (!hasRunSlideIdMigration) {
+      checkMigrationNeeded()
+        .then((needed) => {
+          if (needed) {
+            console.log('🔄 Slide ID migration needed, starting...');
+            return migrateSlideIdsToComponentNames();
+          } else {
+            console.log('✅ Slide IDs already migrated');
+            return null;
+          }
+        })
+        .then((result) => {
+          if (result && result.migrated > 0) {
+            // Refetch slides to show the migrated data
+            refetchSlides();
+          }
+          localStorage.setItem('slide_ids_migration_completed', 'true');
+        })
+        .catch((error) => {
+          console.error('Slide ID migration failed:', error);
+        });
+    }
+  }, [currentVariantId]); // Run when variant changes
   
   const allSectionsData = getAllSections();
   
   // Convert to format expected by useSlideOrdering
+  // Get slide IDs based on displayOrder ranges (using component names now)
+  const getSlideIdsByDisplayOrder = (start: number, end: number) => 
+    slideConfig.filter(s => s.displayOrder >= start && s.displayOrder <= end).map(s => s.id);
+  
   const sections = allSectionsData.map(s => ({
     id: s.id,
     name: s.name,
     description: s.description,
     color: s.color,
-    slides: s.key === 'main' ? Array.from({length: 21}, (_, i) => i + 1) :
-            s.key === 'appendix' ? [22] :
-            s.key === 'demo' ? Array.from({length: 10}, (_, i) => i + 23) :
+    slides: s.key === 'main' ? getSlideIdsByDisplayOrder(1, 24) :
+            s.key === 'appendix' ? getSlideIdsByDisplayOrder(25, 25) :
+            s.key === 'demo' ? getSlideIdsByDisplayOrder(26, 35) :
             [],
   }));
   
@@ -588,23 +651,34 @@ const DeckOverviewNew = () => {
                 onSelect={(id) => {
                   setCurrentVariantId(id);
                   const variant = variations.find(v => v.id === id);
-                  if (variant) setCurrentVariation(variant);
+                  if (variant) {
+                    setCurrentVariation(variant);
+                    // Refetch slides when variant changes
+                    setTimeout(() => refetchSlides(), 100);
+                  }
                 }}
                 onCreate={async () => {
-                  toast({ title: 'Creating new variant...' });
-                  refetch();
+                  setCreateVariantDialogOpen(true);
                 }}
                 onRename={async (id, name) => {
-                  toast({ title: `Renamed to ${name}` });
-                  refetch();
+                  const variant = variations.find(v => v.id === id);
+                  if (variant) {
+                    await updateVariation(id, name, variant.sections);
+                  }
                 }}
                 onDuplicate={async (id) => {
-                  toast({ title: 'Variant duplicated' });
-                  refetch();
+                  const variant = variations.find(v => v.id === id);
+                  if (variant) {
+                    const newName = `${variant.name} (Copy)`;
+                    await createVariation(newName, variant.sections);
+                  }
                 }}
                 onSetDefault={async (id) => {
-                  toast({ title: 'Default variant updated' });
-                  refetch();
+                  // For now, just show a toast - setting default requires updating all variations
+                  toast({ 
+                    title: 'Feature coming soon', 
+                    description: 'Set as default will be implemented soon' 
+                  });
                 }}
                 onDelete={async (id) => {
                   try {
@@ -775,7 +849,7 @@ const DeckOverviewNew = () => {
                     
                     // Update only the current section with new order
                     const reorderedSection = reorderedSlides.map(slide => 
-                      slideConfigMap.get(parseInt(slide.id))
+                      slideConfigMap.get(slide.id)  // slide.id is now a string component name
                     ).filter(Boolean) as typeof slideConfig;
                     
                     orderedSections[activeSection] = reorderedSection;
@@ -954,6 +1028,100 @@ const DeckOverviewNew = () => {
           }}
         />
       )}
+
+      {/* Create Variant Dialog */}
+      <Dialog open={createVariantDialogOpen} onOpenChange={setCreateVariantDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Create New Variant</DialogTitle>
+            <DialogDescription>
+              Create a custom deck variant by selecting which sections to include.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-6 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="variant-name">Variant Name</Label>
+              <Input
+                id="variant-name"
+                value={newVariantName}
+                onChange={(e) => setNewVariantName(e.target.value)}
+                placeholder="e.g., Investor Pitch, Client Demo, etc."
+                autoFocus
+              />
+            </div>
+
+            <div className="space-y-3">
+              <Label>Select Sections to Include</Label>
+              <div className="space-y-2 max-h-[400px] overflow-y-auto border rounded-lg p-4">
+                {allSectionsData
+                  .filter(section => section.key !== 'hidden' && section.key !== 'archived')
+                  .map((section) => (
+                    <div key={section.id} className="flex items-start space-x-3 p-2 hover:bg-neutral-50 rounded-lg">
+                      <Checkbox
+                        id={`section-${section.id}`}
+                        checked={selectedSectionsForVariant.has(section.id)}
+                        onCheckedChange={(checked) => {
+                          const newSet = new Set(selectedSectionsForVariant);
+                          if (checked) {
+                            newSet.add(section.id);
+                          } else {
+                            newSet.delete(section.id);
+                          }
+                          setSelectedSectionsForVariant(newSet);
+                        }}
+                      />
+                      <Label
+                        htmlFor={`section-${section.id}`}
+                        className="flex-1 cursor-pointer space-y-1"
+                      >
+                        <div className="font-medium">{section.name}</div>
+                        {section.description && (
+                          <div className="text-sm text-neutral-500">{section.description}</div>
+                        )}
+                      </Label>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setCreateVariantDialogOpen(false);
+                setNewVariantName('');
+                setSelectedSectionsForVariant(new Set());
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={async () => {
+                if (!newVariantName.trim()) {
+                  toast({ 
+                    title: 'Error', 
+                    description: 'Please enter a variant name',
+                    variant: 'destructive' 
+                  });
+                  return;
+                }
+
+                const sectionsArray = Array.from(selectedSectionsForVariant);
+                await createVariation(newVariantName.trim(), sectionsArray);
+                
+                setCreateVariantDialogOpen(false);
+                setNewVariantName('');
+                setSelectedSectionsForVariant(new Set());
+              }}
+              disabled={!newVariantName.trim()}
+            >
+              Create Variant
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

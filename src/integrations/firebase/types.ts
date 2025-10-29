@@ -18,7 +18,7 @@ export interface DeckVariationSection {
 export interface DeckVariationSlideOrder {
   id: string;
   deck_variation_id: string;
-  slide_id: number;
+  slide_id: string;  // Changed from number to string - now uses component names for stability
   section_id: string;
   order_index: number;
   created_at: string;

@@ -33,12 +33,12 @@ interface Section {
   name: string;
   description: string;
   icon: React.ComponentType<any>;
-  slides: number[];
+  slides: string[];  // Now uses component names instead of numbers
   color: string;
 }
 
 interface SlideData {
-  id: number;
+  id: string;  // Now uses component name for stability
   name: string;
   title: string;
   component: string;
@@ -48,13 +48,13 @@ interface DraggableSlideGridProps {
   sections: Section[];
   selectedSections: Set<string>;
   slideComponents: Record<string, React.LazyExoticComponent<any>>;
-  onSlideClick: (slideId: number) => void;
+  onSlideClick: (slideId: string) => void;
   variationId: string | null;
   orderedSlidesBySection: Record<string, SlideData[]>;
   onOrdersChanged?: () => void;
-  selectedSlideIds?: Set<number>;
-  onToggleSelection?: (slideId: number, ctrlKey: boolean) => void;
-  onContextMenu?: (e: React.MouseEvent, slideId: number) => void;
+  selectedSlideIds?: Set<string>;
+  onToggleSelection?: (slideId: string, ctrlKey: boolean) => void;
+  onContextMenu?: (e: React.MouseEvent, slideId: string) => void;
 }
 
 interface DraggableSlideProps {
@@ -62,11 +62,11 @@ interface DraggableSlideProps {
   sectionId: string;
   sectionColor: string;
   slideComponents: Record<string, React.LazyExoticComponent<any>>;
-  onSlideClick: (slideId: number) => void;
-  onMoveSlide: (slideId: number, fromSection: string, toSection: string) => void;
+  onSlideClick: (slideId: string) => void;
+  onMoveSlide: (slideId: string, fromSection: string, toSection: string) => void;
   isSelected?: boolean;
-  onToggleSelection?: (slideId: number, ctrlKey: boolean) => void;
-  onContextMenu?: (e: React.MouseEvent, slideId: number) => void;
+  onToggleSelection?: (slideId: string, ctrlKey: boolean) => void;
+  onContextMenu?: (e: React.MouseEvent, slideId: string) => void;
 }
 
 interface DroppableSectionProps {
@@ -376,7 +376,7 @@ export const DraggableSlideGrid: React.FC<DraggableSlideGridProps> = ({
     }
   };
 
-  const handleMoveSlide = async (slideId: number, fromSection: string, toSection: string) => {
+  const handleMoveSlide = async (slideId: string, fromSection: string, toSection: string) => {
     const newSectionSlides = { ...sectionSlides };
     
     // Find and remove the slide from the source section

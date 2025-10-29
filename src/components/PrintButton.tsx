@@ -3,7 +3,7 @@ import { Button } from './ui/button';
 import { Printer } from 'lucide-react';
 
 interface Slide {
-  id: number;
+  id: string;
   component: string;
   title: string;
 }

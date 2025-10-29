@@ -32,11 +32,11 @@ interface Section {
   name: string;
   description: string;
   color: string;
-  slides: number[];
+  slides: string[];  // Now uses component names instead of numbers
 }
 
 interface SlideOrder {
-  slide_id: number;
+  slide_id: string;  // Now uses component name for stability
   section_id: string;
   order_index: number;
 }
@@ -152,7 +152,7 @@ export const DragDropSlideReorderer: React.FC<DragDropSlideReordererProps> = ({
   variationId,
   onClose
 }) => {
-  const [sectionSlides, setSectionSlides] = useState<Record<string, { id: number; name: string; title: string; }[]>>({});
+  const [sectionSlides, setSectionSlides] = useState<Record<string, { id: string; name: string; title: string; }[]>>({});
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -187,7 +187,7 @@ export const DragDropSlideReorderer: React.FC<DragDropSlideReordererProps> = ({
       });
 
       // Initialize with default section assignments
-      const initialSections: Record<string, { id: number; name: string; title: string; }[]> = {};
+      const initialSections: Record<string, { id: string; name: string; title: string; }[]> = {};
       
       sections.forEach(section => {
         initialSections[section.id] = [];

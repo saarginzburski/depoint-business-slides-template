@@ -7,7 +7,6 @@ import {
   updateDoc, 
   deleteDoc, 
   query, 
-  where, 
   orderBy,
   doc 
 } from 'firebase/firestore';
@@ -15,7 +14,6 @@ import { toast } from '@/hooks/use-toast';
 
 export interface CustomSection {
   id: string;
-  deck_variation_id: string;
   name: string;
   description: string;
   color: string;
@@ -86,26 +84,24 @@ const PREDEFINED_ICONS = [
   'Heart', 'Flag', 'Award', 'Shield'
 ];
 
-export const useSections = (variationId: string | null) => {
+/**
+ * Global sections hook - sections are shared across all variants
+ * Each variant controls which sections are visible via the deck_variation_sections table
+ */
+export const useSections = () => {
   const [customSections, setCustomSections] = useState<CustomSection[]>([]);
-  const [sectionOrder, setSectionOrder] = useState<string[]>([]);  // Ordered list of section IDs
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (variationId) {
-      loadCustomSections();
-      loadSectionOrder();
-    }
-  }, [variationId]);
+    loadCustomSections();
+  }, []);
 
   const loadCustomSections = async () => {
-    if (!variationId) return;
-
     try {
       setLoading(true);
+      // Load global custom sections (no variant filter)
       const sectionsQuery = query(
-        collection(db, 'deck_variation_custom_sections'),
-        where('deck_variation_id', '==', variationId),
+        collection(db, 'custom_sections'),
         orderBy('order_index', 'asc')
       );
       const sectionsSnapshot = await getDocs(sectionsQuery);
@@ -120,29 +116,6 @@ export const useSections = (variationId: string | null) => {
       console.error('Error loading custom sections:', error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const loadSectionOrder = async () => {
-    if (!variationId) return;
-
-    try {
-      const orderQuery = query(
-        collection(db, 'deck_variation_section_order'),
-        where('deck_variation_id', '==', variationId)
-      );
-      const orderSnapshot = await getDocs(orderQuery);
-      
-      if (orderSnapshot.empty) {
-        setSectionOrder([]);
-      } else {
-        const orderDoc = orderSnapshot.docs[0];
-        const order = orderDoc.data().section_ids || [];
-        setSectionOrder(order);
-      }
-    } catch (error) {
-      console.error('Error loading section order:', error);
-      setSectionOrder([]);
     }
   };
 
@@ -183,52 +156,26 @@ export const useSections = (variationId: string | null) => {
     
     // Separate sections into regular and status sections
     const statusSectionKeys = ['hidden', 'archived'];
-    const regularSections: typeof sectionsMap extends Map<any, infer V> ? V[] : never[] = [];
-    const statusSections: typeof sectionsMap extends Map<any, infer V> ? V[] : never[] = [];
+    const regularSections: any[] = [];
+    const statusSections: any[] = [];
     
-    // If we have a saved order, use it for regular sections only
-    if (sectionOrder && sectionOrder.length > 0) {
-      // Filter order to exclude status sections
-      const regularOrder = sectionOrder.filter(id => !statusSectionKeys.includes(id));
-      
-      regularOrder.forEach(id => {
-        const section = sectionsMap.get(id);
-        if (section) {
-          regularSections.push(section);
-        }
-      });
-      
-      // Add any new sections that aren't in the saved order
-      sectionsMap.forEach((section, id) => {
-        if (!sectionOrder.includes(id) && !statusSectionKeys.includes(id)) {
-          regularSections.push(section);
-        }
-      });
-    } else {
-      // Use default order for regular sections
-      sectionsMap.forEach((section, id) => {
-        if (!statusSectionKeys.includes(id)) {
-          regularSections.push(section);
-        }
-      });
-      regularSections.sort((a, b) => a.order_index - b.order_index);
-    }
-    
-    // Always add status sections at the end in fixed order
-    statusSectionKeys.forEach(key => {
-      const section = sectionsMap.get(key);
-      if (section) {
+    // Sort all sections by order_index
+    sectionsMap.forEach((section, id) => {
+      if (!statusSectionKeys.includes(id)) {
+        regularSections.push(section);
+      } else {
         statusSections.push(section);
       }
     });
+    
+    regularSections.sort((a, b) => a.order_index - b.order_index);
+    statusSections.sort((a, b) => a.order_index - b.order_index);
     
     // Return regular sections followed by status sections
     return [...regularSections, ...statusSections];
   };
 
   const addSection = async (name: string, description: string) => {
-    if (!variationId) return;
-
     try {
       // Random color and icon
       const color = PREDEFINED_COLORS[Math.floor(Math.random() * PREDEFINED_COLORS.length)];
@@ -239,8 +186,7 @@ export const useSections = (variationId: string | null) => {
       const maxOrder = Math.max(...allSections.map(s => s.order_index), -1);
 
       const now = new Date().toISOString();
-      const docRef = await addDoc(collection(db, 'deck_variation_custom_sections'), {
-        deck_variation_id: variationId,
+      const docRef = await addDoc(collection(db, 'custom_sections'), {
         name,
         description,
         color,
@@ -251,45 +197,15 @@ export const useSections = (variationId: string | null) => {
         updated_at: now,
       });
 
-      const newSectionId = docRef.id;
-
-      // Reload custom sections first
+      // Reload custom sections
       await loadCustomSections();
-
-      // Add the new section to the order
-      const currentOrder = sectionOrder.length > 0 ? sectionOrder : allSections.map(s => s.id);
-      const newOrder = [...currentOrder, newSectionId];
-      
-      // Save the updated order
-      const orderQuery = query(
-        collection(db, 'deck_variation_section_order'),
-        where('deck_variation_id', '==', variationId)
-      );
-      const orderSnapshot = await getDocs(orderQuery);
-      
-      if (orderSnapshot.empty) {
-        await addDoc(collection(db, 'deck_variation_section_order'), {
-          deck_variation_id: variationId,
-          section_ids: newOrder,
-          created_at: now,
-          updated_at: now,
-        });
-      } else {
-        const orderDoc = orderSnapshot.docs[0];
-        await updateDoc(orderDoc.ref, {
-          section_ids: newOrder,
-          updated_at: now,
-        });
-      }
-      
-      await loadSectionOrder();
 
       toast({
         title: 'Section created',
-        description: `${name} has been added`,
+        description: `${name} has been added globally`,
       });
 
-      return newSectionId;
+      return docRef.id;
     } catch (error) {
       console.error('Error adding section:', error);
       toast({
@@ -302,10 +218,8 @@ export const useSections = (variationId: string | null) => {
   };
 
   const updateSection = async (sectionId: string, updates: Partial<CustomSection>) => {
-    if (!variationId) return;
-
     try {
-      const sectionRef = doc(db, 'deck_variation_custom_sections', sectionId);
+      const sectionRef = doc(db, 'custom_sections', sectionId);
       await updateDoc(sectionRef, {
         ...updates,
         updated_at: new Date().toISOString(),
@@ -328,37 +242,15 @@ export const useSections = (variationId: string | null) => {
   };
 
   const deleteSection = async (sectionId: string) => {
-    if (!variationId) return;
-
     try {
-      const sectionRef = doc(db, 'deck_variation_custom_sections', sectionId);
+      const sectionRef = doc(db, 'custom_sections', sectionId);
       await deleteDoc(sectionRef);
 
       await loadCustomSections();
 
-      // Remove from order array
-      if (sectionOrder.length > 0) {
-        const newOrder = sectionOrder.filter(id => id !== sectionId);
-        
-        const orderQuery = query(
-          collection(db, 'deck_variation_section_order'),
-          where('deck_variation_id', '==', variationId)
-        );
-        const orderSnapshot = await getDocs(orderQuery);
-        
-        if (!orderSnapshot.empty) {
-          const orderDoc = orderSnapshot.docs[0];
-          await updateDoc(orderDoc.ref, {
-            section_ids: newOrder,
-            updated_at: new Date().toISOString(),
-          });
-        }
-        
-        await loadSectionOrder();
-      }
-
       toast({
         title: 'Section deleted',
+        description: 'The section has been removed from all variants',
       });
     } catch (error) {
       console.error('Error deleting section:', error);
@@ -372,40 +264,20 @@ export const useSections = (variationId: string | null) => {
   };
 
   const reorderSections = async (newOrder: Array<{ id: string; order_index: number; is_default: boolean }>) => {
-    if (!variationId) return;
-
     try {
-      // Save the complete order as an array of section IDs
-      const sectionIds = newOrder.map(item => item.id);
-      
-      // Check if order document exists
-      const orderQuery = query(
-        collection(db, 'deck_variation_section_order'),
-        where('deck_variation_id', '==', variationId)
-      );
-      const orderSnapshot = await getDocs(orderQuery);
-      
-      const now = new Date().toISOString();
-      
-      if (orderSnapshot.empty) {
-        // Create new order document
-        await addDoc(collection(db, 'deck_variation_section_order'), {
-          deck_variation_id: variationId,
-          section_ids: sectionIds,
-          created_at: now,
-          updated_at: now,
+      // Update order_index for each custom section
+      const updatePromises = newOrder
+        .filter(item => !item.is_default) // Only update custom sections
+        .map(item => {
+          const sectionRef = doc(db, 'custom_sections', item.id);
+          return updateDoc(sectionRef, {
+            order_index: item.order_index,
+            updated_at: new Date().toISOString(),
+          });
         });
-      } else {
-        // Update existing order document
-        const orderDoc = orderSnapshot.docs[0];
-        await updateDoc(orderDoc.ref, {
-          section_ids: sectionIds,
-          updated_at: now,
-        });
-      }
-      
-      // Reload the section order
-      await loadSectionOrder();
+
+      await Promise.all(updatePromises);
+      await loadCustomSections();
 
       toast({
         title: 'Sections reordered',
@@ -429,8 +301,8 @@ export const useSections = (variationId: string | null) => {
     updateSection,
     deleteSection,
     reorderSections,
+    refetch: loadCustomSections,
     DEFAULT_SECTIONS,
     PREDEFINED_ICONS,
   };
 };
-

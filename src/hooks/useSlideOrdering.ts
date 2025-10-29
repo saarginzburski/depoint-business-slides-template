@@ -5,7 +5,7 @@ import { slideConfig } from '@/pages/slides/slideConfig';
 import { toast } from '@/hooks/use-toast';
 
 interface SlideOrder {
-  slide_id: number;
+  slide_id: string;  // Now uses component name for stability
   section_id: string;
   order_index: number;
 }
@@ -15,7 +15,7 @@ interface Section {
   name: string;
   description: string;
   color: string;
-  slides: number[];
+  slides: string[];  // Now uses component names instead of numbers
 }
 
 export const useSlideOrdering = (variationId: string | null, sections: Section[]) => {
@@ -75,7 +75,7 @@ export const useSlideOrdering = (variationId: string | null, sections: Section[]
       sections.forEach(section => {
         orderedSections[section.id] = slideConfig.filter(slide => 
           section.slides.includes(slide.id)
-        ).sort((a, b) => a.id - b.id); // Sort by ID to maintain order
+        ).sort((a, b) => a.displayOrder - b.displayOrder); // Sort by displayOrder to maintain order
       });
     } else {
       // Use custom ordering from database
@@ -190,21 +190,20 @@ export const useSlideOrdering = (variationId: string | null, sections: Section[]
 
     try {
       const orderedSections = getOrderedSlidesBySection();
-      const slideIdNum = parseInt(slideId);
       
       // Find and remove the slide from its current section
       let slideData: typeof slideConfig[0] | null = null;
       Object.entries(orderedSections).forEach(([sectionId, slides]) => {
-        const index = slides.findIndex(s => s.id === slideIdNum);
+        const index = slides.findIndex(s => s.id === slideId);
         if (index !== -1) {
           slideData = slides[index];
-          orderedSections[sectionId] = slides.filter(s => s.id !== slideIdNum);
+          orderedSections[sectionId] = slides.filter(s => s.id !== slideId);
         }
       });
 
       // If slide not found in ordered sections, get from slideConfig
       if (!slideData) {
-        slideData = slideConfig.find(s => s.id === slideIdNum) || null;
+        slideData = slideConfig.find(s => s.id === slideId) || null;
       }
 
       // Add to target section

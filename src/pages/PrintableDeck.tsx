@@ -39,6 +39,9 @@ const slideComponents = {
   SlideDashboardSummary: lazy(() => import('./slides/SlideDashboardSummary')),
   SlideJollibeeCase: lazy(() => import('./slides/SlideJollibeeCase')),
   SlideJollibeeOperationBook: lazy(() => import('./slides/SlideJollibeeOperationBook')),
+  SlideWhatsNext: lazy(() => import('./slides/SlideWhatsNext')),
+  SlideRealityNotChecklists: lazy(() => import('./slides/SlideRealityNotChecklists')),
+  SlideArchitectureOverview: lazy(() => import('./slides/SlideArchitectureOverview')),
   SlideIntegrations: lazy(() => import('./slides/SlideIntegrations')),
   SlideDashboardsDemo: lazy(() => import('./slides/SlideDashboardsDemo')),
 };
@@ -72,9 +75,10 @@ const PrintableDeck = () => {
   } else if (slidesParam === 'all') {
     slidesToRender = slideConfig;
   } else {
-    const ids = slidesParam.split(',').map(Number);
+    // IDs are now component names (strings), not numbers
+    const ids = slidesParam.split(',');
     slidesToRender = ids
-      .map((id) => slideConfig.find((s) => s.id === id))
+      .map((id) => slideConfig.find((s) => s.id === id || s.component === id))
       .filter((s): s is typeof slideConfig[number] => Boolean(s));
   }
 

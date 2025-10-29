@@ -80,9 +80,8 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
       ref={setNodeRef}
       style={style}
       {...attributes}
-      {...listeners}
       className={`
-        relative group cursor-move transition-all duration-200
+        relative group cursor-pointer transition-all duration-200
         ${isSelected ? 'ring-2 ring-primary-600 bg-primary-50/30' : 'hover:elevation-2'}
         ${isHovered ? 'elevation-1' : ''}
         ${isDragging ? 'opacity-50' : ''}
@@ -100,7 +99,7 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
       aria-selected={isSelected}
       tabIndex={0}
     >
-      {/* Drag Handle for cross-section moving (overrides dnd-kit) */}
+      {/* Drag Handle for cross-section moving (native HTML5 drag) */}
       <div
         draggable
         onDragStart={(e) => {
@@ -109,14 +108,22 @@ const DraggableSlideCard: React.FC<DraggableSlideCardProps> = ({
           e.dataTransfer.setData('slideIds', slide.id);
           e.dataTransfer.setData('text/plain', slide.id);
         }}
-        onMouseDown={(e) => {
-          e.stopPropagation();
-        }}
         className="absolute top-2 left-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing"
         title="Drag to section labels to move between sections"
       >
         <div className="p-1 bg-white rounded shadow-sm">
           <GripVertical className="w-4 h-4 text-neutral-600" />
+        </div>
+      </div>
+
+      {/* Reorder Handle for intra-section reordering (dnd-kit) */}
+      <div
+        {...listeners}
+        className="absolute top-2 right-12 z-10 opacity-0 group-hover:opacity-100 transition-opacity cursor-move"
+        title="Drag to reorder within section"
+      >
+        <div className="p-1 bg-white rounded shadow-sm">
+          <GripVertical className="w-4 h-4 text-neutral-400" />
         </div>
       </div>
 
