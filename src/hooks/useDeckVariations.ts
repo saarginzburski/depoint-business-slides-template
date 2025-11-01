@@ -51,6 +51,7 @@ export const useDeckVariations = () => {
           name: variationData.name,
           is_default: variationData.is_default || false,
           share_password: variationData.share_password,
+          hidden_sections: variationData.hidden_sections || [],
           created_at: variationData.created_at,
           updated_at: variationData.updated_at,
           sections: sectionsSnapshot.docs.map(doc => doc.data().section_id)
@@ -256,6 +257,33 @@ export const useDeckVariations = () => {
     }
   };
 
+  const updateHiddenSections = async (id: string, hiddenSections: string[]) => {
+    try {
+      const variationRef = doc(db, 'deck_variations', id);
+      await updateDoc(variationRef, {
+        hidden_sections: hiddenSections,
+        updated_at: new Date().toISOString()
+      });
+
+      // Update local state
+      setVariations(prev => prev.map(v =>
+        v.id === id ? { ...v, hidden_sections: hiddenSections } : v
+      ));
+
+      if (currentVariation?.id === id) {
+        setCurrentVariation(prev => prev ? { ...prev, hidden_sections: hiddenSections } : null);
+      }
+    } catch (error) {
+      console.error('Error updating hidden sections:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update hidden sections",
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
+
   const deleteVariation = async (id: string) => {
     try {
       // Delete the variation document (cascade deletes handled by app)
@@ -324,6 +352,7 @@ export const useDeckVariations = () => {
     updateVariation,
     updateVariationSections,
     updateSharePassword,
+    updateHiddenSections,
     deleteVariation,
     refetch: fetchVariations
   };

@@ -24,6 +24,7 @@ export interface Variant {
   updatedAt: string;
   order?: number;
   share_password?: string;
+  hidden_sections?: string[];
 }
 
 export interface Section {

@@ -25,6 +25,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { migrateCustomSections } from '@/utils/migrateSections';
 import { migrateSlideIdsToComponentNames, checkMigrationNeeded } from '@/utils/migrateSlideIds';
+import { getMigrationFlag, setMigrationFlag } from '@/utils/migrationFlags';
 
 // Lazy load all slide components for thumbnails
 const slideComponents = {
@@ -106,25 +107,14 @@ const DeckOverviewNew = () => {
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [variantToShare, setVariantToShare] = useState<string | null>(null);
   const [sharePassword, setSharePassword] = useState('');
-  const [hiddenSections, setHiddenSections] = useState<Set<Section>>(() => {
-    // Load hidden sections from localStorage
-    const saved = localStorage.getItem('hiddenSections');
-    if (saved) {
-      try {
-        return new Set(JSON.parse(saved));
-      } catch (e) {
-        return new Set();
-      }
-    }
-    return new Set();
-  });
+  const [hiddenSections, setHiddenSections] = useState<Set<Section>>(new Set());
   
   // Scroll restoration
   const { saveScrollPosition, restoreScrollPosition } = useGridScrollRestoration();
   const gridScrollContainerRef = React.useRef<HTMLDivElement>(null);
 
   // Hooks
-  const { currentVariation, variations, setCurrentVariation, deleteVariation, createVariation, updateVariation, updateSharePassword, refetch } = useDeckVariations();
+  const { currentVariation, variations, setCurrentVariation, deleteVariation, createVariation, updateVariation, updateSharePassword, updateHiddenSections, refetch } = useDeckVariations();
   
   // Section management hook - sections are now global, shared across all variants
   const { 
@@ -137,53 +127,64 @@ const DeckOverviewNew = () => {
   
   // Auto-migrate old sections on first load
   useEffect(() => {
-    const hasRunMigration = localStorage.getItem('sections_migration_completed');
-    if (!hasRunMigration) {
-      migrateCustomSections()
-        .then((result) => {
-          if (result && result.migrated > 0) {
-            // Refetch sections to show the migrated ones
-            refetchSections();
-          }
-          localStorage.setItem('sections_migration_completed', 'true');
-        })
-        .catch((error) => {
-          console.error('Auto-migration failed:', error);
-        });
-    }
+    getMigrationFlag('sections_migration_completed').then((hasRunMigration) => {
+      if (!hasRunMigration) {
+        migrateCustomSections()
+          .then((result) => {
+            if (result && result.migrated > 0) {
+              // Refetch sections to show the migrated ones
+              refetchSections();
+            }
+            return setMigrationFlag('sections_migration_completed', true);
+          })
+          .catch((error) => {
+            console.error('Auto-migration failed:', error);
+          });
+      }
+    });
   }, []);
   
   // Auto-migrate slide IDs from numbers to component names
   useEffect(() => {
-    const hasRunSlideIdMigration = localStorage.getItem('slide_ids_migration_completed');
-    if (!hasRunSlideIdMigration) {
-      checkMigrationNeeded()
-        .then((needed) => {
-          if (needed) {
-            console.log('🔄 Slide ID migration needed, starting...');
-            return migrateSlideIdsToComponentNames();
-          } else {
-            console.log('✅ Slide IDs already migrated');
-            return null;
-          }
-        })
-        .then((result) => {
-          if (result && result.migrated > 0) {
-            // Refetch slides to show the migrated data
-            refetchSlides();
-          }
-          localStorage.setItem('slide_ids_migration_completed', 'true');
-        })
-        .catch((error) => {
-          console.error('Slide ID migration failed:', error);
-        });
-    }
+    getMigrationFlag('slide_ids_migration_completed').then((hasRunSlideIdMigration) => {
+      if (!hasRunSlideIdMigration) {
+        checkMigrationNeeded()
+          .then((needed) => {
+            if (needed) {
+              console.log('🔄 Slide ID migration needed, starting...');
+              return migrateSlideIdsToComponentNames();
+            } else {
+              console.log('✅ Slide IDs already migrated');
+              return null;
+            }
+          })
+          .then((result) => {
+            if (result && result.migrated > 0) {
+              // Refetch slides to show the migrated data
+              refetchSlides();
+            }
+            return setMigrationFlag('slide_ids_migration_completed', true);
+          })
+          .catch((error) => {
+            console.error('Slide ID migration failed:', error);
+          });
+      }
+    });
   }, [currentVariantId]); // Run when variant changes
   
   // Update deck name when variant changes
   useEffect(() => {
     if (currentVariation?.name) {
       setDeckName(currentVariation.name);
+    }
+  }, [currentVariation]);
+
+  // Sync hidden sections from currentVariation
+  useEffect(() => {
+    if (currentVariation?.hidden_sections) {
+      setHiddenSections(new Set(currentVariation.hidden_sections as Section[]));
+    } else {
+      setHiddenSections(new Set());
     }
   }, [currentVariation]);
   
@@ -718,6 +719,7 @@ Then rebuild: npm run dev
                   name: v.name,
                   isDefault: v.is_default,
                   share_password: v.share_password,
+                  hidden_sections: v.hidden_sections,
                   countBySection: {
                     main: allSlides.filter(s => s.section === 'main' && s.status === 'visible').length,
                     demo: allSlides.filter(s => s.section === 'demo' && s.status === 'visible').length,
@@ -797,26 +799,29 @@ Then rebuild: npm run dev
                 activeSectionKey={activeSection}
                 onSelect={(key) => setActiveSection(key as Section)}
                 hiddenSections={hiddenSections}
-                onToggleSectionVisibility={(sectionKey) => {
-                  setHiddenSections(prev => {
-                    const next = new Set(prev);
-                    if (next.has(sectionKey as Section)) {
-                      next.delete(sectionKey as Section);
-                      toast({
-                        title: 'Section shown',
-                        description: `${sectionKey} will be included in presentations`,
-                      });
-                    } else {
-                      next.add(sectionKey as Section);
-                  toast({
-                        title: 'Section hidden',
-                        description: `${sectionKey} will be excluded from presentations`,
-                      });
-                    }
-                    // Save to localStorage
-                    localStorage.setItem('hiddenSections', JSON.stringify(Array.from(next)));
-                    return next;
-                  });
+                onToggleSectionVisibility={async (sectionKey) => {
+                  if (!currentVariantId) return;
+                  
+                  const next = new Set(hiddenSections);
+                  if (next.has(sectionKey as Section)) {
+                    next.delete(sectionKey as Section);
+                    toast({
+                      title: 'Section shown',
+                      description: `${sectionKey} will be included in presentations`,
+                    });
+                  } else {
+                    next.add(sectionKey as Section);
+                    toast({
+                      title: 'Section hidden',
+                      description: `${sectionKey} will be excluded from presentations`,
+                    });
+                  }
+                  
+                  // Update local state immediately for responsive UI
+                  setHiddenSections(next);
+                  
+                  // Save to Firebase
+                  await updateHiddenSections(currentVariantId, Array.from(next));
                 }}
                 onDrop={async (slideIds, targetSection) => {
                   if (!currentVariantId) {

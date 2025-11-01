@@ -5,6 +5,7 @@ export interface DeckVariation {
   name: string;
   is_default: boolean;
   share_password?: string; // Optional password for public sharing
+  hidden_sections?: string[]; // Array of section IDs that are hidden in this variant
   created_at: string;
   updated_at: string;
 }
