@@ -1211,31 +1211,35 @@ Then rebuild: npm run dev
       <Dialog open={duplicateDialogOpen} onOpenChange={setDuplicateDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Duplicate Slide</DialogTitle>
+            <DialogTitle>Duplicate Slide Component</DialogTitle>
             <DialogDescription>
-              This will create a duplicate reference to "{slideToDuplicate ? getSlideInfo(slideToDuplicate)?.title : ''}" in your deck. The same slide will appear twice.
+              Create a new slide component based on "{slideToDuplicate ? getSlideInfo(slideToDuplicate)?.title : ''}". 
+              This will generate a terminal command to create the new component file.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="slide-name">Label for this duplicate (optional)</Label>
+              <Label htmlFor="slide-name">New Slide Name</Label>
               <Input
                 id="slide-name"
-                placeholder="e.g., Duplicate for Q2 section"
+                placeholder="e.g., Custom Market Analysis"
                 value={newSlideName}
                 onChange={(e) => setNewSlideName(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
+                  if (e.key === 'Enter' && newSlideName.trim()) {
                     handleDuplicateSlide();
                   }
                 }}
                 autoFocus
               />
               <p className="text-sm text-muted-foreground">
-                Original component: <code className="text-xs bg-muted px-1 py-0.5 rounded">
-                  {slideToDuplicate}
+                Component name: <code className="text-xs bg-muted px-1 py-0.5 rounded">
+                  {'Slide' + newSlideName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('').replace(/[^a-zA-Z0-9]/g, '')}
                 </code>
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">
+                A terminal command will be copied to your clipboard. Run it to create the component.
               </p>
             </div>
           </div>
@@ -1253,8 +1257,9 @@ Then rebuild: npm run dev
             </Button>
             <Button
               onClick={handleDuplicateSlide}
+              disabled={!newSlideName.trim()}
             >
-              Duplicate Slide
+              Get Command
             </Button>
           </DialogFooter>
         </DialogContent>
