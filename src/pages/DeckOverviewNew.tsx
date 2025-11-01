@@ -17,7 +17,7 @@ import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useGridScrollRestoration } from '@/hooks/useGridScrollRestoration';
 import { Slide, Variant } from '@/types/deck';
 import { toast } from '@/hooks/use-toast';
-import { slideConfig } from '@/pages/slides/slideConfig';
+import { slideConfig, getSlideInfo } from '@/pages/slides/slideConfig';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -100,6 +100,9 @@ const DeckOverviewNew = () => {
   const [createVariantDialogOpen, setCreateVariantDialogOpen] = useState(false);
   const [newVariantName, setNewVariantName] = useState('');
   const [selectedSectionsForVariant, setSelectedSectionsForVariant] = useState<Set<string>>(new Set());
+  const [duplicateDialogOpen, setDuplicateDialogOpen] = useState(false);
+  const [slideToDuplicate, setSlideToDuplicate] = useState<string | null>(null);
+  const [newSlideName, setNewSlideName] = useState('');
   const [hiddenSections, setHiddenSections] = useState<Set<Section>>(() => {
     // Load hidden sections from localStorage
     const saved = localStorage.getItem('hiddenSections');
@@ -395,6 +398,92 @@ const DeckOverviewNew = () => {
     }
   };
   
+  // Duplicate slide handler
+  const handleDuplicateSlide = async () => {
+    if (!slideToDuplicate || !currentVariantId) {
+      toast({
+        title: 'Error',
+        description: 'No slide or variant selected',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      // Generate component name from user input
+      const componentName = 'Slide' + newSlideName
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join('');
+
+      // Find the original slide's order info
+      const originalSlideOrders = getOrderedSlidesBySection();
+      let originalSection = 'main';
+      let originalOrder = 0;
+
+      // Find which section the original slide is in
+      for (const [sectionKey, slides] of Object.entries(originalSlideOrders)) {
+        const slideIndex = slides.findIndex(s => s.id === slideToDuplicate);
+        if (slideIndex !== -1) {
+          originalSection = sectionKey;
+          originalOrder = slideIndex;
+          break;
+        }
+      }
+
+      // Create new slide order entry in Firebase
+      const { db } = await import('@/integrations/firebase/client');
+      const { collection, addDoc, query, where, getDocs, updateDoc, doc } = await import('firebase/firestore');
+
+      // Get all slides in the same section to update their order
+      const ordersQuery = query(
+        collection(db, 'deck_variation_slide_orders'),
+        where('deck_variation_id', '==', currentVariantId),
+        where('section_id', '==', originalSection)
+      );
+      const ordersSnapshot = await getDocs(ordersQuery);
+      
+      // Update order indices of slides after the original
+      const updatePromises = ordersSnapshot.docs
+        .filter(doc => doc.data().order_index > originalOrder)
+        .map(doc => 
+          updateDoc(doc.ref, { 
+            order_index: doc.data().order_index + 1,
+            updated_at: new Date().toISOString()
+          })
+        );
+      
+      await Promise.all(updatePromises);
+
+      // Add the duplicated slide
+      await addDoc(collection(db, 'deck_variation_slide_orders'), {
+        deck_variation_id: currentVariantId,
+        slide_id: componentName,
+        section_id: originalSection,
+        order_index: originalOrder + 1,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
+
+      toast({
+        title: 'Slide duplicated',
+        description: `Created "${newSlideName}" with component name "${componentName}"`,
+      });
+
+      setDuplicateDialogOpen(false);
+      setSlideToDuplicate(null);
+      setNewSlideName('');
+      refetchSlides();
+    } catch (error) {
+      console.error('Error duplicating slide:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to duplicate slide',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const handleViewerPrev = () => {
     if (!slideIdFromUrl) return;
     const currentIndex = filteredSlides.findIndex(s => s.id === slideIdFromUrl);
@@ -425,11 +514,10 @@ const DeckOverviewNew = () => {
   };
   
   const handleViewerDuplicate = (slideId: string) => {
-    toast({
-      title: 'Slide duplicated',
-      description: 'Created a duplicate of this slide',
-    });
-    refetchSlides();
+    setSlideToDuplicate(slideId);
+    const slideInfo = getSlideInfo(slideId);
+    setNewSlideName(slideInfo ? `${slideInfo.title} (Copy)` : 'Copy of Slide');
+    setDuplicateDialogOpen(true);
   };
   
   const handleViewerHide = async (slideId: string) => {
@@ -1014,9 +1102,13 @@ const DeckOverviewNew = () => {
             }
           }}
           onDuplicate={() => {
-            toast({ title: 'Slide duplicated' });
+            if (contextMenu) {
+              setSlideToDuplicate(contextMenu.slideId);
+              const slideInfo = getSlideInfo(contextMenu.slideId);
+              setNewSlideName(slideInfo ? `${slideInfo.title} (Copy)` : 'Copy of Slide');
+              setDuplicateDialogOpen(true);
+            }
             setContextMenu(null);
-            refetchSlides();
           }}
           onRename={() => {
             toast({ title: 'Rename slide' });
@@ -1125,6 +1217,60 @@ const DeckOverviewNew = () => {
               disabled={!newVariantName.trim()}
             >
               Create Variant
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Duplicate Slide Dialog */}
+      <Dialog open={duplicateDialogOpen} onOpenChange={setDuplicateDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Duplicate Slide</DialogTitle>
+            <DialogDescription>
+              Enter a name for the duplicated slide. A component name will be automatically generated.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="slide-name">Slide Name</Label>
+              <Input
+                id="slide-name"
+                placeholder="e.g., My Custom Slide"
+                value={newSlideName}
+                onChange={(e) => setNewSlideName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && newSlideName.trim()) {
+                    handleDuplicateSlide();
+                  }
+                }}
+                autoFocus
+              />
+              <p className="text-sm text-muted-foreground">
+                Component name: <code className="text-xs bg-muted px-1 py-0.5 rounded">
+                  {'Slide' + newSlideName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}
+                </code>
+              </p>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setDuplicateDialogOpen(false);
+                setSlideToDuplicate(null);
+                setNewSlideName('');
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDuplicateSlide}
+              disabled={!newSlideName.trim()}
+            >
+              Duplicate Slide
             </Button>
           </DialogFooter>
         </DialogContent>
