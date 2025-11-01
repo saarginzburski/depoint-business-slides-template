@@ -147,33 +147,25 @@ const SharedDeckView = () => {
       const orderedSlides: string[] = [];
       
       if (slideOrders.length === 0) {
-        // No custom ordering - use all slides from all sections in default order
-        allSections.forEach((section: any) => {
-          const sectionSlideIds = section.slides || [];
-          slideConfig
-            .filter(slide => sectionSlideIds.includes(slide.id))
-            .sort((a, b) => a.displayOrder - b.displayOrder)
-            .forEach(slide => orderedSlides.push(slide.id));
-        });
+        // No custom ordering - show all slides in default displayOrder
+        // This happens when a variant hasn't been customized yet
+        const allSlideIds = slideConfig
+          .sort((a, b) => a.displayOrder - b.displayOrder)
+          .map(slide => slide.id);
+        
+        orderedSlides.push(...allSlideIds);
       } else {
         // Use custom ordering from database
-        allSections.forEach((section: any) => {
-          const sectionSlides = slidesBySection[section.id] || [];
-          
-          if (sectionSlides.length > 0) {
-            // Sort slides within this section by order_index
-            sectionSlides
-              .sort((a, b) => a.order_index - b.order_index)
-              .forEach(order => {
-                const slide = slideConfig.find(s => s.id === order.slide_id);
-                if (slide) {
-                  orderedSlides.push(slide.id);
-                }
-              });
+        // Sort all slide orders globally by order_index (already sorted by query)
+        slideOrders.forEach(order => {
+          const slide = slideConfig.find(s => s.id === order.slide_id);
+          if (slide) {
+            orderedSlides.push(slide.id);
           }
         });
       }
       
+      console.log('Loaded slides for shared view:', orderedSlides.length, orderedSlides);
       setSlides(orderedSlides);
     } catch (error) {
       console.error('Error loading variant:', error);
