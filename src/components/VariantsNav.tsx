@@ -242,7 +242,7 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
             onClick={() => setContextMenu(null)}
           />
           <div
-            className="fixed z-50 min-w-[180px] bg-surface rounded-lg shadow-elevation-3 border border-neutral-200 py-1"
+            className="fixed z-50 min-w-[180px] bg-white rounded-lg shadow-elevation-3 border border-neutral-200 py-1"
             style={{ left: contextMenu.x, top: contextMenu.y }}
           >
             {[
