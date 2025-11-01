@@ -18,12 +18,9 @@ const SlideProblemStats = () => {
           
           {/* Subtitle */}
           <div className="text-center px-12">
-            <h2 className="text-2xl font-light text-gray-700 mb-2">
-              When Enterprises Lose Control of Their Operations
+            <h2 className="text-2xl font-light text-gray-700">
+              When Enterprises Lose Control of Their Data & Processes
             </h2>
-            <p className="text-base text-gray-500 italic">
-              The real cost isn't in the technology—it's in the chaos that follows
-            </p>
           </div>
 
           {/* Three Circular Stats */}
@@ -47,12 +44,8 @@ const SlideProblemStats = () => {
               {/* Label */}
               <div className="text-center max-w-xs">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  Disconnected Systems
+                  Disparate Systems for<br />Managing Store &<br />Employee Data
                 </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Store operations, employee data, scheduling, inventory, compliance—each in its own silo, 
-                  creating a maze of manual reconciliation
-                </p>
               </div>
             </div>
 
@@ -74,12 +67,8 @@ const SlideProblemStats = () => {
               {/* Label */}
               <div className="text-center max-w-xs">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  Management Time Lost
+                  Of Management<br />Time Spent on<br />Chasing Store Managers
                 </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Half of every manager's day spent chasing updates, hunting for reports, 
-                  and firefighting issues that should have been caught days earlier
-                </p>
               </div>
             </div>
 
@@ -101,30 +90,13 @@ const SlideProblemStats = () => {
               {/* Label */}
               <div className="text-center max-w-xs">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  Employee Turnover Rate
+                  Avg. Employee<br />Turnover Rate
                 </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Frontline teams burned out by broken processes, unclear expectations, 
-                  and tools that work against them instead of for them
-                </p>
               </div>
             </div>
 
           </div>
 
-          {/* Bottom Impact Statement */}
-          <div className="text-center px-12 pb-4">
-            <div className="inline-block bg-red-50 border-2 border-red-200 rounded-xl px-8 py-4">
-              <p className="text-lg font-semibold text-red-800">
-                <span className="text-red-600">💸</span> This isn't just inefficiency—it's a compounding crisis. 
-                <span className="block mt-2 text-base font-normal text-red-700">
-                  Every hour managers spend chasing data is an hour not spent leading. 
-                  Every employee who quits takes institutional knowledge with them.
-                  Every disconnected system multiplies the risk of critical failures.
-                </span>
-              </p>
-            </div>
-          </div>
 
         </div>
       </SlideLayout>
