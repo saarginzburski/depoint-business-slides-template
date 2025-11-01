@@ -309,8 +309,8 @@ const DeckOverviewNew = () => {
   
   const filteredSlides = getFilteredSlides();
   
-  // Calculate stats
-  const visibleSlidesCount = allSlides.filter(s => s.status === 'visible').length;
+  // Calculate stats - only count visible slides in non-hidden sections
+  const visibleSlidesCount = allSlides.filter(s => s.status === 'visible' && !hiddenSections.has(s.section)).length;
   const hiddenSlidesCount = allSlides.filter(s => s.status === 'hidden').length;
   const archivedSlidesCount = allSlides.filter(s => s.status === 'archived').length;
   const presentationTime = `${Math.ceil(visibleSlidesCount * 2.5)} min`; // Estimate 2.5 min per slide
