@@ -27,6 +27,7 @@ import { migrateCustomSections } from '@/utils/migrateSections';
 import { migrateSlideIdsToComponentNames, checkMigrationNeeded } from '@/utils/migrateSlideIds';
 import { migrateDefaultSectionsToFirebase, checkDefaultSectionsMigrationNeeded } from '@/utils/migrateDefaultSections';
 import { getMigrationFlag, setMigrationFlag } from '@/utils/migrationFlags';
+import { fixSectionsManually } from '@/utils/fixSections';
 
 // Lazy load all slide components for thumbnails
 const slideComponents = {
@@ -218,6 +219,44 @@ const DeckOverviewNew = () => {
   }, [currentVariation]);
   
   const allSectionsData = getAllSections();
+  
+  // Auto-fix sections if no slides are found
+  useEffect(() => {
+    // Only run once after migrations have completed
+    let hasRunAutoFix = false;
+    
+    const checkAndFix = async () => {
+      if (hasRunAutoFix) return;
+      
+      // Wait a bit for migrations to complete
+      const migrationCompleted = await getMigrationFlag('default_sections_migration_completed');
+      
+      if (migrationCompleted && allSectionsData.length > 0) {
+        // Check if we have sections but no slides in any section
+        const sections = allSectionsData.map(s => {
+          const sectionSlides = slideConfig
+            .filter(slide => slide.section_key === s.key || slide.section_key === s.id)
+            .map(slide => slide.id);
+          return { id: s.id, key: s.key, slideCount: sectionSlides.length };
+        });
+        
+        const totalSlides = sections.reduce((sum, s) => sum + s.slideCount, 0);
+        
+        console.log('Section check:', sections);
+        console.log('Total slides found:', totalSlides);
+        
+        if (totalSlides === 0 && sections.length > 0) {
+          console.log('⚠️ No slides found in any section - running auto-fix...');
+          hasRunAutoFix = true;
+          handleFixSections();
+        }
+      }
+    };
+    
+    // Run check after a short delay to let everything load
+    const timer = setTimeout(checkAndFix, 2000);
+    return () => clearTimeout(timer);
+  }, [allSectionsData]);
   
   // Convert to format expected by useSlideOrdering
   // Build section->slides mapping from slideConfig's section_key field
@@ -437,6 +476,46 @@ const DeckOverviewNew = () => {
   };
   
   // Duplicate slide handler - manual process for now
+  const handleFixSections = async () => {
+    toast({
+      title: 'Fixing sections...',
+      description: 'Recreating sections with correct IDs',
+    });
+    
+    try {
+      const result = await fixSectionsManually();
+      if (result.success) {
+        // Reset migration flag so it doesn't run again
+        await setMigrationFlag('default_sections_migration_completed', true);
+        
+        // Refetch sections and slides
+        await refetchSections();
+        await refetchSlides();
+        
+        toast({
+          title: 'Success!',
+          description: 'Sections fixed. Reloading page...',
+        });
+        
+        // Reload to see changes
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Failed to fix sections. Check console for details.',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Error fixing sections:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to fix sections',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const handleDuplicateSlide = async () => {
     if (!slideToDuplicate || !currentVariantId) {
       toast({
