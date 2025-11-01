@@ -97,9 +97,21 @@ const SharedDeckView = () => {
         return;
       }
       
-      setVariantData(variantDoc.data());
+      const data = variantDoc.data();
+      setVariantData(data);
       
-      // Fetch slides for this variant
+      // Fetch sections for this variant
+      const sectionsQuery = query(
+        collection(db, 'deck_variation_sections'),
+        where('deck_variation_id', '==', variantId)
+      );
+      const sectionsSnapshot = await getDocs(sectionsQuery);
+      const sections = sectionsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      // Fetch slide orders for this variant
       const slidesQuery = query(
         collection(db, 'deck_variation_slide_orders'),
         where('deck_variation_id', '==', variantId),
@@ -107,9 +119,49 @@ const SharedDeckView = () => {
       );
       
       const slidesSnapshot = await getDocs(slidesQuery);
-      const slideIds = slidesSnapshot.docs.map(doc => doc.data().slide_id);
+      const slideOrders = slidesSnapshot.docs.map(doc => ({
+        slide_id: doc.data().slide_id,
+        section_id: doc.data().section_id,
+        order_index: doc.data().order_index
+      }));
       
-      setSlides(slideIds);
+      // Build ordered list of slides respecting sections
+      const orderedSlides: string[] = [];
+      
+      if (slideOrders.length === 0) {
+        // No custom ordering - use default from slideConfig
+        sections.forEach(section => {
+          const sectionSlides = slideConfig
+            .filter(slide => section.slides?.includes(slide.id))
+            .sort((a, b) => a.displayOrder - b.displayOrder);
+          sectionSlides.forEach(slide => orderedSlides.push(slide.id));
+        });
+      } else {
+        // Use custom ordering from database
+        const assignedSlideIds = new Set(slideOrders.map(o => o.slide_id));
+        
+        // First, add slides in their custom order
+        slideOrders
+          .sort((a, b) => a.order_index - b.order_index)
+          .forEach(order => {
+            const slide = slideConfig.find(s => s.id === order.slide_id);
+            if (slide) {
+              orderedSlides.push(slide.id);
+            }
+          });
+        
+        // Then add any slides from slideConfig that aren't in the database yet
+        sections.forEach(section => {
+          slideConfig
+            .filter(slide => 
+              section.slides?.includes(slide.id) && !assignedSlideIds.has(slide.id)
+            )
+            .sort((a, b) => a.displayOrder - b.displayOrder)
+            .forEach(slide => orderedSlides.push(slide.id));
+        });
+      }
+      
+      setSlides(orderedSlides);
     } catch (error) {
       console.error('Error loading variant:', error);
       toast({
