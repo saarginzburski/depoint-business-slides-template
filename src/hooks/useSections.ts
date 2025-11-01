@@ -24,34 +24,9 @@ export interface CustomSection {
   updated_at: string;
 }
 
-const DEFAULT_SECTIONS = [
-  {
-    key: 'main',
-    name: 'Main Deck',
-    description: 'Core presentation',
-    color: 'blue',
-    icon: 'Layers',
-    is_default: true,
-    order_index: 0,
-  },
-  {
-    key: 'demo',
-    name: 'Demo',
-    description: 'Dashboard demonstrations',
-    color: 'green',
-    icon: 'Monitor',
-    is_default: true,
-    order_index: 1,
-  },
-  {
-    key: 'appendix',
-    name: 'Appendices',
-    description: 'Supporting documentation',
-    color: 'slate',
-    icon: 'BookOpen',
-    is_default: true,
-    order_index: 2,
-  },
+// Status sections - these are special sections for slide status management
+// They are always present and cannot be deleted or reordered
+const STATUS_SECTIONS = [
   {
     key: 'hidden',
     name: 'Hidden',
@@ -60,7 +35,7 @@ const DEFAULT_SECTIONS = [
     icon: 'EyeOff',
     is_default: true,
     locked: true,
-    order_index: 3,
+    order_index: 9997, // Very high order to always appear at the end
   },
   {
     key: 'archived',
@@ -70,7 +45,7 @@ const DEFAULT_SECTIONS = [
     icon: 'Archive',
     is_default: true,
     locked: true,
-    order_index: 4,
+    order_index: 9998, // Very high order to always appear at the end
   },
 ];
 
@@ -123,8 +98,24 @@ export const useSections = () => {
     // Create a map of all sections by ID
     const sectionsMap = new Map();
     
-    // Add default sections
-    DEFAULT_SECTIONS.forEach(s => {
+    // Add all custom sections from Firebase (including main, demo, appendix)
+    customSections.forEach(s => {
+      const section = {
+        key: s.id,
+        name: s.name,
+        description: s.description,
+        color: s.color,
+        icon: s.icon,
+        is_default: false, // All Firebase sections are now custom
+        order_index: s.order_index,
+        locked: false,
+        id: s.id,
+      };
+      sectionsMap.set(s.id, section);
+    });
+    
+    // Add status sections (hidden, archived)
+    STATUS_SECTIONS.forEach(s => {
       sectionsMap.set(s.key, {
         key: s.key,
         name: s.name,
@@ -136,22 +127,6 @@ export const useSections = () => {
         locked: s.locked,
         id: s.key,
       });
-    });
-    
-    // Add custom sections
-    customSections.forEach(s => {
-      const customSection = {
-        key: s.id,
-        name: s.name,
-        description: s.description,
-        color: s.color,
-        icon: s.icon,
-        is_default: false,
-        order_index: s.order_index,
-        locked: false, // Custom sections are never locked
-        id: s.id,
-      };
-      sectionsMap.set(s.id, customSection);
     });
     
     // Separate sections into regular and status sections
@@ -302,7 +277,7 @@ export const useSections = () => {
     deleteSection,
     reorderSections,
     refetch: loadCustomSections,
-    DEFAULT_SECTIONS,
+    STATUS_SECTIONS,
     PREDEFINED_ICONS,
   };
 };

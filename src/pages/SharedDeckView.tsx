@@ -73,19 +73,22 @@ const SharedDeckView = () => {
   const allSectionsData = getAllSections();
   
   // Convert to format expected by useSlideOrdering (same as DeckOverviewNew)
-  const getSlideIdsByDisplayOrder = (start: number, end: number) => 
-    slideConfig.filter(s => s.displayOrder >= start && s.displayOrder <= end).map(s => s.id);
-  
-  const sections = allSectionsData.map(s => ({
-    id: s.id,
-    name: s.name,
-    description: s.description,
-    color: s.color,
-    slides: s.key === 'main' ? getSlideIdsByDisplayOrder(1, 24) :
-            s.key === 'appendix' ? getSlideIdsByDisplayOrder(25, 25) :
-            s.key === 'demo' ? getSlideIdsByDisplayOrder(26, 35) :
-            [],
-  }));
+  // Build section->slides mapping from slideConfig's section_key field
+  const sections = allSectionsData.map(s => {
+    // Get slides that belong to this section
+    const sectionSlides = slideConfig
+      .filter(slide => slide.section_key === s.key || slide.section_key === s.id)
+      .sort((a, b) => a.displayOrder - b.displayOrder)
+      .map(slide => slide.id);
+    
+    return {
+      id: s.id,
+      name: s.name,
+      description: s.description,
+      color: s.color,
+      slides: sectionSlides,
+    };
+  });
   
   const { getVisibleSlides } = useSlideOrdering(variantId || null, sections);
   

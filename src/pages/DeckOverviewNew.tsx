@@ -25,6 +25,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { migrateCustomSections } from '@/utils/migrateSections';
 import { migrateSlideIdsToComponentNames, checkMigrationNeeded } from '@/utils/migrateSlideIds';
+import { migrateDefaultSectionsToFirebase, checkDefaultSectionsMigrationNeeded } from '@/utils/migrateDefaultSections';
 import { getMigrationFlag, setMigrationFlag } from '@/utils/migrationFlags';
 
 // Lazy load all slide components for thumbnails
@@ -144,6 +145,34 @@ const DeckOverviewNew = () => {
     });
   }, []);
   
+  // Auto-migrate default sections (main, demo, appendix) to Firebase
+  useEffect(() => {
+    getMigrationFlag('default_sections_migration_completed').then((hasRunDefaultMigration) => {
+      if (!hasRunDefaultMigration) {
+        checkDefaultSectionsMigrationNeeded()
+          .then((needed) => {
+            if (needed) {
+              console.log('🔄 Default sections migration needed, starting...');
+              return migrateDefaultSectionsToFirebase();
+            } else {
+              console.log('✅ Default sections already migrated');
+              return true;
+            }
+          })
+          .then((result) => {
+            if (result) {
+              // Refetch sections to show the migrated ones
+              refetchSections();
+            }
+            return setMigrationFlag('default_sections_migration_completed', true);
+          })
+          .catch((error) => {
+            console.error('Default sections migration failed:', error);
+          });
+      }
+    });
+  }, []);
+  
   // Auto-migrate slide IDs from numbers to component names
   useEffect(() => {
     getMigrationFlag('slide_ids_migration_completed').then((hasRunSlideIdMigration) => {
@@ -191,20 +220,22 @@ const DeckOverviewNew = () => {
   const allSectionsData = getAllSections();
   
   // Convert to format expected by useSlideOrdering
-  // Get slide IDs based on displayOrder ranges (using component names now)
-  const getSlideIdsByDisplayOrder = (start: number, end: number) => 
-    slideConfig.filter(s => s.displayOrder >= start && s.displayOrder <= end).map(s => s.id);
-  
-  const sections = allSectionsData.map(s => ({
-    id: s.id,
-    name: s.name,
-    description: s.description,
-    color: s.color,
-    slides: s.key === 'main' ? getSlideIdsByDisplayOrder(1, 24) :
-            s.key === 'appendix' ? getSlideIdsByDisplayOrder(25, 25) :
-            s.key === 'demo' ? getSlideIdsByDisplayOrder(26, 35) :
-            [],
-  }));
+  // Build section->slides mapping from slideConfig's section_key field
+  const sections = allSectionsData.map(s => {
+    // Get slides that belong to this section
+    const sectionSlides = slideConfig
+      .filter(slide => slide.section_key === s.key || slide.section_key === s.id)
+      .sort((a, b) => a.displayOrder - b.displayOrder)
+      .map(slide => slide.id);
+    
+    return {
+      id: s.id,
+      name: s.name,
+      description: s.description,
+      color: s.color,
+      slides: sectionSlides,
+    };
+  });
   
   const { getOrderedSlidesBySection, getVisibleSlides, updateSlideOrders, moveSlideToSection, refetch: refetchSlides } = useSlideOrdering(
     currentVariantId,
