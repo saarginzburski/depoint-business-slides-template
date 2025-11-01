@@ -100,6 +100,9 @@ const SharedDeckView = () => {
       const data = variantDoc.data();
       setVariantData(data);
       
+      // Get hidden sections from variant
+      const hiddenSectionIds = new Set(data.hidden_sections || []);
+      
       // Fetch sections for this variant
       const variantSectionsQuery = query(
         collection(db, 'deck_variation_sections'),
@@ -115,10 +118,16 @@ const SharedDeckView = () => {
       const allSections = allSectionsSnapshot.docs
         .map(doc => ({
           id: doc.id,
+          key: doc.data().key,
           ...doc.data()
         }))
-        .filter(section => variantSectionIds.has(section.id))
+        .filter(section => 
+          variantSectionIds.has(section.id) && // Section is in variant
+          !hiddenSectionIds.has(section.key) // Section is not hidden
+        )
         .sort((a: any, b: any) => a.order_index - b.order_index);
+      
+      console.log('Visible sections:', allSections.map((s: any) => s.key));
       
       // Fetch slide orders for this variant
       const slidesQuery = query(
@@ -143,27 +152,46 @@ const SharedDeckView = () => {
         slidesBySection[order.section_id].push(order);
       });
       
+      // Helper to get default slides for a section
+      const getDefaultSlidesForSection = (sectionKey: string): string[] => {
+        // Map section keys to their default display order ranges
+        const sectionRanges: Record<string, [number, number]> = {
+          'main': [1, 24],
+          'appendix': [25, 25],
+          'demo': [26, 35],
+        };
+        
+        const range = sectionRanges[sectionKey];
+        if (!range) return [];
+        
+        return slideConfig
+          .filter(s => s.displayOrder >= range[0] && s.displayOrder <= range[1])
+          .sort((a, b) => a.displayOrder - b.displayOrder)
+          .map(s => s.id);
+      };
+      
       // Build ordered list of slides: iterate sections in order, then slides within each section
       const orderedSlides: string[] = [];
       
-      if (slideOrders.length === 0) {
-        // No custom ordering - show all slides in default displayOrder
-        // This happens when a variant hasn't been customized yet
-        const allSlideIds = slideConfig
-          .sort((a, b) => a.displayOrder - b.displayOrder)
-          .map(slide => slide.id);
+      allSections.forEach((section: any) => {
+        const sectionSlides = slidesBySection[section.id] || [];
         
-        orderedSlides.push(...allSlideIds);
-      } else {
-        // Use custom ordering from database
-        // Sort all slide orders globally by order_index (already sorted by query)
-        slideOrders.forEach(order => {
-          const slide = slideConfig.find(s => s.id === order.slide_id);
-          if (slide) {
-            orderedSlides.push(slide.id);
-          }
-        });
-      }
+        if (sectionSlides.length > 0) {
+          // Use custom ordering for this section
+          sectionSlides
+            .sort((a, b) => a.order_index - b.order_index)
+            .forEach(order => {
+              const slide = slideConfig.find(s => s.id === order.slide_id);
+              if (slide) {
+                orderedSlides.push(slide.id);
+              }
+            });
+        } else {
+          // No custom ordering - use default slides for this section
+          const defaultSlides = getDefaultSlidesForSection(section.key);
+          orderedSlides.push(...defaultSlides);
+        }
+      });
       
       console.log('Loaded slides for shared view:', orderedSlides.length, orderedSlides);
       setSlides(orderedSlides);
