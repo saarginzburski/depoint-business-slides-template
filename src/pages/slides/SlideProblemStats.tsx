@@ -101,7 +101,7 @@ const SlideProblemStats = () => {
         </div>
       </SlideLayout>
       
-      <SlideFooter text="Fragmented systems don't just waste time—they compound costs and drive talent away" />
+      <SlideFooter tagline="Fragmented systems don't just waste time—they compound costs and drive talent away" />
     </div>
   );
 };
