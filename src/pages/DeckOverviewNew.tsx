@@ -1,6 +1,6 @@
 import React, { useState, useEffect, lazy } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Layers } from 'lucide-react';
+import { Layers, Copy } from 'lucide-react';
 import { useDeckVariations } from '@/hooks/useDeckVariations';
 import { useSlideOrdering } from '@/hooks/useSlideOrdering';
 import { useSections } from '@/hooks/useSections';
@@ -103,6 +103,9 @@ const DeckOverviewNew = () => {
   const [duplicateDialogOpen, setDuplicateDialogOpen] = useState(false);
   const [slideToDuplicate, setSlideToDuplicate] = useState<string | null>(null);
   const [newSlideName, setNewSlideName] = useState('');
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [variantToShare, setVariantToShare] = useState<string | null>(null);
+  const [sharePassword, setSharePassword] = useState('');
   const [hiddenSections, setHiddenSections] = useState<Set<Section>>(() => {
     // Load hidden sections from localStorage
     const saved = localStorage.getItem('hiddenSections');
@@ -121,7 +124,7 @@ const DeckOverviewNew = () => {
   const gridScrollContainerRef = React.useRef<HTMLDivElement>(null);
 
   // Hooks
-  const { currentVariation, variations, setCurrentVariation, deleteVariation, createVariation, updateVariation, refetch } = useDeckVariations();
+  const { currentVariation, variations, setCurrentVariation, deleteVariation, createVariation, updateVariation, updateSharePassword, refetch } = useDeckVariations();
   
   // Section management hook - sections are now global, shared across all variants
   const { 
@@ -711,6 +714,7 @@ Then rebuild: npm run dev
                   id: v.id,
                   name: v.name,
                   isDefault: v.is_default,
+                  share_password: v.share_password,
                   countBySection: {
                     main: allSlides.filter(s => s.section === 'main' && s.status === 'visible').length,
                     demo: allSlides.filter(s => s.section === 'demo' && s.status === 'visible').length,
@@ -765,6 +769,14 @@ Then rebuild: npm run dev
                 }}
                 onReorder={async (fromIndex, toIndex) => {
                   refetch();
+                }}
+                onShare={(id) => {
+                  const variant = variations.find(v => v.id === id);
+                  if (variant) {
+                    setVariantToShare(id);
+                    setSharePassword(variant.share_password || '');
+                    setShareDialogOpen(true);
+                  }
                 }}
               />
             
@@ -1251,6 +1263,85 @@ Then rebuild: npm run dev
               disabled={!newSlideName.trim()}
             >
               Get Command
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Share Variant Dialog */}
+      <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Share Variant</DialogTitle>
+            <DialogDescription>
+              Set a password to protect this shared variant. Anyone with the link and password will be able to view the presentation.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="share-password">Password (optional)</Label>
+              <Input
+                id="share-password"
+                type="text"
+                placeholder="Enter password for shared link"
+                value={sharePassword}
+                onChange={(e) => setSharePassword(e.target.value)}
+              />
+              <p className="text-sm text-muted-foreground">
+                Leave empty to allow anyone with the link to view without a password.
+              </p>
+            </div>
+
+            {variantToShare && (
+              <div className="space-y-2">
+                <Label>Share Link</Label>
+                <div className="flex gap-2">
+                  <Input
+                    readOnly
+                    value={`${window.location.origin}/share/${variantToShare}`}
+                    className="flex-1 bg-gray-50"
+                  />
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      navigator.clipboard.writeText(`${window.location.origin}/share/${variantToShare}`);
+                      toast({
+                        title: 'Link copied!',
+                        description: 'Share link has been copied to clipboard',
+                      });
+                    }}
+                    className="shrink-0"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShareDialogOpen(false);
+                setVariantToShare(null);
+                setSharePassword('');
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={async () => {
+                if (variantToShare) {
+                  await updateSharePassword(variantToShare, sharePassword || null);
+                  setShareDialogOpen(false);
+                  setVariantToShare(null);
+                  setSharePassword('');
+                }
+              }}
+            >
+              Save & Close
             </Button>
           </DialogFooter>
         </DialogContent>

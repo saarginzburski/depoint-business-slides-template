@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Plus, Search, MoreVertical, GripVertical, Star, Copy, Edit2, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Plus, Search, MoreVertical, GripVertical, Star, Copy, Edit2, Trash2, ChevronDown, ChevronUp, Share2, Lock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,6 +15,7 @@ interface VariantsNavProps {
   onSetDefault: (id: string) => void;
   onDelete: (id: string) => void;
   onReorder: (srcId: string, dstId: string) => void;
+  onShare?: (id: string) => void;
 }
 
 interface ContextMenuState {
@@ -33,6 +34,7 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
   onSetDefault,
   onDelete,
   onReorder,
+  onShare,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
@@ -260,6 +262,14 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
                   setContextMenu(null);
                 },
               },
+              ...(onShare ? [{
+                icon: Share2,
+                label: 'Share',
+                onClick: () => {
+                  onShare(contextMenu.variantId);
+                  setContextMenu(null);
+                },
+              }] : []),
               {
                 icon: Star,
                 label: 'Set as default',

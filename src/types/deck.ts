@@ -23,6 +23,7 @@ export interface Variant {
   countBySection: Record<SectionKey, number>;
   updatedAt: string;
   order?: number;
+  share_password?: string;
 }
 
 export interface Section {
