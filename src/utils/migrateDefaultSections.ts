@@ -1,9 +1,10 @@
 import { db } from '@/integrations/firebase/client';
-import { collection, getDocs, addDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, setDoc, doc, getDoc, deleteDoc } from 'firebase/firestore';
 
 /**
  * Migrate hardcoded default sections (main, demo, appendix) to Firebase custom_sections
  * This allows all sections to be treated uniformly as custom sections
+ * Uses predictable document IDs so slides can reference them by key
  */
 export const migrateDefaultSectionsToFirebase = async () => {
   const sectionsToMigrate = [
@@ -36,18 +37,29 @@ export const migrateDefaultSectionsToFirebase = async () => {
   try {
     console.log('Starting default sections migration...');
     
+    // First, clean up any existing sections with these names but wrong IDs
+    const allSections = await getDocs(collection(db, 'custom_sections'));
+    const sectionNames = ['Main Deck', 'Demo', 'Appendices'];
+    
+    for (const docSnap of allSections.docs) {
+      const data = docSnap.data();
+      // If it has one of the default section names but wrong ID, delete it
+      if (sectionNames.includes(data.name) && !['main', 'demo', 'appendix'].includes(docSnap.id)) {
+        console.log(`🗑️ Removing duplicate section: ${data.name} (ID: ${docSnap.id})`);
+        await deleteDoc(docSnap.ref);
+      }
+    }
+    
+    // Now create the sections with correct IDs
     for (const section of sectionsToMigrate) {
-      // Check if section already exists by name
-      const existingQuery = query(
-        collection(db, 'custom_sections'),
-        where('name', '==', section.name)
-      );
-      const existingSnapshot = await getDocs(existingQuery);
+      // Use the key as the document ID for predictable references
+      const docRef = doc(db, 'custom_sections', section.key);
+      const docSnap = await getDoc(docRef);
 
-      if (existingSnapshot.empty) {
-        // Create the section
+      if (!docSnap.exists()) {
+        // Create the section with the key as document ID
         const now = new Date().toISOString();
-        await addDoc(collection(db, 'custom_sections'), {
+        await setDoc(docRef, {
           name: section.name,
           description: section.description,
           color: section.color,
@@ -57,9 +69,9 @@ export const migrateDefaultSectionsToFirebase = async () => {
           created_at: now,
           updated_at: now,
         });
-        console.log(`✓ Created section: ${section.name}`);
+        console.log(`✓ Created section: ${section.name} (ID: ${section.key})`);
       } else {
-        console.log(`✓ Section already exists: ${section.name}`);
+        console.log(`✓ Section already exists: ${section.name} (ID: ${section.key})`);
       }
     }
 
@@ -73,15 +85,13 @@ export const migrateDefaultSectionsToFirebase = async () => {
 
 export const checkDefaultSectionsMigrationNeeded = async (): Promise<boolean> => {
   try {
-    const sectionsSnapshot = await getDocs(collection(db, 'custom_sections'));
-    const sectionNames = sectionsSnapshot.docs.map(doc => doc.data().name);
+    // Check if the specific document IDs exist
+    const mainDoc = await getDoc(doc(db, 'custom_sections', 'main'));
+    const demoDoc = await getDoc(doc(db, 'custom_sections', 'demo'));
+    const appendixDoc = await getDoc(doc(db, 'custom_sections', 'appendix'));
     
-    // Check if we have Main Deck, Demo, and Appendices
-    const hasMain = sectionNames.includes('Main Deck');
-    const hasDemo = sectionNames.includes('Demo');
-    const hasAppendix = sectionNames.includes('Appendices');
-    
-    return !hasMain || !hasDemo || !hasAppendix;
+    // Migration needed if any of the documents don't exist
+    return !mainDoc.exists() || !demoDoc.exists() || !appendixDoc.exists();
   } catch (error) {
     console.error('Error checking migration status:', error);
     return true; // If error, assume migration needed
