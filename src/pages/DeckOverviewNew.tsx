@@ -398,7 +398,7 @@ const DeckOverviewNew = () => {
     }
   };
   
-  // Duplicate slide handler
+  // Duplicate slide handler - manual process for now
   const handleDuplicateSlide = async () => {
     if (!slideToDuplicate || !currentVariantId) {
       toast({
@@ -409,79 +409,64 @@ const DeckOverviewNew = () => {
       return;
     }
 
-    try {
-      // Generate component name from user input
-      const componentName = 'Slide' + newSlideName
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join('');
-
-      // Find the original slide's order info
-      const originalSlideOrders = getOrderedSlidesBySection();
-      let originalSection = 'main';
-      let originalOrder = 0;
-
-      // Find which section the original slide is in
-      for (const [sectionKey, slides] of Object.entries(originalSlideOrders)) {
-        const slideIndex = slides.findIndex(s => s.id === slideToDuplicate);
-        if (slideIndex !== -1) {
-          originalSection = sectionKey;
-          originalOrder = slideIndex;
-          break;
-        }
-      }
-
-      // Create new slide order entry in Firebase
-      const { db } = await import('@/integrations/firebase/client');
-      const { collection, addDoc, query, where, getDocs, updateDoc, doc } = await import('firebase/firestore');
-
-      // Get all slides in the same section to update their order
-      const ordersQuery = query(
-        collection(db, 'deck_variation_slide_orders'),
-        where('deck_variation_id', '==', currentVariantId),
-        where('section_id', '==', originalSection)
-      );
-      const ordersSnapshot = await getDocs(ordersQuery);
-      
-      // Update order indices of slides after the original
-      const updatePromises = ordersSnapshot.docs
-        .filter(doc => doc.data().order_index > originalOrder)
-        .map(doc => 
-          updateDoc(doc.ref, { 
-            order_index: doc.data().order_index + 1,
-            updated_at: new Date().toISOString()
-          })
-        );
-      
-      await Promise.all(updatePromises);
-
-      // Add the duplicated slide
-      await addDoc(collection(db, 'deck_variation_slide_orders'), {
-        deck_variation_id: currentVariantId,
-        slide_id: componentName,
-        section_id: originalSection,
-        order_index: originalOrder + 1,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      });
-
-      toast({
-        title: 'Slide duplicated',
-        description: `Created "${newSlideName}" with component name "${componentName}"`,
-      });
-
-      setDuplicateDialogOpen(false);
-      setSlideToDuplicate(null);
-      setNewSlideName('');
-      refetchSlides();
-    } catch (error) {
-      console.error('Error duplicating slide:', error);
+    if (!newSlideName.trim()) {
       toast({
         title: 'Error',
-        description: 'Failed to duplicate slide',
+        description: 'Please enter a name for the new slide',
         variant: 'destructive',
       });
+      return;
     }
+
+    // Generate component name from user input
+    const componentName = 'Slide' + newSlideName
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')
+      .replace(/[^a-zA-Z0-9]/g, ''); // Remove special characters
+
+    const command = `node scripts/duplicate-slide.js ${slideToDuplicate} "${newSlideName}"`;
+    
+    // Copy to clipboard
+    try {
+      await navigator.clipboard.writeText(command);
+      
+      toast({
+        title: 'Instructions copied!',
+        description: `Run the command from your clipboard in terminal`,
+      });
+      
+      console.log(`
+================================================================================
+TO DUPLICATE THIS SLIDE, RUN THIS COMMAND IN YOUR TERMINAL:
+================================================================================
+
+${command}
+
+This will:
+1. Create src/pages/slides/${componentName}.tsx (copy of ${slideToDuplicate}.tsx)
+2. Update slideConfig.ts with the new slide entry
+3. Show instructions for manually adding lazy imports
+
+After running, add these imports:
+
+In src/pages/DeckOverviewNew.tsx:
+  ${componentName}: lazy(() => import('./slides/${componentName}').catch(() => ({ default: () => <div className="w-full h-full bg-slate-900 flex items-center justify-center"><div className="text-white/20 text-6xl font-bold">X</div></div> }))),
+
+In src/pages/PrintableDeck.tsx:
+  const ${componentName} = lazy(() => import('./slides/${componentName}'));
+
+Then rebuild: npm run dev
+
+================================================================================
+      `);
+    } catch (err) {
+      console.log('Clipboard API not available, check console for command');
+    }
+
+    setDuplicateDialogOpen(false);
+    setSlideToDuplicate(null);
+    setNewSlideName('');
   };
 
   const handleViewerPrev = () => {
@@ -1228,28 +1213,28 @@ const DeckOverviewNew = () => {
           <DialogHeader>
             <DialogTitle>Duplicate Slide</DialogTitle>
             <DialogDescription>
-              Enter a name for the duplicated slide. A component name will be automatically generated.
+              This will create a duplicate reference to "{slideToDuplicate ? getSlideInfo(slideToDuplicate)?.title : ''}" in your deck. The same slide will appear twice.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="slide-name">Slide Name</Label>
+              <Label htmlFor="slide-name">Label for this duplicate (optional)</Label>
               <Input
                 id="slide-name"
-                placeholder="e.g., My Custom Slide"
+                placeholder="e.g., Duplicate for Q2 section"
                 value={newSlideName}
                 onChange={(e) => setNewSlideName(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && newSlideName.trim()) {
+                  if (e.key === 'Enter') {
                     handleDuplicateSlide();
                   }
                 }}
                 autoFocus
               />
               <p className="text-sm text-muted-foreground">
-                Component name: <code className="text-xs bg-muted px-1 py-0.5 rounded">
-                  {'Slide' + newSlideName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')}
+                Original component: <code className="text-xs bg-muted px-1 py-0.5 rounded">
+                  {slideToDuplicate}
                 </code>
               </p>
             </div>
@@ -1268,7 +1253,6 @@ const DeckOverviewNew = () => {
             </Button>
             <Button
               onClick={handleDuplicateSlide}
-              disabled={!newSlideName.trim()}
             >
               Duplicate Slide
             </Button>
