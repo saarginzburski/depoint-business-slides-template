@@ -11,6 +11,7 @@ const slideComponents = {
   SlideFranchisorFranchisee: lazy(() => import('./slides/SlideFranchisorFranchisee')),
   SlideOurJourneyInvestor: lazy(() => import('./slides/SlideOurJourneyInvestor')),
   SlideProblem: lazy(() => import('./slides/SlideProblem')),
+  SlideProblemStats: lazy(() => import('./slides/SlideProblemStats')),
   SlideSolution: lazy(() => import('./slides/SlideSolution')),
   SlidePlatformEcosystem: lazy(() => import('./slides/SlidePlatformEcosystem')),
   SlideInsightsEngine: lazy(() => import('./slides/SlideInsightsEngine')),
