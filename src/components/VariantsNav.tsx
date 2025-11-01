@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Plus, Search, MoreVertical, GripVertical, Star, Copy, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Search, MoreVertical, GripVertical, Star, Copy, Edit2, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -38,6 +38,10 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState('');
+  const [isExpanded, setIsExpanded] = useState(() => {
+    const saved = localStorage.getItem('variantsExpanded');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
 
   // Filter variants by search
   const filteredVariants = variants.filter((v) =>
@@ -73,12 +77,28 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
     }
   };
 
+  const toggleExpanded = () => {
+    const newState = !isExpanded;
+    setIsExpanded(newState);
+    localStorage.setItem('variantsExpanded', JSON.stringify(newState));
+  };
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col">
       {/* Header */}
       <div className="px-4 py-3 border-b border-neutral-200">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-title-small font-medium text-neutral-900">Variants</h3>
+        <div className="flex items-center justify-between">
+          <button
+            onClick={toggleExpanded}
+            className="flex items-center gap-2 flex-1 text-left hover:opacity-70 transition-opacity"
+          >
+            <h3 className="text-title-small font-medium text-neutral-900">Variants</h3>
+            {isExpanded ? (
+              <ChevronUp className="h-4 w-4 text-neutral-500" />
+            ) : (
+              <ChevronDown className="h-4 w-4 text-neutral-500" />
+            )}
+          </button>
           <Button
             size="sm"
             variant="ghost"
@@ -91,20 +111,23 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
           </Button>
         </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-500" />
-          <Input
-            type="text"
-            placeholder="Search variants..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-8 pl-8 text-body-small border-neutral-300 focus:border-primary"
-          />
-        </div>
+        {/* Search - only show when expanded */}
+        {isExpanded && (
+          <div className="relative mt-3">
+            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-500" />
+            <Input
+              type="text"
+              placeholder="Search variants..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-8 pl-8 text-body-small border-neutral-300 focus:border-primary"
+            />
+          </div>
+        )}
       </div>
 
-      {/* Variants List */}
+      {/* Variants List - only show when expanded */}
+      {isExpanded && (
       <div className="flex-1 overflow-y-auto py-2">
         {filteredVariants.length === 0 ? (
           <div className="px-4 py-8 text-center">
@@ -207,6 +230,7 @@ export const VariantsNav: React.FC<VariantsNavProps> = ({
           })
         )}
       </div>
+      )}
 
       {/* Context Menu */}
       {contextMenu && (

@@ -705,14 +705,8 @@ Then rebuild: npm run dev
         <div className="flex-1 flex overflow-hidden">
           {/* Left Sidebar - Variants & Sections - Hidden in presentation mode */}
           {!isPresentationMode && (
-          <div className="w-64 bg-white border-r border-neutral-200 flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-neutral-200">
-              <h2 className="text-sm font-medium text-neutral-700 uppercase tracking-wide">
-                Variants
-              </h2>
-            </div>
-            <div className="flex-1 overflow-y-auto">
-              <VariantsNav
+          <div className="w-64 bg-white border-r border-neutral-200 flex flex-col overflow-y-auto">
+            <VariantsNav
                 variants={variations.map(v => ({
                   id: v.id,
                   name: v.name,
@@ -773,10 +767,8 @@ Then rebuild: npm run dev
                   refetch();
                 }}
               />
-            </div>
             
-            <div className="border-t border-neutral-200">
-              <SectionsNav
+            <SectionsNav
                 sections={allSectionsData.map(s => ({
                   key: s.key,
                   label: s.name,
@@ -851,7 +843,6 @@ Then rebuild: npm run dev
                 }}
                 onReorderSections={reorderSections}
               />
-            </div>
           </div>
           )}
           

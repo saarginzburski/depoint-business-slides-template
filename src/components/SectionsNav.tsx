@@ -80,6 +80,10 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
   const [dragOver, setDragOver] = useState<string | null>(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; sectionId: string } | null>(null);
+  const [isExpanded, setIsExpanded] = useState(() => {
+    const saved = localStorage.getItem('sectionsExpanded');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
 
   // Slide drop handlers
   const handleSlideDragOver = (e: React.DragEvent, sectionKey: string) => {
@@ -184,12 +188,28 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
   // Sections that can be toggled (exclude hidden and archived)
   const toggleableSections = ['main', 'demo', 'appendix'];
 
+  const toggleExpanded = () => {
+    const newState = !isExpanded;
+    setIsExpanded(newState);
+    localStorage.setItem('sectionsExpanded', JSON.stringify(newState));
+  };
+
   return (
     <>
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col">
         {/* Header with Add Button */}
         <div className="px-4 py-3 border-b border-neutral-200 flex items-center justify-between">
-          <h3 className="text-title-small font-medium text-neutral-900">Sections</h3>
+          <button
+            onClick={toggleExpanded}
+            className="flex items-center gap-2 flex-1 text-left hover:opacity-70 transition-opacity"
+          >
+            <h3 className="text-title-small font-medium text-neutral-900">Sections</h3>
+            {isExpanded ? (
+              <ChevronUp className="h-4 w-4 text-neutral-500" />
+            ) : (
+              <ChevronDown className="h-4 w-4 text-neutral-500" />
+            )}
+          </button>
           {onAddSection && (
             <Button
               size="sm"
@@ -204,7 +224,8 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
           )}
         </div>
 
-        {/* Sections List */}
+        {/* Sections List - only show when expanded */}
+        {isExpanded && (
         <div className="flex-1 overflow-y-auto py-2">
           {sections.map((section, index) => {
             const sectionId = section.id || section.key;
@@ -361,14 +382,6 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
             );
           })}
         </div>
-
-        {/* Help Text for Drag & Drop */}
-        {sections.some((s) => s.count > 0) && (
-          <div className="px-4 py-3 border-t border-neutral-200">
-            <p className="text-label-small text-neutral-500 leading-relaxed">
-              💡 Drag slides to sections to move them. Use ↑↓ arrows to reorder sections.
-            </p>
-          </div>
         )}
       </div>
 
