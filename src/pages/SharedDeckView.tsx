@@ -1,13 +1,15 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '@/integrations/firebase/client';
-import { doc, getDoc, collection, query, where, getDocs, orderBy as firestoreOrderBy } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { toast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useSlideOrdering } from '@/hooks/useSlideOrdering';
+import { useSections } from '@/hooks/useSections';
 import { slideConfig } from '@/pages/slides/slideConfig';
 
 // Lazy load all slide components
@@ -64,8 +66,41 @@ const SharedDeckView = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [variantData, setVariantData] = useState<any>(null);
-  const [slides, setSlides] = useState<string[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  
+  // Use the same hooks as the main editor
+  const { getAllSections } = useSections();
+  const allSectionsData = getAllSections();
+  
+  // Convert to format expected by useSlideOrdering (same as DeckOverviewNew)
+  const getSlideIdsByDisplayOrder = (start: number, end: number) => 
+    slideConfig.filter(s => s.displayOrder >= start && s.displayOrder <= end).map(s => s.id);
+  
+  const sections = allSectionsData.map(s => ({
+    id: s.id,
+    name: s.name,
+    description: s.description,
+    color: s.color,
+    slides: s.key === 'main' ? getSlideIdsByDisplayOrder(1, 24) :
+            s.key === 'appendix' ? getSlideIdsByDisplayOrder(25, 25) :
+            s.key === 'demo' ? getSlideIdsByDisplayOrder(26, 35) :
+            [],
+  }));
+  
+  const { getVisibleSlides } = useSlideOrdering(variantId || null, sections);
+  
+  // Get visible slides excluding hidden sections
+  const visibleSlides = React.useMemo(() => {
+    const hiddenSectionKeys = new Set(variantData?.hidden_sections || []);
+    const visibleSectionIds = new Set(
+      allSectionsData
+        .filter(s => !hiddenSectionKeys.has(s.key))
+        .map(s => s.id)
+    );
+    
+    const slides = getVisibleSlides(visibleSectionIds);
+    return slides.map(s => s.id);
+  }, [variantData, allSectionsData, getVisibleSlides]);
 
   useEffect(() => {
     // Check if already authenticated for this variant
@@ -100,84 +135,7 @@ const SharedDeckView = () => {
       const data = variantDoc.data();
       setVariantData(data);
       
-      // Get hidden sections from variant (these are section KEYS like 'main', 'demo', etc)
-      const hiddenSectionKeys = new Set(data.hidden_sections || []);
-      console.log('Hidden section keys:', Array.from(hiddenSectionKeys));
-      
-      // Fetch ALL sections to get order and mapping
-      const allSectionsSnapshot = await getDocs(
-        query(collection(db, 'custom_sections'), firestoreOrderBy('order_index', 'asc'))
-      );
-      
-      const sectionIdToKey = new Map<string, string>();
-      const orderedSections: Array<{ id: string; key: string }> = [];
-      
-      allSectionsSnapshot.docs.forEach(doc => {
-        const sectionData = doc.data();
-        if (sectionData.key) {
-          sectionIdToKey.set(doc.id, sectionData.key);
-          orderedSections.push({ id: doc.id, key: sectionData.key });
-        }
-      });
-      
-      console.log('Ordered sections:', orderedSections.map(s => s.key));
-      
-      // Fetch slide orders for this variant
-      const slidesQuery = query(
-        collection(db, 'deck_variation_slide_orders'),
-        where('deck_variation_id', '==', variantId),
-        firestoreOrderBy('order_index', 'asc')
-      );
-      
-      const slidesSnapshot = await getDocs(slidesQuery);
-      const slideOrders = slidesSnapshot.docs.map(doc => ({
-        slide_id: doc.data().slide_id,
-        section_id: doc.data().section_id,
-        order_index: doc.data().order_index
-      }));
-      
-      console.log('Total slide orders:', slideOrders.length);
-      
-      // Group slide orders by section
-      const slidesBySection = new Map<string, typeof slideOrders>();
-      slideOrders.forEach(order => {
-        if (!slidesBySection.has(order.section_id)) {
-          slidesBySection.set(order.section_id, []);
-        }
-        slidesBySection.get(order.section_id)!.push(order);
-      });
-      
-      // Build ordered list of slides: sections in order, then slides within each section
-      let orderedSlides: string[] = [];
-      
-      if (slideOrders.length === 0) {
-        // No custom ordering - use all slides in default order
-        console.log('No custom ordering, using all slides');
-        orderedSlides = slideConfig
-          .sort((a, b) => a.displayOrder - b.displayOrder)
-          .map(slide => slide.id);
-      } else {
-        // Iterate sections in order
-        orderedSections.forEach(section => {
-          // Skip hidden sections
-          if (hiddenSectionKeys.has(section.key)) {
-            console.log('Skipping hidden section:', section.key);
-            return;
-          }
-          
-          const sectionSlideOrders = slidesBySection.get(section.id) || [];
-          
-          // Sort slides within this section by order_index and add to result
-          sectionSlideOrders
-            .sort((a, b) => a.order_index - b.order_index)
-            .forEach(order => {
-              orderedSlides.push(order.slide_id);
-            });
-        });
-      }
-      
-      console.log('Final slides for shared view:', orderedSlides.length);
-      setSlides(orderedSlides);
+      console.log('Loaded variant data, hidden sections:', data.hidden_sections);
     } catch (error) {
       console.error('Error loading variant:', error);
       toast({
@@ -233,7 +191,7 @@ const SharedDeckView = () => {
   };
 
   const handleNext = () => {
-    if (currentSlideIndex < slides.length - 1) {
+    if (currentSlideIndex < visibleSlides.length - 1) {
       setCurrentSlideIndex(currentSlideIndex + 1);
     }
   };
@@ -259,7 +217,7 @@ const SharedDeckView = () => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isAuthenticated, currentSlideIndex, slides.length]);
+  }, [isAuthenticated, currentSlideIndex, visibleSlides.length]);
 
   if (loading) {
     return (
@@ -312,7 +270,7 @@ const SharedDeckView = () => {
     );
   }
 
-  const currentSlideId = slides[currentSlideIndex];
+  const currentSlideId = visibleSlides[currentSlideIndex];
   const SlideComponent = currentSlideId ? slideComponents[currentSlideId] : null;
 
   return (
@@ -326,6 +284,7 @@ const SharedDeckView = () => {
         ) : (
           <div className="text-white text-center">
             <p>Slide not found</p>
+            <p className="text-sm text-gray-400 mt-2">Total slides: {visibleSlides.length}</p>
           </div>
         )}
       </div>
@@ -343,12 +302,12 @@ const SharedDeckView = () => {
         </Button>
         
         <div className="text-gray-300 text-sm">
-          Slide {currentSlideIndex + 1} of {slides.length}
+          Slide {currentSlideIndex + 1} of {visibleSlides.length}
         </div>
         
         <Button
           onClick={handleNext}
-          disabled={currentSlideIndex === slides.length - 1}
+          disabled={currentSlideIndex === visibleSlides.length - 1}
           variant="ghost"
           className="text-gray-300 hover:text-white hover:bg-gray-700"
         >
