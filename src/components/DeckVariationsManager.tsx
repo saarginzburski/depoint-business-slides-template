@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Copy, Eye, Printer, ChevronDown, ChevronUp } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Copy, Eye, Printer, ChevronDown, ChevronUp, Share2, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,7 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { useDeckVariations, DeckVariationWithSections } from '@/hooks/useDeckVariations';
+import { toast } from '@/hooks/use-toast';
 
 interface Section {
   id: string;
@@ -35,6 +37,7 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
     loading,
     createVariation,
     updateVariation,
+    updateSharePassword,
     deleteVariation
   } = useDeckVariations();
 
@@ -46,6 +49,11 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
     const saved = localStorage.getItem('showVariationsList');
     return saved !== null ? JSON.parse(saved) : true;
   });
+  
+  // Share dialog state
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [selectedShareVariation, setSelectedShareVariation] = useState<DeckVariationWithSections | null>(null);
+  const [sharePassword, setSharePassword] = useState('');
 
   const handleSelectVariation = (variationId: string) => {
     const variation = variations.find(v => v.id === variationId);
@@ -94,6 +102,34 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
     const newState = !showVariationsList;
     setShowVariationsList(newState);
     localStorage.setItem('showVariationsList', JSON.stringify(newState));
+  };
+
+  const handleOpenShareDialog = (e: React.MouseEvent, variation: DeckVariationWithSections) => {
+    e.stopPropagation();
+    setSelectedShareVariation(variation);
+    setSharePassword(variation.share_password || '');
+    setShareDialogOpen(true);
+  };
+
+  const handleSaveSharePassword = async () => {
+    if (!selectedShareVariation) return;
+    
+    await updateSharePassword(selectedShareVariation.id, sharePassword || null);
+    setShareDialogOpen(false);
+    setSelectedShareVariation(null);
+    setSharePassword('');
+  };
+
+  const handleCopyShareLink = () => {
+    if (!selectedShareVariation) return;
+    
+    const shareUrl = `${window.location.origin}/share/${selectedShareVariation.id}`;
+    navigator.clipboard.writeText(shareUrl);
+    
+    toast({
+      title: 'Link copied!',
+      description: 'Share link has been copied to clipboard',
+    });
   };
 
   if (loading) {
@@ -362,6 +398,15 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
                   <Button
                     size="sm"
                     variant="ghost"
+                    onClick={(e) => handleOpenShareDialog(e, variation)}
+                    className="h-8 w-8 p-0 rounded-full hover:bg-primary/10 text-neutral-600 hover:text-primary transition-standard"
+                    title="Share deck"
+                  >
+                    {variation.share_password ? <Lock className="h-4 w-4" /> : <Share2 className="h-4 w-4" />}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDuplicateVariation(variation);
@@ -477,6 +522,70 @@ export const DeckVariationsManager: React.FC<DeckVariationsManagerProps> = ({
           </div>
         )}
       </CardContent>
+      
+      {/* Share Dialog */}
+      <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Share Deck</DialogTitle>
+            <DialogDescription>
+              Set a password to protect this shared deck. Anyone with the link and password will be able to view the presentation.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="share-password">Password (optional)</Label>
+              <Input
+                id="share-password"
+                type="text"
+                placeholder="Enter password for shared link"
+                value={sharePassword}
+                onChange={(e) => setSharePassword(e.target.value)}
+              />
+              <p className="text-sm text-muted-foreground">
+                Leave empty to allow anyone with the link to view without a password.
+              </p>
+            </div>
+
+            {selectedShareVariation && (
+              <div className="space-y-2">
+                <Label>Share Link</Label>
+                <div className="flex gap-2">
+                  <Input
+                    readOnly
+                    value={`${window.location.origin}/share/${selectedShareVariation.id}`}
+                    className="flex-1 bg-gray-50"
+                  />
+                  <Button
+                    variant="outline"
+                    onClick={handleCopyShareLink}
+                    className="shrink-0"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShareDialogOpen(false);
+                setSelectedShareVariation(null);
+                setSharePassword('');
+              }}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleSaveSharePassword}>
+              Save & Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };

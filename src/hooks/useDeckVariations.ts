@@ -50,6 +50,7 @@ export const useDeckVariations = () => {
           id: variationDoc.id,
           name: variationData.name,
           is_default: variationData.is_default || false,
+          share_password: variationData.share_password,
           created_at: variationData.created_at,
           updated_at: variationData.updated_at,
           sections: sectionsSnapshot.docs.map(doc => doc.data().section_id)
@@ -223,6 +224,38 @@ export const useDeckVariations = () => {
     }
   };
 
+  const updateSharePassword = async (id: string, password: string | null) => {
+    try {
+      const variationRef = doc(db, 'deck_variations', id);
+      await updateDoc(variationRef, {
+        share_password: password || null,
+        updated_at: new Date().toISOString()
+      });
+
+      // Update local state
+      setVariations(prev => prev.map(v =>
+        v.id === id ? { ...v, share_password: password || undefined } : v
+      ));
+
+      if (currentVariation?.id === id) {
+        setCurrentVariation(prev => prev ? { ...prev, share_password: password || undefined } : null);
+      }
+
+      toast({
+        title: "Success",
+        description: password ? "Share password set successfully" : "Share password removed",
+      });
+    } catch (error) {
+      console.error('Error updating share password:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update share password",
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
+
   const deleteVariation = async (id: string) => {
     try {
       // Delete the variation document (cascade deletes handled by app)
@@ -290,6 +323,7 @@ export const useDeckVariations = () => {
     createVariation,
     updateVariation,
     updateVariationSections,
+    updateSharePassword,
     deleteVariation,
     refetch: fetchVariations
   };

@@ -4,6 +4,7 @@ export interface DeckVariation {
   id: string;
   name: string;
   is_default: boolean;
+  share_password?: string; // Optional password for public sharing
   created_at: string;
   updated_at: string;
 }

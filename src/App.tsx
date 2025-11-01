@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import DeckOverviewNew from "./pages/DeckOverviewNew";
 import SlideViewer from "./pages/SlideViewer";
 import PrintableDeck from "./pages/PrintableDeck";
+import SharedDeckView from "./pages/SharedDeckView";
 
 
 const queryClient = new QueryClient();
@@ -32,8 +33,9 @@ const App = () => {
         <BrowserRouter>
           <AuthProvider>
             <Routes>
-              {/* Public route - Login */}
+              {/* Public routes */}
               <Route path="/login" element={<Login />} />
+              <Route path="/share/:variantId" element={<SharedDeckView />} />
               
               {/* Protected routes - require @depoint.ai authentication */}
               <Route 
