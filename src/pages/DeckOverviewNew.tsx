@@ -174,6 +174,13 @@ const DeckOverviewNew = () => {
     }
   }, [currentVariantId]); // Run when variant changes
   
+  // Update deck name when variant changes
+  useEffect(() => {
+    if (currentVariation?.name) {
+      setDeckName(currentVariation.name);
+    }
+  }, [currentVariation]);
+  
   const allSectionsData = getAllSections();
   
   // Convert to format expected by useSlideOrdering
