@@ -21,8 +21,8 @@ const SlideDashboardIntro = () => {
       iconBg: "bg-green-100",
       iconColor: "text-green-600",
       dashboards: [
-        { name: "Oil Monitoring", slideId: 23, icon: "🛢️" },
-        { name: "Issues Dashboard", slideId: 24, icon: "🔧" }
+        { name: "Oil Monitoring", componentId: "SlideOilMonitoringDashboard", icon: "🛢️" },
+        { name: "Issues Dashboard", componentId: "SlideIssuesDashboard", icon: "🔧" }
       ]
     },
     {
@@ -37,9 +37,9 @@ const SlideDashboardIntro = () => {
       iconBg: "bg-orange-100",
       iconColor: "text-orange-600",
       dashboards: [
-        { name: "Equipment Monitoring", slideId: 25, icon: "⚙️" },
-        { name: "Audit Report", slideId: 26, icon: "📋" },
-        { name: "Task Compliance", slideId: 27, icon: "✅" }
+        { name: "Equipment Monitoring", componentId: "SlideEquipmentMonitoringDashboard", icon: "⚙️" },
+        { name: "Audit Report", componentId: "SlideAuditReportDashboard", icon: "📋" },
+        { name: "Task Compliance", componentId: "SlideTaskComplianceDashboard", icon: "✅" }
       ]
     },
     {
@@ -54,7 +54,7 @@ const SlideDashboardIntro = () => {
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600",
       dashboards: [
-        { name: "Product Gold Standard", slideId: 28, icon: "🏆" }
+        { name: "Product Gold Standard", componentId: "SlideProductGoldStandardDashboard", icon: "🏆" }
       ]
     },
     {
@@ -69,15 +69,15 @@ const SlideDashboardIntro = () => {
       iconBg: "bg-purple-100",
       iconColor: "text-purple-600",
       dashboards: [
-        { name: "Speed of Service", slideId: 29, icon: "⚡" },
-        { name: "Users Engagement", slideId: 30, icon: "👥" },
-        { name: "Sales Management", slideId: 31, icon: "💼" }
+        { name: "Speed of Service", componentId: "SlideSpeedOfServiceDashboard", icon: "⚡" },
+        { name: "Users Engagement", componentId: "SlideUsersEngagementDashboard", icon: "👥" },
+        { name: "Sales Management", componentId: "SlideSalesManagementDashboard", icon: "💼" }
       ]
     }
   ];
 
-  const handleDashboardClick = (slideId: number) => {
-    navigate(`/investor-deck/slide/${slideId}`);
+  const handleDashboardClick = (componentId: string) => {
+    navigate(`/investor-deck/slide/${componentId}`);
   };
 
   return (
@@ -133,7 +133,7 @@ const SlideDashboardIntro = () => {
                   {category.dashboards.map((dashboard, dashIndex) => (
                     <button
                       key={dashIndex}
-                      onClick={() => handleDashboardClick(dashboard.slideId)}
+                      onClick={() => handleDashboardClick(dashboard.componentId)}
                       className={`w-full ${category.buttonColor} hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 rounded-lg px-4 py-3 text-white text-sm font-medium`}
                     >
                       <div className="flex items-center justify-between">
