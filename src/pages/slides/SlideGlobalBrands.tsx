@@ -2,24 +2,28 @@ import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
 import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
+import papaJohnsLogo from '@/assets/papajohns-logo.png';
+import jollibeeLogo from '@/assets/jollibee-logo.png';
+import nespressoLogo from '@/assets/nespresso-logo.png';
+import zaraLogo from '@/assets/zara-logo.png';
 
 const SlideGlobalBrands = () => {
   const brands = [
     {
       name: 'Papa Johns',
-      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNjAiPjx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjM2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0QzMTAyRCI+UEFQQSBKT0hOUzwvdGV4dD48L3N2Zz4=',
+      logo: papaJohnsLogo,
     },
     {
       name: 'Jollibee',
-      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTAgODAiPjx0ZXh0IHg9IjEwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0VEMUMyNCI+Sm9sbGliZWU8L3RleHQ+PC9zdmc+',
+      logo: jollibeeLogo,
     },
     {
       name: 'Nespresso',
-      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgNjAiPjx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzAwMDAwMCI+TkVTUFJFU1NPPC90ZXh0Pjwvc3ZnPg==',
+      logo: nespressoLogo,
     },
     {
       name: 'Zara',
-      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgNjAiPjx0ZXh0IHg9IjEwIiB5PSI0NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ1IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzAwMDAwMCI+WkFSQTwvdGV4dD48L3N2Zz4=',
+      logo: zaraLogo,
     },
   ];
 
