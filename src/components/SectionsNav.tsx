@@ -185,8 +185,9 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
     }
   };
 
-  // Sections that can be toggled (exclude hidden and archived)
-  const toggleableSections = ['main', 'demo', 'appendix'];
+  // All sections can be toggled except status sections (hidden and archived)
+  const nonToggleableSections = ['hidden', 'archived'];
+  const isSectionToggleable = (sectionKey: string) => !nonToggleableSections.includes(sectionKey);
 
   const toggleExpanded = () => {
     const newState = !isExpanded;
@@ -233,7 +234,7 @@ export const SectionsNav: React.FC<SectionsNavProps> = ({
             const Icon = getIconComponent(section.icon || section.key);
             const isStatus = section.key === 'hidden' || section.key === 'archived';
             const isDropTarget = dragOver === section.key; // For slide drops
-            const isToggleable = toggleableSections.includes(section.key);
+            const isToggleable = isSectionToggleable(section.key);
             const isSectionHidden = hiddenSections.has(section.key);
             const isLocked = section.locked === true; // Only true if explicitly true
             const isDefault = section.is_default !== false;
