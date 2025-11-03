@@ -1,16 +1,14 @@
 import React from 'react';
 import { Brain, DollarSign, AlertTriangle, Shield, TrendingUp, ChevronRight, BarChart3, Zap } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import SlideLayout from '@/components/SlideLayout';
 import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
-const SlideDashboardIntro = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  
-  // Check if we're in shared view mode (public preview)
-  const isSharedView = location.pathname.startsWith('/share/');
+interface SlideDashboardIntroProps {
+  onNavigateToSlide?: (componentId: string) => void;
+}
+
+const SlideDashboardIntro: React.FC<SlideDashboardIntroProps> = ({ onNavigateToSlide }) => {
 
   const dashboardCategories = [
     {
@@ -81,12 +79,11 @@ const SlideDashboardIntro = () => {
   ];
 
   const handleDashboardClick = (componentId: string) => {
-    // Disable navigation in shared view mode (public preview)
-    if (isSharedView) {
-      return;
+    // Use provided callback if available (for internal navigation)
+    if (onNavigateToSlide) {
+      onNavigateToSlide(componentId);
     }
-    // Navigate to the correct protected route
-    navigate(`/deck/slide/${componentId}`);
+    // Otherwise, do nothing (links are informational only without callback)
   };
 
   return (
@@ -143,11 +140,11 @@ const SlideDashboardIntro = () => {
                     <button
                       key={dashIndex}
                       onClick={() => handleDashboardClick(dashboard.componentId)}
-                      disabled={isSharedView}
+                      disabled={!onNavigateToSlide}
                       className={`w-full ${category.buttonColor} ${
-                        isSharedView 
-                          ? 'cursor-default opacity-90' 
-                          : 'hover:shadow-md transform hover:-translate-y-0.5 cursor-pointer'
+                        onNavigateToSlide
+                          ? 'hover:shadow-md transform hover:-translate-y-0.5 cursor-pointer'
+                          : 'cursor-default opacity-75'
                       } transition-all duration-200 rounded-lg px-4 py-3 text-white text-sm font-medium`}
                     >
                       <div className="flex items-center justify-between">

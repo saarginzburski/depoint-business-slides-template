@@ -277,13 +277,21 @@ const SharedDeckView = () => {
   const currentSlideId = visibleSlides[currentSlideIndex];
   const SlideComponent = currentSlideId ? slideComponents[currentSlideId] : null;
 
+  // Handle navigation to a specific slide by component ID
+  const handleNavigateToSlide = (componentId: string) => {
+    const index = visibleSlides.findIndex(s => s === componentId);
+    if (index !== -1) {
+      setCurrentSlideIndex(index);
+    }
+  };
+
   return (
     <div className="w-full h-screen bg-gray-900 flex flex-col">
       {/* Slide Display */}
       <div className="flex-1 flex items-center justify-center p-8">
         {SlideComponent ? (
           <Suspense fallback={<div className="text-white">Loading slide...</div>}>
-            <SlideComponent />
+            <SlideComponent onNavigateToSlide={handleNavigateToSlide} />
           </Suspense>
         ) : (
           <div className="text-white text-center">

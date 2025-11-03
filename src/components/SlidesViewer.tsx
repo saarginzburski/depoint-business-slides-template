@@ -420,7 +420,7 @@ export const SlidesViewer: React.FC<SlidesViewerProps> = ({
               }
             >
               {SlideComponent ? (
-                <SlideComponent />
+                <SlideComponent onNavigateToSlide={onJump} />
               ) : (
                 <div 
                   className="flex items-center justify-center"
