@@ -6,20 +6,20 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 const SlideGlobalBrands = () => {
   const brands = [
     {
-      name: 'McDonald\'s',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/3/36/McDonald%27s_Golden_Arches.svg',
+      name: 'Papa Johns',
+      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNjAiPjx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjM2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0QzMTAyRCI+UEFQQSBKT0hOUzwvdGV4dD48L3N2Zz4=',
     },
     {
-      name: 'Papa Johns',
-      logo: 'https://upload.wikimedia.org/wikipedia/en/4/4f/Papa_John%27s_Logo.svg',
+      name: 'Jollibee',
+      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTAgODAiPjx0ZXh0IHg9IjEwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0VEMUMyNCI+Sm9sbGliZWU8L3RleHQ+PC9zdmc+',
     },
     {
       name: 'Nespresso',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/1/1e/Nespresso_logo.svg',
+      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgNjAiPjx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzAwMDAwMCI+TkVTUFJFU1NPPC90ZXh0Pjwvc3ZnPg==',
     },
     {
       name: 'Zara',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fd/Zara_Logo.svg',
+      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgNjAiPjx0ZXh0IHg9IjEwIiB5PSI0NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ1IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzAwMDAwMCI+WkFSQTwvdGV4dD48L3N2Zz4=',
     },
   ];
 
@@ -38,14 +38,10 @@ const SlideGlobalBrands = () => {
         <div className="h-full flex flex-col items-center justify-center relative px-20 py-16">
           
           {/* Hero Message - Ultra Clean Typography */}
-          <div className="text-center mb-20 space-y-6">
-            <h2 className="text-[72px] font-extralight text-gray-900 leading-[1.1] tracking-tight">
-              Efficiency & Transparency
+          <div className="text-center mb-20">
+            <h2 className="text-[56px] font-light text-gray-900 leading-[1.25] tracking-tight max-w-4xl mx-auto">
+              We bring efficiency & transparency<br/>to process management in global chains
             </h2>
-            <div className="w-12 h-[2px] bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto"></div>
-            <p className="text-[28px] font-light text-gray-500 leading-relaxed tracking-wide">
-              to process management in global chains
-            </p>
           </div>
 
           {/* Brand Logos - Premium Grid with Floating Effect */}
