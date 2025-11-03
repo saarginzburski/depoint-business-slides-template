@@ -15,11 +15,14 @@ const slideComponents = {
   SlideOurJourney: lazy(() => import('./slides/SlideOurJourney')),
   SlideOurJourneyInvestor: lazy(() => import('./slides/SlideOurJourneyInvestor')),
   SlideProblem: lazy(() => import('./slides/SlideProblem')),
+  SlideProblemStats: lazy(() => import('./slides/SlideProblemStats')),
   SlideSolution: lazy(() => import('./slides/SlideSolution')),
   SlideDigitizingOpsManual: lazy(() => import('./slides/SlideDigitizingOpsManual')),
   SlideFranchisorFranchisee: lazy(() => import('./slides/SlideFranchisorFranchisee')),
+  SlideRealityNotChecklists: lazy(() => import('./slides/SlideRealityNotChecklists')),
   SlideJollibeeCase: lazy(() => import('./slides/SlideJollibeeCase')),
   SlideJollibeeOperationBook: lazy(() => import('./slides/SlideJollibeeOperationBook')),
+  SlideWhatsNext: lazy(() => import('./slides/SlideWhatsNext')),
   SlidePlatformEcosystem: lazy(() => import('./slides/SlidePlatformEcosystem')),
   SlideInsightsEngine: lazy(() => import('./slides/SlideInsightsEngine')),
   SlideCustomerStories: lazy(() => import('./slides/SlideCustomerStories')),
@@ -29,6 +32,7 @@ const slideComponents = {
   SlideGTMStrategy: lazy(() => import('./slides/SlideGTMStrategy')),
   SlideFinancial: lazy(() => import('./slides/SlideFinancial')),
   SlideStrategicFit: lazy(() => import('./slides/SlideStrategicFit')),
+  SlideArchitectureOverview: lazy(() => import('./slides/SlideArchitectureOverview')),
   SlideTeam: lazy(() => import('./slides/SlideTeam')),
   SlideClosing: lazy(() => import('./slides/SlideClosing')),
   SlideIntegrations: lazy(() => import('./slides/SlideIntegrations')),
@@ -55,8 +59,13 @@ const SlideViewer = () => {
   const [searchParams] = useSearchParams();
   const [availableSlides, setAvailableSlides] = useState<typeof slideConfig>([]);
   
-  const currentSlideId = parseInt(slideId || '1');
-  const slideInfo = getSlideInfo(currentSlideId);
+  // Handle both numeric IDs (legacy) and component names (new system)
+  const currentSlideId = slideId || 'SlideCover';
+  const slideInfo = slideConfig.find(s => 
+    s.id === currentSlideId || 
+    s.component === currentSlideId ||
+    s.id === parseInt(currentSlideId)
+  );
   const deckName = decodeURIComponent(searchParams.get('deckName') || 'Investor Deck');
   const slidesParam = searchParams.get('slides');
   const componentsParam = searchParams.get('components');
@@ -84,7 +93,11 @@ const SlideViewer = () => {
 
   useEffect(() => {
     if (availableSlides.length === 0) return;
-    const idx = availableSlides.findIndex((s) => s.id === currentSlideId);
+    const idx = availableSlides.findIndex((s) => 
+      s.id === currentSlideId || 
+      s.component === currentSlideId ||
+      s.id === parseInt(currentSlideId)
+    );
     if (idx === -1) {
       const qs = searchParams.toString();
       navigate(`/deck/slide/${availableSlides[0].id}?${qs}`);
@@ -92,7 +105,7 @@ const SlideViewer = () => {
   }, [availableSlides, currentSlideId, navigate, searchParams]);
 
   if (!slideInfo) {
-    navigate('/deck/slide/1');
+    navigate('/deck/slide/SlideCover');
     return null;
   }
 
