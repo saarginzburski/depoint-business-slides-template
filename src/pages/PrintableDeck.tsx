@@ -21,6 +21,7 @@ const slideComponents = {
   SlideCompetitiveLandscape: lazy(() => import('./slides/SlideCompetitiveLandscape')),
   SlideGTMStrategy: lazy(() => import('./slides/SlideGTMStrategy')),
   SlideGlobalBrands: lazy(() => import('./slides/SlideGlobalBrands')),
+  SlideFieldAssociates: lazy(() => import('./slides/SlideFieldAssociates')),
   SlideFinancial: lazy(() => import('./slides/SlideFinancial')),
   SlideStrategicFit: lazy(() => import('./slides/SlideStrategicFit')),
   SlideConsultingPartners: lazy(() => import('./slides/SlideConsultingPartners')),

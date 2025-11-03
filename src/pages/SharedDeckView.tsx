@@ -35,6 +35,7 @@ const slideComponents: Record<string, React.LazyExoticComponent<React.ComponentT
   SlideCompetitiveLandscape: lazy(() => import('./slides/SlideCompetitiveLandscape')),
   SlideGTMStrategy: lazy(() => import('./slides/SlideGTMStrategy')),
   SlideGlobalBrands: lazy(() => import('./slides/SlideGlobalBrands')),
+  SlideFieldAssociates: lazy(() => import('./slides/SlideFieldAssociates')),
   SlideFinancial: lazy(() => import('./slides/SlideFinancial')),
   SlideTeam: lazy(() => import('./slides/SlideTeam')),
   SlideOurJourney: lazy(() => import('./slides/SlideOurJourney')),

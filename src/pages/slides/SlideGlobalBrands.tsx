@@ -2,10 +2,11 @@ import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
 import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
-import papaJohnsLogo from '@/assets/papajohns-logo.png';
-import jollibeeLogo from '@/assets/jollibee-logo.png';
-import nespressoLogo from '@/assets/nespresso-logo.png';
-import zaraLogo from '@/assets/zara-logo.png';
+import papaJohnsLogo from '@/assets/customers/papa.png';
+import jollibeeLogo from '@/assets/customers/jollibee.png';
+import nespressoLogo from '@/assets/customers/ness.png';
+import zaraLogo from '@/assets/customers/zara.png';
+import mcdonaldsLogo from '@/assets/customers/mac.png';
 
 const SlideGlobalBrands = () => {
   const brands = [
@@ -24,6 +25,10 @@ const SlideGlobalBrands = () => {
     {
       name: 'Zara',
       logo: zaraLogo,
+    },
+    {
+      name: 'McDonalds',
+      logo: mcdonaldsLogo,
     },
   ];
 
@@ -48,8 +53,8 @@ const SlideGlobalBrands = () => {
             </h2>
           </div>
 
-          {/* Brand Logos - Premium Grid with Floating Effect */}
-          <div className="grid grid-cols-4 gap-16 items-center justify-items-center w-full max-w-5xl">
+              {/* Brand Logos - Premium Grid with Floating Effect */}
+              <div className="grid grid-cols-5 gap-12 items-center justify-items-center w-full max-w-6xl">
             {brands.map((brand, index) => (
               <div
                 key={brand.name}
