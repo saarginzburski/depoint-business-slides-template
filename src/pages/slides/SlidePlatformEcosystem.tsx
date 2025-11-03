@@ -8,7 +8,7 @@ const SlidePlatformEcosystem = () => {
   return (
     <div className="relative w-full h-full">
       <SlideLayout
-        title="The Data Flywheel — Built on Proprietary IP"
+        title="How it work"
         subtitle=""
         slideNumber="9"
         totalSlides="15"
