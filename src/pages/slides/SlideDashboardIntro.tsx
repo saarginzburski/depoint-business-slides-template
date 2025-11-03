@@ -1,12 +1,16 @@
 import React from 'react';
 import { Brain, DollarSign, AlertTriangle, Shield, TrendingUp, ChevronRight, BarChart3, Zap } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import SlideLayout from '@/components/SlideLayout';
 import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideDashboardIntro = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Check if we're in shared view mode (public preview)
+  const isSharedView = location.pathname.startsWith('/share/');
 
   const dashboardCategories = [
     {
@@ -77,7 +81,12 @@ const SlideDashboardIntro = () => {
   ];
 
   const handleDashboardClick = (componentId: string) => {
-    navigate(`/investor-deck/slide/${componentId}`);
+    // Disable navigation in shared view mode (public preview)
+    if (isSharedView) {
+      return;
+    }
+    // Navigate to the correct protected route
+    navigate(`/deck/slide/${componentId}`);
   };
 
   return (
@@ -134,7 +143,12 @@ const SlideDashboardIntro = () => {
                     <button
                       key={dashIndex}
                       onClick={() => handleDashboardClick(dashboard.componentId)}
-                      className={`w-full ${category.buttonColor} hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 rounded-lg px-4 py-3 text-white text-sm font-medium`}
+                      disabled={isSharedView}
+                      className={`w-full ${category.buttonColor} ${
+                        isSharedView 
+                          ? 'cursor-default opacity-90' 
+                          : 'hover:shadow-md transform hover:-translate-y-0.5 cursor-pointer'
+                      } transition-all duration-200 rounded-lg px-4 py-3 text-white text-sm font-medium`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
