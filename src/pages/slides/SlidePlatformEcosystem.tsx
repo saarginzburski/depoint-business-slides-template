@@ -15,13 +15,13 @@ const SlidePlatformEcosystem = () => {
         logoSrc={depointLogo}
         componentName="SlidePlatformEcosystem"
       >
-      {/* Redesigned with expanded, more spacious flywheel and enhanced density */}
-      <div className="h-full py-4 overflow-hidden">
-        <div className="grid grid-cols-12 gap-8 h-full items-center">
+      {/* Redesigned with centered, larger flywheel for maximum visual impact */}
+      <div className="h-full py-6 overflow-hidden">
+        <div className="grid grid-cols-12 gap-10 h-full items-center">
         
-        {/* Left 55% - Expanded Flywheel with More Spacing (7 columns) */}
-        <div className="col-span-7 flex flex-col h-full justify-center items-center gap-6 py-2 min-h-0">
-          <div className="relative w-full max-w-[28rem] aspect-square">
+        {/* Left 60% - Centered Large Flywheel (7.5 columns) */}
+        <div className="col-span-8 flex flex-col h-full justify-center items-center py-4 min-h-0">
+          <div className="relative w-full max-w-[34rem] aspect-square">
             
             {/* Expanded Ring Flywheel - Much larger radius for more spacing */}
             <div className="absolute inset-4">
@@ -70,61 +70,61 @@ const SlidePlatformEcosystem = () => {
             </div>
             
             {/* Central Hub - Larger and more detailed */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-600 rounded-full flex items-center justify-center z-20 border-4 border-white">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-56 h-56 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center z-20 border-4 border-white shadow-2xl">
               <div className="text-center text-white">
-                <RefreshCw className="w-10 h-10 mx-auto mb-2 animate-spin" style={{animationDuration: '3s'}} />
-                <div className="text-base font-bold leading-tight">Operations</div>
-                <div className="text-base font-bold leading-tight">Intelligence</div>
-                <div className="text-base font-bold leading-tight">Engine</div>
-                <div className="text-xs font-medium opacity-80 mt-1">AI-Powered</div>
+                <RefreshCw className="w-12 h-12 mx-auto mb-3 animate-spin" style={{animationDuration: '3s'}} />
+                <div className="text-lg font-bold leading-tight">Operations</div>
+                <div className="text-lg font-bold leading-tight">Intelligence</div>
+                <div className="text-lg font-bold leading-tight">Engine</div>
+                <div className="text-sm font-medium opacity-90 mt-2">AI-Powered</div>
               </div>
             </div>
             
             {/* Node 01 - Execute (Top) - Positioned further out */}
-            <div className="absolute" style={{top: '-12px', left: '50%', transform: 'translateX(-50%)'}}>
-              <div className="w-32 h-32 bg-red-500 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative">
+            <div className="absolute" style={{top: '-16px', left: '50%', transform: 'translateX(-50%)'}}>
+              <div className="w-40 h-40 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative shadow-xl">
                 <div className="text-center">
-                  <Target className="w-8 h-8 mx-auto mb-1" />
-                  <div className="text-base font-bold">Execute</div>
-                  <div className="text-xs opacity-90">Real-time</div>
+                  <Target className="w-10 h-10 mx-auto mb-1" />
+                  <div className="text-lg font-bold">Execute</div>
+                  <div className="text-sm opacity-90">Real-time</div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-red-600 rounded-full flex items-center justify-center text-sm font-bold">01</div>
+                <div className="absolute -top-2 -right-2 w-10 h-10 bg-white text-red-600 rounded-full flex items-center justify-center text-base font-bold shadow-lg">01</div>
               </div>
             </div>
             
             {/* Node 02 - Measure (Right) - Positioned further out */}
-            <div className="absolute" style={{top: '50%', right: '-16px', transform: 'translateY(-50%)'}}>
-              <div className="w-32 h-32 bg-slate-500 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative">
+            <div className="absolute" style={{top: '50%', right: '-20px', transform: 'translateY(-50%)'}}>
+              <div className="w-40 h-40 bg-gradient-to-br from-slate-400 to-slate-600 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative shadow-xl">
                 <div className="text-center">
-                  <BarChart3 className="w-8 h-8 mx-auto mb-1" />
-                  <div className="text-base font-bold">Measure</div>
-                  <div className="text-xs opacity-90">100% Coverage</div>
+                  <BarChart3 className="w-10 h-10 mx-auto mb-1" />
+                  <div className="text-lg font-bold">Measure</div>
+                  <div className="text-sm opacity-90">100% Coverage</div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-slate-600 rounded-full flex items-center justify-center text-sm font-bold">02</div>
+                <div className="absolute -top-2 -right-2 w-10 h-10 bg-white text-slate-600 rounded-full flex items-center justify-center text-base font-bold shadow-lg">02</div>
               </div>
             </div>
             
             {/* Node 03 - Analyze (Bottom) - Positioned further out */}
-            <div className="absolute" style={{bottom: '-12px', left: '50%', transform: 'translateX(-50%)'}}>
-              <div className="w-36 h-36 bg-orange-500 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative">
+            <div className="absolute" style={{bottom: '-16px', left: '50%', transform: 'translateX(-50%)'}}>
+              <div className="w-44 h-44 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative shadow-xl">
                 <div className="text-center">
-                  <Brain className="w-9 h-9 mx-auto mb-1" />
-                  <div className="text-base font-bold">Analyze</div>
-                  <div className="text-xs opacity-90">AI-Powered</div>
+                  <Brain className="w-11 h-11 mx-auto mb-1" />
+                  <div className="text-lg font-bold">Analyze</div>
+                  <div className="text-sm opacity-90">AI-Powered</div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-orange-600 rounded-full flex items-center justify-center text-sm font-bold">03</div>
+                <div className="absolute -top-2 -right-2 w-10 h-10 bg-white text-orange-600 rounded-full flex items-center justify-center text-base font-bold shadow-lg">03</div>
               </div>
             </div>
             
             {/* Node 04 - Improve (Left) - Positioned further out */}
-            <div className="absolute" style={{top: '50%', left: '-16px', transform: 'translateY(-50%)'}}>
-              <div className="w-36 h-36 bg-purple-500 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative">
+            <div className="absolute" style={{top: '50%', left: '-20px', transform: 'translateY(-50%)'}}>
+              <div className="w-44 h-44 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white border-4 border-white z-10 relative shadow-xl">
                 <div className="text-center">
-                  <Zap className="w-9 h-9 mx-auto mb-1" />
-                  <div className="text-base font-bold">Improve</div>
-                  <div className="text-xs opacity-90">Predictive</div>
+                  <Zap className="w-11 h-11 mx-auto mb-1" />
+                  <div className="text-lg font-bold">Improve</div>
+                  <div className="text-sm opacity-90">Predictive</div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-purple-600 rounded-full flex items-center justify-center text-sm font-bold">04</div>
+                <div className="absolute -top-2 -right-2 w-10 h-10 bg-white text-purple-600 rounded-full flex items-center justify-center text-base font-bold shadow-lg">04</div>
               </div>
             </div>
             
@@ -144,23 +144,10 @@ const SlidePlatformEcosystem = () => {
               </svg>
             </div>
           </div>
-          
-          {/* Enhanced Proprietary IP Statement */}
-          <div className="bg-orange-50 border-2 border-orange-200 rounded-2xl p-5 text-center max-w-xl mx-auto">
-            <div className="text-orange-900 font-bold text-lg leading-tight mb-2">
-              "Depoint doesn't just analyze data. It operationalizes it."
-            </div>
-            <div className="text-orange-700 text-sm font-medium mb-2">
-              Unlike BI platforms, our IP is rooted in industry execution intelligence.
-            </div>
-            <div className="text-orange-600 text-xs font-medium italic">
-              Spin the flywheel, print foresight.
-            </div>
-          </div>
         </div>
         
-        {/* Right 45% - Enhanced Dense Information Cards (5 columns) */}
-        <div className="col-span-5 flex flex-col h-full py-2">
+        {/* Right 40% - Enhanced Dense Information Cards (4 columns) */}
+        <div className="col-span-4 flex flex-col h-full py-2">
           
           {/* Four Enhanced Dense Step Cards */}
           <div className="flex-1 grid grid-rows-4 gap-3 mb-2">
