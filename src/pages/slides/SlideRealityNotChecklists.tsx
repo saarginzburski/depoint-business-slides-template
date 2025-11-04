@@ -5,17 +5,16 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideRealityNotChecklists = () => {
   return (
-    <div className="relative w-full h-full" style={{ background: 'linear-gradient(135deg, #0047FF 0%, #0066FF 50%, #1E90FF 100%)' }}>
-      <SlideLayout
-        title="Is this just another checklists app?"
-        subtitle=""
-        slideNumber="6"
-        totalSlides="35"
-        logoSrc={depointLogo}
-        componentName="SlideRealityNotChecklists"
-        footerTagline="Live intelligence for frontline operations"
-        backgroundClass="bg-transparent"
-      >
+    <SlideLayout
+      title="Is this just another checklists app?"
+      subtitle=""
+      slideNumber="6"
+      totalSlides="35"
+      logoSrc={depointLogo}
+      componentName="SlideRealityNotChecklists"
+      footerTagline="Live intelligence for frontline operations"
+      backgroundClass="bg-gradient-to-br from-[#0047FF] via-[#0066FF] to-[#1E90FF]"
+    >
         <div className="h-full flex items-center justify-between px-8 py-4">
           
           {/* Left Side - Text Content */}
@@ -139,10 +138,9 @@ const SlideRealityNotChecklists = () => {
             </div>
           </div>
         </div>
-      </SlideLayout>
 
-      {/* Additional CSS for animations */}
-      <style>{`
+        {/* Additional CSS for animations */}
+        <style>{`
         @keyframes fade-in {
           from {
             opacity: 0;
@@ -235,8 +233,8 @@ const SlideRealityNotChecklists = () => {
             border-width: 2px !important;
           }
         }
-      `}</style>
-    </div>
+        `}</style>
+      </SlideLayout>
   );
 };
 
