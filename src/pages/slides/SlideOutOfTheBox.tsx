@@ -85,163 +85,165 @@ const SlideOutOfTheBox = () => {
       backgroundClass="bg-gradient-to-b from-white via-[#F9FAFB] to-[#F3F4F6]/30"
       footerTagline="Depoint — Out of the Box. Ready on Day One."
     >
-      <div className="h-full flex items-center justify-center pb-8 px-8 relative">
+      <div className="h-full flex items-center justify-center pb-8 px-8 relative" style={{ minHeight: '600px' }}>
         
-        {/* Central Hub */}
-        <div 
-          className="absolute z-20"
-          style={{
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
+        {/* Container for proper centering */}
+        <div className="relative" style={{ width: '100%', height: '100%', maxWidth: '1100px', maxHeight: '700px' }}>
+          
+          {/* Central Hub */}
           <div 
-            className="relative flex flex-col items-center justify-center rounded-3xl shadow-2xl"
+            className="absolute z-20"
             style={{
-              width: '280px',
-              height: '280px',
-              background: 'linear-gradient(135deg, #1E73FF 0%, #60A5FA 100%)',
-              boxShadow: '0 20px 60px rgba(30, 115, 255, 0.3), 0 0 0 1px rgba(255,255,255,0.1) inset',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
             }}
           >
-            {/* Inner glow */}
             <div 
-              className="absolute inset-0 rounded-3xl"
+              className="relative flex flex-col items-center justify-center rounded-3xl shadow-2xl"
               style={{
-                background: 'radial-gradient(ellipse at top, rgba(255,255,255,0.3), transparent 60%)',
-              }}
-            ></div>
-            
-            {/* Icon */}
-            <div className="relative z-10 mb-3">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-                <rect x="3" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="14" width="7" height="7" rx="1" />
-                <rect x="3" y="14" width="7" height="7" rx="1" />
-              </svg>
-            </div>
-            
-            {/* Text */}
-            <div className="relative z-10 text-center px-6">
-              <h3 className="text-white font-bold text-xl mb-2 tracking-tight">
-                Data & Analytics Hub
-              </h3>
-              <p className="text-white/90 text-sm leading-relaxed">
-                Collects and syncs data<br />from/between external systems
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Connecting Lines */}
-        <svg 
-          className="absolute z-10" 
-          style={{
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '100%',
-            height: '100%',
-            maxWidth: '1200px',
-            maxHeight: '800px',
-          }}
-        >
-          <defs>
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style={{ stopColor: 'rgba(30, 115, 255, 0.6)', stopOpacity: 1 }} />
-              <stop offset="50%" style={{ stopColor: 'rgba(30, 115, 255, 0.2)', stopOpacity: 1 }} />
-              <stop offset="100%" style={{ stopColor: 'rgba(30, 115, 255, 0.1)', stopOpacity: 1 }} />
-            </linearGradient>
-          </defs>
-          {modules.map((module, index) => {
-            const pos = getPosition(module.angle, radius);
-            return (
-              <line
-                key={index}
-                x1="50%"
-                y1="50%"
-                x2={`calc(50% + ${pos.x}px)`}
-                y2={`calc(50% + ${pos.y}px)`}
-                stroke="url(#lineGradient)"
-                strokeWidth="2"
-                strokeDasharray="4 4"
-                opacity="0.5"
-              />
-            );
-          })}
-        </svg>
-
-        {/* Surrounding Modules */}
-        {modules.map((module, index) => {
-          const Icon = module.icon;
-          const pos = getPosition(module.angle, radius);
-          
-          return (
-            <div
-              key={index}
-              className="absolute z-30"
-              style={{
-                left: '50%',
-                top: '50%',
-                transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`,
-                animation: `floatIn 0.8s ease-out forwards ${index * 0.1}s`,
-                opacity: 0,
+                width: '280px',
+                height: '280px',
+                background: 'linear-gradient(135deg, #1E73FF 0%, #60A5FA 100%)',
+                boxShadow: '0 20px 60px rgba(30, 115, 255, 0.3), 0 0 0 1px rgba(255,255,255,0.1) inset',
               }}
             >
+              {/* Inner glow */}
               <div 
-                className="flex flex-col items-center text-center group"
-                style={{ width: '200px' }}
-              >
-                {/* Icon Circle */}
-                <div 
-                  className="mb-3 flex items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-105"
-                  style={{
-                    width: '80px',
-                    height: '80px',
-                    background: module.lightBg,
-                    border: `2px solid ${module.color}20`,
-                    boxShadow: `0 8px 24px ${module.color}15, 0 2px 8px ${module.color}10`,
-                  }}
-                >
-                  <Icon 
-                    style={{ 
-                      width: '36px', 
-                      height: '36px',
-                      color: module.color,
-                      strokeWidth: 1.5
-                    }} 
-                  />
-                </div>
-                
-                {/* Title */}
-                <h4 
-                  className="font-bold mb-2 tracking-tight"
-                  style={{
-                    fontSize: '15px',
-                    lineHeight: '1.3',
-                    color: '#1a1a1a',
-                  }}
-                >
-                  {module.title}
-                </h4>
-                
-                {/* Items */}
-                <p 
-                  className="leading-snug"
-                  style={{
-                    fontSize: '11px',
-                    lineHeight: '1.5',
-                    color: '#6b7280',
-                  }}
-                >
-                  {module.items}
+                className="absolute inset-0 rounded-3xl"
+                style={{
+                  background: 'radial-gradient(ellipse at top, rgba(255,255,255,0.3), transparent 60%)',
+                }}
+              ></div>
+              
+              {/* Icon */}
+              <div className="relative z-10 mb-3">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                  <rect x="3" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="14" width="7" height="7" rx="1" />
+                  <rect x="3" y="14" width="7" height="7" rx="1" />
+                </svg>
+              </div>
+              
+              {/* Text */}
+              <div className="relative z-10 text-center px-6">
+                <h3 className="text-white font-bold text-xl mb-2 tracking-tight">
+                  Data & Analytics Hub
+                </h3>
+                <p className="text-white/90 text-sm leading-relaxed">
+                  Collects and syncs data<br />from/between external systems
                 </p>
               </div>
             </div>
-          );
-        })}
+          </div>
+
+          {/* Connecting Lines */}
+          <svg 
+            className="absolute z-10 pointer-events-none" 
+            style={{
+              left: 0,
+              top: 0,
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            <defs>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style={{ stopColor: 'rgba(30, 115, 255, 0.6)', stopOpacity: 1 }} />
+                <stop offset="50%" style={{ stopColor: 'rgba(30, 115, 255, 0.2)', stopOpacity: 1 }} />
+                <stop offset="100%" style={{ stopColor: 'rgba(30, 115, 255, 0.1)', stopOpacity: 1 }} />
+              </linearGradient>
+            </defs>
+            {modules.map((module, index) => {
+              const pos = getPosition(module.angle, radius);
+              return (
+                <line
+                  key={index}
+                  x1="50%"
+                  y1="50%"
+                  x2={`calc(50% + ${pos.x}px)`}
+                  y2={`calc(50% + ${pos.y}px)`}
+                  stroke="url(#lineGradient)"
+                  strokeWidth="2"
+                  strokeDasharray="4 4"
+                  opacity="0.5"
+                />
+              );
+            })}
+          </svg>
+
+          {/* Surrounding Modules */}
+          {modules.map((module, index) => {
+            const Icon = module.icon;
+            const pos = getPosition(module.angle, radius);
+            
+            return (
+              <div
+                key={index}
+                className="absolute z-30"
+                style={{
+                  left: `calc(50% + ${pos.x}px)`,
+                  top: `calc(50% + ${pos.y}px)`,
+                  transform: 'translate(-50%, -50%)',
+                  animation: `floatIn 0.8s ease-out forwards ${index * 0.1}s`,
+                  opacity: 0,
+                }}
+              >
+                <div 
+                  className="flex flex-col items-center text-center group"
+                  style={{ width: '200px' }}
+                >
+                  {/* Icon Circle */}
+                  <div 
+                    className="mb-3 flex items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-105"
+                    style={{
+                      width: '80px',
+                      height: '80px',
+                      background: module.lightBg,
+                      border: `2px solid ${module.color}20`,
+                      boxShadow: `0 8px 24px ${module.color}15, 0 2px 8px ${module.color}10`,
+                    }}
+                  >
+                    <Icon 
+                      style={{ 
+                        width: '36px', 
+                        height: '36px',
+                        color: module.color,
+                        strokeWidth: 1.5
+                      }} 
+                    />
+                  </div>
+                  
+                  {/* Title */}
+                  <h4 
+                    className="font-bold mb-2 tracking-tight"
+                    style={{
+                      fontSize: '15px',
+                      lineHeight: '1.3',
+                      color: '#1a1a1a',
+                    }}
+                  >
+                    {module.title}
+                  </h4>
+                  
+                  {/* Items */}
+                  <p 
+                    className="leading-snug"
+                    style={{
+                      fontSize: '11px',
+                      lineHeight: '1.5',
+                      color: '#6b7280',
+                    }}
+                  >
+                    {module.items}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        
+        </div>
 
       </div>
 
