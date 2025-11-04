@@ -1,7 +1,6 @@
 import React from 'react';
 import { Monitor, Clock, Users } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideProblemStats = () => {
@@ -128,8 +127,6 @@ const SlideProblemStats = () => {
 
         </div>
       </SlideLayout>
-      
-      <SlideFooter tagline="Fragmented systems don't just waste time—they compound costs and drive talent away" />
     </div>
   );
 };

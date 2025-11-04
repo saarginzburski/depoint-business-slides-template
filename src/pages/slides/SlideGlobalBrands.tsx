@@ -1,6 +1,5 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import papaJohnsLogo from '@/assets/customers/papa.png';
 import jollibeeLogo from '@/assets/customers/jollibee.png';
@@ -91,8 +90,6 @@ const SlideGlobalBrands = () => {
 
         </div>
       </SlideLayout>
-      
-      <SlideFooter tagline="From fast food to fast fashion—execution at global scale" />
 
       {/* Apple-inspired animations */}
       <style>{`

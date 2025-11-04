@@ -1,6 +1,5 @@
 import React from 'react';
 import SlideLayout from '@/components/SlideLayout';
-import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import mobile1 from '@/assets/mobiles/mobile1.png';
 import mobile2 from '@/assets/mobiles/mobile2.png';
@@ -126,8 +125,6 @@ const SlideFieldAssociates = () => {
 
         </div>
       </SlideLayout>
-      
-      <SlideFooter tagline="From checklists to competitions—everything your team needs in one elegant app" />
 
       {/* Apple-inspired animations */}
       <style>{`
