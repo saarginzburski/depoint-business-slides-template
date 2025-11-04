@@ -82,10 +82,10 @@ const SlideDashboardIntro: React.FC<SlideDashboardIntroProps> = ({ onNavigateToS
         componentName="SlideDashboardIntro"
         backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       >
-      <div className="h-full flex flex-col px-10 pb-6" style={{ gap: '20px' }}>
+      <div className="h-full flex flex-col px-10 py-6" style={{ gap: '20px' }}>
         
         {/* Hero Message Card */}
-        <div className="mt-3 flex-shrink-0">
+        <div className="flex-shrink-0">
           <div
             className="group relative"
             style={{
