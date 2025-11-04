@@ -112,16 +112,16 @@ const SlideOutOfTheBox = () => {
   }
 
   return (
-    <SlideLayout 
-      title="Out of the Box" 
-      subtitle="Hundreds of predefined templates"
-      slideNumber="29" 
-      totalSlides="41" 
-      logoSrc={depointLogo} 
-      componentName="SlideOutOfTheBox"
-      backgroundClass="bg-gradient-to-b from-white via-[#F9FAFB] to-[#F3F4F6]/30"
-      footerTagline="Depoint — Out of the Box. Ready on Day One."
-    >
+      <SlideLayout
+        title="Out of the Box"
+        subtitle="Hundreds of predefined templates"
+        slideNumber="29"
+        totalSlides="43"
+        logoSrc={depointLogo}
+        componentName="SlideOutOfTheBox"
+        backgroundClass="bg-gradient-to-b from-white via-[#F9FAFB] to-[#F3F4F6]/30"
+        footerTagline="Depoint — Out of the Box. Ready on Day One."
+      >
       <div className="h-full flex items-center justify-center pb-2 px-3">
         
         {/* 3x3 Grid Layout */}

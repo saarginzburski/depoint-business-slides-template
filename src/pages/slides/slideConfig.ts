@@ -39,23 +39,24 @@ export const slideConfig: SlideInfo[] = [
   { id: "SlideDashboardFeatures", component: "SlideDashboardFeatures", displayOrder: 27, name: "Dashboard Features", title: "Intelligence at Every Level", route: "/investor-deck/slide/27", section_key: "main" },
   { id: "Slide360Management", component: "Slide360Management", displayOrder: 28, name: "360° Management", title: "360° Management", route: "/investor-deck/slide/28", section_key: "main" },
   { id: "SlideOutOfTheBox", component: "SlideOutOfTheBox", displayOrder: 29, name: "Out of the Box", title: "Out of the Box", route: "/investor-deck/slide/29", section_key: "main" },
-  { id: "SlideClosing", component: "SlideClosing", displayOrder: 30, name: "Contact", title: "EDGE — Every Day Great Execution", route: "/investor-deck/slide/30", section_key: "main" },
-  { id: "SlideProblemStats", component: "SlideProblemStats", displayOrder: 31, name: "The Problem (Stats)", title: "The Hidden Cost of Operational Chaos", route: "/investor-deck/slide/31", section_key: "main" },
-  { id: "SlideAppendices", component: "SlideAppendices", displayOrder: 32, name: "Appendices", title: "Appendices", route: "/investor-deck/slide/32", section_key: "appendix" },
-  { id: "SlideDashboardsDemo", component: "SlideDashboardsDemo", displayOrder: 33, name: "Dashboards Demo", title: "Dashboards Demo", route: "/investor-deck/slide/33", section_key: "demo" },
+  { id: "SlideAnalyticsPlatform", component: "SlideAnalyticsPlatform", displayOrder: 30, name: "Analytics", title: "Analytics", route: "/investor-deck/slide/30", section_key: "main" },
+  { id: "SlideClosing", component: "SlideClosing", displayOrder: 31, name: "Contact", title: "EDGE — Every Day Great Execution", route: "/investor-deck/slide/31", section_key: "main" },
+  { id: "SlideProblemStats", component: "SlideProblemStats", displayOrder: 32, name: "The Problem (Stats)", title: "The Hidden Cost of Operational Chaos", route: "/investor-deck/slide/32", section_key: "main" },
+  { id: "SlideAppendices", component: "SlideAppendices", displayOrder: 33, name: "Appendices", title: "Appendices", route: "/investor-deck/slide/33", section_key: "appendix" },
+  { id: "SlideDashboardsDemo", component: "SlideDashboardsDemo", displayOrder: 34, name: "Dashboards Demo", title: "Dashboards Demo", route: "/investor-deck/slide/34", section_key: "demo" },
   // Category 1: Protect Margin
-  { id: "SlideOilMonitoringDashboard", component: "SlideOilMonitoringDashboard", displayOrder: 34, name: "Oil Monitoring Dashboard", title: "Oil Monitoring Dashboard", route: "/investor-deck/slide/34", section_key: "demo" },
-  { id: "SlideIssuesDashboard", component: "SlideIssuesDashboard", displayOrder: 35, name: "Issues Dashboard", title: "Issues Dashboard", route: "/investor-deck/slide/35", section_key: "demo" },
+  { id: "SlideOilMonitoringDashboard", component: "SlideOilMonitoringDashboard", displayOrder: 35, name: "Oil Monitoring Dashboard", title: "Oil Monitoring Dashboard", route: "/investor-deck/slide/35", section_key: "demo" },
+  { id: "SlideIssuesDashboard", component: "SlideIssuesDashboard", displayOrder: 36, name: "Issues Dashboard", title: "Issues Dashboard", route: "/investor-deck/slide/36", section_key: "demo" },
   // Category 2: Reduce Risk
-  { id: "SlideEquipmentMonitoringDashboard", component: "SlideEquipmentMonitoringDashboard", displayOrder: 36, name: "Equipment Monitoring Dashboard", title: "Equipment Monitoring Dashboard", route: "/investor-deck/slide/36", section_key: "demo" },
-  { id: "SlideAuditReportDashboard", component: "SlideAuditReportDashboard", displayOrder: 37, name: "Audit Report Dashboard", title: "Audit Report Dashboard", route: "/investor-deck/slide/37", section_key: "demo" },
-  { id: "SlideTaskComplianceDashboard", component: "SlideTaskComplianceDashboard", displayOrder: 38, name: "Task Compliance Dashboard", title: "Task Compliance Dashboard", route: "/investor-deck/slide/38", section_key: "demo" },
+  { id: "SlideEquipmentMonitoringDashboard", component: "SlideEquipmentMonitoringDashboard", displayOrder: 37, name: "Equipment Monitoring Dashboard", title: "Equipment Monitoring Dashboard", route: "/investor-deck/slide/37", section_key: "demo" },
+  { id: "SlideAuditReportDashboard", component: "SlideAuditReportDashboard", displayOrder: 38, name: "Audit Report Dashboard", title: "Audit Report Dashboard", route: "/investor-deck/slide/38", section_key: "demo" },
+  { id: "SlideTaskComplianceDashboard", component: "SlideTaskComplianceDashboard", displayOrder: 39, name: "Task Compliance Dashboard", title: "Task Compliance Dashboard", route: "/investor-deck/slide/39", section_key: "demo" },
   // Category 3: Protect Revenue
-  { id: "SlideProductGoldStandardDashboard", component: "SlideProductGoldStandardDashboard", displayOrder: 39, name: "Product Gold Standard Dashboard", title: "Product Gold Standard Dashboard", route: "/investor-deck/slide/39", section_key: "demo" },
+  { id: "SlideProductGoldStandardDashboard", component: "SlideProductGoldStandardDashboard", displayOrder: 40, name: "Product Gold Standard Dashboard", title: "Product Gold Standard Dashboard", route: "/investor-deck/slide/40", section_key: "demo" },
   // Category 4: Accelerate Growth
-  { id: "SlideSpeedOfServiceDashboard", component: "SlideSpeedOfServiceDashboard", displayOrder: 40, name: "Speed of Service Dashboard", title: "Speed of Service Dashboard", route: "/investor-deck/slide/40", section_key: "demo" },
-  { id: "SlideUsersEngagementDashboard", component: "SlideUsersEngagementDashboard", displayOrder: 41, name: "Users Engagement Dashboard", title: "Users Engagement Dashboard", route: "/investor-deck/slide/41", section_key: "demo" },
-  { id: "SlideSalesManagementDashboard", component: "SlideSalesManagementDashboard", displayOrder: 42, name: "Sales Dashboard", title: "Sales Management Dashboard", route: "/investor-deck/slide/42", section_key: "demo" },
+  { id: "SlideSpeedOfServiceDashboard", component: "SlideSpeedOfServiceDashboard", displayOrder: 41, name: "Speed of Service Dashboard", title: "Speed of Service Dashboard", route: "/investor-deck/slide/41", section_key: "demo" },
+  { id: "SlideUsersEngagementDashboard", component: "SlideUsersEngagementDashboard", displayOrder: 42, name: "Users Engagement Dashboard", title: "Users Engagement Dashboard", route: "/investor-deck/slide/42", section_key: "demo" },
+  { id: "SlideSalesManagementDashboard", component: "SlideSalesManagementDashboard", displayOrder: 43, name: "Sales Dashboard", title: "Sales Management Dashboard", route: "/investor-deck/slide/43", section_key: "demo" },
 ];
 
 export const getTotalSlides = () => slideConfig.length;
