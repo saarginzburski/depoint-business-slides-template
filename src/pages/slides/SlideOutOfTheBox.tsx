@@ -8,49 +8,49 @@ const SlideOutOfTheBox = () => {
     {
       icon: FileText,
       title: "Requests from stores to HQ",
-      description: "Inventory, supplier, and employee reports.",
+      items: "Inventory checks / Supplier issues / Apply to mgmt / Theft reports / Vacation / Sickness / Accident reports / Employees reviews",
       color: "#1E73FF",
       angle: 0
     },
     {
       icon: CheckCircle,
       title: "Ad-Hoc Tasks",
-      description: "Recalls, planograms, new product launches.",
+      items: "Recalls / Surprise review / Signage & planogram / Pricing changes / New products / Special sales",
       color: "#22C55E",
       angle: 51.4
     },
     {
       icon: MessageSquare,
       title: "Internal communication",
-      description: "Social feed, news, and updates.",
+      items: "Internal social network / Organizational portal / News & updates / Suggestion box",
       color: "#F59E0B",
       angle: 102.8
     },
     {
       icon: Target,
       title: "Goals & Incentives",
-      description: "Real-time performance and rewards.",
+      items: "Personal & group Competitions / Goals setting / Real time performance feedback / Live compensation view",
       color: "#8B5CF6",
       angle: 154.2
     },
     {
       icon: GraduationCap,
       title: "Onboarding & Training",
-      description: "Digital forms, job-based training.",
+      items: "Full digital onboarding / Sign agreements & procedures / Upload documents / Training & evaluation by job",
       color: "#EF4444",
       angle: 205.6
     },
     {
       icon: Shield,
       title: "Auditing management",
-      description: "Quality checks, mystery shopper, maintenance.",
+      items: "Quality checks / Store visits / Mystery shopper / Preventing maintenance",
       color: "#3B82F6",
       angle: 257
     },
     {
       icon: RotateCw,
       title: "Routines",
-      description: "Open-close checklists, security, shift reviews.",
+      items: "Cars counting / Safes reviews / Shifts mgmt. / Security checks / Secret customer / Open-close store checklists / Department mgmt. freshness",
       color: "#10B981",
       angle: 308.4
     }
@@ -75,12 +75,12 @@ const SlideOutOfTheBox = () => {
         }}
       >
         
-        {/* Wrapper - perfectly centered */}
+        {/* Wrapper - perfectly centered, wider */}
         <div
           className="relative"
           style={{
-            width: '1100px',
-            height: '650px'
+            width: '1400px',
+            height: '750px'
           }}
         >
           
@@ -90,9 +90,9 @@ const SlideOutOfTheBox = () => {
             style={{ zIndex: 0 }}
           >
             {orbitingModules.map((module, idx) => {
-              const centerX = 550;
-              const centerY = 325;
-              const radius = 280;
+              const centerX = 700;
+              const centerY = 375;
+              const radius = 350;
               const angleRad = (module.angle * Math.PI) / 180;
               const x = centerX + radius * Math.cos(angleRad);
               const y = centerY + radius * Math.sin(angleRad);
@@ -119,8 +119,8 @@ const SlideOutOfTheBox = () => {
           <div
             className="absolute top-1/2 left-1/2 pointer-events-none"
             style={{
-              width: '560px',
-              height: '560px',
+              width: '700px',
+              height: '700px',
               transform: 'translate(-50%, -50%)',
               border: '1px solid rgba(0, 0, 0, 0.03)',
               borderRadius: '50%',
@@ -215,37 +215,36 @@ const SlideOutOfTheBox = () => {
                 key={idx}
                 className="absolute top-1/2 left-1/2 orbit-card"
                 style={{
-                  width: '230px',
-                  height: '140px',
-                  transform: `translate(-50%, -50%) rotate(${module.angle}deg) translate(280px) rotate(-${module.angle}deg)`,
+                  width: '280px',
+                  transform: `translate(-50%, -50%) rotate(${module.angle}deg) translate(350px) rotate(-${module.angle}deg)`,
                   animation: `fadeIn 0.6s ease forwards ${delay}s`,
                   opacity: 0,
                   zIndex: 5
                 }}
               >
                 <div
-                  className="w-full h-full rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105"
+                  className="w-full rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105"
                   style={{
                     background: '#fff',
                     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
                     border: '1px solid rgba(0, 0, 0, 0.04)'
                   }}
                 >
-                  <div className="h-full flex flex-col items-center justify-center text-center p-5">
+                  <div className="flex flex-col items-center text-center p-4">
                     {/* Icon */}
                     <div
-                      className="mb-3 rounded-xl flex items-center justify-center"
+                      className="mb-2.5 rounded-xl flex items-center justify-center"
                       style={{
-                        width: '48px',
-                        height: '48px',
+                        width: '46px',
+                        height: '46px',
                         background: `${module.color}12`,
                         border: `1.5px solid ${module.color}30`
                       }}
                     >
                       <Icon
                         style={{
-                          width: '24px',
-                          height: '24px',
+                          width: '22px',
+                          height: '22px',
                           color: module.color,
                           strokeWidth: 1.75
                         }}
@@ -254,9 +253,9 @@ const SlideOutOfTheBox = () => {
 
                     {/* Title */}
                     <h4
-                      className="font-bold tracking-tight mb-1"
+                      className="font-bold tracking-tight mb-1.5"
                       style={{
-                        fontSize: '13px',
+                        fontSize: '12px',
                         lineHeight: '1.3',
                         color: '#0a0a0a'
                       }}
@@ -264,15 +263,15 @@ const SlideOutOfTheBox = () => {
                       {module.title}
                     </h4>
 
-                    {/* Description */}
+                    {/* Full Items List */}
                     <p
                       style={{
-                        fontSize: '11px',
+                        fontSize: '9px',
                         lineHeight: '1.4',
                         color: '#666666'
                       }}
                     >
-                      {module.description}
+                      {module.items}
                     </p>
                   </div>
                 </div>
@@ -302,11 +301,11 @@ const SlideOutOfTheBox = () => {
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translate(-50%, -50%) rotate(var(--angle)) translate(280px) rotate(calc(-1 * var(--angle))) scale(0.8);
+            transform: translate(-50%, -50%) rotate(var(--angle)) translate(350px) rotate(calc(-1 * var(--angle))) scale(0.8);
           }
           to {
             opacity: 1;
-            transform: translate(-50%, -50%) rotate(var(--angle)) translate(280px) rotate(calc(-1 * var(--angle))) scale(1);
+            transform: translate(-50%, -50%) rotate(var(--angle)) translate(350px) rotate(calc(-1 * var(--angle))) scale(1);
           }
         }
 
