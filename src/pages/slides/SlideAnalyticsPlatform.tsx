@@ -48,66 +48,25 @@ const SlideAnalyticsPlatform = () => {
     >
       <div className="h-full relative px-12 pb-8">
         
-        {/* Mac Screen Mockup - Positioned on left */}
-        <div className="absolute left-0 top-0 bottom-0 w-[60%] flex items-center justify-start pl-8">
-          
-          {/* iMac Stand and Base */}
-          <div className="relative w-full h-[85%] flex flex-col items-center">
-            
-            {/* Screen */}
-            <div 
-              className="relative w-full flex-1 rounded-2xl overflow-hidden"
+        {/* Background Image - Positioned on left */}
+        <div className="absolute left-0 top-0 bottom-0 w-[75%] flex items-center justify-start -ml-8">
+          {/* Subtle vignette/glow underneath */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              background: 'radial-gradient(ellipse 60% 50% at 35% 50%, rgba(30, 115, 255, 0.06), transparent 70%)'
+            }}
+          ></div>
+
+          <div className="relative w-full h-[85%]">
+            <img
+              src={complianceDashboard}
+              alt="Analytics Dashboard"
+              className="w-full h-full object-contain object-left"
               style={{
-                background: '#1a1a1a',
-                boxShadow: '0 25px 80px rgba(0, 0, 0, 0.25), 0 0 0 8px #2a2a2a, 0 0 0 9px rgba(0,0,0,0.1)',
+                filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.08))',
               }}
-            >
-              {/* Screen bezel */}
-              <div 
-                className="absolute inset-0 rounded-2xl"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%)',
-                  pointerEvents: 'none',
-                }}
-              ></div>
-              
-              {/* Dashboard Image */}
-              <div className="relative w-full h-full p-3 bg-white rounded-xl">
-                <img 
-                  src={complianceDashboard} 
-                  alt="Analytics Dashboard" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              
-              {/* Screen glare */}
-              <div 
-                className="absolute top-0 left-0 right-0 h-24 rounded-t-2xl"
-                style={{
-                  background: 'linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%)',
-                  pointerEvents: 'none',
-                }}
-              ></div>
-            </div>
-            
-            {/* Stand */}
-            <div 
-              className="w-32 h-16 mt-1"
-              style={{
-                background: 'linear-gradient(180deg, #d0d0d0 0%, #a8a8a8 100%)',
-                clipPath: 'polygon(40% 0%, 60% 0%, 70% 100%, 30% 100%)',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              }}
-            ></div>
-            
-            {/* Base */}
-            <div 
-              className="w-48 h-3 rounded-full"
-              style={{
-                background: 'linear-gradient(180deg, #d0d0d0 0%, #a8a8a8 100%)',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-              }}
-            ></div>
+            />
           </div>
         </div>
 
