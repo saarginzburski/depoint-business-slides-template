@@ -32,7 +32,7 @@ const SlideTaskComplianceDashboard = () => {
       <div className="h-full flex flex-col px-12 pb-8" style={{ gap: '16px' }}>
         
         {/* Executive Summary Card - Top, 100% width */}
-        <div className="w-full">
+        <div className="w-full mt-4">
           <div
             className="group relative"
             style={{
@@ -45,7 +45,7 @@ const SlideTaskComplianceDashboard = () => {
               style={{
                 background: 'rgba(255, 255, 255, 0.92)',
                 backdropFilter: 'blur(24px)',
-                borderRadius: '20px',
+                borderRadius: '16px',
                 border: '1px solid rgba(0, 0, 0, 0.08)',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)',
               }}
@@ -60,18 +60,18 @@ const SlideTaskComplianceDashboard = () => {
 
               {/* Colored accent bar on left */}
               <div
-                className="absolute left-0 top-4 bottom-4 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
                 style={{
                   background: 'linear-gradient(180deg, #FF5733, #FF5733dd)',
                   boxShadow: '0 0 12px rgba(255, 87, 51, 0.4)'
                 }}
               ></div>
 
-              <div className="flex items-start gap-4 p-5 pl-6">
+              <div className="flex items-center gap-3 p-3 pl-5">
                 {/* Icon Container */}
                 <div className="flex-shrink-0">
                   <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300"
+                    className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
                     style={{
                       background: 'rgba(255, 87, 51, 0.08)',
                       border: '1px solid rgba(255, 87, 51, 0.15)'
@@ -80,8 +80,8 @@ const SlideTaskComplianceDashboard = () => {
                     <AlertTriangle
                       className="transition-transform duration-300 group-hover:scale-110"
                       style={{
-                        width: '24px',
-                        height: '24px',
+                        width: '20px',
+                        height: '20px',
                         color: '#FF5733',
                         strokeWidth: 2
                       }}
@@ -92,10 +92,10 @@ const SlideTaskComplianceDashboard = () => {
                 {/* Text Content */}
                 <div className="flex-1">
                   <h3
-                    className="font-semibold mb-2 tracking-tight"
+                    className="font-semibold mb-1 tracking-tight"
                     style={{
-                      fontSize: '18px',
-                      lineHeight: '1.4',
+                      fontSize: '16px',
+                      lineHeight: '1.3',
                       color: '#1a1a1a'
                     }}
                   >
@@ -104,8 +104,8 @@ const SlideTaskComplianceDashboard = () => {
                   <p
                     className="font-normal leading-relaxed"
                     style={{
-                      fontSize: '15px',
-                      lineHeight: '1.6',
+                      fontSize: '14px',
+                      lineHeight: '1.5',
                       color: '#6b7280'
                     }}
                   >
