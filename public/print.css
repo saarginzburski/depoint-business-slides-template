@@ -267,14 +267,15 @@
     print-color-adjust: exact !important;
   }
 
-  /* Ensure all elements with white-based backgrounds print correctly */
-  div[class*="bg-white"],
-  section[class*="bg-white"],
-  article[class*="bg-white"],
-  .shadow-lg,
-  .shadow-xl,
-  .shadow-2xl,
-  .shadow-card {
+  /* Ensure solid white backgrounds print correctly, but exclude gradients */
+  /* Note: We exclude gradient classes so they preserve their background-image */
+  div[class*="bg-white"]:not([class*="gradient"]),
+  section[class*="bg-white"]:not([class*="gradient"]),
+  article[class*="bg-white"]:not([class*="gradient"]),
+  .shadow-lg:not([class*="gradient"]),
+  .shadow-xl:not([class*="gradient"]),
+  .shadow-2xl:not([class*="gradient"]),
+  .shadow-card:not([class*="gradient"]) {
     background-color: white !important;
     -webkit-print-color-adjust: exact !important;
     color-adjust: exact !important;
@@ -358,13 +359,21 @@
     border: none !important;
   }
   
-  /* Force clean backgrounds for all card-like elements */
-  div[class*="bg-white"],
-  div[class*="rounded"],
-  .card,
-  .panel {
+  /* Force clean backgrounds for all card-like elements, but preserve gradients */
+  div[class*="bg-white"]:not([class*="gradient"]),
+  div[class*="rounded"]:not([class*="gradient"]):not([class*="bg-gradient"]),
+  .card:not([class*="gradient"]),
+  .panel:not([class*="gradient"]) {
     background-color: white !important;
     border: none !important;
     box-shadow: none !important;
+  }
+  
+  /* Ensure gradient backgrounds are preserved in print */
+  [class*="bg-gradient"],
+  [class*="gradient-to"] {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }

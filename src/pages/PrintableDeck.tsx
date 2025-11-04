@@ -185,18 +185,20 @@ const PrintableDeck = () => {
             print-color-adjust: exact !important;
           }
           
-          /* Remove gradients and backdrop filters which cause color issues in PDFs */
-          [class*="gradient"],
-          [style*="gradient"],
+          /* Remove backdrop filters and drop shadows which cause issues in PDFs */
+          /* Note: We keep gradient backgrounds as they work fine in print */
           [class*="backdrop-blur"],
-          [style*="backdrop-filter"],
-          [class*="drop-shadow"],
-          [style*="filter:"] {
-            box-shadow: none !important;
+          [style*="backdrop-filter"] {
             -webkit-backdrop-filter: none !important;
             backdrop-filter: none !important;
+          }
+          
+          /* Remove drop shadows and filters but keep backgrounds */
+          [class*="drop-shadow"],
+          [style*="filter: drop-shadow"],
+          [style*="filter:drop-shadow"] {
             filter: none !important;
-            background: none !important;
+            -webkit-filter: none !important;
           }
           
           /* Target the printable deck container specifically */
