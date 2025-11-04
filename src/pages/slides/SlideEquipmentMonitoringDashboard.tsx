@@ -1,10 +1,9 @@
 import React from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { AlertTriangle, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SlideLayout from '@/components/SlideLayout';
-import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
-import dashboardImage from '@/assets/equipment-monitoring-dashboard-interface-new.png';
+import dashboardImage from '@/assets/dashboards/Equipment Monitoring Dashboard.png';
 
 const SlideEquipmentMonitoringDashboard = () => {
   const navigate = useNavigate();
@@ -28,71 +27,133 @@ const SlideEquipmentMonitoringDashboard = () => {
         totalSlides="31"
         logoSrc={depointLogo}
         componentName="SlideEquipmentMonitoringDashboard"
+        backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       >
-      <div className="h-full flex gap-4 py-2 px-4 min-h-0">
+      <div className="h-full flex flex-col px-12 pb-8" style={{ gap: '16px' }}>
+        
+        {/* Executive Summary Card - Top, 100% width */}
+        <div className="w-full mt-4">
+          <div
+            className="group relative"
+            style={{
+              animation: 'floatIn 0.6s ease-out forwards',
+              opacity: 0
+            }}
+          >
+            <div
+              className="relative overflow-hidden transition-all duration-500 hover:scale-[1.01]"
+              style={{
+                background: 'rgba(255, 255, 255, 0.92)',
+                backdropFilter: 'blur(24px)',
+                borderRadius: '16px',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)',
+              }}
+            >
+              {/* Top light reflection */}
+              <div
+                className="absolute inset-x-0 top-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
+                }}
+              ></div>
 
-        {/* Left Side - Dashboard Image (70%) */}
-        <div className="w-[70%] flex flex-col min-h-0">
-          {/* Executive Summary - Top */}
-          <div className="mb-3">
-            <div className="bg-pillar-risk text-white p-3 rounded">
-              <div className="text-sm font-bold">Executive Summary:</div>
-              <div className="text-xs">This dashboard prevents $50,000+ in annual losses per location through predictive maintenance</div>
+              {/* Colored accent bar on left - Orange for risk */}
+              <div
+                className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                style={{
+                  background: 'linear-gradient(180deg, #f97316, #f97316dd)',
+                  boxShadow: '0 0 12px rgba(249, 115, 22, 0.4)'
+                }}
+              ></div>
+
+              <div className="flex items-center gap-3 p-3 pl-5">
+                {/* Icon Container */}
+                <div className="flex-shrink-0">
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
+                    style={{
+                      background: 'rgba(249, 115, 22, 0.08)',
+                      border: '1px solid rgba(249, 115, 22, 0.15)'
+                    }}
+                  >
+                    <AlertTriangle
+                      className="transition-transform duration-300 group-hover:scale-110"
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        color: '#f97316',
+                        strokeWidth: 2
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Text Content */}
+                <div className="flex-1">
+                  <h3
+                    className="font-semibold mb-1 tracking-tight"
+                    style={{
+                      fontSize: '16px',
+                      lineHeight: '1.3',
+                      color: '#1a1a1a'
+                    }}
+                  >
+                    Executive Summary
+                  </h3>
+                  <p
+                    className="font-normal leading-relaxed"
+                    style={{
+                      fontSize: '14px',
+                      lineHeight: '1.5',
+                      color: '#6b7280'
+                    }}
+                  >
+                    This dashboard prevents <span className="font-semibold text-gray-900">$50,000+ in annual losses</span> per location through predictive maintenance
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="bg-white rounded-lg shadow-lg p-2 flex-1 overflow-hidden">
-            <img 
-              src={dashboardImage} 
+        </div>
+
+        {/* Dashboard Image - Below, 100% width */}
+        <div className="flex-1 w-full flex items-center justify-center relative overflow-hidden">
+          {/* Subtle vignette/glow underneath - Orange for risk */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              background: 'radial-gradient(ellipse 50% 50% at 50% 50%, rgba(249, 115, 22, 0.04), transparent 70%)'
+            }}
+          ></div>
+
+          <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
+            <img
+              src={dashboardImage}
               alt="Equipment Monitoring Dashboard showing 95% uptime rates and predictive maintenance insights preventing costly failures"
-              className="w-full h-auto"
+              className="w-full h-auto object-contain object-top"
+              style={{
+                filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.08))',
+              }}
             />
           </div>
         </div>
 
-        {/* Right Side - Content (30%) */}
-        <div className="w-[30%] flex flex-col gap-3 overflow-y-auto">
-          {/* Financial Impact KPIs */}
-          <div className="bg-pillar-risk text-white p-3 rounded-lg shadow-clean-md">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="font-bold text-base">⚠️ Risk Reduction Impact</span>
-            </div>
-            <div className="grid grid-cols-1 gap-2 text-sm">
-              <div className="bg-white/20 p-2 rounded">
-                <div className="text-lg font-bold">$15,000</div>
-                <div className="text-white/80 text-xs">Spoilage avoided per freezer failure prevented</div>
-              </div>
-              <div className="bg-white/20 p-2 rounded">
-                <div className="text-lg font-bold">$8,500</div>
-                <div className="text-white/80 text-xs">Lost revenue per hour of equipment downtime</div>
-              </div>
-              <div className="bg-white/20 p-2 rounded">
-                <div className="text-lg font-bold">95%</div>
-                <div className="text-white/80 text-xs">Uptime rate = maximum transaction capacity</div>
-              </div>
-            </div>
-          </div>
-
-          {/* COO Risk Management Analysis */}
-          <div>
-            <h3 className="text-sm font-bold text-foreground mb-2">COO Risk Management Analysis:</h3>
-            <div className="space-y-2 text-xs">
-              <div className="bg-card border border-border p-2 rounded border-l-2 border-l-depoint-blue">
-                <span className="font-bold text-depoint-blue">Predictive Loss Prevention:</span> 
-                <div className="mt-1 text-muted-foreground">Real-time equipment health monitoring prevents catastrophic failures that cost $15,000+ in spoiled inventory per incident.</div>
-              </div>
-              <div className="bg-card border border-border p-2 rounded border-l-2 border-l-depoint-orange">
-                <span className="font-bold text-depoint-orange">Revenue Protection Through Uptime:</span> 
-                <div className="mt-1 text-muted-foreground">95% uptime rate ensures maximum transaction processing capacity during peak hours, protecting daily revenue potential.</div>
-              </div>
-              <div className="bg-card border border-border p-2 rounded border-l-2 border-l-pillar-risk">
-                <span className="font-bold text-pillar-risk">Enterprise-Wide Accountability:</span> 
-                <div className="mt-1 text-muted-foreground">Business unit performance tracking identifies best practices and problem areas for systematic improvement.</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
+
+      {/* Apple-style animations */}
+      <style>{`
+        @keyframes floatIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}</style>
       </SlideLayout>
   );
 };
