@@ -46,54 +46,50 @@ const SlideSolutionOverview = () => {
       backgroundClass="bg-gradient-to-br from-white via-[#F8FAFB] to-[#F5F7FA]"
       footerTagline="Depoint — Because chaos doesn't scale well."
     >
-      <div className="h-full flex items-center relative px-12 py-8">
+      <div className="h-full relative px-12 pb-6 overflow-hidden">
         
-        {/* Product Image - 75% width, left side with more breathing room */}
+        {/* Background Image - Larger, overflowing left */}
         <div 
-          className="w-[75%] h-full flex items-center justify-center pr-6"
+          className="absolute top-0 bottom-0 flex items-center justify-start pointer-events-none"
           style={{
+            left: '-8%',
+            width: '85%',
             animation: 'fadeInTilt 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            opacity: 0
+            opacity: 0,
+            zIndex: 1
           }}
         >
-          {/* Apple-style spotlight effect - stronger radial gradient */}
+          {/* Apple-style spotlight effect */}
           <div 
-            className="absolute left-0 top-1/2 -translate-y-1/2"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{
-              width: '65%',
-              height: '70%',
-              background: 'radial-gradient(ellipse 70% 60% at 40% 50%, rgba(30, 115, 255, 0.08), rgba(99, 102, 241, 0.04) 50%, transparent 75%)',
+              width: '100%',
+              height: '100%',
+              background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30, 115, 255, 0.05), rgba(99, 102, 241, 0.02) 50%, transparent 75%)',
               filter: 'blur(50px)',
               zIndex: 0
             }}
-          ></div>
-
+          />
+          
           <div className="relative w-full h-full flex items-center justify-center">
             <img 
               src={feedImage} 
               alt="Depoint Platform Interface" 
-              className="max-w-full max-h-full object-contain"
+              className="object-contain"
               style={{
-                filter: 'drop-shadow(0 24px 70px rgba(0, 0, 0, 0.14)) drop-shadow(0 10px 28px rgba(0, 0, 0, 0.1))',
+                width: '130%',
+                height: '130%',
+                maxWidth: 'none',
+                maxHeight: 'none',
+                filter: 'drop-shadow(0 20px 50px rgba(0, 0, 0, 0.10)) drop-shadow(0 8px 20px rgba(0, 0, 0, 0.06))'
               }}
             />
-            
-            {/* Enhanced floor reflection */}
-            <div 
-              className="absolute bottom-0 left-1/2 -translate-x-1/2"
-              style={{
-                width: '92%',
-                height: '35px',
-                background: 'radial-gradient(ellipse, rgba(0, 0, 0, 0.04), transparent 70%)',
-                filter: 'blur(14px)',
-                transform: 'translateX(-50%) translateY(12px)'
-              }}
-            ></div>
           </div>
         </div>
 
-        {/* Content Cards - 25% width, right side with better alignment */}
-        <div className="w-[25%] h-full flex items-center pr-4">
+        {/* Content Cards - Right side, overlaying the image */}
+        <div className="relative h-full flex items-center justify-end" style={{ zIndex: 2 }}>
+          <div className="w-[35%] flex items-center pr-4">
           <div className="w-full flex flex-col justify-center" style={{ gap: '14px' }}>
             {solutions.map((solution, index) => {
               const Icon = solution.icon;
@@ -193,6 +189,7 @@ const SlideSolutionOverview = () => {
                 </div>
               );
             })}
+          </div>
           </div>
         </div>
 
