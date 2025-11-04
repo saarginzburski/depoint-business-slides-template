@@ -11,32 +11,28 @@ const SlideSolutionOverview = () => {
       title: "Modernizing Operations:",
       description: "Replacing outdated, manual processes with streamlined, data-driven efficiency.",
       gradient: "linear-gradient(135deg, #1E73FF, #60A5FA)",
-      color: "#1E73FF",
-      lightBg: "rgba(30, 115, 255, 0.05)"
+      color: "#1E73FF"
     },
     {
       icon: TrendingUp,
       title: "Unlocking KPI Growth:",
       description: "Connecting data silos to uncover hidden revenue and optimize performance.",
       gradient: "linear-gradient(135deg, #22C55E, #A3E635)",
-      color: "#22C55E",
-      lightBg: "rgba(34, 197, 94, 0.05)"
+      color: "#22C55E"
     },
     {
       icon: RefreshCw,
       title: "Eliminating Repetitive Tasks:",
       description: "Flexible customization to protect brand identity and save time.",
       gradient: "linear-gradient(135deg, #F59E0B, #FACC15)",
-      color: "#F59E0B",
-      lightBg: "rgba(245, 158, 11, 0.05)"
+      color: "#F59E0B"
     },
     {
       icon: BarChart3,
       title: "Empowering Data-Driven Action:",
       description: "Advanced analytics powered by Google Looker for actionable insights.",
       gradient: "linear-gradient(135deg, #8B5CF6, #A78BFA)",
-      color: "#8B5CF6",
-      lightBg: "rgba(139, 92, 246, 0.05)"
+      color: "#8B5CF6"
     }
   ];
 
@@ -48,26 +44,26 @@ const SlideSolutionOverview = () => {
       logoSrc={depointLogo} 
       componentName="SlideSolutionOverview"
       backgroundClass="bg-gradient-to-br from-white via-[#F8FAFB] to-[#F5F7FA]"
-      footerTagline="Depoint — Because chaos doesn't scale good."
+      footerTagline="Depoint — Because chaos doesn't scale well."
     >
       <div className="h-full flex items-center relative px-12 py-8">
         
-        {/* Product Image - 70% width, left side */}
+        {/* Product Image - 75% width, left side with more breathing room */}
         <div 
-          className="w-[70%] h-full flex items-center justify-center pr-8"
+          className="w-[75%] h-full flex items-center justify-center pr-6"
           style={{
-            animation: 'fadeInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            animation: 'fadeInTilt 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
             opacity: 0
           }}
         >
-          {/* Subtle ambient glow behind image */}
+          {/* Apple-style spotlight effect - stronger radial gradient */}
           <div 
             className="absolute left-0 top-1/2 -translate-y-1/2"
             style={{
-              width: '60%',
-              height: '60%',
-              background: 'radial-gradient(ellipse, rgba(30, 115, 255, 0.04), transparent 70%)',
-              filter: 'blur(40px)',
+              width: '65%',
+              height: '70%',
+              background: 'radial-gradient(ellipse 70% 60% at 40% 50%, rgba(30, 115, 255, 0.08), rgba(99, 102, 241, 0.04) 50%, transparent 75%)',
+              filter: 'blur(50px)',
               zIndex: 0
             }}
           ></div>
@@ -78,27 +74,27 @@ const SlideSolutionOverview = () => {
               alt="Depoint Platform Interface" 
               className="max-w-full max-h-full object-contain"
               style={{
-                filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.12)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.08))',
+                filter: 'drop-shadow(0 24px 70px rgba(0, 0, 0, 0.14)) drop-shadow(0 10px 28px rgba(0, 0, 0, 0.1))',
               }}
             />
             
-            {/* Subtle floor reflection */}
+            {/* Enhanced floor reflection */}
             <div 
               className="absolute bottom-0 left-1/2 -translate-x-1/2"
               style={{
-                width: '90%',
-                height: '30px',
-                background: 'radial-gradient(ellipse, rgba(0, 0, 0, 0.03), transparent 70%)',
-                filter: 'blur(12px)',
-                transform: 'translateX(-50%) translateY(10px)'
+                width: '92%',
+                height: '35px',
+                background: 'radial-gradient(ellipse, rgba(0, 0, 0, 0.04), transparent 70%)',
+                filter: 'blur(14px)',
+                transform: 'translateX(-50%) translateY(12px)'
               }}
             ></div>
           </div>
         </div>
 
-        {/* Content Cards - 30% width, right side */}
-        <div className="w-[30%] h-full flex items-center">
-          <div className="w-full flex flex-col justify-center" style={{ gap: '16px' }}>
+        {/* Content Cards - 25% width, right side with better alignment */}
+        <div className="w-[25%] h-full flex items-center pr-4">
+          <div className="w-full flex flex-col justify-center" style={{ gap: '14px' }}>
             {solutions.map((solution, index) => {
               const Icon = solution.icon;
               return (
@@ -106,74 +102,76 @@ const SlideSolutionOverview = () => {
                   key={index}
                   className="group"
                   style={{
-                    animation: `slideInRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards ${0.3 + index * 0.1}s`,
+                    animation: `slideInRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards ${0.4 + index * 0.15}s`,
                     opacity: 0
                   }}
                 >
                   <div 
                     className="relative overflow-hidden transition-all duration-500"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.85)',
-                      backdropFilter: 'blur(16px)',
-                      borderRadius: '12px',
-                      border: '1px solid rgba(0, 0, 0, 0.06)',
-                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02)',
+                      background: 'rgba(255, 255, 255, 0.95)',
+                      backdropFilter: 'blur(20px)',
+                      borderRadius: '14px',
+                      border: '1px solid rgba(0, 0, 0, 0.05)',
+                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02), inset 0 1px 2px rgba(0, 0, 0, 0.02)',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateX(4px)';
-                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)';
+                      e.currentTarget.style.transform = 'translateX(6px) scale(1.01)';
+                      e.currentTarget.style.boxShadow = '0 8px 28px rgba(0, 0, 0, 0.08), 0 3px 10px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(0, 0, 0, 0.02)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateX(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02)';
+                      e.currentTarget.style.transform = 'translateX(0) scale(1)';
+                      e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02), inset 0 1px 2px rgba(0, 0, 0, 0.02)';
                     }}
                   >
-                    {/* Top light reflection */}
+                    {/* Top light reflection - stronger for glass effect */}
                     <div 
-                      className="absolute inset-x-0 top-0 h-px"
+                      className="absolute inset-x-0 top-0"
                       style={{
-                        background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
+                        height: '40%',
+                        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, transparent 100%)',
+                        borderRadius: '14px 14px 0 0'
                       }}
                     ></div>
                     
-                    {/* Colored left border with gradient */}
-                    <div 
-                      className="absolute left-0 top-3 bottom-3 w-[3px] rounded-r-full transition-all duration-300 group-hover:w-[4px]"
-                      style={{
-                        background: solution.gradient,
-                        boxShadow: `0 0 12px ${solution.color}30`
-                      }}
-                    ></div>
-                    
-                    <div className="flex items-start p-4 pl-5" style={{ gap: '12px' }}>
-                      {/* Minimal Monochrome Icon */}
+                    <div className="relative flex items-start p-4" style={{ gap: '12px' }}>
+                      {/* Gradient Color Dot with Icon - cleaner, more modern */}
                       <div className="flex-shrink-0">
                         <div 
-                          className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300"
+                          className="relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
                           style={{
-                            background: solution.lightBg,
-                            border: `1px solid ${solution.color}10`
+                            background: solution.gradient,
+                            boxShadow: `0 2px 8px ${solution.color}25, inset 0 1px 1px rgba(255, 255, 255, 0.3)`
                           }}
                         >
+                          {/* Inner light reflection on dot */}
+                          <div
+                            className="absolute inset-0 rounded-full"
+                            style={{
+                              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 60%)'
+                            }}
+                          ></div>
+                          
                           <Icon 
-                            className="transition-transform duration-300 group-hover:scale-110" 
+                            className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" 
                             style={{ 
                               width: '18px', 
                               height: '18px',
-                              color: solution.color,
-                              strokeWidth: 2
+                              color: 'white',
+                              strokeWidth: 2.5,
+                              filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))'
                             }} 
                           />
                         </div>
                       </div>
 
-                      {/* Text Content */}
+                      {/* Text Content - bolder titles, tighter spacing */}
                       <div className="flex-1">
                         <h3 
-                          className="font-semibold mb-1 tracking-tight"
+                          className="font-bold mb-0.5 tracking-tight"
                           style={{
                             fontSize: '14px',
-                            lineHeight: '1.4',
+                            lineHeight: '1.35',
                             color: '#0a0a0a'
                           }}
                         >
@@ -183,8 +181,8 @@ const SlideSolutionOverview = () => {
                           className="font-normal leading-relaxed"
                           style={{
                             fontSize: '12px',
-                            lineHeight: '1.5',
-                            color: '#6b7280'
+                            lineHeight: '1.45',
+                            color: '#555555'
                           }}
                         >
                           {solution.description}
@@ -200,23 +198,23 @@ const SlideSolutionOverview = () => {
 
       </div>
 
-      {/* Cinematic Apple-style animations */}
+      {/* Cinematic Apple-style animations with tilt effect */}
       <style>{`
-        @keyframes fadeInLeft {
+        @keyframes fadeInTilt {
           from {
             opacity: 0;
-            transform: translateX(-40px);
+            transform: translateX(-50px) perspective(1000px) rotateY(10deg);
           }
           to {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateX(0) perspective(1000px) rotateY(0deg);
           }
         }
 
         @keyframes slideInRight {
           from {
             opacity: 0;
-            transform: translateX(40px) scale(0.96);
+            transform: translateX(50px) scale(0.95);
           }
           to {
             opacity: 1;
