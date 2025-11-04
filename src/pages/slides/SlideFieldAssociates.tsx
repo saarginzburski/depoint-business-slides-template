@@ -1,153 +1,230 @@
 import React from 'react';
+import { CheckSquare, Shield, TrendingUp, MessageCircle } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
-import mobile1 from '@/assets/mobiles/mobile1.png';
-import mobile2 from '@/assets/mobiles/mobile2.png';
-import mobile3 from '@/assets/mobiles/mobile3.png';
-import mobile4 from '@/assets/mobiles/mobile4.png';
-import mobile5 from '@/assets/mobiles/mobile5.png';
-import mobile6 from '@/assets/mobiles/mobile6.png';
-import mobile7 from '@/assets/mobiles/mobile7.png';
+import multiImage from '@/assets/images/Multi.png';
 
 const SlideFieldAssociates = () => {
+  const features = [
+    {
+      icon: CheckSquare,
+      title: "Task Management Simplified:",
+      description: "Field teams receive real-time tasks, checklists, and updates directly from HQ — no WhatsApp or spreadsheets needed.",
+      gradient: "linear-gradient(135deg, #1E73FF, #60A5FA)",
+      color: "#1E73FF"
+    },
+    {
+      icon: Shield,
+      title: "Smart Compliance Tracking:",
+      description: "Every form, inspection, or audit submission syncs instantly, ensuring full traceability and zero manual follow-up.",
+      gradient: "linear-gradient(135deg, #22C55E, #A3E635)",
+      color: "#22C55E"
+    },
+    {
+      icon: TrendingUp,
+      title: "Performance Motivation:",
+      description: "Associates track their sales, quality, and engagement goals — turning daily routines into measurable achievements.",
+      gradient: "linear-gradient(135deg, #F59E0B, #FACC15)",
+      color: "#F59E0B"
+    },
+    {
+      icon: MessageCircle,
+      title: "Frictionless Communication:",
+      description: "Announcements, photo proofs, and policy updates reach every employee in one platform — no information gaps.",
+      gradient: "linear-gradient(135deg, #8B5CF6, #A78BFA)",
+      color: "#8B5CF6"
+    }
+  ];
+
   return (
     <SlideLayout 
-        title="Field Associates" 
-        slideNumber="16" 
-        totalSlides="37" 
-        logoSrc={depointLogo} 
-        componentName="SlideFieldAssociates"
-        backgroundClass="bg-white"
-      >
-        <div className="h-full flex flex-col items-center justify-start relative px-12 pb-8">
-          
-          {/* Hero Headline */}
-          <div className="text-center mb-4 relative z-10">
-            <h2 className="text-5xl font-light text-gray-900 leading-tight tracking-tight">
-              How it Works?
-            </h2>
-          </div>
+      title="Field Associates" 
+      subtitle="How It Works"
+      slideNumber="16" 
+      totalSlides="37" 
+      logoSrc={depointLogo} 
+      componentName="SlideFieldAssociates"
+      backgroundClass="bg-gradient-to-br from-white via-[#F7F9FB] to-[#F5F7FA]"
+      footerTagline="Depoint — Empowering the Frontline, One Task at a Time."
+    >
+      <div className="h-full flex items-center relative px-12 py-8">
+        
+        {/* Product Image - 70% width, left side */}
+        <div 
+          className="w-[70%] h-full flex items-center justify-center pr-6"
+          style={{
+            animation: 'fadeInTilt 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            opacity: 0
+          }}
+        >
+          {/* Apple-style spotlight effect */}
+          <div 
+            className="absolute left-0 top-1/2 -translate-y-1/2"
+            style={{
+              width: '60%',
+              height: '70%',
+              background: 'radial-gradient(ellipse 70% 60% at 40% 50%, rgba(30, 115, 255, 0.06), rgba(99, 102, 241, 0.03) 50%, transparent 75%)',
+              filter: 'blur(45px)',
+              zIndex: 0
+            }}
+          ></div>
 
-          {/* Mobile Showcase - Horizontal Layout with 7 screens */}
-          <div className="flex items-end justify-center gap-2 w-full max-w-7xl mx-auto flex-1">
+          <div className="relative w-full h-full flex items-center justify-center">
+            <img 
+              src={multiImage} 
+              alt="Depoint Field Associates Mobile Interface" 
+              className="max-w-full max-h-full object-contain"
+              style={{
+                filter: 'drop-shadow(0 24px 70px rgba(0, 0, 0, 0.14)) drop-shadow(0 10px 28px rgba(0, 0, 0, 0.1))',
+              }}
+            />
             
-            {/* Mobile 1 */}
+            {/* Enhanced floor reflection */}
             <div 
-              className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity duration-300"
+              className="absolute bottom-0 left-1/2 -translate-x-1/2"
               style={{
-                animation: 'floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both'
+                width: '85%',
+                height: '40px',
+                background: 'radial-gradient(ellipse, rgba(0, 0, 0, 0.04), transparent 70%)',
+                filter: 'blur(16px)',
+                transform: 'translateX(-50%) translateY(15px)'
               }}
-            >
-              <div className="rounded-xl overflow-hidden border border-gray-200/50 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-                <img src={mobile1} alt="Opening Checklist" className="w-44 h-auto" />
-              </div>
-            </div>
-
-            {/* Mobile 2 */}
-            <div 
-              className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity duration-300"
-              style={{
-                animation: 'floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both'
-              }}
-            >
-              <div className="rounded-xl overflow-hidden border border-gray-200/50 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-                <img src={mobile2} alt="Issue Reporting" className="w-44 h-auto" />
-              </div>
-            </div>
-
-            {/* Mobile 3 */}
-            <div 
-              className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity duration-300"
-              style={{
-                animation: 'floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both'
-              }}
-            >
-              <div className="rounded-xl overflow-hidden border border-gray-200/50 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-                <img src={mobile3} alt="Dashboard" className="w-44 h-auto" />
-              </div>
-            </div>
-
-            {/* Mobile 7 - Hero Center (largest) */}
-            <div 
-              className="flex flex-col items-center gap-3 relative"
-              style={{
-                animation: 'heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0s both'
-              }}
-            >
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-indigo-400/10 to-purple-400/10 blur-2xl scale-110"></div>
-              
-              <div className="relative rounded-2xl overflow-hidden border-2 border-gray-300/30 bg-white shadow-[0_15px_50px_rgba(0,0,0,0.12)]">
-                <img src={mobile7} alt="Task Management" className="w-64 h-auto relative z-10" />
-              </div>
-            </div>
-
-            {/* Mobile 4 */}
-            <div 
-              className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity duration-300"
-              style={{
-                animation: 'floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both'
-              }}
-            >
-              <div className="rounded-xl overflow-hidden border border-gray-200/50 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-                <img src={mobile4} alt="Sales Competition" className="w-44 h-auto" />
-              </div>
-            </div>
-
-            {/* Mobile 5 */}
-            <div 
-              className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity duration-300"
-              style={{
-                animation: 'floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both'
-              }}
-            >
-              <div className="rounded-xl overflow-hidden border border-gray-200/50 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-                <img src={mobile5} alt="Smart Alerts" className="w-44 h-auto" />
-              </div>
-            </div>
-
-            {/* Mobile 6 */}
-            <div 
-              className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity duration-300"
-              style={{
-                animation: 'floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both'
-              }}
-            >
-              <div className="rounded-xl overflow-hidden border border-gray-200/50 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-                <img src={mobile6} alt="Analytics" className="w-44 h-auto" />
-              </div>
-            </div>
-
+            ></div>
           </div>
-
         </div>
 
-        <style>{`
-          @keyframes floatIn {
-            0% {
-              opacity: 0;
-              transform: translateY(20px) scale(0.95);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0) scale(1);
-            }
-          }
+        {/* Content Cards - 30% width, right side */}
+        <div className="w-[30%] h-full flex items-center pr-4">
+          <div className="w-full flex flex-col justify-center" style={{ gap: '14px' }}>
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <div 
+                  key={index}
+                  className="group"
+                  style={{
+                    animation: `slideInRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards ${0.4 + index * 0.15}s`,
+                    opacity: 0
+                  }}
+                >
+                  <div 
+                    className="relative overflow-hidden transition-all duration-500"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.95)',
+                      backdropFilter: 'blur(20px)',
+                      borderRadius: '14px',
+                      border: '1px solid rgba(0, 0, 0, 0.05)',
+                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02), inset 0 1px 2px rgba(0, 0, 0, 0.02)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateX(6px) scale(1.01)';
+                      e.currentTarget.style.boxShadow = '0 8px 28px rgba(0, 0, 0, 0.08), 0 3px 10px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(0, 0, 0, 0.02)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateX(0) scale(1)';
+                      e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02), inset 0 1px 2px rgba(0, 0, 0, 0.02)';
+                    }}
+                  >
+                    {/* Top light reflection - stronger for glass effect */}
+                    <div 
+                      className="absolute inset-x-0 top-0"
+                      style={{
+                        height: '40%',
+                        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, transparent 100%)',
+                        borderRadius: '14px 14px 0 0'
+                      }}
+                    ></div>
+                    
+                    <div className="relative flex items-start p-4" style={{ gap: '12px' }}>
+                      {/* Gradient Color Dot with Icon */}
+                      <div className="flex-shrink-0">
+                        <div 
+                          className="relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
+                          style={{
+                            background: feature.gradient,
+                            boxShadow: `0 2px 8px ${feature.color}25, inset 0 1px 1px rgba(255, 255, 255, 0.3)`
+                          }}
+                        >
+                          {/* Inner light reflection on dot */}
+                          <div
+                            className="absolute inset-0 rounded-full"
+                            style={{
+                              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 60%)'
+                            }}
+                          ></div>
+                          
+                          <Icon 
+                            className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" 
+                            style={{ 
+                              width: '18px', 
+                              height: '18px',
+                              color: 'white',
+                              strokeWidth: 2.5,
+                              filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))'
+                            }} 
+                          />
+                        </div>
+                      </div>
 
-          @keyframes heroReveal {
-            0% {
-              opacity: 0;
-              transform: scale(0.9);
-            }
-            100% {
-              opacity: 1;
-              transform: scale(1);
-            }
+                      {/* Text Content - bolder titles, tighter spacing */}
+                      <div className="flex-1">
+                        <h3 
+                          className="font-bold mb-0.5 tracking-tight"
+                          style={{
+                            fontSize: '14px',
+                            lineHeight: '1.35',
+                            color: '#0a0a0a'
+                          }}
+                        >
+                          {feature.title}
+                        </h3>
+                        <p 
+                          className="font-normal leading-relaxed"
+                          style={{
+                            fontSize: '12px',
+                            lineHeight: '1.45',
+                            color: '#555555'
+                          }}
+                        >
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+      </div>
+
+      {/* Cinematic Apple-style animations with tilt effect */}
+      <style>{`
+        @keyframes fadeInTilt {
+          from {
+            opacity: 0;
+            transform: translateX(-50px) perspective(1000px) rotateY(10deg);
           }
-        `}</style>
-      </SlideLayout>
+          to {
+            opacity: 1;
+            transform: translateX(0) perspective(1000px) rotateY(0deg);
+          }
+        }
+
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(50px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+          }
+        }
+      `}</style>
+    </SlideLayout>
   );
 };
 
 export default SlideFieldAssociates;
-
