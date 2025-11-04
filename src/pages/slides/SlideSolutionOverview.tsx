@@ -80,8 +80,7 @@ const SlideSolutionOverview = () => {
                 width: '130%',
                 height: '130%',
                 maxWidth: 'none',
-                maxHeight: 'none',
-                filter: 'drop-shadow(0 20px 50px rgba(0, 0, 0, 0.10)) drop-shadow(0 8px 20px rgba(0, 0, 0, 0.06))'
+                maxHeight: 'none'
               }}
             />
           </div>
