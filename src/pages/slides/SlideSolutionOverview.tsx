@@ -46,15 +46,15 @@ const SlideSolutionOverview = () => {
       backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       footerTagline="Depoint — Because chaos doesn't scale good."
     >
-      <div className="h-full flex items-center gap-16 px-20 pb-10">
+      <div className="h-full flex items-center gap-12 px-16 pb-8">
         
-        {/* Left Side - Hero Image with Vignette */}
-        <div className="w-[56%] flex items-center justify-center relative">
+        {/* Left Side - Hero Image with Vignette (Much Larger) */}
+        <div className="w-[68%] flex items-center justify-center relative">
           {/* Subtle vignette/glow underneath */}
           <div 
             className="absolute inset-0 flex items-center justify-center"
             style={{
-              background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(30, 115, 255, 0.08), transparent 70%)'
+              background: 'radial-gradient(ellipse 65% 55% at 50% 50%, rgba(30, 115, 255, 0.08), transparent 70%)'
             }}
           ></div>
           
@@ -71,7 +71,7 @@ const SlideSolutionOverview = () => {
         </div>
 
         {/* Right Side - Solution Cards with Apple-style glassmorphism */}
-        <div className="w-[44%] flex flex-col gap-6">
+        <div className="w-[32%] flex flex-col justify-center" style={{ gap: '18px' }}>
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
             return (
@@ -103,18 +103,18 @@ const SlideSolutionOverview = () => {
                   
                   {/* Colored accent bar on left */}
                   <div 
-                    className="absolute left-0 top-6 bottom-6 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                    className="absolute left-0 top-4 bottom-4 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
                     style={{
                       background: `linear-gradient(180deg, ${solution.color}, ${solution.color}dd)`,
                       boxShadow: `0 0 12px ${solution.color}40`
                     }}
                   ></div>
                   
-                  <div className="flex items-start gap-5 p-6 pl-7">
+                  <div className="flex items-start gap-4 p-4 pl-5">
                     {/* Icon Container - Minimal with brand color */}
                     <div className="flex-shrink-0">
                       <div 
-                        className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300"
+                        className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
                         style={{
                           background: solution.lightBg,
                           border: `1px solid ${solution.color}15`
@@ -123,8 +123,8 @@ const SlideSolutionOverview = () => {
                         <Icon 
                           className="transition-transform duration-300 group-hover:scale-110" 
                           style={{ 
-                            width: '24px', 
-                            height: '24px',
+                            width: '20px', 
+                            height: '20px',
                             color: solution.color,
                             strokeWidth: 2
                           }} 
@@ -133,11 +133,11 @@ const SlideSolutionOverview = () => {
                     </div>
 
                     {/* Text Content */}
-                    <div className="flex-1 pt-1">
+                    <div className="flex-1">
                       <h3 
-                        className="font-semibold mb-2 tracking-tight"
+                        className="font-semibold mb-1.5 tracking-tight"
                         style={{
-                          fontSize: '17px',
+                          fontSize: '15px',
                           lineHeight: '1.4',
                           color: '#1a1a1a'
                         }}
@@ -147,8 +147,8 @@ const SlideSolutionOverview = () => {
                       <p 
                         className="font-normal leading-relaxed"
                         style={{
-                          fontSize: '15px',
-                          lineHeight: '1.6',
+                          fontSize: '13px',
+                          lineHeight: '1.5',
                           color: '#6b7280'
                         }}
                       >
