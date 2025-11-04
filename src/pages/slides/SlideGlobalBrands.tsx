@@ -33,54 +33,181 @@ const SlideGlobalBrands = () => {
 
   return (
     <SlideLayout 
-        title="Scale Proven Across Industries" 
+        title="Trusted by Global Leaders" 
         slideNumber="15" 
         totalSlides="37" 
         logoSrc={depointLogo} 
         componentName="SlideGlobalBrands"
-        backgroundClass="bg-white"
+        footerTagline="Depoint — The quiet system behind very loud brands."
+        backgroundClass="bg-gradient-to-b from-white via-[#F8FAFC] to-[#F1F5F9]/40"
       >
-        <div className="h-full flex flex-col items-center justify-start relative px-20 pb-12">
+        <div className="h-full flex flex-col items-center justify-center relative px-16 py-8">
           
-          {/* Hero Message - Ultra Clean Typography */}
-          <div className="text-center mb-20">
-            <h2 className="text-[56px] font-light text-gray-900 leading-[1.25] tracking-tight max-w-4xl mx-auto">
-              We bring efficiency & transparency<br/>to process management in global chains
+          {/* Hero Typography - Cinematic and Bold */}
+          <div 
+            className="text-center mb-16"
+            style={{
+              animation: 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              opacity: 0
+            }}
+          >
+            <h2 
+              className="font-light tracking-tight mb-4"
+              style={{
+                fontSize: '52px',
+                lineHeight: '1.15',
+                color: '#0a0a0a',
+                letterSpacing: '-0.02em',
+                maxWidth: '900px',
+                margin: '0 auto'
+              }}
+            >
+              Powering operations excellence across<br/>
+              retail, QSR, and enterprise chains.
             </h2>
           </div>
 
-              {/* Brand Logos - Premium Grid with Floating Effect */}
-              <div className="grid grid-cols-5 gap-12 items-center justify-items-center w-full max-w-6xl">
+          {/* Decorative gradient lines behind logos - subtle connectivity visual */}
+          <div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{
+              animation: 'fadeIn 1.5s ease-out 0.5s forwards',
+              opacity: 0
+            }}
+          >
+            <div
+              style={{
+                width: '85%',
+                height: '2px',
+                background: 'linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.08) 15%, rgba(99, 102, 241, 0.12) 50%, rgba(139, 92, 246, 0.08) 85%, transparent 100%)',
+                position: 'relative'
+              }}
+            >
+              {/* Subtle glow points */}
+              {[20, 35, 50, 65, 80].map((position, i) => (
+                <div
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    left: `${position}%`,
+                    top: '50%',
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, rgba(99, 102, 241, 0.25), transparent 70%)',
+                    transform: 'translate(-50%, -50%)',
+                    boxShadow: '0 0 20px rgba(99, 102, 241, 0.15)'
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Brand Logos - Premium Glass Tiles */}
+          <div 
+            className="flex items-center justify-center w-full max-w-7xl relative z-10"
+            style={{ gap: '36px' }}
+          >
             {brands.map((brand, index) => (
               <div
                 key={brand.name}
-                className="group relative"
+                className="group relative flex-shrink-0"
                 style={{
-                  animation: `floatIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.12}s both`
+                  animation: `floatIn 1s cubic-bezier(0.16, 1, 0.3, 1) ${0.6 + index * 0.1}s both`,
+                  opacity: 0
                 }}
               >
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 transition-all duration-700 -z-10 scale-110 blur-2xl"></div>
+                {/* Hover glow effect - Apple-style ambient light */}
+                <div 
+                  className="absolute inset-0 rounded-[28px] transition-all duration-700 -z-10"
+                  style={{
+                    background: 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0), rgba(139, 92, 246, 0))',
+                    transform: 'scale(1.15)',
+                    filter: 'blur(24px)',
+                  }}
+                ></div>
                 
                 {/* Logo container with glassmorphism */}
-                <div className="relative w-44 h-44 rounded-3xl bg-white/80 backdrop-blur-sm border border-gray-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex items-center justify-center p-10 transition-all duration-500 group-hover:shadow-[0_20px_60px_rgb(0,0,0,0.08)] group-hover:scale-105 group-hover:-translate-y-2">
-                  {/* Subtle inner shadow for depth */}
-                  <div className="absolute inset-[1px] rounded-3xl shadow-inner shadow-black/[0.02]"></div>
+                <div 
+                  className="relative flex items-center justify-center transition-all duration-500"
+                  style={{
+                    width: '200px',
+                    height: '200px',
+                    borderRadius: '28px',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    border: '1px solid rgba(0, 0, 0, 0.06)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03)',
+                    padding: '48px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.06)';
+                    const glow = e.currentTarget.previousElementSibling as HTMLElement;
+                    if (glow) {
+                      glow.style.background = 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.04))';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03)';
+                    const glow = e.currentTarget.previousElementSibling as HTMLElement;
+                    if (glow) {
+                      glow.style.background = 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0), rgba(139, 92, 246, 0))';
+                    }
+                  }}
+                >
+                  {/* Top light reflection for glass effect */}
+                  <div
+                    className="absolute inset-x-0 top-0 h-px"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)',
+                      borderRadius: '28px 28px 0 0'
+                    }}
+                  ></div>
+
+                  {/* Subtle inner glow */}
+                  <div
+                    className="absolute inset-[1px] rounded-[27px]"
+                    style={{
+                      boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.02)'
+                    }}
+                  ></div>
                   
                   <img 
                     src={brand.logo} 
                     alt={brand.name}
-                    className="w-full h-full object-contain relative z-10 transition-all duration-500 group-hover:scale-110"
+                    className="relative z-10 transition-all duration-500"
                     style={{ 
-                      filter: 'saturate(0.95) contrast(1.02)',
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      filter: 'saturate(0.98) contrast(1.01)',
                       maxHeight: '100%',
                       maxWidth: '100%'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.08)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
                     }}
                   />
                 </div>
 
-                {/* Ultra-subtle reflection effect */}
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-gradient-radial from-gray-900/[0.02] to-transparent rounded-full blur-sm"></div>
+                {/* Subtle floor reflection */}
+                <div 
+                  style={{
+                    position: 'absolute',
+                    bottom: '-8px',
+                    left: '50%',
+                    width: '60%',
+                    height: '6px',
+                    background: 'radial-gradient(ellipse, rgba(0, 0, 0, 0.04), transparent 70%)',
+                    transform: 'translateX(-50%)',
+                    filter: 'blur(4px)'
+                  }}
+                ></div>
               </div>
             ))}
           </div>
@@ -88,11 +215,31 @@ const SlideGlobalBrands = () => {
         </div>
 
         <style>{`
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
+          }
+
           @keyframes floatIn {
             0% {
               opacity: 0;
-              transform: translateY(40px) scale(0.9);
-              filter: blur(10px);
+              transform: translateY(50px) scale(0.92);
+              filter: blur(8px);
             }
             60% {
               opacity: 1;
@@ -104,14 +251,9 @@ const SlideGlobalBrands = () => {
               filter: blur(0px);
             }
           }
-
-          .bg-gradient-radial {
-            background-image: radial-gradient(circle, var(--tw-gradient-stops));
-          }
         `}</style>
       </SlideLayout>
   );
 };
 
 export default SlideGlobalBrands;
-
