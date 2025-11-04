@@ -155,9 +155,9 @@ const SlideOutOfTheBox = () => {
             maxHeight: '700px'
           }}
         >
-          {/* Row 1: Empty, Top, Empty */}
-          <div></div>
-          <div><ModuleCard module={modules.top} delay={0.6} /></div>
+          {/* Row 1: Top-Left (Auditing), Top, Empty */}
+          <div><ModuleCard module={modules.bottom} delay={0.6} /></div>
+          <div><ModuleCard module={modules.top} delay={0.65} /></div>
           <div></div>
 
           {/* Row 2: Left, Center Hub, Right */}
@@ -243,9 +243,9 @@ const SlideOutOfTheBox = () => {
           
           <div><ModuleCard module={modules.right} delay={0.75} /></div>
 
-          {/* Row 3: Bottom-Left, Bottom, Bottom-Right */}
+          {/* Row 3: Bottom-Left, Empty, Bottom-Right */}
           <div><ModuleCard module={modules.bottomLeft} delay={1.0} /></div>
-          <div><ModuleCard module={modules.bottom} delay={0.95} /></div>
+          <div></div>
           <div><ModuleCard module={modules.bottomRight} delay={0.85} /></div>
         </div>
 
