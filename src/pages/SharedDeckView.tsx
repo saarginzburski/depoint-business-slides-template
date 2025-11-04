@@ -131,29 +131,29 @@ const SharedDeckView = () => {
     checkMobile();
   }, []);
 
-  // Request fullscreen after authentication
+  // Request fullscreen after authentication (including on page load if already authenticated)
   useEffect(() => {
-    if (isAuthenticated && !isMobile) {
-      const requestFullscreen = async () => {
-        try {
-          const elem = document.documentElement;
-          if (elem.requestFullscreen) {
-            await elem.requestFullscreen();
-          } else if ((elem as any).webkitRequestFullscreen) {
-            await (elem as any).webkitRequestFullscreen();
-          } else if ((elem as any).msRequestFullscreen) {
-            await (elem as any).msRequestFullscreen();
-          }
-        } catch (error) {
-          console.log('Fullscreen request failed:', error);
-          // Silently fail - user might have denied permission
+    const requestFullscreen = async () => {
+      try {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+          await elem.requestFullscreen();
+        } else if ((elem as any).webkitRequestFullscreen) {
+          await (elem as any).webkitRequestFullscreen();
+        } else if ((elem as any).msRequestFullscreen) {
+          await (elem as any).msRequestFullscreen();
         }
-      };
-      
+      } catch (error) {
+        console.log('Fullscreen request failed:', error);
+        // Silently fail - user might have denied permission
+      }
+    };
+
+    if (isAuthenticated && !isMobile && !loading) {
       // Small delay to ensure smooth transition
       setTimeout(requestFullscreen, 300);
     }
-  }, [isAuthenticated, isMobile]);
+  }, [isAuthenticated, isMobile, loading]);
 
   useEffect(() => {
     // Check if already authenticated for this variant
