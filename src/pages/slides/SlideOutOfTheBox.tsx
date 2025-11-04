@@ -92,10 +92,12 @@ const SlideOutOfTheBox = () => {
             {orbitingModules.map((module, idx) => {
               const centerX = 700;
               const centerY = 375;
-              const radius = 350;
+              // Elliptical orbit: horizontal radius larger, vertical radius smaller
+              const horizontalRadius = 420;
+              const verticalRadius = 240;
               const angleRad = (module.angle * Math.PI) / 180;
-              const x = centerX + radius * Math.cos(angleRad);
-              const y = centerY + radius * Math.sin(angleRad);
+              const x = centerX + horizontalRadius * Math.cos(angleRad);
+              const y = centerY + verticalRadius * Math.sin(angleRad);
               
               return (
                 <line
@@ -115,12 +117,12 @@ const SlideOutOfTheBox = () => {
             })}
           </svg>
 
-          {/* Optional: Faint circular guide line */}
+          {/* Optional: Faint elliptical guide line */}
           <div
             className="absolute top-1/2 left-1/2 pointer-events-none"
             style={{
-              width: '700px',
-              height: '700px',
+              width: '840px',
+              height: '480px',
               transform: 'translate(-50%, -50%)',
               border: '1px solid rgba(0, 0, 0, 0.03)',
               borderRadius: '50%',
@@ -210,13 +212,20 @@ const SlideOutOfTheBox = () => {
             const Icon = module.icon;
             const delay = 0.4 + idx * 0.05;
             
+            // Elliptical orbit calculation
+            const horizontalRadius = 420;
+            const verticalRadius = 240;
+            const angleRad = (module.angle * Math.PI) / 180;
+            const translateX = horizontalRadius * Math.cos(angleRad);
+            const translateY = verticalRadius * Math.sin(angleRad);
+            
             return (
               <div
                 key={idx}
                 className="absolute top-1/2 left-1/2 orbit-card"
                 style={{
                   width: '280px',
-                  transform: `translate(-50%, -50%) rotate(${module.angle}deg) translate(350px) rotate(-${module.angle}deg)`,
+                  transform: `translate(-50%, -50%) translate(${translateX}px, ${translateY}px)`,
                   animation: `fadeIn 0.6s ease forwards ${delay}s`,
                   opacity: 0,
                   zIndex: 5
@@ -301,11 +310,9 @@ const SlideOutOfTheBox = () => {
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translate(-50%, -50%) rotate(var(--angle)) translate(350px) rotate(calc(-1 * var(--angle))) scale(0.8);
           }
           to {
             opacity: 1;
-            transform: translate(-50%, -50%) rotate(var(--angle)) translate(350px) rotate(calc(-1 * var(--angle))) scale(1);
           }
         }
 
