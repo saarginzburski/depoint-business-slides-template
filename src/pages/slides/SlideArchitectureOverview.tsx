@@ -15,7 +15,7 @@ const SlideArchitectureOverview = () => {
       footerTagline="The Intelligence Layer for your Franchise Operations"
       backgroundClass="bg-white"
     >
-      <div className="h-full flex items-center justify-center px-8 py-6">
+      <div className="h-full flex items-start justify-start px-8 pb-6">
         <div className="w-full h-full flex items-center justify-center">
           <img 
             src={architectureDiagram}

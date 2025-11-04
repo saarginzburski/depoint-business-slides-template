@@ -14,7 +14,7 @@ const SlideCompetitiveLandscape = () => {
         logoSrc={depointLogo}
         componentName="SlideCompetitiveLandscape"
       >
-        <div className="h-full flex flex-col justify-center py-6 max-w-7xl mx-auto">
+        <div className="h-full flex flex-col justify-start pb-6 max-w-7xl mx-auto">
         
         {/* Two-Column Layout */}
         <div className="grid grid-cols-2 gap-12 h-full items-center">

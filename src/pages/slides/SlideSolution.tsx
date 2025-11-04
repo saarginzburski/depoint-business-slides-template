@@ -58,7 +58,7 @@ const SlideSolution = () => {
         componentName="SlideSolution"
       >
       {/* Clean, spacious layout with generous breathing room */}
-      <div className="h-full flex flex-col justify-center py-12 gap-10">
+      <div className="h-full flex flex-col justify-start pb-12 gap-10">
         
         {/* Inner Heading & Subhead - Narrative bridge */}
         <div className="text-center flex-shrink-0 space-y-4">

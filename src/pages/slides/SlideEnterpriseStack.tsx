@@ -14,7 +14,7 @@ const SlideEnterpriseStack = () => {
         logoSrc={depointLogo}
         componentName="SlideEnterpriseStack"
       >
-        <div className="h-full flex flex-col justify-center items-center py-6 max-w-6xl mx-auto">
+        <div className="h-full flex flex-col justify-start items-center pb-6 max-w-6xl mx-auto">
         
         {/* Horizontal Bridge Diagram */}
         <div className="flex items-center justify-center gap-20 w-full mb-12">

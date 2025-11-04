@@ -14,7 +14,7 @@ const SlideCrossIndustryPlatform = () => {
         logoSrc={depointLogo}
         componentName="SlideCrossIndustryPlatform"
       >
-        <div className="h-full flex flex-col justify-center gap-6 py-6">
+        <div className="h-full flex flex-col justify-start gap-6 pb-6">
         
         {/* 7 DNA Bullets - Hero Section */}
         <div className="flex-1 bg-white rounded-xl border border-gray-200 p-6">

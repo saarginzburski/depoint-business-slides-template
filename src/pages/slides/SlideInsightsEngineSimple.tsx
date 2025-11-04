@@ -13,7 +13,7 @@ const SlideInsightsEngineSimple = () => {
       logoSrc={depointLogo}
     >
       {/* Simple two-part story as specified */}
-      <div className="h-full flex flex-col justify-center py-8">
+      <div className="h-full flex flex-col justify-start pb-8">
         
         {/* Two-Part Story Layout */}
         <div className="grid grid-cols-2 gap-16 max-w-6xl mx-auto">

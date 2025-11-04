@@ -14,7 +14,7 @@ const SlideStrategicFit = () => {
         logoSrc={depointLogo}
         componentName="SlideStrategicFit"
       >
-        <div className="h-full flex flex-col justify-center py-6">
+        <div className="h-full flex flex-col justify-start pb-6">
         
         {/* Hero Statement - Compact */}
         <div className="text-center mb-6">

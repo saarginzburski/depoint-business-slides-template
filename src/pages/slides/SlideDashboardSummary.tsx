@@ -13,7 +13,7 @@ const SlideDashboardSummary = () => {
         totalSlides="28"
         logoSrc={depointLogo}
       >
-        <div className="h-full flex flex-col justify-center py-6 max-w-7xl mx-auto">
+        <div className="h-full flex flex-col justify-start pb-6 max-w-7xl mx-auto">
         
         {/* 4-Column Category Layout */}
         <div className="grid grid-cols-4 gap-6 h-full">

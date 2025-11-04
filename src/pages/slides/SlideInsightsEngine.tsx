@@ -15,7 +15,7 @@ const SlideInsightsEngine = () => {
         componentName="SlideInsightsEngine"
       >
       {/* Main Content - Simple two-step visual flow */}
-      <div className="h-full flex flex-col justify-center py-6">
+      <div className="h-full flex flex-col justify-start pb-6">
         
         {/* Two-Step Visual Flow */}
         <div className="grid grid-cols-2 gap-6 h-full items-stretch">

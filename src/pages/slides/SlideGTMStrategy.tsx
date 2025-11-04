@@ -15,7 +15,7 @@ const SlideGTMStrategy = () => {
         componentName="SlideGTMStrategy"
       >
         {/* Content focused on the proven process with elite metrics callout */}
-        <div className="h-full flex flex-col justify-center gap-6 py-6">
+        <div className="h-full flex flex-col justify-start gap-6 pb-6">
         
         {/* LAND-EXPAND-EMBED Flow - Sleek Machine Design */}
         <div className="flex-shrink-0">

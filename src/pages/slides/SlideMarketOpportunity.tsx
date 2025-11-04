@@ -15,7 +15,7 @@ const SlideMarketOpportunity = () => {
         logoSrc={depointLogo}
         componentName="SlideMarketOpportunity"
       >
-      <div className="h-full flex flex-col justify-center py-6 overflow-hidden">
+      <div className="h-full flex flex-col justify-start pb-6 overflow-hidden">
         
         {/* Create Clear Visual Funnel - Compact */}
         <div className="text-center mb-4">

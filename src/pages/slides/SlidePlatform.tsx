@@ -15,7 +15,7 @@ const SlidePlatform = () => {
         logoSrc={depointLogo}
         componentName="SlidePlatform"
       >
-      <div className="h-full flex flex-col justify-center py-3 max-w-6xl mx-auto">
+      <div className="h-full flex flex-col justify-start pb-3 max-w-6xl mx-auto">
         
         {/* Clean Split Layout with Brand Colors */}
         <div className="grid grid-cols-2 gap-6 mb-4 items-stretch">

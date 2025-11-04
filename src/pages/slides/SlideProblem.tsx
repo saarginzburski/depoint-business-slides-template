@@ -8,7 +8,7 @@ const SlideProblem = () => {
     <div className="relative w-full h-full">
       <SlideLayout title="The $1 Trillion Disconnect" slideNumber="2" totalSlides="15" logoSrc={depointLogo} componentName="SlideProblem">
       {/* Reserve space for humor footer so borders are visible */}
-      <div className="h-full flex flex-col justify-center py-6 gap-6">
+      <div className="h-full flex flex-col justify-start pb-6 gap-6">
         
         {/* Section Labels */}
         

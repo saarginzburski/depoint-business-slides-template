@@ -12,7 +12,7 @@ const SlideTeam = () => {
         totalSlides="15"
         logoSrc={depointLogo}
       >
-      <div className="h-full flex flex-col justify-center items-center px-12">
+      <div className="h-full flex flex-col justify-start items-center px-12">
         <div className="max-w-4xl w-full grid grid-cols-3 gap-8">
           {/* CEO - Saar Ginzburski */}
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 text-center">

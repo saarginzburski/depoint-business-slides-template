@@ -16,7 +16,7 @@ const SlideCustomerStories = () => {
         logoSrc={depointLogo}
       >
       {/* World-class design - optimized for perfect fit */}
-      <div className="h-full flex flex-col justify-center py-6 max-w-7xl mx-auto">
+      <div className="h-full flex flex-col justify-start pb-6 max-w-7xl mx-auto">
         
         {/* Hero Grid Layout - Two Premium Brand Showcases */}
         <div className="grid grid-cols-2 gap-8 flex-1">

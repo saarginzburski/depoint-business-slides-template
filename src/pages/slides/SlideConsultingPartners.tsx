@@ -21,7 +21,7 @@ const SlideConsultingPartners = () => {
         logoSrc={depointLogo}
         componentName="SlideConsultingPartners"
       >
-      <div className="h-full flex flex-col justify-center py-6 max-w-6xl mx-auto">
+      <div className="h-full flex flex-col justify-start pb-6 max-w-6xl mx-auto">
         
         {/* Center Hero Box - Larger, balanced, centered with generous white space */}
         <div className="flex justify-center mb-12">

@@ -13,7 +13,7 @@ const SlideExecutiveSummary = () => {
         totalSlides="26"
         logoSrc={depointLogo}
       >
-      <div className="h-full flex flex-col justify-center py-6 max-w-7xl mx-auto">
+      <div className="h-full flex flex-col justify-start pb-6 max-w-7xl mx-auto">
         
         {/* Vision Statement - Monochrome */}
         <div className="text-center mb-12">

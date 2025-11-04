@@ -22,7 +22,7 @@ const SlideDashboardsDemo = () => {
       </div>
       
       {/* Main content */}
-      <div className="h-full relative flex flex-col justify-center items-center text-center z-10">
+      <div className="h-full relative flex flex-col justify-start items-center text-center z-10">
         
         {/* Title */}
         <h1 className="text-gray-900 mb-4" style={{fontSize: '4.5rem', fontWeight: '800', lineHeight: '1.1'}}>
