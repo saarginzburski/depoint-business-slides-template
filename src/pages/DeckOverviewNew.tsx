@@ -917,7 +917,14 @@ Then rebuild: npm run dev
                   order_index: s.order_index,
                 }))}
                 activeSectionKey={activeSection}
-                onSelect={(key) => setActiveSection(key as Section)}
+                onSelect={(key) => {
+                  setActiveSection(key as Section);
+                  // Clear slide viewer when switching sections to go back to grid view
+                  const params = new URLSearchParams(searchParams);
+                  params.delete('slide');
+                  params.set('section', key);
+                  setSearchParams(params, { replace: true });
+                }}
                 hiddenSections={hiddenSections}
                 onToggleSectionVisibility={async (sectionKey) => {
                   if (!currentVariantId) return;
