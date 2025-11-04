@@ -6,7 +6,8 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideEnterpriseStack = () => {
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="Depoint Bridges Frontline & ERP"
         slideNumber="18"
         totalSlides="15"
@@ -92,6 +93,8 @@ const SlideEnterpriseStack = () => {
         </div>
         </div>
       </SlideLayout>
+      
+    </div>
   );
 };
 

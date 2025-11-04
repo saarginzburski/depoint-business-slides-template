@@ -10,8 +10,7 @@ const SlideSpeedOfServiceDashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative w-full h-full">
-      <SlideLayout
+    <SlideLayout
         title={
           <div className="flex items-center gap-4">
             <span>Speed of Service Dashboard</span>
@@ -95,7 +94,6 @@ const SlideSpeedOfServiceDashboard = () => {
         </div>
       </div>
       </SlideLayout>
-    </div>
   );
 };
 

@@ -5,7 +5,8 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideTeam = () => {
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="Our Team"
         slideNumber="14"
         totalSlides="15"
@@ -45,6 +46,7 @@ const SlideTeam = () => {
         </div>
       </div>
       </SlideLayout>
+    </div>
   );
 };
 

@@ -6,7 +6,8 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideMarketOpportunity = () => {
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="Defining a $14B Category"
         subtitle=""
         slideNumber="11"
@@ -84,6 +85,8 @@ const SlideMarketOpportunity = () => {
         </div>
       </div>
       </SlideLayout>
+      
+    </div>
   );
 };
 

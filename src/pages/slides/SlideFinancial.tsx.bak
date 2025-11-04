@@ -7,7 +7,8 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 const SlideFinancial = () => {
 
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="Capital-Efficient Growth to $1.26M ARR"
         slideNumber="13"
         totalSlides="31"
@@ -161,6 +162,8 @@ const SlideFinancial = () => {
         </div>
       </div>
       </SlideLayout>
+      
+    </div>
   );
 };
 

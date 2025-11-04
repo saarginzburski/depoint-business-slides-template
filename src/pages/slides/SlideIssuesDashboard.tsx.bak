@@ -10,7 +10,8 @@ const SlideIssuesDashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title={
           <div className="flex items-center gap-4">
             <span>Issues Dashboard</span>
@@ -94,6 +95,7 @@ const SlideIssuesDashboard = () => {
         </div>
       </div>
       </SlideLayout>
+    </div>
   );
 };
 

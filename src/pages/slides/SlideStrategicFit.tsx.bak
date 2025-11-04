@@ -6,7 +6,8 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideStrategicFit = () => {
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="The Ultimate Strategic Asset: Our Data"
         slideNumber="16"
         totalSlides="15"
@@ -147,6 +148,8 @@ const SlideStrategicFit = () => {
         
         </div>
       </SlideLayout>
+      
+    </div>
   );
 };
 

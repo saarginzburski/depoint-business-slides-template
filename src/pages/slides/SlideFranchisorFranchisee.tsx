@@ -1,20 +1,18 @@
 import React from 'react';
 import { Eye, RefreshCw, Shield, Coins, Trophy, CheckSquare, DollarSign, Clock, Lock, GraduationCap } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideFranchisorFranchisee = () => {
   return (
-    <div className="relative w-full h-full">
-      <SlideLayout
-        title="One Platform. Two Perspectives. Shared Growth."
-        slideNumber="5"
-        totalSlides="15"
-        logoSrc={depointLogo}
-        componentName="SlideFranchisorFranchisee"
-      >
-        <div className="content-viewport h-full flex flex-col justify-center py-6">
+    <SlideLayout
+      title="One Platform. Two Perspectives. Shared Growth."
+      slideNumber="5"
+      totalSlides="15"
+      logoSrc={depointLogo}
+      componentName="SlideFranchisorFranchisee"
+    >
+      <div className="content-viewport h-full flex flex-col justify-start pb-6">
           
           {/* Main Split Layout */}
           <div className="flex-1 grid grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -130,7 +128,6 @@ const SlideFranchisorFranchisee = () => {
           </div>
         </div>
       </SlideLayout>
-    </div>
   );
 };
 

@@ -6,7 +6,8 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideCrossIndustryPlatform = () => {
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="The Common DNA of Our Target Industries"
         slideNumber="15"
         totalSlides="15"
@@ -179,6 +180,8 @@ const SlideCrossIndustryPlatform = () => {
         </div>
         </div>
       </SlideLayout>
+      
+    </div>
   );
 };
 

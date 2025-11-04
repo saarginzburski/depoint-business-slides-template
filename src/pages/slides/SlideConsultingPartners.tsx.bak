@@ -13,7 +13,8 @@ const SlideConsultingPartners = () => {
   ];
 
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="Why Partners Love Depoint"
         slideNumber="19"
         totalSlides="28"
@@ -82,6 +83,8 @@ const SlideConsultingPartners = () => {
         </div>
       </div>
       </SlideLayout>
+      
+    </div>
   );
 };
 

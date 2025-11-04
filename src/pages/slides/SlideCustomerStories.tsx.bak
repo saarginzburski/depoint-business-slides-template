@@ -8,7 +8,8 @@ import jollibeeLogo from "@/assets/jollibee-logo-new.png";
 
 const SlideCustomerStories = () => {
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="Trusted by Global Leaders"
         slideNumber="5"
         totalSlides="15"
@@ -105,6 +106,8 @@ const SlideCustomerStories = () => {
         </div>
       </div>
       </SlideLayout>
+      
+    </div>
   );
 };
 

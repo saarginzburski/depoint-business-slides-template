@@ -6,7 +6,8 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideCompetitiveLandscape = () => {
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="Designed for a Complexity Others Can't Handle"
         slideNumber="14"
         totalSlides="15"
@@ -118,6 +119,8 @@ const SlideCompetitiveLandscape = () => {
         
         </div>
       </SlideLayout>
+      
+    </div>
   );
 };
 

@@ -87,7 +87,8 @@ const SlideDashboardIntro: React.FC<SlideDashboardIntroProps> = ({ onNavigateToS
   };
 
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="The Intelligence Layer: Why Dashboards Matter"
         slideNumber="20"
         totalSlides="31"
@@ -194,6 +195,8 @@ const SlideDashboardIntro: React.FC<SlideDashboardIntroProps> = ({ onNavigateToS
         
       </div>
       </SlideLayout>
+      
+    </div>
   );
 };
 

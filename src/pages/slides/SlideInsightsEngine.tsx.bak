@@ -6,7 +6,8 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideInsightsEngine = () => {
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title="We Turn Data Into Foresight"
         slideNumber="10"
         totalSlides="15"
@@ -133,6 +134,7 @@ const SlideInsightsEngine = () => {
         
       </div>
       </SlideLayout>
+    </div>
   );
 };
 

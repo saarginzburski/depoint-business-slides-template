@@ -10,7 +10,8 @@ const SlideOilMonitoringDashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <SlideLayout
+    <div className="relative w-full h-full">
+      <SlideLayout
         title={
           <div className="flex items-center gap-4">
             <span>Oil Monitoring Dashboard</span>
@@ -109,6 +110,7 @@ const SlideOilMonitoringDashboard = () => {
         </div>
       </div>
       </SlideLayout>
+    </div>
   );
 };
 
