@@ -21,9 +21,10 @@ const SlideJollibeeCase = () => {
           <div className="grid grid-cols-3 flex-1 items-start" style={{ gap: '16px' }}>
             
             {/* Left Column - 2/3 width */}
-            <div className="col-span-2 flex flex-col h-full justify-between pr-6 border-r-2 border-neutral-300">
+            <div className="col-span-2 flex flex-col h-full justify-center pr-6 border-r-2 border-neutral-300">
+              <div className="flex flex-col" style={{ gap: '16px' }}>
               {/* Scale & Structure */}
-              <div className="mb-3">
+              <div>
                 <h3 className="text-base font-bold text-neutral-800 mb-2 text-center">Scale & Structure</h3>
                 <div className="grid grid-cols-3" style={{ gap: '12px' }}>
                   {/* Total Locations */}
@@ -163,20 +164,22 @@ const SlideJollibeeCase = () => {
                   </div>
                 </div>
               </div>
+              </div>
             </div>
 
             {/* Right Column - 1/3 width - Duplicating Made Easy */}
-            <div className="col-span-1 flex flex-col h-full pl-2">
-              <div className="flex items-center justify-center gap-1.5 mb-2">
-                <Copy className="w-4 h-4 text-jollibee-red" />
-                <h3 className="text-base font-bold text-neutral-800">Duplicating Made Easy</h3>
-              </div>
-              
-              <p className="text-[10px] text-neutral-600 text-center mb-3 leading-tight">
-                Once configured for Jollibee Philippines, the entire system was seamlessly replicated to multiple markets
-              </p>
-              
-              <div className="grid grid-cols-2 mb-3" style={{ gap: '10px' }}>
+            <div className="col-span-1 flex flex-col justify-center h-full pl-2">
+              <div className="flex flex-col">
+                <div className="flex items-center justify-center gap-1.5 mb-2">
+                  <Copy className="w-4 h-4 text-jollibee-red" />
+                  <h3 className="text-base font-bold text-neutral-800">Duplicating Made Easy</h3>
+                </div>
+                
+                <p className="text-[10px] text-neutral-600 text-center mb-3 leading-tight">
+                  Once configured for Jollibee Philippines, the entire system was seamlessly replicated to multiple markets
+                </p>
+                
+                <div className="grid grid-cols-2 mb-2" style={{ gap: '12px' }}>
                 {/* Jollibee UK */}
                 <div 
                   className="group relative overflow-hidden transition-all duration-500 hover:scale-[1.02]"
@@ -280,14 +283,15 @@ const SlideJollibeeCase = () => {
                     <div className="text-[8px] text-orange-700 mt-0.5 font-medium">Sister Brand</div>
                   </div>
                 </div>
-              </div>
+                </div>
 
-              {/* Call to action */}
-              <div className="text-center mt-auto">
-                <div className="inline-block bg-jollibee-red/10 rounded-lg px-2.5 py-1 border border-jollibee-red/20">
-                  <p className="text-[9px] font-bold text-jollibee-red leading-tight">
-                    One-click duplication • Zero reconfiguration • Instant scalability
-                  </p>
+                {/* Call to action */}
+                <div className="text-center mt-2">
+                  <div className="inline-block bg-jollibee-red/10 rounded-lg px-2.5 py-1 border border-jollibee-red/20">
+                    <p className="text-[9px] font-bold text-jollibee-red leading-tight">
+                      One-click duplication • Zero reconfiguration • Instant scalability
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
