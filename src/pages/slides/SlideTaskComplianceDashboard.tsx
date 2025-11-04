@@ -1,10 +1,9 @@
 import React from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SlideLayout from '@/components/SlideLayout';
-import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
-import dashboardImage from '@/assets/task-compliance-dashboard-interface.png';
+import dashboardImage from '@/assets/dashboards/Compliance Dashboard.png';
 
 const SlideTaskComplianceDashboard = () => {
   const navigate = useNavigate();
@@ -28,71 +27,137 @@ const SlideTaskComplianceDashboard = () => {
         totalSlides="31"
         logoSrc={depointLogo}
         componentName="SlideTaskComplianceDashboard"
+        backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       >
-      <div className="h-full flex gap-4 py-2 px-4 min-h-0">
+      <div className="h-full relative px-12 pb-8">
+        
+        {/* Background Image - Positioned on left */}
+        <div className="absolute left-0 top-0 bottom-0 w-[75%] flex items-center justify-start -ml-8">
+          {/* Subtle vignette/glow underneath */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              background: 'radial-gradient(ellipse 60% 50% at 35% 50%, rgba(255, 87, 51, 0.06), transparent 70%)'
+            }}
+          ></div>
 
-        {/* Left Side - Dashboard Image (70%) */}
-        <div className="w-[70%] flex flex-col min-h-0">
-          {/* Executive Summary - Risk Pillar Color */}
-          <div className="mb-3">
-            <div className="bg-pillar-risk text-white p-3 rounded">
-              <div className="text-sm font-bold">Executive Summary:</div>
-              <div className="text-xs">This dashboard prevents $150,000+ in annual risk exposure per location through compliance execution</div>
-            </div>
-          </div>
-          
-          <div className="bg-background rounded-lg shadow-clean-md p-2 flex-1 overflow-hidden border border-border">
-            <img 
-              src={dashboardImage} 
+          <div className="relative w-full h-[85%]">
+            <img
+              src={dashboardImage}
               alt="Task Compliance Dashboard showing 90.71% compliance protection with risk mitigation analytics across business units"
-              className="w-full h-auto"
+              className="w-full h-full object-contain object-left"
+              style={{
+                filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.08))',
+              }}
             />
           </div>
         </div>
 
-        {/* Right Side - Content (30%) */}
-        <div className="w-[30%] flex flex-col gap-3 overflow-y-auto">
-          {/* Financial Impact KPIs */}
-          <div className="bg-pillar-risk text-white p-3 rounded-lg shadow-clean-md">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="font-bold text-base">⚠️ Risk Reduction Impact</span>
-            </div>
-            <div className="grid grid-cols-1 gap-2 text-sm">
-              <div className="bg-white/20 p-2 rounded">
-                <div className="text-lg font-bold">$25K</div>
-                <div className="text-white/80 text-xs">Risk exposure per missed food safety task per store</div>
-              </div>
-              <div className="bg-white/20 p-2 rounded">
-                <div className="text-lg font-bold">$3.7M</div>
-                <div className="text-white/80 text-xs">Savings from 10% compliance improvement</div>
-              </div>
-              <div className="bg-white/20 p-2 rounded">
-                <div className="text-lg font-bold text-depoint-blue">90.71%</div>
-                <div className="text-white/80 text-xs">Current compliance rate protecting millions in exposure</div>
-              </div>
-            </div>
-          </div>
+        {/* Executive Summary Card - Overlaying on right side */}
+        <div className="relative h-full flex items-center justify-end z-10">
+          <div className="w-[35%] flex flex-col justify-center">
+            
+            <div
+              className="group relative"
+              style={{
+                animation: 'floatIn 0.6s ease-out forwards',
+                opacity: 0
+              }}
+            >
+              <div
+                className="relative overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.92)',
+                  backdropFilter: 'blur(24px)',
+                  borderRadius: '20px',
+                  border: '1px solid rgba(0, 0, 0, 0.08)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)',
+                }}
+              >
+                {/* Top light reflection */}
+                <div
+                  className="absolute inset-x-0 top-0 h-px"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
+                  }}
+                ></div>
 
-          {/* Risk Management Analysis */}
-          <div>
-            <h3 className="text-sm font-bold text-foreground mb-2">Risk Management Analysis:</h3>
-            <div className="space-y-2 text-xs">
-              <div className="bg-card border border-border p-2 rounded border-l-2 border-l-pillar-risk">
-                <span className="font-bold text-pillar-risk">Enterprise Risk Control:</span> 
-                <div className="mt-1 text-muted-foreground">90.71% overall compliance rate provides real-time protection against safety violations, lawsuits, and regulatory penalties.</div>
-              </div>
-              <div className="bg-card border border-border p-2 rounded border-l-2 border-l-depoint-orange">
-                <span className="font-bold text-depoint-orange">Predictive Risk Prevention:</span> 
-                <div className="mt-1 text-muted-foreground">Trend analysis identifies compliance degradation before incidents occur, preventing costly failures.</div>
-              </div>
-              <div className="bg-card border border-border p-2 rounded border-l-2 border-l-pillar-growth">
-                <span className="font-bold text-pillar-growth">Targeted Compliance Investment:</span> 
-                <div className="mt-1 text-muted-foreground">Business unit and task-specific breakdowns optimize training spend for maximum risk reduction ROI.</div>
+                {/* Colored accent bar on left */}
+                <div
+                  className="absolute left-0 top-4 bottom-4 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                  style={{
+                    background: 'linear-gradient(180deg, #FF5733, #FF5733dd)',
+                    boxShadow: '0 0 12px rgba(255, 87, 51, 0.4)'
+                  }}
+                ></div>
+
+                <div className="flex items-start gap-4 p-6 pl-7">
+                  {/* Icon Container */}
+                  <div className="flex-shrink-0">
+                    <div
+                      className="w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300"
+                      style={{
+                        background: 'rgba(255, 87, 51, 0.08)',
+                        border: '1px solid rgba(255, 87, 51, 0.15)'
+                      }}
+                    >
+                      <AlertTriangle
+                        className="transition-transform duration-300 group-hover:scale-110"
+                        style={{
+                          width: '24px',
+                          height: '24px',
+                          color: '#FF5733',
+                          strokeWidth: 2
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Text Content */}
+                  <div className="flex-1">
+                    <h3
+                      className="font-semibold mb-3 tracking-tight"
+                      style={{
+                        fontSize: '18px',
+                        lineHeight: '1.4',
+                        color: '#1a1a1a'
+                      }}
+                    >
+                      Executive Summary
+                    </h3>
+                    <p
+                      className="font-normal leading-relaxed"
+                      style={{
+                        fontSize: '15px',
+                        lineHeight: '1.6',
+                        color: '#6b7280'
+                      }}
+                    >
+                      This dashboard prevents <span className="font-semibold text-gray-900">$150,000+ in annual risk exposure</span> per location through compliance execution
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
+
       </div>
+
+      {/* Apple-style animations */}
+      <style>{`
+        @keyframes floatIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}</style>
       </SlideLayout>
   );
 };
