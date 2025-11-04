@@ -52,7 +52,7 @@ const SlideDashboardFeatures = () => {
         <div 
           className="absolute top-0 bottom-0 flex items-center justify-start pointer-events-none"
           style={{
-            left: '-15%',
+            left: '-8%',
             width: '85%',
             animation: 'fadeInTilt 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
             opacity: 0,
