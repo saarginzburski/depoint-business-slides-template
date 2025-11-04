@@ -1,10 +1,9 @@
 import React from 'react';
-import { Smartphone, ArrowLeft } from 'lucide-react';
+import { DollarSign, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SlideLayout from '@/components/SlideLayout';
-import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
-import dashboardImage from '@/assets/oil-monitoring-dashboard-interface.png';
+import dashboardImage from '@/assets/dashboards/Oil Monitoring.png';
 
 const SlideOilMonitoringDashboard = () => {
   const navigate = useNavigate();
@@ -28,86 +27,133 @@ const SlideOilMonitoringDashboard = () => {
         totalSlides="31"
         logoSrc={depointLogo}
         componentName="SlideOilMonitoringDashboard"
+        backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       >
-      <div className="h-full flex gap-4 py-2 px-4 min-h-0">
+      <div className="h-full flex flex-col px-12 pb-8" style={{ gap: '16px' }}>
+        
+        {/* Executive Summary Card - Top, 100% width */}
+        <div className="w-full mt-4">
+          <div
+            className="group relative"
+            style={{
+              animation: 'floatIn 0.6s ease-out forwards',
+              opacity: 0
+            }}
+          >
+            <div
+              className="relative overflow-hidden transition-all duration-500 hover:scale-[1.01]"
+              style={{
+                background: 'rgba(255, 255, 255, 0.92)',
+                backdropFilter: 'blur(24px)',
+                borderRadius: '16px',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)',
+              }}
+            >
+              {/* Top light reflection */}
+              <div
+                className="absolute inset-x-0 top-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
+                }}
+              ></div>
 
-        {/* Left Side - Dashboard Image (70%) */}
-        <div className="w-[70%] flex flex-col min-h-0">
-          {/* Executive Summary - Top */}
-          <div className="mb-3">
-            <div className="bg-pillar-margin text-white p-3 rounded">
-              <div className="text-sm font-bold">Executive Summary:</div>
-              <div className="text-xs">This dashboard = $15,000 annual savings per location through optimized oil management</div>
+              {/* Colored accent bar on left - Green for margin */}
+              <div
+                className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                style={{
+                  background: 'linear-gradient(180deg, #22c55e, #22c55edd)',
+                  boxShadow: '0 0 12px rgba(34, 197, 94, 0.4)'
+                }}
+              ></div>
+
+              <div className="flex items-center gap-3 p-3 pl-5">
+                {/* Icon Container */}
+                <div className="flex-shrink-0">
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
+                    style={{
+                      background: 'rgba(34, 197, 94, 0.08)',
+                      border: '1px solid rgba(34, 197, 94, 0.15)'
+                    }}
+                  >
+                    <DollarSign
+                      className="transition-transform duration-300 group-hover:scale-110"
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        color: '#22c55e',
+                        strokeWidth: 2
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Text Content */}
+                <div className="flex-1">
+                  <h3
+                    className="font-semibold mb-1 tracking-tight"
+                    style={{
+                      fontSize: '16px',
+                      lineHeight: '1.3',
+                      color: '#1a1a1a'
+                    }}
+                  >
+                    Executive Summary
+                  </h3>
+                  <p
+                    className="font-normal leading-relaxed"
+                    style={{
+                      fontSize: '14px',
+                      lineHeight: '1.5',
+                      color: '#6b7280'
+                    }}
+                  >
+                    This dashboard = <span className="font-semibold text-gray-900">$15,000 annual savings</span> per location through optimized oil management
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="bg-white rounded-lg shadow-lg p-2 flex-1 overflow-hidden relative">
-            {/* Subtle background image of fries - very faint */}
-            <div className="absolute inset-0 opacity-5 bg-gradient-to-br from-orange-100 to-yellow-100"></div>
-            <div className="absolute top-4 right-4 opacity-10">
-              🍟
-            </div>
-            <img 
-              src={dashboardImage} 
+        </div>
+
+        {/* Dashboard Image - Below, 100% width */}
+        <div className="flex-1 w-full flex items-center justify-center relative overflow-hidden">
+          {/* Subtle vignette/glow underneath - Green for margin */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              background: 'radial-gradient(ellipse 50% 50% at 50% 50%, rgba(34, 197, 94, 0.04), transparent 70%)'
+            }}
+          ></div>
+
+          <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
+            <img
+              src={dashboardImage}
               alt="Oil Monitoring Dashboard showing 99.59% oil quality checking hit rate with cost-saving insights and margin protection analytics"
-              className="w-full h-full object-contain relative z-10"
+              className="w-full h-auto object-contain object-top"
+              style={{
+                filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.08))',
+              }}
             />
           </div>
         </div>
 
-        {/* Right Side - Content (30%) */}
-        <div className="w-[30%] flex flex-col gap-3 overflow-y-auto">
-          {/* Financial Impact KPIs */}
-          <div className="bg-pillar-margin text-white p-3 rounded-lg shadow-clean-md">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="font-bold text-base">💰 Margin Protection Impact</span>
-            </div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-red-300">🔥 Oil waste</span>
-              <span className="text-blue-300">✅ Meals served</span>
-            </div>
-            <div className="grid grid-cols-1 gap-2 text-sm">
-              <div className="bg-white/20 p-2 rounded">
-                <div className="text-lg font-bold">$2.4M</div>
-                <div className="text-white/80 text-xs">Annual savings by reducing wasted oil changes</div>
-              </div>
-              <div className="bg-white/20 p-2 rounded">
-                <div className="text-lg font-bold">2-3%</div>
-                <div className="text-white/80 text-xs">Margin protection per store through improved fryer efficiency</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Platform Highlight */}
-          <div className="bg-blue-700 text-white p-3 rounded-lg shadow-xl">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="font-bold text-sm text-white">📱 Complete Mobile Platform</span>
-            </div>
-            <div className="text-blue-100 text-xs">
-              Real-time oil quality monitoring accessible anywhere for immediate cost-saving decisions.
-            </div>
-          </div>
-
-          {/* CFO Impact Analysis */}
-          <div>
-            <h3 className="text-sm font-bold text-foreground mb-2">CFO Impact Analysis:</h3>
-            <div className="space-y-2 text-xs">
-              <div className="bg-card border border-border p-2 rounded border-l-2 border-l-pillar-margin">
-                <span className="font-bold text-pillar-margin">Cost Avoidance Through Quality Control:</span> 
-                <div className="mt-1 text-muted-foreground">99.59% oil quality hit rate prevents premature oil replacement, extending oil life by 15-20% across all locations.</div>
-              </div>
-              <div className="bg-card border border-border p-2 rounded border-l-2 border-l-depoint-orange">
-                <span className="font-bold text-depoint-orange">Real-Time Loss Prevention:</span> 
-                <div className="mt-1 text-muted-foreground">Invalid fryer alerts prevent batch losses and customer complaints that cost $500-$2,000 per incident.</div>
-              </div>
-              <div className="bg-card border border-border p-2 rounded border-l-2 border-l-depoint-blue">
-                <span className="font-bold text-depoint-blue">Trend-Based Margin Optimization:</span> 
-                <div className="mt-1 text-muted-foreground">Historical performance data enables predictive oil management, reducing food costs by 2-3%.</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
+
+      {/* Apple-style animations */}
+      <style>{`
+        @keyframes floatIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}</style>
       </SlideLayout>
   );
 };
