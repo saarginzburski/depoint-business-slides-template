@@ -5,23 +5,22 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideProblemStats = () => {
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-slate-50 via-blue-50/30 to-orange-50/20 overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yellow-400 rounded-full blur-3xl"></div>
-      </div>
-      
-      <SlideLayout 
+    <SlideLayout 
         title="The Hidden Cost of Operational Chaos" 
         slideNumber="2" 
         totalSlides="15" 
         logoSrc={depointLogo} 
         componentName="SlideProblemStats"
+        backgroundClass="bg-gradient-to-br from-slate-50 via-blue-50/30 to-orange-50/20"
       >
         <div className="h-full flex flex-col justify-between py-6 relative">
-          
+          {/* Decorative background elements */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+            <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yellow-400 rounded-full blur-3xl"></div>
+          </div>
+
           {/* Subtitle */}
           <div className="text-center px-12 mb-4">
             <h2 className="text-2xl font-light text-gray-600 tracking-wide">
@@ -127,7 +126,6 @@ const SlideProblemStats = () => {
 
         </div>
       </SlideLayout>
-    </div>
   );
 };
 

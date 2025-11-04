@@ -32,16 +32,13 @@ const SlideGlobalBrands = () => {
   ];
 
   return (
-    <div className="relative w-full h-full bg-white overflow-hidden">
-      {/* Ultra-subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50/30"></div>
-
-      <SlideLayout 
+    <SlideLayout 
         title="Scale Proven Across Industries" 
         slideNumber="15" 
         totalSlides="37" 
         logoSrc={depointLogo} 
         componentName="SlideGlobalBrands"
+        backgroundClass="bg-white"
       >
         <div className="h-full flex flex-col items-center justify-center relative px-20 py-16">
           
@@ -89,32 +86,30 @@ const SlideGlobalBrands = () => {
           </div>
 
         </div>
+
+        <style>{`
+          @keyframes floatIn {
+            0% {
+              opacity: 0;
+              transform: translateY(40px) scale(0.9);
+              filter: blur(10px);
+            }
+            60% {
+              opacity: 1;
+              filter: blur(0px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+              filter: blur(0px);
+            }
+          }
+
+          .bg-gradient-radial {
+            background-image: radial-gradient(circle, var(--tw-gradient-stops));
+          }
+        `}</style>
       </SlideLayout>
-
-      {/* Apple-inspired animations */}
-      <style>{`
-        @keyframes floatIn {
-          0% {
-            opacity: 0;
-            transform: translateY(40px) scale(0.9);
-            filter: blur(10px);
-          }
-          60% {
-            opacity: 1;
-            filter: blur(0px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0px);
-          }
-        }
-
-        .bg-gradient-radial {
-          background-image: radial-gradient(circle, var(--tw-gradient-stops));
-        }
-      `}</style>
-    </div>
   );
 };
 

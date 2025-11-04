@@ -11,16 +11,13 @@ import mobile7 from '@/assets/mobiles/mobile7.png';
 
 const SlideFieldAssociates = () => {
   return (
-    <div className="relative w-full h-full bg-white overflow-hidden">
-      {/* Ultra-subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-50/20 via-white to-slate-50/10"></div>
-
-      <SlideLayout 
+    <SlideLayout 
         title="Field Associates" 
         slideNumber="16" 
         totalSlides="37" 
         logoSrc={depointLogo} 
         componentName="SlideFieldAssociates"
+        backgroundClass="bg-white"
       >
         <div className="h-full flex flex-col items-center justify-between relative px-12 py-8">
           
@@ -124,33 +121,31 @@ const SlideFieldAssociates = () => {
           </div>
 
         </div>
+
+        <style>{`
+          @keyframes floatIn {
+            0% {
+              opacity: 0;
+              transform: translateY(20px) scale(0.95);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+          }
+
+          @keyframes heroReveal {
+            0% {
+              opacity: 0;
+              transform: scale(0.9);
+            }
+            100% {
+              opacity: 1;
+              transform: scale(1);
+            }
+          }
+        `}</style>
       </SlideLayout>
-
-      {/* Apple-inspired animations */}
-      <style>{`
-        @keyframes floatIn {
-          0% {
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes heroReveal {
-          0% {
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-      `}</style>
-    </div>
   );
 };
 
