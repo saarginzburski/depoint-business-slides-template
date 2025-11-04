@@ -4,6 +4,33 @@ import SlideLayout from '@/components/SlideLayout';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideProblemStats = () => {
+  const metrics = [
+    {
+      icon: Monitor,
+      value: '~9',
+      label: 'Disconnected Systems Managing Store & Workforce Data',
+      gradient: 'linear-gradient(135deg, #1E73FF 0%, #60A5FA 100%)',
+      shadowColor: 'rgba(30, 115, 255, 0.2)',
+      glowColor: 'rgba(30, 115, 255, 0.15)'
+    },
+    {
+      icon: Clock,
+      value: '50%',
+      label: 'Of Management Time Lost to Manual Follow-Ups',
+      gradient: 'linear-gradient(135deg, #FF9E00 0%, #FACC15 100%)',
+      shadowColor: 'rgba(255, 158, 0, 0.2)',
+      glowColor: 'rgba(255, 158, 0, 0.15)'
+    },
+    {
+      icon: Users,
+      value: '80%',
+      label: 'Average Annual Employee Turnover in Operations',
+      gradient: 'linear-gradient(135deg, #FF5733 0%, #FF7F50 100%)',
+      shadowColor: 'rgba(255, 87, 51, 0.2)',
+      glowColor: 'rgba(255, 87, 51, 0.15)'
+    }
+  ];
+
   return (
     <SlideLayout 
         title="The Real Cost of Losing Operational Control" 
@@ -11,148 +38,206 @@ const SlideProblemStats = () => {
         totalSlides="15" 
         logoSrc={depointLogo} 
         componentName="SlideProblemStats"
-        backgroundClass="bg-gradient-to-b from-white via-gray-50/30 to-gray-50/50"
-        footerTagline="Turning Operational Noise Into Signal"
+        footerTagline="Depoint — Because chaos is not a KPI."
+        backgroundClass="bg-white"
       >
-        <div className="h-full flex flex-col justify-center pb-8 relative px-20">
+        {/* Custom background with subtle vignette */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse 80% 60% at 50% 40%, #FFFFFF, #F7F9FB)',
+            mixBlendMode: 'normal'
+          }}
+        ></div>
+
+        <div className="h-full flex flex-col justify-center py-8 relative px-16">
           
-          {/* Subtitle */}
-          <div className="text-center mb-20">
-            <h2 className="text-xl font-light text-gray-500 tracking-wide">
+          {/* Elegant Sub-header */}
+          <div 
+            className="text-center mb-16"
+            style={{
+              animation: 'fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              opacity: 0
+            }}
+          >
+            <h2 
+              className="font-light tracking-wide"
+              style={{
+                fontSize: '22px',
+                color: '#6b7280',
+                letterSpacing: '0.02em'
+              }}
+            >
               When Enterprises Lose Sight of Their Data & Processes
             </h2>
           </div>
 
-          {/* Three Horizontal Glass Bars */}
-          <div className="flex flex-col gap-6 max-w-5xl mx-auto w-full">
-            
-            {/* METRIC 1 - Blue - Systems */}
-            <div className="group">
-              <div 
-                className="relative overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
-                style={{
-                  background: 'linear-gradient(135deg, #1E73FF 0%, #60A5FA 100%)',
-                  boxShadow: '0 8px 32px rgba(30, 115, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-                }}
-              >
-                {/* Inner shadow for depth */}
-                <div className="absolute inset-0 shadow-inner" style={{ boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.06)' }}></div>
-                
-                {/* Light reflection */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent"></div>
-                
-                <div className="relative flex items-center gap-8 px-10 py-8">
-                  {/* Icon */}
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
-                      <Monitor className="w-7 h-7 text-white" strokeWidth={1.5} />
+          {/* Three Cinematic Data Cards */}
+          <div 
+            className="flex flex-col max-w-6xl mx-auto w-full"
+            style={{ gap: '28px' }}
+          >
+            {metrics.map((metric, index) => {
+              const IconComponent = metric.icon;
+              return (
+                <div
+                  key={index}
+                  className="group"
+                  style={{
+                    animation: `slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${0.2 + index * 0.15}s forwards`,
+                    opacity: 0
+                  }}
+                >
+                  <div 
+                    className="relative overflow-hidden transition-all duration-500"
+                    style={{
+                      background: metric.gradient,
+                      borderRadius: '24px',
+                      boxShadow: `0 12px 40px ${metric.shadowColor}, 0 4px 12px ${metric.glowColor}`,
+                      border: '1px solid rgba(255, 255, 255, 0.25)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)';
+                      e.currentTarget.style.boxShadow = `0 20px 60px ${metric.shadowColor}, 0 8px 24px ${metric.glowColor}`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = `0 12px 40px ${metric.shadowColor}, 0 4px 12px ${metric.glowColor}`;
+                    }}
+                  >
+                    {/* Top light reflection - glass effect */}
+                    <div
+                      className="absolute inset-x-0 top-0"
+                      style={{
+                        height: '50%',
+                        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%)',
+                        borderRadius: '24px 24px 0 0'
+                      }}
+                    ></div>
+
+                    {/* Subtle inner border for depth */}
+                    <div
+                      className="absolute inset-[1px] rounded-[23px]"
+                      style={{
+                        boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.1)'
+                      }}
+                    ></div>
+
+                    {/* Content */}
+                    <div className="relative flex items-center px-12 py-9" style={{ gap: '32px' }}>
+                      {/* Icon Container */}
+                      <div className="flex-shrink-0">
+                        <div 
+                          className="transition-all duration-300"
+                          style={{
+                            width: '64px',
+                            height: '64px',
+                            borderRadius: '16px',
+                            background: 'rgba(255, 255, 255, 0.18)',
+                            backdropFilter: 'blur(8px)',
+                            border: '1px solid rgba(255, 255, 255, 0.35)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+                          }}
+                        >
+                          <IconComponent 
+                            style={{
+                              width: '32px',
+                              height: '32px',
+                              color: 'rgba(255, 255, 255, 0.95)',
+                              strokeWidth: 1.75
+                            }}
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Metric Number */}
+                      <div className="flex-shrink-0 text-center" style={{ minWidth: '160px' }}>
+                        <div 
+                          className="font-extralight tracking-tight"
+                          style={{
+                            fontSize: '80px',
+                            lineHeight: '1',
+                            color: 'white',
+                            textShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+                            letterSpacing: '-0.03em'
+                          }}
+                        >
+                          {metric.value}
+                        </div>
+                      </div>
+                      
+                      {/* Elegant Vertical Divider */}
+                      <div 
+                        style={{
+                          width: '1px',
+                          height: '72px',
+                          background: 'linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.4) 20%, rgba(255, 255, 255, 0.4) 80%, transparent 100%)',
+                          flexShrink: 0
+                        }}
+                      ></div>
+                      
+                      {/* Label */}
+                      <div className="flex-1">
+                        <h3 
+                          className="font-normal leading-relaxed"
+                          style={{
+                            fontSize: '22px',
+                            color: 'rgba(255, 255, 255, 0.97)',
+                            letterSpacing: '0.01em',
+                            lineHeight: '1.4',
+                            textShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                          }}
+                        >
+                          {metric.label}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Metric Number */}
-                  <div className="flex-shrink-0 text-center min-w-[140px]">
-                    <div className="text-7xl font-extralight text-white tracking-tight drop-shadow-lg">~9</div>
-                  </div>
-                  
-                  {/* Divider */}
-                  <div className="w-px h-16 bg-white/30"></div>
-                  
-                  {/* Label */}
-                  <div className="flex-1">
-                    <h3 className="text-xl font-normal text-white/95 leading-relaxed tracking-wide">
-                      Disconnected Systems Managing Store & Workforce Data
-                    </h3>
+
+                    {/* Bottom subtle shadow for lifted effect */}
+                    <div
+                      className="absolute -bottom-1 left-1/2 -translate-x-1/2"
+                      style={{
+                        width: '95%',
+                        height: '8px',
+                        background: `radial-gradient(ellipse, ${metric.glowColor}, transparent 70%)`,
+                        filter: 'blur(6px)'
+                      }}
+                    ></div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* METRIC 2 - Amber - Time */}
-            <div className="group">
-              <div 
-                className="relative overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
-                style={{
-                  background: 'linear-gradient(135deg, #FF9E00 0%, #FACC15 100%)',
-                  boxShadow: '0 8px 32px rgba(255, 158, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-                }}
-              >
-                {/* Inner shadow for depth */}
-                <div className="absolute inset-0 shadow-inner" style={{ boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.06)' }}></div>
-                
-                {/* Light reflection */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent"></div>
-                
-                <div className="relative flex items-center gap-8 px-10 py-8">
-                  {/* Icon */}
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
-                      <Clock className="w-7 h-7 text-white" strokeWidth={1.5} />
-                    </div>
-                  </div>
-                  
-                  {/* Metric Number */}
-                  <div className="flex-shrink-0 text-center min-w-[140px]">
-                    <div className="text-7xl font-extralight text-white tracking-tight drop-shadow-lg">50%</div>
-                  </div>
-                  
-                  {/* Divider */}
-                  <div className="w-px h-16 bg-white/30"></div>
-                  
-                  {/* Label */}
-                  <div className="flex-1">
-                    <h3 className="text-xl font-normal text-white/95 leading-relaxed tracking-wide">
-                      Of Management Time Lost to Manual Follow-Ups
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* METRIC 3 - Coral - Turnover */}
-            <div className="group">
-              <div 
-                className="relative overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
-                style={{
-                  background: 'linear-gradient(135deg, #FF5733 0%, #FF7F50 100%)',
-                  boxShadow: '0 8px 32px rgba(255, 87, 51, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
-                }}
-              >
-                {/* Inner shadow for depth */}
-                <div className="absolute inset-0 shadow-inner" style={{ boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.06)' }}></div>
-                
-                {/* Light reflection */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent"></div>
-                
-                <div className="relative flex items-center gap-8 px-10 py-8">
-                  {/* Icon */}
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
-                      <Users className="w-7 h-7 text-white" strokeWidth={1.5} />
-                    </div>
-                  </div>
-                  
-                  {/* Metric Number */}
-                  <div className="flex-shrink-0 text-center min-w-[140px]">
-                    <div className="text-7xl font-extralight text-white tracking-tight drop-shadow-lg">80%</div>
-                  </div>
-                  
-                  {/* Divider */}
-                  <div className="w-px h-16 bg-white/30"></div>
-                  
-                  {/* Label */}
-                  <div className="flex-1">
-                    <h3 className="text-xl font-normal text-white/95 leading-relaxed tracking-wide">
-                      Average Annual Employee Turnover in Operations
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+              );
+            })}
           </div>
 
-          {/* Dividing line above footer (handled by SlideLayout) */}
         </div>
+
+        {/* Cinematic Animations */}
+        <style>{`
+          @keyframes fadeInDown {
+            from {
+              opacity: 0;
+              transform: translateY(-30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          @keyframes slideInRight {
+            from {
+              opacity: 0;
+              transform: translateX(60px) scale(0.95);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0) scale(1);
+            }
+          }
+        `}</style>
       </SlideLayout>
   );
 };
