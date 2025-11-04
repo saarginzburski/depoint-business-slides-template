@@ -46,32 +46,33 @@ const SlideSolutionOverview = () => {
       backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       footerTagline="Depoint — Because chaos doesn't scale good."
     >
-      <div className="h-full flex items-center gap-12 px-16 pb-8">
+      <div className="h-full relative px-12 pb-8">
         
-        {/* Left Side - Hero Image with Vignette (Much Larger) */}
-        <div className="w-[68%] flex items-center justify-center relative">
+        {/* Background Image - Positioned on left */}
+        <div className="absolute left-0 top-0 bottom-0 w-[70%] flex items-center justify-start pl-8">
           {/* Subtle vignette/glow underneath */}
           <div 
             className="absolute inset-0 flex items-center justify-center"
             style={{
-              background: 'radial-gradient(ellipse 65% 55% at 50% 50%, rgba(30, 115, 255, 0.08), transparent 70%)'
+              background: 'radial-gradient(ellipse 60% 50% at 40% 50%, rgba(30, 115, 255, 0.06), transparent 70%)'
             }}
           ></div>
           
-          <div className="relative w-full z-10">
+          <div className="relative w-full h-[85%]">
             <img 
               src={solutionImage} 
               alt="Depoint Solution" 
-              className="w-full h-auto object-contain"
+              className="w-full h-full object-contain object-left"
               style={{
-                filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.12))',
+                filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.08))',
               }}
             />
           </div>
         </div>
 
-        {/* Right Side - Solution Cards with Apple-style glassmorphism */}
-        <div className="w-[32%] flex flex-col justify-center" style={{ gap: '18px' }}>
+        {/* Solution Cards - Overlaying on right side */}
+        <div className="relative h-full flex items-center justify-end z-10">
+          <div className="w-[48%] flex flex-col justify-center" style={{ gap: '20px' }}>
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
             return (
@@ -86,11 +87,11 @@ const SlideSolutionOverview = () => {
                 <div 
                   className="relative overflow-hidden transition-all duration-500 hover:scale-[1.02]"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.8)',
-                    backdropFilter: 'blur(20px)',
+                    background: 'rgba(255, 255, 255, 0.92)',
+                    backdropFilter: 'blur(24px)',
                     borderRadius: '20px',
-                    border: '1px solid rgba(0, 0, 0, 0.06)',
-                    boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04)',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)',
                   }}
                 >
                   {/* Top light reflection */}
@@ -110,11 +111,11 @@ const SlideSolutionOverview = () => {
                     }}
                   ></div>
                   
-                  <div className="flex items-start gap-4 p-4 pl-5">
+                  <div className="flex items-start gap-4 p-5 pl-6">
                     {/* Icon Container - Minimal with brand color */}
                     <div className="flex-shrink-0">
                       <div 
-                        className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
+                        className="w-11 h-11 rounded-lg flex items-center justify-center transition-all duration-300"
                         style={{
                           background: solution.lightBg,
                           border: `1px solid ${solution.color}15`
@@ -123,8 +124,8 @@ const SlideSolutionOverview = () => {
                         <Icon 
                           className="transition-transform duration-300 group-hover:scale-110" 
                           style={{ 
-                            width: '20px', 
-                            height: '20px',
+                            width: '22px', 
+                            height: '22px',
                             color: solution.color,
                             strokeWidth: 2
                           }} 
@@ -135,9 +136,9 @@ const SlideSolutionOverview = () => {
                     {/* Text Content */}
                     <div className="flex-1">
                       <h3 
-                        className="font-semibold mb-1.5 tracking-tight"
+                        className="font-semibold mb-2 tracking-tight"
                         style={{
-                          fontSize: '15px',
+                          fontSize: '16px',
                           lineHeight: '1.4',
                           color: '#1a1a1a'
                         }}
@@ -147,8 +148,8 @@ const SlideSolutionOverview = () => {
                       <p 
                         className="font-normal leading-relaxed"
                         style={{
-                          fontSize: '13px',
-                          lineHeight: '1.5',
+                          fontSize: '14px',
+                          lineHeight: '1.55',
                           color: '#6b7280'
                         }}
                       >
@@ -160,6 +161,7 @@ const SlideSolutionOverview = () => {
               </div>
             );
           })}
+          </div>
         </div>
 
       </div>
