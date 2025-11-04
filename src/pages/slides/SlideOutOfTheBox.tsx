@@ -46,7 +46,7 @@ const SlideOutOfTheBox = () => {
     const Icon = module.icon;
     return (
       <div
-        className="h-full flex items-center justify-center"
+        className="flex items-center justify-center"
         style={{
           animation: `floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards ${delay}s`,
           opacity: 0
@@ -55,7 +55,7 @@ const SlideOutOfTheBox = () => {
         <div
           className="overflow-hidden rounded-2xl transition-all duration-500 group"
           style={{
-            width: '170px',
+            width: '165px',
             background: 'rgba(255, 255, 255, 0.92)',
             backdropFilter: 'blur(16px)',
             border: '1px solid rgba(0, 0, 0, 0.06)',
@@ -78,13 +78,13 @@ const SlideOutOfTheBox = () => {
             }}
           ></div>
 
-          <div className="flex flex-col items-center text-center p-4">
+          <div className="flex flex-col items-center text-center p-3.5">
             {/* Icon Container */}
             <div
-              className="mb-3 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+              className="mb-2.5 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
               style={{
-                width: '48px',
-                height: '48px',
+                width: '46px',
+                height: '46px',
                 background: 'rgba(30, 115, 255, 0.06)',
                 border: '1.5px solid rgba(30, 115, 255, 0.12)',
                 boxShadow: '0 2px 8px rgba(30, 115, 255, 0.08)'
@@ -92,8 +92,8 @@ const SlideOutOfTheBox = () => {
             >
               <Icon
                 style={{
-                  width: '24px',
-                  height: '24px',
+                  width: '22px',
+                  height: '22px',
                   color: '#1E73FF',
                   strokeWidth: 1.75
                 }}
@@ -102,9 +102,9 @@ const SlideOutOfTheBox = () => {
 
             {/* Title */}
             <h4
-              className="font-bold mb-1.5 tracking-tight"
+              className="font-bold mb-1 tracking-tight"
               style={{
-                fontSize: '12px',
+                fontSize: '11.5px',
                 lineHeight: '1.3',
                 color: '#0a0a0a'
               }}
@@ -116,8 +116,8 @@ const SlideOutOfTheBox = () => {
             <p
               className="leading-tight"
               style={{
-                fontSize: '9px',
-                lineHeight: '1.4',
+                fontSize: '8.5px',
+                lineHeight: '1.35',
                 color: '#555555'
               }}
             >
@@ -140,53 +140,46 @@ const SlideOutOfTheBox = () => {
       backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F5F7FA]"
       footerTagline="Depoint — Out of the Box. Ready from Day One."
     >
-      <div className="h-full flex items-center justify-center py-6 px-8">
+      <div className="h-full flex items-center justify-center py-4 px-6">
         
-        {/* 5x5 Grid Layout for perfect positioning */}
+        {/* 3x3 Grid with center hub and surrounding modules */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(5, 180px)',
-            gridTemplateRows: 'repeat(5, 140px)',
-            gap: '20px',
+            gridTemplateColumns: '200px 240px 200px',
+            gridTemplateRows: '180px 240px 180px',
+            gap: '0px',
             alignItems: 'center',
             justifyItems: 'center',
+            maxWidth: '900px',
+            maxHeight: '700px'
           }}
         >
-          {/* Row 1 - Empty, Top, Empty, Empty, Empty */}
+          {/* Row 1: Empty, Top, Empty */}
           <div></div>
           <div><ModuleCard module={modules.top} delay={0.6} /></div>
           <div></div>
-          <div></div>
-          <div></div>
 
-          {/* Row 2 - Empty, Empty, Top-Right, Empty, Empty */}
-          <div></div>
-          <div></div>
-          <div><ModuleCard module={modules.topRight} delay={0.7} /></div>
-          <div></div>
-          <div></div>
-
-          {/* Row 3 - Left, Empty, CENTER HUB, Empty, Right */}
-          <div><ModuleCard module={modules.left} delay={1.0} /></div>
-          <div></div>
+          {/* Row 2: Left, Center Hub, Right */}
+          <div><ModuleCard module={modules.left} delay={0.95} /></div>
           
           {/* Central Hub */}
           <div
             className="flex items-center justify-center"
             style={{
               animation: 'hubPulse 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s',
-              opacity: 0
+              opacity: 0,
+              position: 'relative'
             }}
           >
             {/* Radial glow background */}
             <div
               className="absolute pointer-events-none"
               style={{
-                width: '500px',
-                height: '500px',
+                width: '450px',
+                height: '450px',
                 background: 'radial-gradient(circle, rgba(30, 115, 255, 0.15) 0%, rgba(96, 165, 250, 0.08) 40%, transparent 70%)',
-                filter: 'blur(40px)',
+                filter: 'blur(35px)',
                 zIndex: 0
               }}
             ></div>
@@ -194,8 +187,8 @@ const SlideOutOfTheBox = () => {
             <div
               className="relative overflow-hidden rounded-3xl transition-all duration-500"
               style={{
-                width: '220px',
-                height: '220px',
+                width: '215px',
+                height: '215px',
                 background: 'linear-gradient(135deg, #1E73FF 0%, #60A5FA 100%)',
                 boxShadow: '0 20px 60px rgba(30, 115, 255, 0.3), 0 8px 24px rgba(30, 115, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -212,10 +205,10 @@ const SlideOutOfTheBox = () => {
               ></div>
 
               {/* Content */}
-              <div className="relative h-full flex flex-col items-center justify-center px-6 text-center">
+              <div className="relative h-full flex flex-col items-center justify-center px-5 text-center">
                 {/* Icon - 4 squares grid */}
-                <div className="mb-4">
-                  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <div className="mb-3.5">
+                  <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="3" width="7" height="7" rx="1.5" />
                     <rect x="14" y="3" width="7" height="7" rx="1.5" />
                     <rect x="14" y="14" width="7" height="7" rx="1.5" />
@@ -226,7 +219,7 @@ const SlideOutOfTheBox = () => {
                 <h3
                   className="font-bold tracking-tight mb-2"
                   style={{
-                    fontSize: '17px',
+                    fontSize: '16.5px',
                     lineHeight: '1.2',
                     color: 'white',
                     textShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
@@ -237,7 +230,7 @@ const SlideOutOfTheBox = () => {
                 <p
                   className="font-normal leading-snug"
                   style={{
-                    fontSize: '12px',
+                    fontSize: '11.5px',
                     lineHeight: '1.4',
                     color: 'rgba(255, 255, 255, 0.92)'
                   }}
@@ -248,22 +241,20 @@ const SlideOutOfTheBox = () => {
             </div>
           </div>
           
-          <div></div>
-          <div><ModuleCard module={modules.right} delay={0.8} /></div>
+          <div><ModuleCard module={modules.right} delay={0.75} /></div>
 
-          {/* Row 4 - Empty, Empty, Bottom-Left, Empty, Empty */}
-          <div></div>
-          <div></div>
-          <div><ModuleCard module={modules.bottomLeft} delay={1.1} /></div>
-          <div></div>
-          <div></div>
+          {/* Row 3: Bottom-Left, Bottom, Bottom-Right */}
+          <div><ModuleCard module={modules.bottomLeft} delay={1.0} /></div>
+          <div><ModuleCard module={modules.bottom} delay={0.95} /></div>
+          <div><ModuleCard module={modules.bottomRight} delay={0.85} /></div>
+        </div>
 
-          {/* Row 5 - Empty, Bottom, Empty, Bottom-Right, Empty */}
-          <div></div>
-          <div><ModuleCard module={modules.bottom} delay={1.0} /></div>
-          <div></div>
-          <div><ModuleCard module={modules.bottomRight} delay={0.9} /></div>
-          <div></div>
+        {/* Diagonal modules (positioned absolutely for circular effect) */}
+        <div className="absolute" style={{ top: '50%', left: '50%', width: '900px', height: '700px', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}>
+          {/* Top-Right */}
+          <div style={{ position: 'absolute', top: '13%', right: '20%', pointerEvents: 'auto' }}>
+            <ModuleCard module={modules.topRight} delay={0.7} />
+          </div>
         </div>
 
       </div>
