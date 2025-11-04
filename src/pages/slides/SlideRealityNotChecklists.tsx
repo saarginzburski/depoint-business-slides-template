@@ -15,7 +15,7 @@ const SlideRealityNotChecklists = () => {
       footerTagline="Live intelligence for frontline operations"
       backgroundClass="bg-gradient-to-br from-[#0047FF] via-[#0066FF] to-[#1E90FF]"
     >
-        <div className="h-full flex items-center justify-between px-8 py-4">
+        <div className="h-full flex items-start justify-between px-8 py-8">
           
           {/* Left Side - Text Content */}
           <div className="w-1/2 flex items-center justify-start pr-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>

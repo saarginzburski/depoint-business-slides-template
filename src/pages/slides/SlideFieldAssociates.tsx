@@ -19,7 +19,7 @@ const SlideFieldAssociates = () => {
         componentName="SlideFieldAssociates"
         backgroundClass="bg-white"
       >
-        <div className="h-full flex flex-col items-center justify-between relative px-12 py-8">
+        <div className="h-full flex flex-col items-center justify-start relative px-12 py-8">
           
           {/* Hero Headline */}
           <div className="text-center mb-4 relative z-10">
@@ -29,7 +29,7 @@ const SlideFieldAssociates = () => {
           </div>
 
           {/* Mobile Showcase - Horizontal Layout with 7 screens */}
-          <div className="flex items-end justify-center gap-2 w-full max-w-7xl mx-auto flex-1">
+          <div className="flex items-end justify-center gap-2 w-full max-w-7xl mx-auto flex-1 pt-8">
             
             {/* Mobile 1 */}
             <div 

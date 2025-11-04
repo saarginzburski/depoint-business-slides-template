@@ -40,7 +40,7 @@ const SlideGlobalBrands = () => {
         componentName="SlideGlobalBrands"
         backgroundClass="bg-white"
       >
-        <div className="h-full flex flex-col items-center justify-center relative px-20 py-16">
+        <div className="h-full flex flex-col items-center justify-start relative px-20 py-12">
           
           {/* Hero Message - Ultra Clean Typography */}
           <div className="text-center mb-20">
