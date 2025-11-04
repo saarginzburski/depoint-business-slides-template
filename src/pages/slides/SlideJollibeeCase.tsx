@@ -13,7 +13,7 @@ const SlideJollibeeCase = () => {
       logoSrc={depointLogo} 
       componentName="SlideJollibeeCase"
       backgroundClass="bg-gradient-to-br from-white via-[#F8FAFB] to-[#F5F7FA]"
-      footerTagline="1,324 locations, 184 bosses, and zero migraines."
+      footerTagline="1,324 stores. 184 franchisees. Zero chaos."
     >
       <div className="h-full flex flex-col px-12 pb-6">
           
@@ -34,24 +34,48 @@ const SlideJollibeeCase = () => {
           {/* Main Content - 50/50 Split with Perfect Symmetry */}
           <div className="flex-1 flex items-center justify-center relative">
             
-            {/* Centered Jollibee Logo - Above Divider */}
+            {/* Radial glow behind logo */}
             <div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
+              className="absolute left-1/2 -translate-x-1/2 z-10"
               style={{
+                top: 'calc(50% - 100px)',
+                width: '400px',
+                height: '400px',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 30%, transparent 70%)',
+                filter: 'blur(40px)',
+                pointerEvents: 'none',
+                animation: 'fadeIn 1s ease-out forwards',
+                opacity: 0
+              }}
+            />
+
+            {/* Centered Jollibee Logo - Elevated Position */}
+            <div 
+              className="absolute left-1/2 -translate-x-1/2 z-20"
+              style={{
+                top: 'calc(50% - 80px)',
                 background: 'white',
                 padding: '12px 20px',
                 borderRadius: '50px',
-                boxShadow: '0 8px 28px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08)',
-                border: '1px solid rgba(0, 0, 0, 0.06)'
+                boxShadow: '0 12px 36px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08)',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
+                animation: 'logoFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                opacity: 0
               }}
             >
               <img src={jollibeeLogo} alt="Jollibee" style={{ height: '48px' }} />
             </div>
 
-            {/* Vertical Divider Line */}
+            {/* Vertical Divider Line - Fine Gradient */}
             <div 
-              className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px"
-              style={{ background: 'linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.12) 20%, rgba(0, 0, 0, 0.12) 80%, transparent)' }}
+              className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2"
+              style={{ 
+                width: '0.5px',
+                background: 'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.15) 15%, rgba(0, 0, 0, 0.15) 85%, transparent 100%)',
+                animation: 'dividerDraw 1.5s ease-out forwards',
+                transformOrigin: 'top',
+                scaleY: 0
+              }}
             />
 
             {/* Left Side - 50% */}
@@ -86,25 +110,38 @@ const SlideJollibeeCase = () => {
                           backdropFilter: 'blur(20px)',
                           borderRadius: '12px',
                           border: '1px solid rgba(0, 0, 0, 0.08)',
-                          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.6)',
+                          boxShadow: '0 8px 16px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04)',
+                          animation: `slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+                          animationDelay: `${0.3 + idx * 0.1}s`,
+                          opacity: 0,
+                          minHeight: '88px'
                         }}
                       >
+                        {/* Top light reflection for hover glow */}
+                        <div 
+                          className="absolute top-0 left-0 right-0 h-[40%] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                          style={{
+                            background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent)',
+                            borderRadius: '12px 12px 0 0'
+                          }}
+                        />
+
                         {/* Left accent bar */}
                         <div 
-                          className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full"
+                          className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
                           style={{ 
                             background: item.gradient,
                             boxShadow: `0 0 12px ${item.color}40`
                           }}
                         />
                         
-                        <div className="text-center py-4 px-3">
+                        <div className="text-center py-3 px-2 h-full flex flex-col items-center justify-center">
                           <div 
                             style={{
-                              fontSize: '28px',
-                              fontWeight: 900,
+                              fontSize: '30px',
+                              fontWeight: 950,
                               color: item.textColor,
-                              marginBottom: '4px',
+                              marginBottom: '3px',
                               lineHeight: 1
                             }}
                           >
@@ -114,19 +151,28 @@ const SlideJollibeeCase = () => {
                             style={{
                               fontSize: '11px',
                               fontWeight: 600,
-                              color: '#525252',
+                              color: '#555555',
                               lineHeight: 1.2
                             }}
                           >
                             {item.label}
                           </div>
                         </div>
+
+                        {/* Hover shadow enhancement */}
+                        <div 
+                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                          style={{
+                            boxShadow: '0 12px 32px rgba(0, 0, 0, 0.12)',
+                            borderRadius: '12px'
+                          }}
+                        />
                       </div>
                     ))}
                   </div>
                   
                   <div className="text-center">
-                    <p style={{ fontSize: '11px', fontWeight: 700, color: '#525252' }}>
+                    <p style={{ fontSize: '11px', fontWeight: 600, color: '#555555', fontStyle: 'italic' }}>
                       184 franchisees ranging from 2 to 60 stores each
                     </p>
                   </div>
@@ -173,25 +219,38 @@ const SlideJollibeeCase = () => {
                           backdropFilter: 'blur(20px)',
                           borderRadius: '12px',
                           border: '1px solid rgba(0, 0, 0, 0.08)',
-                          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.6)',
+                          boxShadow: '0 8px 16px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04)',
+                          animation: `slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+                          animationDelay: `${0.6 + idx * 0.1}s`,
+                          opacity: 0,
+                          minHeight: '88px'
                         }}
                       >
+                        {/* Top light reflection for hover glow */}
+                        <div 
+                          className="absolute top-0 left-0 right-0 h-[40%] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                          style={{
+                            background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent)',
+                            borderRadius: '12px 12px 0 0'
+                          }}
+                        />
+
                         {/* Left accent bar */}
                         <div 
-                          className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full"
+                          className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
                           style={{ 
                             background: item.gradient,
                             boxShadow: `0 0 12px ${item.color}40`
                           }}
                         />
                         
-                        <div className="text-center py-4 px-3">
+                        <div className="text-center py-3 px-2 h-full flex flex-col items-center justify-center">
                           <div 
                             style={{
-                              fontSize: '28px',
-                              fontWeight: 900,
+                              fontSize: '30px',
+                              fontWeight: 950,
                               color: item.textColor,
-                              marginBottom: '4px',
+                              marginBottom: '3px',
                               lineHeight: 1
                             }}
                           >
@@ -201,7 +260,7 @@ const SlideJollibeeCase = () => {
                             style={{
                               fontSize: '11px',
                               fontWeight: 600,
-                              color: '#525252',
+                              color: '#555555',
                               lineHeight: 1.2,
                               marginBottom: '2px'
                             }}
@@ -212,13 +271,22 @@ const SlideJollibeeCase = () => {
                             style={{
                               fontSize: '9px',
                               fontWeight: 500,
-                              color: '#737373',
+                              color: '#777777',
                               lineHeight: 1.2
                             }}
                           >
                             {item.sublabel}
                           </div>
                         </div>
+
+                        {/* Hover shadow enhancement */}
+                        <div 
+                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                          style={{
+                            boxShadow: '0 12px 32px rgba(0, 0, 0, 0.12)',
+                            borderRadius: '12px'
+                          }}
+                        />
                       </div>
                     ))}
                   </div>
@@ -246,7 +314,7 @@ const SlideJollibeeCase = () => {
                   style={{
                     fontSize: '12px',
                     lineHeight: '1.5',
-                    color: '#525252',
+                    color: '#555555',
                     fontWeight: 400
                   }}
                 >
@@ -268,25 +336,38 @@ const SlideJollibeeCase = () => {
                         backdropFilter: 'blur(20px)',
                         borderRadius: '12px',
                         border: '1px solid rgba(0, 0, 0, 0.08)',
-                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.6)',
+                        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04)',
+                        animation: `slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+                        animationDelay: `${0.3 + idx * 0.1}s`,
+                        opacity: 0,
+                        minHeight: '88px'
                       }}
                     >
+                      {/* Top light reflection for hover glow */}
+                      <div 
+                        className="absolute top-0 left-0 right-0 h-[40%] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        style={{
+                          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent)',
+                          borderRadius: '12px 12px 0 0'
+                        }}
+                      />
+
                       {/* Left accent bar */}
                       <div 
-                        className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full"
+                        className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
                         style={{ 
                           background: market.gradient,
                           boxShadow: `0 0 12px ${market.color}40`
                         }}
                       />
                       
-                      <div className="text-center py-3 px-3 flex flex-col items-center">
+                      <div className="text-center py-2 px-2 h-full flex flex-col items-center justify-center">
                         <Globe 
                           style={{ 
-                            width: '32px',
-                            height: '32px',
+                            width: '30px',
+                            height: '30px',
                             color: market.iconColor,
-                            marginBottom: '6px',
+                            marginBottom: '5px',
                             strokeWidth: 2
                           }} 
                         />
@@ -305,12 +386,21 @@ const SlideJollibeeCase = () => {
                           style={{
                             fontSize: '9px',
                             fontWeight: 600,
-                            color: '#737373'
+                            color: '#777777'
                           }}
                         >
                           {market.location}
                         </div>
                       </div>
+
+                      {/* Hover shadow enhancement */}
+                      <div 
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style={{
+                          boxShadow: '0 12px 32px rgba(0, 0, 0, 0.12)',
+                          borderRadius: '12px'
+                        }}
+                      />
                     </div>
                   ))}
                 </div>
@@ -321,7 +411,7 @@ const SlideJollibeeCase = () => {
                     style={{
                       fontSize: '10px',
                       fontWeight: 700,
-                      color: '#525252',
+                      color: '#555555',
                       lineHeight: 1.4
                     }}
                   >
@@ -332,6 +422,59 @@ const SlideJollibeeCase = () => {
             </div>
           </div>
         </div>
+
+        <style>{`
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
+          }
+
+          @keyframes logoFadeIn {
+            from {
+              opacity: 0;
+              transform: translate(-50%, -50%) scale(0.9);
+            }
+            to {
+              opacity: 1;
+              transform: translate(-50%, -50%) scale(1);
+            }
+          }
+
+          @keyframes dividerDraw {
+            from {
+              scaleY: 0;
+            }
+            to {
+              scaleY: 1;
+            }
+          }
+
+          @keyframes slideInLeft {
+            from {
+              opacity: 0;
+              transform: translateX(-30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+
+          @keyframes slideInRight {
+            from {
+              opacity: 0;
+              transform: translateX(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+        `}</style>
       </SlideLayout>
   );
 };
