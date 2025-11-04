@@ -118,7 +118,7 @@ const SlideTaskComplianceDashboard = () => {
         </div>
 
         {/* Dashboard Image - Below, 100% width */}
-        <div className="flex-1 w-full flex items-center justify-center relative">
+        <div className="flex-1 w-full flex items-center justify-center relative overflow-hidden">
           {/* Subtle vignette/glow underneath */}
           <div
             className="absolute inset-0 flex items-center justify-center"
@@ -127,11 +127,11 @@ const SlideTaskComplianceDashboard = () => {
             }}
           ></div>
 
-          <div className="relative w-full h-full flex items-center justify-center">
+          <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
             <img
               src={dashboardImage}
               alt="Task Compliance Dashboard showing 90.71% compliance protection with risk mitigation analytics across business units"
-              className="max-w-full max-h-full object-contain"
+              className="w-full h-auto object-contain object-top"
               style={{
                 filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.08))',
               }}
