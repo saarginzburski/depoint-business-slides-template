@@ -77,6 +77,8 @@ const SharedDeckView = () => {
   const [loading, setLoading] = useState(true);
   const [variantData, setVariantData] = useState<any>(null);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showMobileWarning, setShowMobileWarning] = useState(false);
   
   // Use the same hooks as the main editor
   const { getAllSections } = useSections();
@@ -114,6 +116,44 @@ const SharedDeckView = () => {
     const slides = getVisibleSlides(visibleSectionIds);
     return slides.map(s => s.id);
   }, [variantData, allSectionsData, getVisibleSlides]);
+
+  // Detect mobile device on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+        || window.innerWidth < 768;
+      setIsMobile(isMobileDevice);
+      if (isMobileDevice) {
+        setShowMobileWarning(true);
+      }
+    };
+    
+    checkMobile();
+  }, []);
+
+  // Request fullscreen after authentication
+  useEffect(() => {
+    if (isAuthenticated && !isMobile) {
+      const requestFullscreen = async () => {
+        try {
+          const elem = document.documentElement;
+          if (elem.requestFullscreen) {
+            await elem.requestFullscreen();
+          } else if ((elem as any).webkitRequestFullscreen) {
+            await (elem as any).webkitRequestFullscreen();
+          } else if ((elem as any).msRequestFullscreen) {
+            await (elem as any).msRequestFullscreen();
+          }
+        } catch (error) {
+          console.log('Fullscreen request failed:', error);
+          // Silently fail - user might have denied permission
+        }
+      };
+      
+      // Small delay to ensure smooth transition
+      setTimeout(requestFullscreen, 300);
+    }
+  }, [isAuthenticated, isMobile]);
 
   useEffect(() => {
     // Check if already authenticated for this variant
@@ -240,6 +280,33 @@ const SharedDeckView = () => {
           <p className="text-gray-600">Loading presentation...</p>
         </div>
       </div>
+    );
+  }
+
+  // Show mobile warning if accessing from mobile device
+  if (showMobileWarning) {
+    return (
+      <Dialog open={showMobileWarning} onOpenChange={() => {}}>
+        <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+          <DialogHeader>
+            <DialogTitle>Desktop Required</DialogTitle>
+            <DialogDescription>
+              This presentation deck is optimized for desktop viewing only. 
+              Please open this link on a desktop or laptop computer for the best experience.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <DialogFooter>
+            <Button onClick={() => {
+              setShowMobileWarning(false);
+              // Allow user to proceed anyway (optional)
+              // Or redirect them away
+            }}>
+              I Understand
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     );
   }
 
