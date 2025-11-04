@@ -4,130 +4,58 @@ import SlideLayout from '@/components/SlideLayout';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideOutOfTheBox = () => {
-  const modules = {
-    top: {
+  const orbitingModules = [
+    {
       icon: FileText,
       title: "Requests from stores to HQ",
-      items: "Inventory checks / Supplier issues / Apply to mgmt / Theft reports / Vacation / Sickness / Accident reports / Employees reviews",
+      description: "Inventory, supplier, and employee reports.",
+      color: "#1E73FF",
+      angle: 0
     },
-    topRight: {
+    {
       icon: CheckCircle,
       title: "Ad-Hoc Tasks",
-      items: "Recalls / Surprise review / Signage & planogram / Pricing changes / New products / Special sales",
+      description: "Recalls, planograms, new product launches.",
+      color: "#22C55E",
+      angle: 51.4
     },
-    right: {
+    {
       icon: MessageSquare,
       title: "Internal communication",
-      items: "Internal social network / Organizational portal / News & updates / Suggestion box",
+      description: "Social feed, news, and updates.",
+      color: "#F59E0B",
+      angle: 102.8
     },
-    bottomRight: {
+    {
       icon: Target,
       title: "Goals & Incentives",
-      items: "Personal & group Competitions / Goals setting / Real time performance feedback / Live compensation view",
+      description: "Real-time performance and rewards.",
+      color: "#8B5CF6",
+      angle: 154.2
     },
-    bottom: {
+    {
       icon: GraduationCap,
       title: "Onboarding & Training",
-      items: "Full digital onboarding / Sign agreements & procedures / Upload documents / Training & evaluation by job",
+      description: "Digital forms, job-based training.",
+      color: "#EF4444",
+      angle: 205.6
     },
-    topLeft: {
+    {
       icon: Shield,
       title: "Auditing management",
-      items: "Quality checks / Store visits / Mystery shopper / Preventing maintenance",
+      description: "Quality checks, mystery shopper, maintenance.",
+      color: "#3B82F6",
+      angle: 257
     },
-    left: {
+    {
       icon: RotateCw,
       title: "Routines",
-      items: "Cars counting / Safes reviews / Shifts mgmt. / Security checks / Secret customer / Open-close store checklists / Department mgmt. freshness",
-    },
-  };
+      description: "Open-close checklists, security, shift reviews.",
+      color: "#10B981",
+      angle: 308.4
+    }
+  ];
 
-  const ModuleCard = ({ module, delay }: { module: any; delay: number }) => {
-    const Icon = module.icon;
-    return (
-      <div
-        className="flex items-center justify-center"
-        style={{
-          animation: `floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards ${delay}s`,
-          opacity: 0
-        }}
-      >
-        <div
-          className="overflow-hidden rounded-2xl transition-all duration-500 group"
-          style={{
-            width: '165px',
-            background: 'rgba(255, 255, 255, 0.92)',
-            backdropFilter: 'blur(16px)',
-            border: '1px solid rgba(0, 0, 0, 0.06)',
-            boxShadow: '0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(0, 0, 0, 0.015)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
-            e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06), inset 0 1px 2px rgba(0, 0, 0, 0.015)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0) scale(1)';
-            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(0, 0, 0, 0.015)';
-          }}
-        >
-          {/* Top light reflection */}
-          <div
-            className="absolute inset-x-0 top-0 h-px"
-            style={{
-              background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
-            }}
-          ></div>
-
-          <div className="flex flex-col items-center text-center p-3.5">
-            {/* Icon Container */}
-            <div
-              className="mb-2.5 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-              style={{
-                width: '46px',
-                height: '46px',
-                background: 'rgba(30, 115, 255, 0.06)',
-                border: '1.5px solid rgba(30, 115, 255, 0.12)',
-                boxShadow: '0 2px 8px rgba(30, 115, 255, 0.08)'
-              }}
-            >
-              <Icon
-                style={{
-                  width: '22px',
-                  height: '22px',
-                  color: '#1E73FF',
-                  strokeWidth: 1.75
-                }}
-              />
-            </div>
-
-            {/* Title */}
-            <h4
-              className="font-bold mb-1 tracking-tight"
-              style={{
-                fontSize: '11.5px',
-                lineHeight: '1.3',
-                color: '#0a0a0a'
-              }}
-            >
-              {module.title}
-            </h4>
-
-            {/* Description */}
-            <p
-              className="leading-tight"
-              style={{
-                fontSize: '8.5px',
-                lineHeight: '1.35',
-                color: '#555555'
-              }}
-            >
-              {module.items}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <SlideLayout
@@ -137,78 +65,115 @@ const SlideOutOfTheBox = () => {
       totalSlides="43"
       logoSrc={depointLogo}
       componentName="SlideOutOfTheBox"
-      backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F5F7FA]"
+      backgroundClass="bg-white"
       footerTagline="Depoint — Out of the Box. Ready from Day One."
     >
-      <div className="h-full flex items-center justify-center py-4 px-6 relative">
+      <div 
+        className="h-full flex items-center justify-center relative overflow-hidden"
+        style={{
+          background: 'radial-gradient(circle at center, #ffffff 0%, #f8fafb 100%)'
+        }}
+      >
         
-        {/* 3x3 Grid - Cross Pattern (Top, Right, Bottom, Left + Center) */}
+        {/* Wrapper - perfectly centered */}
         <div
+          className="relative"
           style={{
-            display: 'grid',
-            gridTemplateColumns: '200px 240px 200px',
-            gridTemplateRows: '180px 240px 180px',
-            gap: '0px',
-            alignItems: 'center',
-            justifyItems: 'center',
-            maxWidth: '900px',
-            maxHeight: '700px'
+            width: '1100px',
+            height: '650px'
           }}
         >
-          {/* Row 1: Empty, Top, Empty */}
-          <div></div>
-          <div><ModuleCard module={modules.top} delay={0.6} /></div>
-          <div></div>
-
-          {/* Row 2: Left, Center Hub, Right */}
-          <div><ModuleCard module={modules.left} delay={0.95} /></div>
           
+          {/* Connection lines - SVG */}
+          <svg 
+            className="absolute top-0 left-0 w-full h-full pointer-events-none"
+            style={{ zIndex: 0 }}
+          >
+            {orbitingModules.map((module, idx) => {
+              const centerX = 550;
+              const centerY = 325;
+              const radius = 280;
+              const angleRad = (module.angle * Math.PI) / 180;
+              const x = centerX + radius * Math.cos(angleRad);
+              const y = centerY + radius * Math.sin(angleRad);
+              
+              return (
+                <line
+                  key={idx}
+                  x1={centerX}
+                  y1={centerY}
+                  x2={x}
+                  y2={y}
+                  stroke="rgba(30, 115, 255, 0.12)"
+                  strokeWidth="1"
+                  style={{
+                    animation: `lineAppear 0.6s ease forwards ${0.3 + idx * 0.05}s`,
+                    opacity: 0
+                  }}
+                />
+              );
+            })}
+          </svg>
+
+          {/* Optional: Faint circular guide line */}
+          <div
+            className="absolute top-1/2 left-1/2 pointer-events-none"
+            style={{
+              width: '560px',
+              height: '560px',
+              transform: 'translate(-50%, -50%)',
+              border: '1px solid rgba(0, 0, 0, 0.03)',
+              borderRadius: '50%',
+              zIndex: 0
+            }}
+          />
+
           {/* Central Hub */}
           <div
-            className="flex items-center justify-center"
+            className="absolute top-1/2 left-1/2"
             style={{
-              animation: 'hubPulse 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s',
+              width: '270px',
+              height: '170px',
+              transform: 'translate(-50%, -50%)',
+              animation: 'hubPulse 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s',
               opacity: 0,
-              position: 'relative'
+              zIndex: 10
             }}
           >
-            {/* Radial glow background */}
+            {/* Radial glow */}
             <div
-              className="absolute pointer-events-none"
+              className="absolute top-1/2 left-1/2 pointer-events-none"
               style={{
-                width: '450px',
-                height: '450px',
-                background: 'radial-gradient(circle, rgba(30, 115, 255, 0.15) 0%, rgba(96, 165, 250, 0.08) 40%, transparent 70%)',
-                filter: 'blur(35px)',
-                zIndex: 0
+                width: '400px',
+                height: '400px',
+                transform: 'translate(-50%, -50%)',
+                background: 'radial-gradient(circle, rgba(30, 115, 255, 0.2) 0%, transparent 70%)',
+                filter: 'blur(40px)',
+                zIndex: -1
               }}
-            ></div>
+            />
 
             <div
-              className="relative overflow-hidden rounded-3xl transition-all duration-500"
+              className="w-full h-full rounded-3xl relative overflow-hidden"
               style={{
-                width: '215px',
-                height: '215px',
-                background: 'linear-gradient(135deg, #1E73FF 0%, #60A5FA 100%)',
-                boxShadow: '0 20px 60px rgba(30, 115, 255, 0.3), 0 8px 24px rgba(30, 115, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                background: 'linear-gradient(145deg, #1E73FF, #60A5FA)',
+                boxShadow: '0 0 40px rgba(30, 115, 255, 0.4), 0 8px 32px rgba(0, 0, 0, 0.1)',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
-                zIndex: 1
+                animation: 'pulse 3s ease-in-out infinite'
               }}
             >
               {/* Top light reflection */}
               <div
-                className="absolute inset-x-0 top-0"
+                className="absolute inset-x-0 top-0 h-1/2 pointer-events-none"
                 style={{
-                  height: '50%',
-                  background: 'radial-gradient(ellipse at top, rgba(255, 255, 255, 0.3), transparent 70%)',
+                  background: 'radial-gradient(ellipse at top, rgba(255, 255, 255, 0.3), transparent 70%)'
                 }}
-              ></div>
+              />
 
-              {/* Content */}
-              <div className="relative h-full flex flex-col items-center justify-center px-5 text-center">
-                {/* Icon - 4 squares grid */}
-                <div className="mb-3.5">
-                  <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+              <div className="relative h-full flex flex-col items-center justify-center px-6 text-center">
+                {/* Icon */}
+                <div className="mb-3">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="3" width="7" height="7" rx="1.5" />
                     <rect x="14" y="3" width="7" height="7" rx="1.5" />
                     <rect x="14" y="14" width="7" height="7" rx="1.5" />
@@ -217,9 +182,9 @@ const SlideOutOfTheBox = () => {
                 </div>
 
                 <h3
-                  className="font-bold tracking-tight mb-2"
+                  className="font-bold tracking-tight mb-1.5"
                   style={{
-                    fontSize: '16.5px',
+                    fontSize: '17px',
                     lineHeight: '1.2',
                     color: 'white',
                     textShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
@@ -228,11 +193,10 @@ const SlideOutOfTheBox = () => {
                   Data & Analytics Hub
                 </h3>
                 <p
-                  className="font-normal leading-snug"
                   style={{
-                    fontSize: '11.5px',
+                    fontSize: '12px',
                     lineHeight: '1.4',
-                    color: 'rgba(255, 255, 255, 0.92)'
+                    color: 'rgba(255, 255, 255, 0.95)'
                   }}
                 >
                   Collects and syncs data<br />from/between external systems
@@ -240,59 +204,131 @@ const SlideOutOfTheBox = () => {
               </div>
             </div>
           </div>
-          
-          <div><ModuleCard module={modules.right} delay={0.75} /></div>
 
-          {/* Row 3: Empty, Bottom, Empty */}
-          <div></div>
-          <div><ModuleCard module={modules.bottom} delay={0.9} /></div>
-          <div></div>
+          {/* Orbiting Cards */}
+          {orbitingModules.map((module, idx) => {
+            const Icon = module.icon;
+            const delay = 0.4 + idx * 0.05;
+            
+            return (
+              <div
+                key={idx}
+                className="absolute top-1/2 left-1/2 orbit-card"
+                style={{
+                  width: '230px',
+                  height: '140px',
+                  transform: `translate(-50%, -50%) rotate(${module.angle}deg) translate(280px) rotate(-${module.angle}deg)`,
+                  animation: `fadeIn 0.6s ease forwards ${delay}s`,
+                  opacity: 0,
+                  zIndex: 5
+                }}
+              >
+                <div
+                  className="w-full h-full rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105"
+                  style={{
+                    background: '#fff',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+                    border: '1px solid rgba(0, 0, 0, 0.04)'
+                  }}
+                >
+                  <div className="h-full flex flex-col items-center justify-center text-center p-5">
+                    {/* Icon */}
+                    <div
+                      className="mb-3 rounded-xl flex items-center justify-center"
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        background: `${module.color}12`,
+                        border: `1.5px solid ${module.color}30`
+                      }}
+                    >
+                      <Icon
+                        style={{
+                          width: '24px',
+                          height: '24px',
+                          color: module.color,
+                          strokeWidth: 1.75
+                        }}
+                      />
+                    </div>
+
+                    {/* Title */}
+                    <h4
+                      className="font-bold tracking-tight mb-1"
+                      style={{
+                        fontSize: '13px',
+                        lineHeight: '1.3',
+                        color: '#0a0a0a'
+                      }}
+                    >
+                      {module.title}
+                    </h4>
+
+                    {/* Description */}
+                    <p
+                      style={{
+                        fontSize: '11px',
+                        lineHeight: '1.4',
+                        color: '#666666'
+                      }}
+                    >
+                      {module.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
         </div>
-
-        {/* Diagonal modules (positioned absolutely for perfect circular symmetry) */}
-        <div className="absolute" style={{ top: '50%', left: '50%', width: '900px', height: '700px', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}>
-          {/* Top-Left */}
-          <div style={{ position: 'absolute', top: '13%', left: '20%', pointerEvents: 'auto' }}>
-            <ModuleCard module={modules.topLeft} delay={0.65} />
-          </div>
-          
-          {/* Top-Right */}
-          <div style={{ position: 'absolute', top: '13%', right: '20%', pointerEvents: 'auto' }}>
-            <ModuleCard module={modules.topRight} delay={0.7} />
-          </div>
-
-          {/* Bottom-Right */}
-          <div style={{ position: 'absolute', bottom: '13%', right: '20%', pointerEvents: 'auto' }}>
-            <ModuleCard module={modules.bottomRight} delay={0.85} />
-          </div>
-        </div>
-
       </div>
 
-      {/* Apple-style animations */}
+      {/* Animations */}
       <style>{`
         @keyframes hubPulse {
           0% {
             opacity: 0;
-            transform: scale(0.85);
+            transform: translate(-50%, -50%) scale(0.9);
           }
           60% {
-            transform: scale(1.02);
+            transform: translate(-50%, -50%) scale(1.02);
           }
           100% {
             opacity: 1;
-            transform: scale(1);
+            transform: translate(-50%, -50%) scale(1);
           }
         }
 
-        @keyframes floatIn {
+        @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(20px) scale(0.9);
+            transform: translate(-50%, -50%) rotate(var(--angle)) translate(280px) rotate(calc(-1 * var(--angle))) scale(0.8);
           }
           to {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translate(-50%, -50%) rotate(var(--angle)) translate(280px) rotate(calc(-1 * var(--angle))) scale(1);
+          }
+        }
+
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.9;
+          }
+          50% {
+            opacity: 1;
+          }
+        }
+
+        @keyframes lineAppear {
+          from {
+            opacity: 0;
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+          }
+          to {
+            opacity: 1;
+            stroke-dasharray: 300;
+            stroke-dashoffset: 0;
           }
         }
       `}</style>
