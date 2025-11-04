@@ -17,6 +17,7 @@ const slideComponents = {
   SlideProblem: lazy(() => import('./slides/SlideProblem')),
   SlideProblemStats: lazy(() => import('./slides/SlideProblemStats')),
   SlideSolution: lazy(() => import('./slides/SlideSolution')),
+  SlideSolutionOverview: lazy(() => import('./slides/SlideSolutionOverview')),
   SlideDigitizingOpsManual: lazy(() => import('./slides/SlideDigitizingOpsManual')),
   SlideFranchisorFranchisee: lazy(() => import('./slides/SlideFranchisorFranchisee')),
   SlideRealityNotChecklists: lazy(() => import('./slides/SlideRealityNotChecklists')),
