@@ -297,9 +297,19 @@ const SharedDeckView = () => {
       {/* Slide Display */}
       <div className="flex-1 flex items-center justify-center p-8">
         {SlideComponent ? (
-          <Suspense fallback={<div className="text-white">Loading slide...</div>}>
-            <SlideComponent onNavigateToSlide={handleNavigateToSlide} />
-          </Suspense>
+          <div 
+            className="relative bg-white shadow-2xl"
+            style={{
+              width: '100%',
+              maxWidth: '1600px',
+              aspectRatio: '16 / 9',
+              maxHeight: 'calc(100vh - 120px)',
+            }}
+          >
+            <Suspense fallback={<div className="text-white">Loading slide...</div>}>
+              <SlideComponent onNavigateToSlide={handleNavigateToSlide} />
+            </Suspense>
+          </div>
         ) : (
           <div className="text-white text-center">
             <p>Slide not found</p>
