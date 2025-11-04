@@ -199,10 +199,10 @@ const SlideOutOfTheBox = () => {
           </div>
 
           {/* Row 3 */}
-          <div style={{ width: '160px' }}></div>
           <div style={{ width: '160px' }}>
             <ModuleCard module={modules.bottom} delay={0.5} />
           </div>
+          <div style={{ width: '160px' }}></div>
           <div style={{ width: '160px' }}>
             <ModuleCard module={modules.bottomRight} delay={0.4} />
           </div>
