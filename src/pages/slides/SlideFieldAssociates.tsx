@@ -47,24 +47,25 @@ const SlideFieldAssociates = () => {
       backgroundClass="bg-gradient-to-br from-white via-[#F7F9FB] to-[#F5F7FA]"
       footerTagline="Depoint — Empowering the Frontline, One Task at a Time."
     >
-      <div className="h-full flex items-center relative px-12 py-8">
+      <div className="h-full relative px-12 py-8">
         
-        {/* Product Image - 70% width, left side */}
+        {/* Background Image - Positioned absolutely, 20% larger */}
         <div 
-          className="w-[70%] h-full flex items-center justify-center pr-6"
+          className="absolute left-0 top-0 bottom-0 w-[75%] flex items-center justify-center pointer-events-none"
           style={{
             animation: 'fadeInTilt 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            opacity: 0
+            opacity: 0,
+            zIndex: 1
           }}
         >
           {/* Apple-style spotlight effect */}
           <div 
-            className="absolute left-0 top-1/2 -translate-y-1/2"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{
-              width: '60%',
-              height: '70%',
-              background: 'radial-gradient(ellipse 70% 60% at 40% 50%, rgba(30, 115, 255, 0.06), rgba(99, 102, 241, 0.03) 50%, transparent 75%)',
-              filter: 'blur(45px)',
+              width: '90%',
+              height: '90%',
+              background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30, 115, 255, 0.06), rgba(99, 102, 241, 0.03) 50%, transparent 75%)',
+              filter: 'blur(50px)',
               zIndex: 0
             }}
           ></div>
@@ -73,9 +74,12 @@ const SlideFieldAssociates = () => {
             <img 
               src={multiImage} 
               alt="Depoint Field Associates Mobile Interface" 
-              className="max-w-full max-h-full object-contain"
+              className="max-w-none max-h-none object-contain"
               style={{
-                filter: 'drop-shadow(0 24px 70px rgba(0, 0, 0, 0.14)) drop-shadow(0 10px 28px rgba(0, 0, 0, 0.1))',
+                width: '120%',
+                height: '120%',
+                filter: 'drop-shadow(0 24px 70px rgba(0, 0, 0, 0.12)) drop-shadow(0 10px 28px rgba(0, 0, 0, 0.08))',
+                transform: 'scale(1.2)'
               }}
             />
             
@@ -83,18 +87,19 @@ const SlideFieldAssociates = () => {
             <div 
               className="absolute bottom-0 left-1/2 -translate-x-1/2"
               style={{
-                width: '85%',
-                height: '40px',
-                background: 'radial-gradient(ellipse, rgba(0, 0, 0, 0.04), transparent 70%)',
-                filter: 'blur(16px)',
-                transform: 'translateX(-50%) translateY(15px)'
+                width: '100%',
+                height: '50px',
+                background: 'radial-gradient(ellipse, rgba(0, 0, 0, 0.03), transparent 70%)',
+                filter: 'blur(18px)',
+                transform: 'translateX(-50%) translateY(15px) scale(1.2)'
               }}
             ></div>
           </div>
         </div>
 
-        {/* Content Cards - 30% width, right side */}
-        <div className="w-[30%] h-full flex items-center pr-4">
+        {/* Content Cards - Right side, overlaying the image */}
+        <div className="relative h-full flex items-center justify-end" style={{ zIndex: 2 }}>
+          <div className="w-[35%] flex items-center pr-4">
           <div className="w-full flex flex-col justify-center" style={{ gap: '14px' }}>
             {features.map((feature, index) => {
               const Icon = feature.icon;
@@ -194,6 +199,7 @@ const SlideFieldAssociates = () => {
                 </div>
               );
             })}
+          </div>
           </div>
         </div>
 
