@@ -46,6 +46,7 @@ const slideComponents: Record<string, React.LazyExoticComponent<React.ComponentT
   SlideIntegrations: lazy(() => import('./slides/SlideIntegrations')),
   SlideConsultingPartners: lazy(() => import('./slides/SlideConsultingPartners')),
   SlideDashboardIntro: lazy(() => import('./slides/SlideDashboardIntro')),
+  SlideDashboardFeatures: lazy(() => import('./slides/SlideDashboardFeatures')),
   SlideDashboardSummary: lazy(() => import('./slides/SlideDashboardSummary')),
   SlideDashboardsDemo: lazy(() => import('./slides/SlideDashboardsDemo')),
   SlideTaskComplianceDashboard: lazy(() => import('./slides/SlideTaskComplianceDashboard')),
