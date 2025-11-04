@@ -29,7 +29,7 @@ const SlideFieldAssociates = () => {
           </div>
 
           {/* Mobile Showcase - Horizontal Layout with 7 screens */}
-          <div className="flex items-end justify-center gap-2 w-full max-w-7xl mx-auto flex-1 pt-8">
+          <div className="flex items-end justify-center gap-2 w-full max-w-7xl mx-auto flex-1">
             
             {/* Mobile 1 */}
             <div 

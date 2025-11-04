@@ -29,7 +29,7 @@ const SlideProblemStats = () => {
           </div>
 
           {/* Three Circular Stats */}
-          <div className="flex items-center justify-start gap-16 px-12 flex-1 pt-8">
+          <div className="flex items-center justify-start gap-16 px-12 flex-1">
             
             {/* BLUE - Systems Chaos */}
             <div className="flex flex-col items-center gap-8 flex-1 group">

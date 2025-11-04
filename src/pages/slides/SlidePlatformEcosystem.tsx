@@ -20,7 +20,7 @@ const SlidePlatformEcosystem = () => {
         <div className="grid grid-cols-12 gap-10 h-full items-center">
         
         {/* Left 60% - Top-aligned Large Flywheel (7.5 columns) */}
-        <div className="col-span-8 flex flex-col h-full justify-start items-center pb-4 min-h-0 pt-12">
+        <div className="col-span-8 flex flex-col h-full justify-start items-center pb-4 min-h-0">
           <div className="relative w-full max-w-[34rem] aspect-square">
             
             {/* Expanded Ring Flywheel - Much larger radius for more spacing */}
@@ -147,7 +147,7 @@ const SlidePlatformEcosystem = () => {
         </div>
         
         {/* Right 40% - Enhanced Dense Information Cards (4 columns) */}
-        <div className="col-span-4 flex flex-col h-full py-2">
+        <div className="col-span-4 flex flex-col h-full pb-2">
           
           {/* Four Enhanced Dense Step Cards */}
           <div className="flex-1 grid grid-rows-4 gap-3 mb-2">
