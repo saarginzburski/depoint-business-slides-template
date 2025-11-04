@@ -26,14 +26,14 @@ const SlideOutOfTheBox = () => {
       items: "Personal & group Competitions / Goals setting / Real time performance feedback / Live compensation view",
     },
     bottom: {
-      icon: Shield,
-      title: "Auditing management",
-      items: "Quality checks / Store visits / Mystery shopper / Preventing maintenance",
-    },
-    bottomLeft: {
       icon: GraduationCap,
       title: "Onboarding & Training",
       items: "Full digital onboarding / Sign agreements & procedures / Upload documents / Training & evaluation by job",
+    },
+    topLeft: {
+      icon: Shield,
+      title: "Auditing management",
+      items: "Quality checks / Store visits / Mystery shopper / Preventing maintenance",
     },
     left: {
       icon: RotateCw,
@@ -140,9 +140,9 @@ const SlideOutOfTheBox = () => {
       backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F5F7FA]"
       footerTagline="Depoint — Out of the Box. Ready from Day One."
     >
-      <div className="h-full flex items-center justify-center py-4 px-6">
+      <div className="h-full flex items-center justify-center py-4 px-6 relative">
         
-        {/* 3x3 Grid with center hub and surrounding modules */}
+        {/* 3x3 Grid - Cross Pattern (Top, Right, Bottom, Left + Center) */}
         <div
           style={{
             display: 'grid',
@@ -155,9 +155,9 @@ const SlideOutOfTheBox = () => {
             maxHeight: '700px'
           }}
         >
-          {/* Row 1: Top-Left (Auditing), Top, Empty */}
-          <div><ModuleCard module={modules.bottom} delay={0.6} /></div>
-          <div><ModuleCard module={modules.top} delay={0.65} /></div>
+          {/* Row 1: Empty, Top, Empty */}
+          <div></div>
+          <div><ModuleCard module={modules.top} delay={0.6} /></div>
           <div></div>
 
           {/* Row 2: Left, Center Hub, Right */}
@@ -243,17 +243,27 @@ const SlideOutOfTheBox = () => {
           
           <div><ModuleCard module={modules.right} delay={0.75} /></div>
 
-          {/* Row 3: Bottom-Left, Empty, Bottom-Right */}
-          <div><ModuleCard module={modules.bottomLeft} delay={1.0} /></div>
+          {/* Row 3: Empty, Bottom, Empty */}
           <div></div>
-          <div><ModuleCard module={modules.bottomRight} delay={0.85} /></div>
+          <div><ModuleCard module={modules.bottom} delay={0.9} /></div>
+          <div></div>
         </div>
 
-        {/* Diagonal modules (positioned absolutely for circular effect) */}
+        {/* Diagonal modules (positioned absolutely for perfect circular symmetry) */}
         <div className="absolute" style={{ top: '50%', left: '50%', width: '900px', height: '700px', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}>
+          {/* Top-Left */}
+          <div style={{ position: 'absolute', top: '13%', left: '20%', pointerEvents: 'auto' }}>
+            <ModuleCard module={modules.topLeft} delay={0.65} />
+          </div>
+          
           {/* Top-Right */}
           <div style={{ position: 'absolute', top: '13%', right: '20%', pointerEvents: 'auto' }}>
             <ModuleCard module={modules.topRight} delay={0.7} />
+          </div>
+
+          {/* Bottom-Right */}
+          <div style={{ position: 'absolute', bottom: '13%', right: '20%', pointerEvents: 'auto' }}>
+            <ModuleCard module={modules.bottomRight} delay={0.85} />
           </div>
         </div>
 
