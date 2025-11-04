@@ -67,19 +67,19 @@ const SlideOutOfTheBox = () => {
         }}
       >
         <div 
-          className="mb-2.5 flex items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-105"
+          className="mb-1.5 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-105"
           style={{
-            width: '70px',
-            height: '70px',
+            width: '56px',
+            height: '56px',
             background: module.lightBg,
-            border: `2px solid ${module.color}20`,
-            boxShadow: `0 8px 24px ${module.color}15, 0 2px 8px ${module.color}10`,
+            border: `1.5px solid ${module.color}20`,
+            boxShadow: `0 4px 16px ${module.color}12, 0 1px 4px ${module.color}08`,
           }}
         >
           <Icon 
             style={{ 
-              width: '32px', 
-              height: '32px',
+              width: '26px', 
+              height: '26px',
               color: module.color,
               strokeWidth: 1.5
             }} 
@@ -87,10 +87,10 @@ const SlideOutOfTheBox = () => {
         </div>
         
         <h4 
-          className="font-bold mb-1.5 tracking-tight"
+          className="font-bold mb-0.5 tracking-tight"
           style={{
-            fontSize: '14px',
-            lineHeight: '1.3',
+            fontSize: '12px',
+            lineHeight: '1.25',
             color: '#1a1a1a',
           }}
         >
@@ -98,10 +98,10 @@ const SlideOutOfTheBox = () => {
         </h4>
         
         <p 
-          className="leading-snug px-2"
+          className="leading-tight px-0.5"
           style={{
-            fontSize: '10px',
-            lineHeight: '1.45',
+            fontSize: '8.5px',
+            lineHeight: '1.35',
             color: '#6b7280',
           }}
         >
@@ -122,7 +122,7 @@ const SlideOutOfTheBox = () => {
       backgroundClass="bg-gradient-to-b from-white via-[#F9FAFB] to-[#F3F4F6]/30"
       footerTagline="Depoint — Out of the Box. Ready on Day One."
     >
-      <div className="h-full flex items-center justify-center pb-6 px-6">
+      <div className="h-full flex items-center justify-center pb-2 px-3">
         
         {/* 3x3 Grid Layout */}
         <div 
@@ -130,52 +130,52 @@ const SlideOutOfTheBox = () => {
             display: 'grid',
             gridTemplateColumns: '1fr 1fr 1fr',
             gridTemplateRows: '1fr 1fr 1fr',
-            gap: '40px',
+            gap: '16px',
             width: '100%',
-            maxWidth: '1300px',
+            maxWidth: '1000px',
             alignItems: 'center',
             justifyItems: 'center',
           }}
         >
           {/* Row 1 */}
-          <div style={{ width: '200px' }}>
+          <div style={{ width: '160px' }}>
             <ModuleCard module={modules.topLeft} delay={0} />
           </div>
-          <div style={{ width: '200px' }}>
+          <div style={{ width: '160px' }}>
             <ModuleCard module={modules.top} delay={0.1} />
           </div>
-          <div style={{ width: '200px' }}>
+          <div style={{ width: '160px' }}>
             <ModuleCard module={modules.topRight} delay={0.2} />
           </div>
 
           {/* Row 2 */}
-          <div style={{ width: '200px' }}>
+          <div style={{ width: '160px' }}>
             <ModuleCard module={modules.left} delay={0.6} />
           </div>
           
           {/* Central Hub */}
           <div 
-            className="relative flex flex-col items-center justify-center rounded-3xl shadow-2xl"
+            className="relative flex flex-col items-center justify-center rounded-2xl shadow-2xl"
             style={{
-              width: '280px',
-              height: '280px',
+              width: '190px',
+              height: '190px',
               background: 'linear-gradient(135deg, #1E73FF 0%, #60A5FA 100%)',
-              boxShadow: '0 20px 60px rgba(30, 115, 255, 0.3), 0 0 0 1px rgba(255,255,255,0.1) inset',
+              boxShadow: '0 15px 45px rgba(30, 115, 255, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset',
               animation: 'floatIn 0.8s ease-out forwards 0.35s',
               opacity: 0,
             }}
           >
             {/* Inner glow */}
             <div 
-              className="absolute inset-0 rounded-3xl"
+              className="absolute inset-0 rounded-2xl"
               style={{
                 background: 'radial-gradient(ellipse at top, rgba(255,255,255,0.3), transparent 60%)',
               }}
             ></div>
             
             {/* Icon */}
-            <div className="relative z-10 mb-3">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+            <div className="relative z-10 mb-1.5">
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
                 <rect x="3" y="3" width="7" height="7" rx="1" />
                 <rect x="14" y="3" width="7" height="7" rx="1" />
                 <rect x="14" y="14" width="7" height="7" rx="1" />
@@ -184,26 +184,26 @@ const SlideOutOfTheBox = () => {
             </div>
             
             {/* Text */}
-            <div className="relative z-10 text-center px-6">
-              <h3 className="text-white font-bold text-xl mb-2 tracking-tight">
+            <div className="relative z-10 text-center px-3">
+              <h3 className="text-white font-bold text-base mb-1 tracking-tight" style={{ fontSize: '16px' }}>
                 Data & Analytics Hub
               </h3>
-              <p className="text-white/90 text-sm leading-snug">
+              <p className="text-white/90 leading-snug" style={{ fontSize: '11px' }}>
                 Collects and syncs data<br />from/between external systems
               </p>
             </div>
           </div>
           
-          <div style={{ width: '200px' }}>
+          <div style={{ width: '160px' }}>
             <ModuleCard module={modules.right} delay={0.3} />
           </div>
 
           {/* Row 3 */}
-          <div style={{ width: '200px' }}></div>
-          <div style={{ width: '200px' }}>
+          <div style={{ width: '160px' }}></div>
+          <div style={{ width: '160px' }}>
             <ModuleCard module={modules.bottom} delay={0.5} />
           </div>
-          <div style={{ width: '200px' }}>
+          <div style={{ width: '160px' }}>
             <ModuleCard module={modules.bottomRight} delay={0.4} />
           </div>
 
