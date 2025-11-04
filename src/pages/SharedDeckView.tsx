@@ -303,7 +303,7 @@ const SharedDeckView = () => {
             className="relative bg-white shadow-2xl"
             style={{
               width: '100%',
-              maxWidth: '1600px',
+              maxWidth: '1300px',
               aspectRatio: '16 / 9',
               maxHeight: 'calc(100vh - 120px)',
             }}
