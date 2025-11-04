@@ -50,56 +50,50 @@ const Slide360Management = () => {
       backgroundClass="bg-gradient-to-br from-white via-[#F8FAFB] to-[#F5F7FA]"
       footerTagline="Every employee, every metric, one unified view."
     >
-      <div className="h-full relative px-12 pb-8">
+      <div className="h-full relative px-12 pb-6 overflow-hidden">
         
-        {/* Left 70%: Profile Image with Spotlight */}
-        <div className="absolute left-0 top-0 bottom-0 w-[70%] flex items-center justify-center">
-          {/* Subtle spotlight glow behind image */}
+        {/* Background Image - Larger, overflowing left */}
+        <div 
+          className="absolute top-0 bottom-0 flex items-center justify-start pointer-events-none"
+          style={{
+            left: '-8%',
+            width: '85%',
+            animation: 'fadeInTilt 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            opacity: 0,
+            zIndex: 1
+          }}
+        >
+          {/* Apple-style spotlight effect */}
           <div 
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{
-              background: 'radial-gradient(ellipse 50% 45% at 50% 50%, rgba(30, 115, 255, 0.06), transparent 65%)',
-              filter: 'blur(45px)'
+              width: '100%',
+              height: '100%',
+              background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30, 115, 255, 0.05), rgba(99, 102, 241, 0.02) 50%, transparent 75%)',
+              filter: 'blur(50px)',
+              zIndex: 0
             }}
           />
           
-          {/* Main Image */}
-          <div 
-            className="relative"
-            style={{
-              width: '85%',
-              height: '90%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
+          <div className="relative w-full h-full flex items-center justify-center">
             <img 
               src={profileImage} 
               alt="360° Management Platform" 
-              className="w-full h-full object-contain"
+              className="object-contain"
               style={{
-                filter: 'drop-shadow(0 70px 140px rgba(0, 0, 0, 0.12)) drop-shadow(0 28px 56px rgba(0, 0, 0, 0.08))',
-                animation: 'fadeInTilt 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards'
-              }}
-            />
-            
-            {/* Floor reflection */}
-            <div 
-              className="absolute bottom-0 left-1/2 -translate-x-1/2"
-              style={{
-                width: '85%',
-                height: '40px',
-                background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.03), transparent)',
-                filter: 'blur(16px)',
-                borderRadius: '50%'
+                width: '130%',
+                height: '130%',
+                maxWidth: 'none',
+                maxHeight: 'none',
+                filter: 'drop-shadow(0 20px 50px rgba(0, 0, 0, 0.10)) drop-shadow(0 8px 20px rgba(0, 0, 0, 0.06))'
               }}
             />
           </div>
         </div>
 
-        {/* Right 30%: Content Cards */}
-        <div className="absolute right-0 top-0 bottom-0 w-[30%] flex items-center justify-end pr-12">
+        {/* Content Cards - Right side, overlaying the image */}
+        <div className="relative h-full flex items-center justify-end" style={{ zIndex: 2 }}>
+          <div className="w-[35%] flex items-center pr-4">
           <div className="w-full flex flex-col" style={{ gap: '14px' }}>
             {features.map((feature, idx) => {
               const IconComponent = feature.icon;
@@ -195,6 +189,7 @@ const Slide360Management = () => {
                 </div>
               );
             })}
+          </div>
           </div>
         </div>
       </div>
