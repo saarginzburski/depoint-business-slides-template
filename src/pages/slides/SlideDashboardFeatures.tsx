@@ -2,7 +2,7 @@ import React from 'react';
 import { BarChart3, TrendingUp, Bell, Users } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
-import dashboardImage from '@/assets/images/Minidashboard.png';
+import dashboardImage from '@/assets/images/Minidashborad.png';
 
 const SlideDashboardFeatures = () => {
   const features = [
