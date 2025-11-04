@@ -31,10 +31,10 @@ const SlideFieldAssociates = () => {
             alt="Depoint Field Associates Mobile Interface" 
             className="object-contain"
             style={{
-              width: '100%',
-              height: '100%',
-              maxWidth: '100%',
-              maxHeight: '100%',
+              width: '120%',
+              height: '120%',
+              maxWidth: 'none',
+              maxHeight: 'none',
               filter: 'drop-shadow(0 20px 50px rgba(0, 0, 0, 0.10)) drop-shadow(0 8px 20px rgba(0, 0, 0, 0.06))'
             }}
           />
