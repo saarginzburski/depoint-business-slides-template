@@ -4,208 +4,271 @@ import SlideLayout from '@/components/SlideLayout';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideOutOfTheBox = () => {
-  const modules = {
-    topLeft: {
+  const modules = [
+    {
       icon: FileText,
       title: "Requests from stores to HQ",
       items: "Inventory checks / Supplier issues / Apply to mgmt / Theft reports / Vacation / Sickness / Accident reports / Employees reviews",
-      color: "#1E3A8A",
-      lightBg: "rgba(30, 58, 138, 0.08)",
+      angle: 0, // top
     },
-    top: {
+    {
       icon: CheckCircle,
       title: "Ad-Hoc Tasks",
       items: "Recalls / Surprise review / Signage & planogram / Pricing changes / New products / Special sales",
-      color: "#1E73FF",
-      lightBg: "rgba(30, 115, 255, 0.08)",
+      angle: 51.4, // top-right
     },
-    topRight: {
+    {
       icon: MessageSquare,
       title: "Internal communication",
       items: "Internal social network / Organizational portal / News & updates / Suggestion box",
-      color: "#60A5FA",
-      lightBg: "rgba(96, 165, 250, 0.08)",
+      angle: 102.8, // right
     },
-    right: {
+    {
       icon: Target,
       title: "Goals & Incentives",
       items: "Personal & group Competitions / Goals setting / Real time performance feedback / Live compensation view",
-      color: "#3B82F6",
-      lightBg: "rgba(59, 130, 246, 0.08)",
+      angle: 154.2, // bottom-right
     },
-    bottomRight: {
+    {
       icon: Shield,
       title: "Auditing management",
       items: "Quality checks / Store visits / Mystery shopper / Preventing maintenance",
-      color: "#2563EB",
-      lightBg: "rgba(37, 99, 235, 0.08)",
+      angle: 205.7, // bottom
     },
-    bottom: {
+    {
       icon: GraduationCap,
       title: "Onboarding & Training",
       items: "Full digital onboarding / Sign agreements & procedures / Upload documents / Training & evaluation by job",
-      color: "#1D4ED8",
-      lightBg: "rgba(29, 78, 216, 0.08)",
+      angle: 257.1, // bottom-left
     },
-    left: {
+    {
       icon: RotateCw,
       title: "Routines",
       items: "Cars counting / Safes reviews / Shifts mgmt. / Security checks / Secret customer / Open-close store checklists / Department mgmt. freshness",
-      color: "#1E40AF",
-      lightBg: "rgba(30, 64, 175, 0.08)",
+      angle: 308.5, // left
     },
-  };
+  ];
 
-  const ModuleCard = ({ module, delay }: { module: any; delay: number }) => {
-    const Icon = module.icon;
-    return (
-      <div 
-        className="flex flex-col items-center text-center group"
-        style={{ 
-          animation: `floatIn 0.8s ease-out forwards ${delay}s`,
-          opacity: 0,
-        }}
-      >
-        <div 
-          className="mb-1.5 flex items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-105"
-          style={{
-            width: '56px',
-            height: '56px',
-            background: module.lightBg,
-            border: `1.5px solid ${module.color}20`,
-            boxShadow: `0 4px 16px ${module.color}12, 0 1px 4px ${module.color}08`,
-          }}
-        >
-          <Icon 
-            style={{ 
-              width: '26px', 
-              height: '26px',
-              color: module.color,
-              strokeWidth: 1.5
-            }} 
-          />
-        </div>
-        
-        <h4 
-          className="font-bold mb-0.5 tracking-tight"
-          style={{
-            fontSize: '12px',
-            lineHeight: '1.25',
-            color: '#1a1a1a',
-          }}
-        >
-          {module.title}
-        </h4>
-        
-        <p 
-          className="leading-tight px-0.5"
-          style={{
-            fontSize: '8.5px',
-            lineHeight: '1.35',
-            color: '#6b7280',
-          }}
-        >
-          {module.items}
-        </p>
-      </div>
-    );
-  }
+  const radius = 320; // Distance from center to modules
 
   return (
-      <SlideLayout
-        title="Out of the Box"
-        subtitle="Hundreds of predefined templates"
-        slideNumber="29"
-        totalSlides="43"
-        logoSrc={depointLogo}
-        componentName="SlideOutOfTheBox"
-        backgroundClass="bg-gradient-to-b from-white via-[#F9FAFB] to-[#F3F4F6]/30"
-        footerTagline="Depoint — Out of the Box. Ready on Day One."
-      >
-      <div className="h-full flex items-center justify-center pb-2 px-3">
+    <SlideLayout
+      title="Out of the Box"
+      subtitle="Hundreds of predefined templates"
+      slideNumber="29"
+      totalSlides="43"
+      logoSrc={depointLogo}
+      componentName="SlideOutOfTheBox"
+      backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F5F7FA]"
+      footerTagline="Depoint — Out of the Box. Ready from Day One."
+    >
+      <div className="h-full flex items-center justify-center py-6">
         
-        {/* 3x3 Grid Layout */}
-        <div 
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            gridTemplateRows: '1fr 1fr 1fr',
-            gap: '16px',
-            width: '100%',
-            maxWidth: '1000px',
-            alignItems: 'center',
-            justifyItems: 'center',
-          }}
-        >
-          {/* Row 1 */}
-          <div style={{ width: '160px' }}>
-            <ModuleCard module={modules.topLeft} delay={0} />
-          </div>
-          <div style={{ width: '160px' }}>
-            <ModuleCard module={modules.top} delay={0.1} />
-          </div>
-          <div style={{ width: '160px' }}>
-            <ModuleCard module={modules.topRight} delay={0.2} />
-          </div>
-
-          {/* Row 2 */}
-          <div style={{ width: '160px' }}>
-            <ModuleCard module={modules.left} delay={0.6} />
-          </div>
+        {/* Hub and Spokes Container */}
+        <div className="relative" style={{ width: '900px', height: '700px' }}>
           
-          {/* Central Hub */}
+          {/* Central Hub with radial glow */}
           <div 
-            className="relative flex flex-col items-center justify-center rounded-2xl shadow-2xl"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{
-              width: '190px',
-              height: '190px',
-              background: 'linear-gradient(135deg, #1E73FF 0%, #60A5FA 100%)',
-              boxShadow: '0 15px 45px rgba(30, 115, 255, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset',
-              animation: 'floatIn 0.8s ease-out forwards 0.35s',
-              opacity: 0,
+              animation: 'hubPulse 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s',
+              opacity: 0
             }}
           >
-            {/* Inner glow */}
-            <div 
-              className="absolute inset-0 rounded-2xl"
+            {/* Radial glow background */}
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
               style={{
-                background: 'radial-gradient(ellipse at top, rgba(255,255,255,0.3), transparent 60%)',
+                width: '400px',
+                height: '400px',
+                background: 'radial-gradient(circle, rgba(30, 115, 255, 0.15) 0%, rgba(96, 165, 250, 0.08) 40%, transparent 70%)',
+                filter: 'blur(30px)',
               }}
             ></div>
-            
-            {/* Icon */}
-            <div className="relative z-10 mb-1.5">
-              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-                <rect x="3" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="14" width="7" height="7" rx="1" />
-                <rect x="3" y="14" width="7" height="7" rx="1" />
-              </svg>
+
+            {/* Hub Card */}
+            <div 
+              className="relative overflow-hidden rounded-3xl transition-all duration-500"
+              style={{
+                width: '240px',
+                height: '240px',
+                background: 'linear-gradient(135deg, #1E73FF 0%, #60A5FA 100%)',
+                boxShadow: '0 20px 60px rgba(30, 115, 255, 0.3), 0 8px 24px rgba(30, 115, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+              }}
+            >
+              {/* Top light reflection */}
+              <div
+                className="absolute inset-x-0 top-0"
+                style={{
+                  height: '50%',
+                  background: 'radial-gradient(ellipse at top, rgba(255, 255, 255, 0.3), transparent 70%)',
+                }}
+              ></div>
+
+              {/* Content */}
+              <div className="relative h-full flex flex-col items-center justify-center px-6 text-center">
+                {/* Icon - 4 squares grid */}
+                <div className="mb-4">
+                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                    <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                    <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                    <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                  </svg>
+                </div>
+                
+                <h3 
+                  className="font-bold tracking-tight mb-2"
+                  style={{
+                    fontSize: '18px',
+                    lineHeight: '1.2',
+                    color: 'white',
+                    textShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
+                  }}
+                >
+                  Data & Analytics Hub
+                </h3>
+                <p 
+                  className="font-normal leading-snug"
+                  style={{
+                    fontSize: '13px',
+                    lineHeight: '1.4',
+                    color: 'rgba(255, 255, 255, 0.92)'
+                  }}
+                >
+                  Collects and syncs data<br/>from/between external systems
+                </p>
+              </div>
             </div>
-            
-            {/* Text */}
-            <div className="relative z-10 text-center px-3">
-              <h3 className="text-white font-bold text-base mb-1 tracking-tight" style={{ fontSize: '16px' }}>
-                Data & Analytics Hub
-              </h3>
-              <p className="text-white/90 leading-snug" style={{ fontSize: '11px' }}>
-                Collects and syncs data<br />from/between external systems
-              </p>
-            </div>
-          </div>
-          
-          <div style={{ width: '160px' }}>
-            <ModuleCard module={modules.right} delay={0.3} />
           </div>
 
-          {/* Row 3 */}
-          <div style={{ width: '160px' }}>
-            <ModuleCard module={modules.bottom} delay={0.5} />
-          </div>
-          <div style={{ width: '160px' }}></div>
-          <div style={{ width: '160px' }}>
-            <ModuleCard module={modules.bottomRight} delay={0.4} />
-          </div>
+          {/* Connecting beams/lines */}
+          {modules.map((module, index) => {
+            const angleRad = (module.angle - 90) * (Math.PI / 180);
+            const x = Math.cos(angleRad) * radius;
+            const y = Math.sin(angleRad) * radius;
+            
+            return (
+              <svg
+                key={`beam-${index}`}
+                className="absolute top-1/2 left-1/2 pointer-events-none"
+                style={{
+                  width: '900px',
+                  height: '700px',
+                  transform: 'translate(-50%, -50%)',
+                  animation: `fadeIn 0.6s ease-out forwards ${0.5 + index * 0.08}s`,
+                  opacity: 0
+                }}
+              >
+                <line
+                  x1="450"
+                  y1="350"
+                  x2={450 + x}
+                  y2={350 + y}
+                  stroke="rgba(30, 115, 255, 0.12)"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 4"
+                />
+              </svg>
+            );
+          })}
+
+          {/* Surrounding Module Cards */}
+          {modules.map((module, index) => {
+            const Icon = module.icon;
+            const angleRad = (module.angle - 90) * (Math.PI / 180);
+            const x = Math.cos(angleRad) * radius;
+            const y = Math.sin(angleRad) * radius;
+            
+            return (
+              <div
+                key={index}
+                className="absolute group"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                  width: '180px',
+                  animation: `floatIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards ${0.6 + index * 0.08}s`,
+                  opacity: 0
+                }}
+              >
+                <div
+                  className="overflow-hidden rounded-2xl transition-all duration-500"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.92)',
+                    backdropFilter: 'blur(16px)',
+                    border: '1px solid rgba(0, 0, 0, 0.06)',
+                    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(0, 0, 0, 0.015)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06), inset 0 1px 2px rgba(0, 0, 0, 0.015)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(0, 0, 0, 0.015)';
+                  }}
+                >
+                  {/* Top light reflection */}
+                  <div
+                    className="absolute inset-x-0 top-0 h-px"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
+                    }}
+                  ></div>
+
+                  <div className="flex flex-col items-center text-center p-4">
+                    {/* Icon Container */}
+                    <div
+                      className="mb-3 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                      style={{
+                        width: '52px',
+                        height: '52px',
+                        background: 'rgba(30, 115, 255, 0.06)',
+                        border: '1.5px solid rgba(30, 115, 255, 0.12)',
+                        boxShadow: '0 2px 8px rgba(30, 115, 255, 0.08)'
+                      }}
+                    >
+                      <Icon
+                        style={{
+                          width: '26px',
+                          height: '26px',
+                          color: '#1E73FF',
+                          strokeWidth: 1.75
+                        }}
+                      />
+                    </div>
+
+                    {/* Title */}
+                    <h4
+                      className="font-bold mb-1.5 tracking-tight"
+                      style={{
+                        fontSize: '13px',
+                        lineHeight: '1.3',
+                        color: '#0a0a0a'
+                      }}
+                    >
+                      {module.title}
+                    </h4>
+
+                    {/* Description */}
+                    <p
+                      className="leading-tight"
+                      style={{
+                        fontSize: '9.5px',
+                        lineHeight: '1.4',
+                        color: '#555555'
+                      }}
+                    >
+                      {module.items}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
 
         </div>
 
@@ -213,14 +276,37 @@ const SlideOutOfTheBox = () => {
 
       {/* Apple-style animations */}
       <style>{`
+        @keyframes hubPulse {
+          0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.85);
+          }
+          60% {
+            transform: translate(-50%, -50%) scale(1.02);
+          }
+          100% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+          }
+        }
+
         @keyframes floatIn {
           from {
             opacity: 0;
-            transform: translateY(15px) scale(0.95);
+            transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.9);
           }
           to {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1);
+          }
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
           }
         }
       `}</style>
@@ -229,4 +315,3 @@ const SlideOutOfTheBox = () => {
 };
 
 export default SlideOutOfTheBox;
-
