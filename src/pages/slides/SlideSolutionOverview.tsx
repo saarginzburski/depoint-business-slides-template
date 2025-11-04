@@ -49,12 +49,12 @@ const SlideSolutionOverview = () => {
       <div className="h-full relative px-12 pb-8">
         
         {/* Background Image - Positioned on left */}
-        <div className="absolute left-0 top-0 bottom-0 w-[70%] flex items-center justify-start pl-8">
+        <div className="absolute left-0 top-0 bottom-0 w-[75%] flex items-center justify-start -ml-8">
           {/* Subtle vignette/glow underneath */}
           <div 
             className="absolute inset-0 flex items-center justify-center"
             style={{
-              background: 'radial-gradient(ellipse 60% 50% at 40% 50%, rgba(30, 115, 255, 0.06), transparent 70%)'
+              background: 'radial-gradient(ellipse 60% 50% at 35% 50%, rgba(30, 115, 255, 0.06), transparent 70%)'
             }}
           ></div>
           
