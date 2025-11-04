@@ -47,11 +47,11 @@ const SlideFieldAssociates = () => {
       backgroundClass="bg-gradient-to-br from-white via-[#F7F9FB] to-[#F5F7FA]"
       footerTagline="Depoint — Empowering the Frontline, One Task at a Time."
     >
-      <div className="h-full relative px-12 py-8">
+      <div className="h-full relative px-12 pb-6 overflow-hidden">
         
-        {/* Background Image - Positioned absolutely, 20% larger */}
+        {/* Background Image - Positioned absolutely, smaller size */}
         <div 
-          className="absolute left-0 top-0 bottom-0 w-[75%] flex items-center justify-center pointer-events-none"
+          className="absolute left-0 top-0 bottom-0 w-[70%] flex items-center justify-center pointer-events-none"
           style={{
             animation: 'fadeInTilt 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
             opacity: 0,
@@ -62,10 +62,10 @@ const SlideFieldAssociates = () => {
           <div 
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{
-              width: '90%',
-              height: '90%',
-              background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30, 115, 255, 0.06), rgba(99, 102, 241, 0.03) 50%, transparent 75%)',
-              filter: 'blur(50px)',
+              width: '85%',
+              height: '85%',
+              background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30, 115, 255, 0.05), rgba(99, 102, 241, 0.02) 50%, transparent 75%)',
+              filter: 'blur(45px)',
               zIndex: 0
             }}
           ></div>
@@ -74,26 +74,11 @@ const SlideFieldAssociates = () => {
             <img 
               src={multiImage} 
               alt="Depoint Field Associates Mobile Interface" 
-              className="max-w-none max-h-none object-contain"
+              className="max-w-full max-h-full object-contain"
               style={{
-                width: '120%',
-                height: '120%',
-                filter: 'drop-shadow(0 24px 70px rgba(0, 0, 0, 0.12)) drop-shadow(0 10px 28px rgba(0, 0, 0, 0.08))',
-                transform: 'scale(1.2)'
+                filter: 'drop-shadow(0 20px 50px rgba(0, 0, 0, 0.10)) drop-shadow(0 8px 20px rgba(0, 0, 0, 0.06))'
               }}
             />
-            
-            {/* Enhanced floor reflection */}
-            <div 
-              className="absolute bottom-0 left-1/2 -translate-x-1/2"
-              style={{
-                width: '100%',
-                height: '50px',
-                background: 'radial-gradient(ellipse, rgba(0, 0, 0, 0.03), transparent 70%)',
-                filter: 'blur(18px)',
-                transform: 'translateX(-50%) translateY(15px) scale(1.2)'
-              }}
-            ></div>
           </div>
         </div>
 
