@@ -72,7 +72,7 @@ const SlideDashboardFeatures = () => {
 
         {/* Feature Cards - Overlaying on right side */}
         <div className="relative h-full flex items-center justify-end z-10">
-          <div className="w-[48%] flex flex-col justify-center" style={{ gap: '20px' }}>
+          <div className="w-[30%] flex flex-col justify-center" style={{ gap: '12px' }}>
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
@@ -89,9 +89,9 @@ const SlideDashboardFeatures = () => {
                   style={{
                     background: 'rgba(255, 255, 255, 0.92)',
                     backdropFilter: 'blur(24px)',
-                    borderRadius: '20px',
+                    borderRadius: '16px',
                     border: '1px solid rgba(0, 0, 0, 0.08)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)',
+                    boxShadow: '0 6px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03)',
                   }}
                 >
                   {/* Top light reflection */}
@@ -104,18 +104,18 @@ const SlideDashboardFeatures = () => {
                   
                   {/* Colored accent bar on left */}
                   <div 
-                    className="absolute left-0 top-4 bottom-4 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                    className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
                     style={{
                       background: `linear-gradient(180deg, ${feature.color}, ${feature.color}dd)`,
-                      boxShadow: `0 0 12px ${feature.color}40`
+                      boxShadow: `0 0 10px ${feature.color}35`
                     }}
                   ></div>
                   
-                  <div className="flex items-start gap-4 p-5 pl-6">
+                  <div className="flex items-start gap-3 p-3 pl-4">
                     {/* Icon Container - Minimal with brand color */}
                     <div className="flex-shrink-0">
                       <div 
-                        className="w-11 h-11 rounded-lg flex items-center justify-center transition-all duration-300"
+                        className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300"
                         style={{
                           background: feature.lightBg,
                           border: `1px solid ${feature.color}15`
@@ -124,8 +124,8 @@ const SlideDashboardFeatures = () => {
                         <Icon 
                           className="transition-transform duration-300 group-hover:scale-110" 
                           style={{ 
-                            width: '22px', 
-                            height: '22px',
+                            width: '18px', 
+                            height: '18px',
                             color: feature.color,
                             strokeWidth: 2
                           }} 
@@ -136,20 +136,20 @@ const SlideDashboardFeatures = () => {
                     {/* Text Content */}
                     <div className="flex-1">
                       <h3 
-                        className="font-semibold mb-2 tracking-tight"
+                        className="font-semibold mb-1 tracking-tight"
                         style={{
-                          fontSize: '16px',
-                          lineHeight: '1.4',
+                          fontSize: '13px',
+                          lineHeight: '1.3',
                           color: '#1a1a1a'
                         }}
                       >
                         {feature.title}
                       </h3>
                       <p 
-                        className="font-normal leading-relaxed"
+                        className="font-normal leading-snug"
                         style={{
-                          fontSize: '14px',
-                          lineHeight: '1.55',
+                          fontSize: '11px',
+                          lineHeight: '1.45',
                           color: '#6b7280'
                         }}
                       >
