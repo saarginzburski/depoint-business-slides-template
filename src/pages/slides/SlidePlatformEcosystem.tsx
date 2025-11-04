@@ -16,11 +16,11 @@ const SlidePlatformEcosystem = () => {
         componentName="SlidePlatformEcosystem"
       >
       {/* Redesigned with centered, larger flywheel for maximum visual impact */}
-      <div className="h-full py-6 overflow-hidden">
+      <div className="h-full pb-6 overflow-hidden">
         <div className="grid grid-cols-12 gap-10 h-full items-center">
         
         {/* Left 60% - Top-aligned Large Flywheel (7.5 columns) */}
-        <div className="col-span-8 flex flex-col h-full justify-start items-center py-4 min-h-0 pt-12">
+        <div className="col-span-8 flex flex-col h-full justify-start items-center pb-4 min-h-0 pt-12">
           <div className="relative w-full max-w-[34rem] aspect-square">
             
             {/* Expanded Ring Flywheel - Much larger radius for more spacing */}

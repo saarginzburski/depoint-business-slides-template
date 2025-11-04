@@ -19,7 +19,7 @@ const SlideFieldAssociates = () => {
         componentName="SlideFieldAssociates"
         backgroundClass="bg-white"
       >
-        <div className="h-full flex flex-col items-center justify-start relative px-12 py-8">
+        <div className="h-full flex flex-col items-center justify-start relative px-12 pb-8">
           
           {/* Hero Headline */}
           <div className="text-center mb-4 relative z-10">

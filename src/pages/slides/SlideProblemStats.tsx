@@ -13,7 +13,7 @@ const SlideProblemStats = () => {
         componentName="SlideProblemStats"
         backgroundClass="bg-gradient-to-br from-slate-50 via-blue-50/30 to-orange-50/20"
       >
-        <div className="h-full flex flex-col justify-between py-6 relative">
+        <div className="h-full flex flex-col justify-between pb-6 relative">
           {/* Decorative background elements */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
             <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
