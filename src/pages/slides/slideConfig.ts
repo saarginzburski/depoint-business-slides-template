@@ -53,6 +53,7 @@ export const slideConfig: SlideInfo[] = [
   { id: "SlideTaskComplianceDashboard", component: "SlideTaskComplianceDashboard", displayOrder: 39, name: "Task Compliance Dashboard", title: "Task Compliance Dashboard", route: "/investor-deck/slide/39", section_key: "demo" },
   // Category 3: Protect Revenue
   { id: "SlideProductGoldStandardDashboard", component: "SlideProductGoldStandardDashboard", displayOrder: 40, name: "Product Gold Standard Dashboard", title: "Product Gold Standard Dashboard", route: "/investor-deck/slide/40", section_key: "demo" },
+  { id: "SlideCleanlinessConditionDashboard", component: "SlideCleanlinessConditionDashboard", displayOrder: 44, name: "Cleanliness & Condition Dashboard", title: "Cleanliness & Condition Dashboard", route: "/investor-deck/slide/44", section_key: "demo" },
   // Category 4: Accelerate Growth
   { id: "SlideSpeedOfServiceDashboard", component: "SlideSpeedOfServiceDashboard", displayOrder: 41, name: "Speed of Service Dashboard", title: "Speed of Service Dashboard", route: "/investor-deck/slide/41", section_key: "demo" },
   { id: "SlideUsersEngagementDashboard", component: "SlideUsersEngagementDashboard", displayOrder: 42, name: "Users Engagement Dashboard", title: "Users Engagement Dashboard", route: "/investor-deck/slide/42", section_key: "demo" },
