@@ -48,10 +48,12 @@ const SlideDashboardFeatures = () => {
     >
       <div className="h-full relative px-12 pb-6 overflow-hidden">
         
-        {/* Background Image - Positioned absolutely, smaller size */}
+        {/* Background Image - Larger, overflowing left */}
         <div 
-          className="absolute left-0 top-0 bottom-0 w-[70%] flex items-center justify-center pointer-events-none"
+          className="absolute top-0 bottom-0 flex items-center justify-start pointer-events-none"
           style={{
+            left: '-15%',
+            width: '85%',
             animation: 'fadeInTilt 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
             opacity: 0,
             zIndex: 1
@@ -61,10 +63,10 @@ const SlideDashboardFeatures = () => {
           <div 
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{
-              width: '85%',
-              height: '85%',
+              width: '100%',
+              height: '100%',
               background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30, 115, 255, 0.05), rgba(99, 102, 241, 0.02) 50%, transparent 75%)',
-              filter: 'blur(45px)',
+              filter: 'blur(50px)',
               zIndex: 0
             }}
           ></div>
@@ -73,8 +75,12 @@ const SlideDashboardFeatures = () => {
             <img 
               src={dashboardImage} 
               alt="Depoint Intelligence Dashboard" 
-              className="max-w-full max-h-full object-contain"
+              className="object-contain"
               style={{
+                width: '130%',
+                height: '130%',
+                maxWidth: 'none',
+                maxHeight: 'none',
                 filter: 'drop-shadow(0 20px 50px rgba(0, 0, 0, 0.10)) drop-shadow(0 8px 20px rgba(0, 0, 0, 0.06))'
               }}
             />
