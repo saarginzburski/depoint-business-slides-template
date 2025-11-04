@@ -51,6 +51,7 @@ export const slideConfig: SlideInfo[] = [
   { id: "SlideEquipmentMonitoringDashboard", component: "SlideEquipmentMonitoringDashboard", displayOrder: 37, name: "Equipment Monitoring Dashboard", title: "Equipment Monitoring Dashboard", route: "/investor-deck/slide/37", section_key: "demo" },
   { id: "SlideAuditReportDashboard", component: "SlideAuditReportDashboard", displayOrder: 38, name: "Audit Report Dashboard", title: "Audit Report Dashboard", route: "/investor-deck/slide/38", section_key: "demo" },
   { id: "SlideTaskComplianceDashboard", component: "SlideTaskComplianceDashboard", displayOrder: 39, name: "Task Compliance Dashboard", title: "Task Compliance Dashboard", route: "/investor-deck/slide/39", section_key: "demo" },
+  { id: "SlideFoodSafetyDashboard", component: "SlideFoodSafetyDashboard", displayOrder: 45, name: "Food Safety Dashboard", title: "Food Safety Dashboard", route: "/investor-deck/slide/45", section_key: "demo" },
   // Category 3: Protect Revenue
   { id: "SlideProductGoldStandardDashboard", component: "SlideProductGoldStandardDashboard", displayOrder: 40, name: "Product Gold Standard Dashboard", title: "Product Gold Standard Dashboard", route: "/investor-deck/slide/40", section_key: "demo" },
   { id: "SlideCleanlinessConditionDashboard", component: "SlideCleanlinessConditionDashboard", displayOrder: 44, name: "Cleanliness & Condition Dashboard", title: "Cleanliness & Condition Dashboard", route: "/investor-deck/slide/44", section_key: "demo" },

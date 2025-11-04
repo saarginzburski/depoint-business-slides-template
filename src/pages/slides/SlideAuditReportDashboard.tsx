@@ -128,8 +128,8 @@ const SlideAuditReportDashboard = () => {
           ></div>
 
           <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
-            <img
-              src={dashboardImage}
+            <img 
+              src={dashboardImage} 
               alt="Audit Report Dashboard showing compliance protection metrics, audit scores, and risk mitigation analytics"
               className="w-full h-auto object-contain object-top"
               style={{

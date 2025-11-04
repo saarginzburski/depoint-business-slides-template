@@ -30,7 +30,7 @@ const SlideOilMonitoringDashboard = () => {
         backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       >
       <div className="h-full flex flex-col px-12 pb-8" style={{ gap: '16px' }}>
-        
+
         {/* Executive Summary Card - Top, 100% width */}
         <div className="w-full mt-4">
           <div
@@ -86,9 +86,9 @@ const SlideOilMonitoringDashboard = () => {
                         strokeWidth: 2
                       }}
                     />
-                  </div>
-                </div>
-
+            </div>
+          </div>
+          
                 {/* Text Content */}
                 <div className="flex-1">
                   <h3
@@ -128,8 +128,8 @@ const SlideOilMonitoringDashboard = () => {
           ></div>
 
           <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
-            <img
-              src={dashboardImage}
+            <img 
+              src={dashboardImage} 
               alt="Oil Monitoring Dashboard showing 99.59% oil quality checking hit rate with cost-saving insights and margin protection analytics"
               className="w-full h-auto object-contain object-top"
               style={{

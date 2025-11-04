@@ -128,8 +128,8 @@ const SlideIssuesDashboard = () => {
           ></div>
 
           <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
-            <img
-              src={dashboardImage}
+            <img 
+              src={dashboardImage} 
               alt="Issues Dashboard showing cost-saving root cause analysis, issue prioritization, and margin protection analytics"
               className="w-full h-auto object-contain object-top"
               style={{

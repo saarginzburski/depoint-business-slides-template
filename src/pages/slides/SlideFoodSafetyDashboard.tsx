@@ -3,16 +3,16 @@ import { AlertTriangle, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SlideLayout from '@/components/SlideLayout';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
-import dashboardImage from '@/assets/dashboards/Equipment Monitoring Dashboard.png';
+import dashboardImage from '@/assets/dashboards/Food Safety Dashboard.png';
 
-const SlideEquipmentMonitoringDashboard = () => {
+const SlideFoodSafetyDashboard = () => {
   const navigate = useNavigate();
 
   return (
     <SlideLayout
         title={
           <div className="flex items-center gap-4">
-            <span>Equipment Monitoring Dashboard</span>
+            <span>Food Safety Dashboard</span>
             <button
               onClick={() => navigate('/investor-deck/slide/22')}
               className="bg-white/90 hover:bg-white border border-gray-300 rounded-lg px-3 py-2 flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 shadow-sm transition-all"
@@ -22,11 +22,11 @@ const SlideEquipmentMonitoringDashboard = () => {
             </button>
           </div>
         }
-        subtitle="⚠️ Reduce Risk – Predictive Maintenance → Shrink & Downtime Avoidance"
-        slideNumber="26"
-        totalSlides="31"
+        subtitle="⚠️ Reduce Risk – Food Safety Standards → Health Compliance & Brand Protection"
+        slideNumber="45"
+        totalSlides="45"
         logoSrc={depointLogo}
-        componentName="SlideEquipmentMonitoringDashboard"
+        componentName="SlideFoodSafetyDashboard"
         backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       >
       <div className="h-full flex flex-col px-12 pb-8" style={{ gap: '16px' }}>
@@ -109,7 +109,7 @@ const SlideEquipmentMonitoringDashboard = () => {
                       color: '#6b7280'
                     }}
                   >
-                    This dashboard prevents <span className="font-semibold text-gray-900">$50,000+ in annual losses</span> per location through predictive maintenance
+                    This dashboard prevents <span className="font-semibold text-gray-900">critical health violations and brand reputation damage</span> through proactive food safety monitoring
                   </p>
                 </div>
               </div>
@@ -128,9 +128,9 @@ const SlideEquipmentMonitoringDashboard = () => {
           ></div>
 
           <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
-            <img 
-              src={dashboardImage} 
-              alt="Equipment Monitoring Dashboard showing 95% uptime rates and predictive maintenance insights preventing costly failures"
+            <img
+              src={dashboardImage}
+              alt="Food Safety Dashboard showing health compliance metrics and critical safety monitoring across all locations"
               className="w-full h-auto object-contain object-top"
               style={{
                 filter: 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.08))',
@@ -158,4 +158,5 @@ const SlideEquipmentMonitoringDashboard = () => {
   );
 };
 
-export default SlideEquipmentMonitoringDashboard;
+export default SlideFoodSafetyDashboard;
+

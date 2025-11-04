@@ -128,8 +128,8 @@ const SlideSalesManagementDashboard = () => {
           ></div>
 
           <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
-            <img
-              src={dashboardImage}
+            <img 
+              src={dashboardImage} 
               alt="Sales Management Dashboard showing $16,770K revenue expansion opportunities with $2,114.8K profit optimization insights"
               className="w-full h-auto object-contain object-top"
               style={{

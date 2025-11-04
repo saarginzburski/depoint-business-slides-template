@@ -128,8 +128,8 @@ const SlideTaskComplianceDashboard = () => {
           ></div>
 
           <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
-            <img
-              src={dashboardImage}
+            <img 
+              src={dashboardImage} 
               alt="Task Compliance Dashboard showing 90.71% compliance protection with risk mitigation analytics across business units"
               className="w-full h-auto object-contain object-top"
               style={{

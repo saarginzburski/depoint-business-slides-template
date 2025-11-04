@@ -36,6 +36,7 @@ const slideComponents = {
   SlideOutOfTheBox: lazy(() => import('./slides/SlideOutOfTheBox')),
   SlideAnalyticsPlatform: lazy(() => import('./slides/SlideAnalyticsPlatform')),
   SlideTaskComplianceDashboard: lazy(() => import('./slides/SlideTaskComplianceDashboard')),
+  SlideFoodSafetyDashboard: lazy(() => import('./slides/SlideFoodSafetyDashboard')),
   SlideUsersEngagementDashboard: lazy(() => import('./slides/SlideUsersEngagementDashboard')),
   SlideSalesManagementDashboard: lazy(() => import('./slides/SlideSalesManagementDashboard')),
   SlideProductGoldStandardDashboard: lazy(() => import('./slides/SlideProductGoldStandardDashboard')),

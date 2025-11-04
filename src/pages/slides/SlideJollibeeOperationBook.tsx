@@ -179,7 +179,7 @@ const SlideJollibeeOperationBook = () => {
                           background: item.lightBg,
                           border: `1px solid ${item.accentColor}15`
                         }}
-                      >
+                  >
                         <IconComponent 
                           className="transition-transform duration-300 group-hover:scale-110" 
                           style={{ 
@@ -192,13 +192,13 @@ const SlideJollibeeOperationBook = () => {
                       </div>
                       
                       <h4 className="text-[11px] font-semibold text-neutral-800 leading-tight mb-0.5">
-                        {item.title}
-                      </h4>
-                      {item.subtitle && (
+                      {item.title}
+                    </h4>
+                    {item.subtitle && (
                         <p className="text-[9px] text-neutral-600 leading-tight">
-                          {item.subtitle}
-                        </p>
-                      )}
+                        {item.subtitle}
+                      </p>
+                    )}
                     </div>
                   </div>
                 );

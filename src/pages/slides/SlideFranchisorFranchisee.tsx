@@ -5,13 +5,13 @@ import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 const SlideFranchisorFranchisee = () => {
   return (
-    <SlideLayout
-      title="One Platform. Two Perspectives. Shared Growth."
-      slideNumber="5"
-      totalSlides="15"
-      logoSrc={depointLogo}
-      componentName="SlideFranchisorFranchisee"
-    >
+      <SlideLayout
+        title="One Platform. Two Perspectives. Shared Growth."
+        slideNumber="5"
+        totalSlides="15"
+        logoSrc={depointLogo}
+        componentName="SlideFranchisorFranchisee"
+      >
       <div className="content-viewport h-full flex flex-col justify-start pb-6">
           
           {/* Main Split Layout */}

@@ -30,7 +30,7 @@ const SlideUsersEngagementDashboard = () => {
         backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       >
       <div className="h-full flex flex-col px-12 pb-8" style={{ gap: '16px' }}>
-        
+
         {/* Executive Summary Card - Top, 100% width */}
         <div className="w-full mt-4">
           <div
@@ -128,8 +128,8 @@ const SlideUsersEngagementDashboard = () => {
           ></div>
 
           <div className="relative w-full h-full flex items-start justify-center overflow-hidden">
-            <img
-              src={dashboardImage}
+            <img 
+              src={dashboardImage} 
               alt="Users Engagement Dashboard showing 81.78% ROI-driving engagement rate with 56,505 efficiency-generating sessions"
               className="w-full h-auto object-contain object-top"
               style={{

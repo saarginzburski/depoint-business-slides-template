@@ -1,7 +1,6 @@
 import React from 'react';
-import { Brain, DollarSign, AlertTriangle, Shield, TrendingUp, ChevronRight, BarChart3, Zap } from 'lucide-react';
+import { Brain, DollarSign, AlertTriangle, Shield, TrendingUp, ChevronRight } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 
 interface SlideDashboardIntroProps {
@@ -12,78 +11,66 @@ const SlideDashboardIntro: React.FC<SlideDashboardIntroProps> = ({ onNavigateToS
 
   const dashboardCategories = [
     {
-      title: "💰 Protect Margin",
+      title: "Protect Margin",
       subtitle: "Control costs & eliminate waste",
-      bgColor: "bg-green-50",
-      borderColor: "border-green-200",
-      titleColor: "text-green-700",
-      subtitleColor: "text-green-600",
-      buttonColor: "bg-green-600 hover:bg-green-700",
+      emoji: "💰",
+      accentColor: "#22c55e",
+      accentGradient: "linear-gradient(135deg, #22c55e, #16a34a)",
+      bgGradient: "linear-gradient(135deg, rgba(34, 197, 94, 0.03), rgba(22, 163, 74, 0.02))",
       icon: DollarSign,
-      iconBg: "bg-green-100",
-      iconColor: "text-green-600",
       dashboards: [
-        { name: "Oil Monitoring", componentId: "SlideOilMonitoringDashboard", icon: "🛢️" },
-        { name: "Issues Dashboard", componentId: "SlideIssuesDashboard", icon: "🔧" }
+        { name: "Oil Monitoring", componentId: "SlideOilMonitoringDashboard" },
+        { name: "Issues Dashboard", componentId: "SlideIssuesDashboard" }
       ]
     },
     {
-      title: "⚠️ Reduce Risk",
+      title: "Reduce Risk",
       subtitle: "Prevent failures & avoid penalties",
-      bgColor: "bg-orange-50",
-      borderColor: "border-orange-200",
-      titleColor: "text-orange-700",
-      subtitleColor: "text-orange-600",
-      buttonColor: "bg-orange-600 hover:bg-orange-700",
+      emoji: "⚠️",
+      accentColor: "#f97316",
+      accentGradient: "linear-gradient(135deg, #f97316, #ea580c)",
+      bgGradient: "linear-gradient(135deg, rgba(249, 115, 22, 0.03), rgba(234, 88, 12, 0.02))",
       icon: AlertTriangle,
-      iconBg: "bg-orange-100",
-      iconColor: "text-orange-600",
       dashboards: [
-        { name: "Equipment Monitoring", componentId: "SlideEquipmentMonitoringDashboard", icon: "⚙️" },
-        { name: "Audit Report", componentId: "SlideAuditReportDashboard", icon: "📋" },
-        { name: "Task Compliance", componentId: "SlideTaskComplianceDashboard", icon: "✅" }
+        { name: "Equipment Monitoring", componentId: "SlideEquipmentMonitoringDashboard" },
+        { name: "Audit Report", componentId: "SlideAuditReportDashboard" },
+        { name: "Task Compliance", componentId: "SlideTaskComplianceDashboard" },
+        { name: "Food Safety", componentId: "SlideFoodSafetyDashboard" }
       ]
     },
     {
-      title: "🔒 Protect Revenue",
+      title: "Protect Revenue",
       subtitle: "Safeguard sales with consistent quality",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200",
-      titleColor: "text-blue-700",
-      subtitleColor: "text-blue-600",
-      buttonColor: "bg-blue-600 hover:bg-blue-700",
+      emoji: "🔒",
+      accentColor: "#3b82f6",
+      accentGradient: "linear-gradient(135deg, #3b82f6, #2563eb)",
+      bgGradient: "linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(37, 99, 235, 0.02))",
       icon: Shield,
-      iconBg: "bg-blue-100",
-      iconColor: "text-blue-600",
       dashboards: [
-        { name: "Product Gold Standard", componentId: "SlideProductGoldStandardDashboard", icon: "🏆" }
+        { name: "Product Gold Standard", componentId: "SlideProductGoldStandardDashboard" },
+        { name: "Cleanliness & Condition", componentId: "SlideCleanlinessConditionDashboard" }
       ]
     },
     {
-      title: "📈 Accelerate Growth",
+      title: "Accelerate Growth",
       subtitle: "Drive revenue through execution speed & insights",
-      bgColor: "bg-purple-50",
-      borderColor: "border-purple-200",
-      titleColor: "text-purple-700",
-      subtitleColor: "text-purple-600",
-      buttonColor: "bg-purple-600 hover:bg-purple-700",
+      emoji: "📈",
+      accentColor: "#8b5cf6",
+      accentGradient: "linear-gradient(135deg, #8b5cf6, #7c3aed)",
+      bgGradient: "linear-gradient(135deg, rgba(139, 92, 246, 0.03), rgba(124, 58, 237, 0.02))",
       icon: TrendingUp,
-      iconBg: "bg-purple-100",
-      iconColor: "text-purple-600",
       dashboards: [
-        { name: "Speed of Service", componentId: "SlideSpeedOfServiceDashboard", icon: "⚡" },
-        { name: "Users Engagement", componentId: "SlideUsersEngagementDashboard", icon: "👥" },
-        { name: "Sales Management", componentId: "SlideSalesManagementDashboard", icon: "💼" }
+        { name: "Speed of Service", componentId: "SlideSpeedOfServiceDashboard" },
+        { name: "Users Engagement", componentId: "SlideUsersEngagementDashboard" },
+        { name: "Sales Management", componentId: "SlideSalesManagementDashboard" }
       ]
     }
   ];
 
   const handleDashboardClick = (componentId: string) => {
-    // Use provided callback if available (for internal navigation)
     if (onNavigateToSlide) {
       onNavigateToSlide(componentId);
     }
-    // Otherwise, do nothing (links are informational only without callback)
   };
 
   return (
@@ -93,106 +80,303 @@ const SlideDashboardIntro: React.FC<SlideDashboardIntroProps> = ({ onNavigateToS
         totalSlides="31"
         logoSrc={depointLogo}
         componentName="SlideDashboardIntro"
+        backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
       >
-      <div className="h-full flex flex-col px-6 py-3">
+      <div className="h-full flex flex-col px-10 pb-6" style={{ gap: '20px' }}>
         
-        {/* Central Message - 100% wide, reduced height */}
-        <div className="mb-3 flex-shrink-0">
-          <div className="bg-blue-600 rounded-xl px-6 py-3 text-white shadow-xl w-full">
-            <div className="flex items-center gap-4">
-              <div className="bg-white/15 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                <Brain className="w-5 h-5 text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold leading-tight mb-2">
-                  Dashboards are not features — they prove the unmatched depth of <span className="text-blue-200">Depoint's intelligence engine</span>
-                </h3>
-                <p className="text-sm text-blue-100 font-medium">
-                  Each dashboard represents millions of data points transformed into strategic insight
-                </p>
+        {/* Hero Message Card */}
+        <div className="mt-3 flex-shrink-0">
+          <div
+            className="group relative"
+            style={{
+              animation: 'floatIn 0.5s ease-out forwards',
+              opacity: 0
+            }}
+          >
+            <div
+              className="relative overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
+                borderRadius: '20px',
+                boxShadow: '0 12px 40px rgba(30, 64, 175, 0.25), 0 4px 12px rgba(30, 64, 175, 0.15)',
+              }}
+            >
+              {/* Top light reflection */}
+              <div
+                className="absolute inset-x-0 top-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent)'
+                }}
+              ></div>
+
+              <div className="flex items-center gap-5 px-8 py-5">
+                {/* Icon Container */}
+                <div
+                  className="flex-shrink-0"
+                  style={{
+                    width: '56px',
+                    height: '56px',
+                    background: 'rgba(255, 255, 255, 0.15)',
+                    backdropFilter: 'blur(12px)',
+                    borderRadius: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid rgba(255, 255, 255, 0.2)'
+                  }}
+                >
+                  <Brain
+                    style={{
+                      width: '28px',
+                      height: '28px',
+                      color: 'white',
+                      strokeWidth: 2
+                    }}
+                  />
+                </div>
+
+                {/* Text Content */}
+                <div className="flex-1">
+                  <h2
+                    className="font-bold tracking-tight mb-2"
+                    style={{
+                      fontSize: '22px',
+                      lineHeight: '1.2',
+                      color: 'white'
+                    }}
+                  >
+                    Dashboards are not features — they prove the unmatched depth of <span style={{ color: '#93c5fd' }}>Depoint's intelligence engine</span>
+                  </h2>
+                  <p
+                    className="font-medium"
+                    style={{
+                      fontSize: '15px',
+                      lineHeight: '1.4',
+                      color: 'rgba(255, 255, 255, 0.85)'
+                    }}
+                  >
+                    Each dashboard represents millions of data points transformed into strategic insight
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
         
-        {/* 4-Column Grid for better space utilization - Ensure identical heights */}
-        <div className="grid grid-cols-4 gap-3 flex-1 min-h-0" style={{ gridAutoRows: '1fr' }}>
+        {/* 4-Column Grid */}
+        <div className="grid grid-cols-4 flex-1 min-h-0" style={{ gap: '16px' }}>
           {dashboardCategories.map((category, categoryIndex) => {
             const IconComponent = category.icon;
             return (
-              <div key={categoryIndex} className={`${category.bgColor} rounded-lg shadow-lg border-2 ${category.borderColor} p-4 flex flex-col hover:shadow-xl transition-all duration-200`}>
-                {/* Category Header - Fixed height */}
-                <div className="flex items-center gap-3 mb-4 h-16">
-                  <div className={`w-10 h-10 ${category.iconBg} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                    <IconComponent className={`w-5 h-5 ${category.iconColor}`} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className={`text-base font-bold ${category.titleColor} leading-tight mb-1`}>{category.title}</h3>
-                    <p className={`text-xs ${category.subtitleColor} leading-tight`}>{category.subtitle}</p>
-                  </div>
-                </div>
-                
-                {/* Dashboard Buttons - Fixed container height */}
-                <div className="space-y-3 mb-4 flex-1 min-h-0">
-                  {/* Actual Dashboard Buttons */}
-                  {category.dashboards.map((dashboard, dashIndex) => (
-                    <button
-                      key={dashIndex}
-                      onClick={() => handleDashboardClick(dashboard.componentId)}
-                      disabled={!onNavigateToSlide}
-                      className={`w-full ${category.buttonColor} ${
-                        onNavigateToSlide
-                          ? 'hover:shadow-md transform hover:-translate-y-0.5 cursor-pointer'
-                          : 'cursor-default opacity-75'
-                      } transition-all duration-200 rounded-lg px-4 py-3 text-white text-sm font-medium`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-base">{dashboard.icon}</span>
-                          <span className="truncate">{dashboard.name}</span>
-                        </div>
-                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200 flex-shrink-0" />
+              <div
+                key={categoryIndex}
+                className="group relative flex flex-col"
+                style={{
+                  animation: `floatIn 0.6s ease-out ${0.1 + categoryIndex * 0.1}s forwards`,
+                  opacity: 0
+                }}
+              >
+                <div
+                  className="relative overflow-hidden h-full flex flex-col"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(24px)',
+                    borderRadius: '20px',
+                    border: '1px solid rgba(0, 0, 0, 0.06)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  {/* Top light reflection */}
+                  <div
+                    className="absolute inset-x-0 top-0 h-px"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent)'
+                    }}
+                  ></div>
+
+                  {/* Colored accent bar on left */}
+                  <div
+                    className="absolute left-0 top-4 bottom-4 w-1 rounded-r-full"
+                    style={{
+                      background: category.accentGradient,
+                      boxShadow: `0 0 16px ${category.accentColor}40`
+                    }}
+                  ></div>
+
+                  {/* Category Header */}
+                  <div className="px-5 pt-5 pb-4" style={{ background: category.bgGradient }}>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div
+                        style={{
+                          width: '42px',
+                          height: '42px',
+                          background: `${category.accentColor}10`,
+                          border: `1.5px solid ${category.accentColor}20`,
+                          borderRadius: '12px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <IconComponent
+                          style={{
+                            width: '22px',
+                            height: '22px',
+                            color: category.accentColor,
+                            strokeWidth: 2.5
+                          }}
+                        />
                       </div>
-                    </button>
-                  ))}
-                  
-                  {/* Blurred Placeholder Dashboards - Always show same number to ensure identical height */}
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <div
-                      key={`placeholder-${index}`}
-                      className={`w-full ${category.buttonColor} ${index < 2 ? 'opacity-30' : index === 2 ? 'opacity-20' : 'opacity-15'} blur-sm rounded-lg px-4 py-3 text-white text-sm font-medium pointer-events-none animate-pulse`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-base">📊</span>
-                          <span className="truncate">{index < 2 ? 'Additional Dashboard' : index === 2 ? 'More insights...' : 'Advanced analytics'}</span>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span style={{ fontSize: '18px' }}>{category.emoji}</span>
+                          <h3
+                            className="font-bold tracking-tight"
+                            style={{
+                              fontSize: '16px',
+                              lineHeight: '1.2',
+                              color: '#1a1a1a'
+                            }}
+                          >
+                            {category.title}
+                          </h3>
                         </div>
-                        <ChevronRight className="w-4 h-4 flex-shrink-0" />
+                        <p
+                          className="font-medium"
+                          style={{
+                            fontSize: '11px',
+                            lineHeight: '1.3',
+                            color: '#6b7280'
+                          }}
+                        >
+                          {category.subtitle}
+                        </p>
                       </div>
                     </div>
-                  ))}
-                </div>
-                
-                {/* Stats Footer - Fixed height */}
-                <div className="pt-3 border-t border-gray-200 h-12 flex items-center">
-                  <div className="flex items-center justify-between text-xs text-gray-500 w-full">
-                    <span className="flex items-center gap-1">
-                      <BarChart3 className="w-3 h-3" />
-                      Live
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Zap className="w-3 h-3" />
-                      Real-time
-                    </span>
+                  </div>
+
+                  {/* Dashboard Buttons */}
+                  <div className="flex-1 px-4 py-3" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {category.dashboards.map((dashboard, dashIndex) => (
+                      <button
+                        key={dashIndex}
+                        onClick={() => handleDashboardClick(dashboard.componentId)}
+                        disabled={!onNavigateToSlide}
+                        className="relative overflow-hidden text-left transition-all duration-300"
+                        style={{
+                          background: onNavigateToSlide ? category.accentGradient : `${category.accentColor}80`,
+                          borderRadius: '12px',
+                          padding: '12px 14px',
+                          border: 'none',
+                          cursor: onNavigateToSlide ? 'pointer' : 'default',
+                          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                          transform: 'translateY(0)',
+                        }}
+                        onMouseEnter={(e) => {
+                          if (onNavigateToSlide) {
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                            e.currentTarget.style.boxShadow = `0 6px 20px ${category.accentColor}40`;
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (onNavigateToSlide) {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)';
+                          }
+                        }}
+                      >
+                        {/* Button light reflection */}
+                        <div
+                          className="absolute inset-x-0 top-0 h-px"
+                          style={{
+                            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent)'
+                          }}
+                        ></div>
+
+                        <div className="flex items-center justify-between relative z-10">
+                          <span
+                            className="font-semibold"
+                            style={{
+                              fontSize: '13px',
+                              lineHeight: '1.3',
+                              color: 'white'
+                            }}
+                          >
+                            {dashboard.name}
+                          </span>
+                          <ChevronRight
+                            style={{
+                              width: '16px',
+                              height: '16px',
+                              color: 'white',
+                              strokeWidth: 2.5,
+                              transition: 'transform 0.2s ease'
+                            }}
+                            className="dashboard-chevron"
+                          />
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Stats Footer */}
+                  <div
+                    className="px-5 py-3 mt-auto"
+                    style={{
+                      borderTop: '1px solid rgba(0, 0, 0, 0.06)'
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span
+                        className="font-semibold"
+                        style={{
+                          fontSize: '10px',
+                          color: '#9ca3af',
+                          letterSpacing: '0.5px',
+                          textTransform: 'uppercase'
+                        }}
+                      >
+                        ⚡ Live
+                      </span>
+                      <span
+                        className="font-semibold"
+                        style={{
+                          fontSize: '10px',
+                          color: '#9ca3af',
+                          letterSpacing: '0.5px',
+                          textTransform: 'uppercase'
+                        }}
+                      >
+                        Real-time
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             );
           })}
-          
         </div>
         
       </div>
+
+      {/* Apple-style animations */}
+      <style>{`
+        @keyframes floatIn {
+          from {
+            opacity: 0;
+            transform: translateY(24px) scale(0.97);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        button:hover .dashboard-chevron {
+          transform: translateX(3px);
+        }
+      `}</style>
       </SlideLayout>
   );
 };
