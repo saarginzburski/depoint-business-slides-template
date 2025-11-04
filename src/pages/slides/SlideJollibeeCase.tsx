@@ -1,14 +1,13 @@
 import React from 'react';
 import { Copy, Globe } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
-import SlideFooter from '@/components/SlideFooter';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
 import jollibeeLogo from "@/assets/jollibee-logo-new.png";
 
 const SlideJollibeeCase = () => {
-  return <div className="relative w-full h-full">
-      <SlideLayout title="Jollibee: Scale & Complexity Made Simple" slideNumber="8" totalSlides="35" logoSrc={depointLogo} componentName="SlideJollibeeCase">
-        <div className="content-viewport h-full flex flex-col px-8 py-4">
+  return (
+    <SlideLayout title="Jollibee: Scale & Complexity Made Simple" slideNumber="8" totalSlides="35" logoSrc={depointLogo} componentName="SlideJollibeeCase">
+      <div className="content-viewport h-full flex flex-col px-8 pb-4">
           
           {/* Header with Logo - Compact */}
           <div className="text-center mb-4">
@@ -22,7 +21,7 @@ const SlideJollibeeCase = () => {
           <div className="grid grid-cols-3 gap-6 flex-1 items-stretch">
             
             {/* Left Column - 2/3 width */}
-            <div className="col-span-2 flex flex-col justify-center pr-6 border-r-2 border-neutral-300">
+            <div className="col-span-2 flex flex-col justify-start pr-6 border-r-2 border-neutral-300">
               {/* Scale & Structure */}
               <div className="mb-6">
                 <h3 className="text-xl font-bold text-neutral-800 mb-4 text-center">Scale & Structure</h3>
@@ -125,6 +124,6 @@ const SlideJollibeeCase = () => {
           </div>
         </div>
       </SlideLayout>
-    </div>;
+  );
 };
 export default SlideJollibeeCase;
