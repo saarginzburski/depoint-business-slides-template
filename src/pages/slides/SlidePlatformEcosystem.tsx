@@ -146,74 +146,262 @@ const SlidePlatformEcosystem = () => {
         </div>
         
         {/* Right 40% - Enhanced Dense Information Cards (4 columns) */}
-        <div className="col-span-4 flex flex-col h-full pb-2">
+        <div className="col-span-4 flex flex-col h-full justify-center">
           
           {/* Four Enhanced Dense Step Cards */}
-          <div className="flex-1 grid grid-rows-4 gap-3 mb-2">
+          <div className="flex flex-col" style={{ gap: '12px' }}>
             
             {/* Execute Card - Enhanced with metrics */}
-            <div className="bg-red-50 rounded-xl border-2 border-red-200 p-4 transition-all">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Target className="w-7 h-7 text-red-600" />
+            <div 
+              className="group relative overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+              style={{
+                background: 'rgba(255, 255, 255, 0.92)',
+                backdropFilter: 'blur(24px)',
+                borderRadius: '16px',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 6px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03)',
+              }}
+            >
+              {/* Top light reflection */}
+              <div 
+                className="absolute inset-x-0 top-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
+                }}
+              ></div>
+              
+              {/* Colored accent bar on left */}
+              <div 
+                className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                style={{
+                  background: 'linear-gradient(180deg, #ef4444, #dc2626)',
+                  boxShadow: '0 0 10px rgba(239, 68, 68, 0.35)'
+                }}
+              ></div>
+              
+              <div className="flex items-start gap-3 p-3 pl-4">
+                <div className="flex-shrink-0">
+                  <div 
+                    className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300"
+                    style={{
+                      background: 'rgba(239, 68, 68, 0.06)',
+                      border: '1px solid rgba(239, 68, 68, 0.15)'
+                    }}
+                  >
+                    <Target 
+                      className="transition-transform duration-300 group-hover:scale-110" 
+                      style={{ width: '18px', height: '18px', color: '#ef4444', strokeWidth: 2 }} 
+                    />
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-bold text-red-600 text-lg mb-1">Execute</h3>
-                  <p className="text-gray-700 text-sm leading-tight mb-2">Frontline teams complete millions of tasks, generating operational data.</p>
-                  <div className="flex gap-2 text-xs">
-                    <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full font-medium">Real-time Capture</span>
-                    <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full font-medium">Mobile-First</span>
+                <div className="flex-1">
+                  <h3 
+                    className="font-semibold mb-1 tracking-tight"
+                    style={{ fontSize: '13px', lineHeight: '1.3', color: '#1a1a1a' }}
+                  >
+                    Execute
+                  </h3>
+                  <p 
+                    className="font-normal leading-snug mb-1.5"
+                    style={{ fontSize: '11px', lineHeight: '1.45', color: '#6b7280' }}
+                  >
+                    Frontline teams complete millions of tasks, generating operational data.
+                  </p>
+                  <div className="flex gap-1.5" style={{ fontSize: '9px' }}>
+                    <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">Real-time Capture</span>
+                    <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">Mobile-First</span>
                   </div>
                 </div>
               </div>
             </div>
             
             {/* Measure Card - Enhanced with metrics */}
-            <div className="bg-slate-50 rounded-xl border-2 border-slate-200 p-4 transition-all">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <BarChart3 className="w-7 h-7 text-slate-600" />
+            <div 
+              className="group relative overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+              style={{
+                background: 'rgba(255, 255, 255, 0.92)',
+                backdropFilter: 'blur(24px)',
+                borderRadius: '16px',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 6px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03)',
+              }}
+            >
+              {/* Top light reflection */}
+              <div 
+                className="absolute inset-x-0 top-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
+                }}
+              ></div>
+              
+              {/* Colored accent bar on left */}
+              <div 
+                className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                style={{
+                  background: 'linear-gradient(180deg, #64748b, #475569)',
+                  boxShadow: '0 0 10px rgba(100, 116, 139, 0.35)'
+                }}
+              ></div>
+              
+              <div className="flex items-start gap-3 p-3 pl-4">
+                <div className="flex-shrink-0">
+                  <div 
+                    className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300"
+                    style={{
+                      background: 'rgba(100, 116, 139, 0.06)',
+                      border: '1px solid rgba(100, 116, 139, 0.15)'
+                    }}
+                  >
+                    <BarChart3 
+                      className="transition-transform duration-300 group-hover:scale-110" 
+                      style={{ width: '18px', height: '18px', color: '#64748b', strokeWidth: 2 }} 
+                    />
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-bold text-slate-600 text-lg mb-1">Measure</h3>
-                  <p className="text-gray-700 text-sm leading-tight mb-2">Real-time dashboards provide 100% audit coverage across locations.</p>
-                  <div className="flex gap-2 text-xs">
-                    <span className="bg-slate-100 text-slate-700 px-2 py-1 rounded-full font-medium">100% Coverage</span>
-                    <span className="bg-slate-100 text-slate-700 px-2 py-1 rounded-full font-medium">Live Data</span>
+                <div className="flex-1">
+                  <h3 
+                    className="font-semibold mb-1 tracking-tight"
+                    style={{ fontSize: '13px', lineHeight: '1.3', color: '#1a1a1a' }}
+                  >
+                    Measure
+                  </h3>
+                  <p 
+                    className="font-normal leading-snug mb-1.5"
+                    style={{ fontSize: '11px', lineHeight: '1.45', color: '#6b7280' }}
+                  >
+                    Real-time dashboards provide 100% audit coverage across locations.
+                  </p>
+                  <div className="flex gap-1.5" style={{ fontSize: '9px' }}>
+                    <span className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full font-medium">100% Coverage</span>
+                    <span className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full font-medium">Live Data</span>
                   </div>
                 </div>
               </div>
             </div>
             
             {/* Analyze Card - Enhanced with metrics */}
-            <div className="bg-orange-50 rounded-xl border-2 border-orange-200 p-4 transition-all">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Brain className="w-7 h-7 text-orange-600" />
+            <div 
+              className="group relative overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+              style={{
+                background: 'rgba(255, 255, 255, 0.92)',
+                backdropFilter: 'blur(24px)',
+                borderRadius: '16px',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 6px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03)',
+              }}
+            >
+              {/* Top light reflection */}
+              <div 
+                className="absolute inset-x-0 top-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
+                }}
+              ></div>
+              
+              {/* Colored accent bar on left */}
+              <div 
+                className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                style={{
+                  background: 'linear-gradient(180deg, #f97316, #ea580c)',
+                  boxShadow: '0 0 10px rgba(249, 115, 22, 0.35)'
+                }}
+              ></div>
+              
+              <div className="flex items-start gap-3 p-3 pl-4">
+                <div className="flex-shrink-0">
+                  <div 
+                    className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300"
+                    style={{
+                      background: 'rgba(249, 115, 22, 0.06)',
+                      border: '1px solid rgba(249, 115, 22, 0.15)'
+                    }}
+                  >
+                    <Brain 
+                      className="transition-transform duration-300 group-hover:scale-110" 
+                      style={{ width: '18px', height: '18px', color: '#f97316', strokeWidth: 2 }} 
+                    />
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-bold text-orange-600 text-lg mb-1">Analyze</h3>
-                  <p className="text-gray-700 text-sm leading-tight mb-2">AI engine identifies risks and trends impossible for humans to spot.</p>
-                  <div className="flex gap-2 text-xs">
-                    <span className="bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium">Pattern Recognition</span>
-                    <span className="bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium">Risk Detection</span>
+                <div className="flex-1">
+                  <h3 
+                    className="font-semibold mb-1 tracking-tight"
+                    style={{ fontSize: '13px', lineHeight: '1.3', color: '#1a1a1a' }}
+                  >
+                    Analyze
+                  </h3>
+                  <p 
+                    className="font-normal leading-snug mb-1.5"
+                    style={{ fontSize: '11px', lineHeight: '1.45', color: '#6b7280' }}
+                  >
+                    AI engine identifies risks and trends impossible for humans to spot.
+                  </p>
+                  <div className="flex gap-1.5" style={{ fontSize: '9px' }}>
+                    <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-medium">Pattern Recognition</span>
+                    <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-medium">Risk Detection</span>
                   </div>
                 </div>
               </div>
             </div>
             
             {/* Improve Card - Enhanced with metrics */}
-            <div className="bg-purple-50 rounded-xl border-2 border-purple-200 p-4 transition-all">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-7 h-7 text-purple-600" />
+            <div 
+              className="group relative overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+              style={{
+                background: 'rgba(255, 255, 255, 0.92)',
+                backdropFilter: 'blur(24px)',
+                borderRadius: '16px',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 6px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03)',
+              }}
+            >
+              {/* Top light reflection */}
+              <div 
+                className="absolute inset-x-0 top-0 h-px"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent)'
+                }}
+              ></div>
+              
+              {/* Colored accent bar on left */}
+              <div 
+                className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full transition-all duration-300 group-hover:w-1.5"
+                style={{
+                  background: 'linear-gradient(180deg, #a855f7, #9333ea)',
+                  boxShadow: '0 0 10px rgba(168, 85, 247, 0.35)'
+                }}
+              ></div>
+              
+              <div className="flex items-start gap-3 p-3 pl-4">
+                <div className="flex-shrink-0">
+                  <div 
+                    className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300"
+                    style={{
+                      background: 'rgba(168, 85, 247, 0.06)',
+                      border: '1px solid rgba(168, 85, 247, 0.15)'
+                    }}
+                  >
+                    <Zap 
+                      className="transition-transform duration-300 group-hover:scale-110" 
+                      style={{ width: '18px', height: '18px', color: '#a855f7', strokeWidth: 2 }} 
+                    />
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-bold text-purple-600 text-lg mb-1">Improve</h3>
-                  <p className="text-gray-700 text-sm leading-tight mb-2">Insights trigger corrective actions and optimize future execution.</p>
-                  <div className="flex gap-2 text-xs">
-                    <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-medium">Auto-Correction</span>
-                    <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-medium">Optimization</span>
+                <div className="flex-1">
+                  <h3 
+                    className="font-semibold mb-1 tracking-tight"
+                    style={{ fontSize: '13px', lineHeight: '1.3', color: '#1a1a1a' }}
+                  >
+                    Improve
+                  </h3>
+                  <p 
+                    className="font-normal leading-snug mb-1.5"
+                    style={{ fontSize: '11px', lineHeight: '1.45', color: '#6b7280' }}
+                  >
+                    Insights trigger corrective actions and optimize future execution.
+                  </p>
+                  <div className="flex gap-1.5" style={{ fontSize: '9px' }}>
+                    <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">Auto-Correction</span>
+                    <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">Optimization</span>
                   </div>
                 </div>
               </div>
