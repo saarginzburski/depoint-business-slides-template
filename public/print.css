@@ -386,6 +386,10 @@
   svg line {
     stroke: rgba(30, 115, 255, 0.12) !important;
     stroke-opacity: 1 !important;
+    opacity: 1 !important;
+    animation: none !important;
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
     -webkit-print-color-adjust: exact !important;
     color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -394,6 +398,7 @@
   svg line[stroke*="rgba"],
   svg line[stroke*="rgb"] {
     stroke: rgba(30, 115, 255, 0.12) !important;
+    opacity: 1 !important;
     -webkit-print-color-adjust: exact !important;
     color-adjust: exact !important;
     print-color-adjust: exact !important;
