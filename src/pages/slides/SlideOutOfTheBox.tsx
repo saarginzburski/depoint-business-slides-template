@@ -108,6 +108,7 @@ const SlideOutOfTheBox = () => {
                   y2={y}
                   stroke="rgba(30, 115, 255, 0.12)"
                   strokeWidth="1"
+                  className="connection-line"
                   style={{
                     animation: `lineAppear 0.6s ease forwards ${0.3 + idx * 0.05}s`,
                     opacity: 0
