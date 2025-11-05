@@ -384,10 +384,25 @@
   
   /* Ensure SVG connecting lines remain light in print view */
   svg line {
-    stroke-opacity: 0.12 !important;
+    stroke: rgba(30, 115, 255, 0.12) !important;
+    stroke-opacity: 1 !important;
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
   
-  svg line[stroke*="rgba"] {
+  svg line[stroke*="rgba"],
+  svg line[stroke*="rgb"] {
     stroke: rgba(30, 115, 255, 0.12) !important;
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Ensure parent SVG doesn't force color changes */
+  svg {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }

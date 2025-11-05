@@ -67,42 +67,6 @@ const SlideGlobalBrands = () => {
             </h2>
           </div>
 
-          {/* Decorative gradient lines behind logos - subtle connectivity visual */}
-          <div 
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            style={{
-              animation: 'fadeIn 1.5s ease-out 0.5s forwards',
-              opacity: 0
-            }}
-          >
-            <div
-              style={{
-                width: '85%',
-                height: '2px',
-                background: 'linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.08) 15%, rgba(99, 102, 241, 0.12) 50%, rgba(139, 92, 246, 0.08) 85%, transparent 100%)',
-                position: 'relative'
-              }}
-            >
-              {/* Subtle glow points */}
-              {[20, 35, 50, 65, 80].map((position, i) => (
-                <div
-                  key={i}
-                  style={{
-                    position: 'absolute',
-                    left: `${position}%`,
-                    top: '50%',
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(99, 102, 241, 0.25), transparent 70%)',
-                    transform: 'translate(-50%, -50%)',
-                    boxShadow: '0 0 20px rgba(99, 102, 241, 0.15)'
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
           {/* Brand Logos - Premium Glass Tiles */}
           <div 
             className="flex items-center justify-center w-full max-w-7xl relative z-10"
