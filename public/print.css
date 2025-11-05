@@ -376,4 +376,18 @@
     color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
+  
+  /* Hide decorative glass reflection lines on logo boxes */
+  .absolute.inset-x-0.top-0.h-px {
+    display: none !important;
+  }
+  
+  /* Ensure SVG connecting lines remain light in print view */
+  svg line {
+    stroke-opacity: 0.12 !important;
+  }
+  
+  svg line[stroke*="rgba"] {
+    stroke: rgba(30, 115, 255, 0.12) !important;
+  }
 }
