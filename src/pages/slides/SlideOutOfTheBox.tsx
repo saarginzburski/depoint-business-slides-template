@@ -71,7 +71,7 @@ const SlideOutOfTheBox = () => {
       <div 
         className="h-full flex items-center justify-center relative overflow-hidden"
         style={{
-          background: 'radial-gradient(circle at center, #ffffff 0%, #f8fafb 100%)'
+          background: '#ffffff'
         }}
       >
         
