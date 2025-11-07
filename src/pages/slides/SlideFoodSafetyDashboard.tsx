@@ -28,6 +28,7 @@ const SlideFoodSafetyDashboard = () => {
         logoSrc={depointLogo}
         componentName="SlideFoodSafetyDashboard"
         backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
+        footerTagline="Because food poisoning is not a menu feature."
       >
       <div className="h-full flex flex-col px-12 pb-8" style={{ gap: '16px' }}>
         
