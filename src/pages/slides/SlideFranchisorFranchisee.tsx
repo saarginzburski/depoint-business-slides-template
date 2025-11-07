@@ -77,7 +77,7 @@ const SlideFranchisorFranchisee = () => {
         totalSlides="15"
         logoSrc={depointLogo}
         componentName="SlideFranchisorFranchisee"
-        backgroundClass="bg-gradient-to-br from-white via-[#F8FAFB] to-[#F5F7FA]"
+        backgroundClass="bg-white"
         footerTagline="Keeping franchisors happy — without giving franchisees a headache."
       >
       <div className="h-full flex flex-col justify-center pb-6 pt-4">
