@@ -28,6 +28,7 @@ const SlideCleanlinessConditionDashboard = () => {
         logoSrc={depointLogo}
         componentName="SlideCleanlinessConditionDashboard"
         backgroundClass="bg-gradient-to-b from-white via-[#F8FAFB] to-[#F1F5F9]/30"
+        footerTagline="Clean stores, happy customers. Dirty stores, happy lawyers."
       >
       <div className="h-full flex flex-col px-12 pb-8" style={{ gap: '16px' }}>
         
