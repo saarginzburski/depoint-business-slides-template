@@ -1,8 +1,7 @@
 import React from 'react';
-import { Copy, Globe } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import SlideLayout from '@/components/SlideLayout';
 import depointLogo from '@/assets/Depoint-Logo-black.png';
-import jollibeeLogo from "@/assets/jollibee-logo-new.png";
 
 const SlideJollibeeCase = () => {
   return (
@@ -12,7 +11,7 @@ const SlideJollibeeCase = () => {
       totalSlides="35" 
       logoSrc={depointLogo} 
       componentName="SlideJollibeeCase"
-      backgroundClass="bg-gradient-to-br from-white via-[#F8FAFB] to-[#F5F7FA]"
+      backgroundClass="bg-white"
       footerTagline="1,324 stores. 184 franchisees. Zero chaos."
     >
       <div className="h-full flex flex-col px-12 pb-6">
@@ -34,38 +33,6 @@ const SlideJollibeeCase = () => {
           {/* Main Content - 50/50 Split with Perfect Symmetry */}
           <div className="flex-1 flex items-center justify-center relative">
             
-            {/* Radial glow behind logo */}
-            <div 
-              className="absolute left-1/2 -translate-x-1/2 z-10"
-              style={{
-                top: 'calc(50% - 100px)',
-                width: '400px',
-                height: '400px',
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 30%, transparent 70%)',
-                filter: 'blur(40px)',
-                pointerEvents: 'none',
-                animation: 'fadeIn 1s ease-out forwards',
-                opacity: 0
-              }}
-            />
-
-            {/* Centered Jollibee Logo - Elevated Position */}
-            <div 
-              className="absolute left-1/2 -translate-x-1/2 z-20"
-              style={{
-                top: 'calc(50% - 80px)',
-                background: 'white',
-                padding: '12px 20px',
-                borderRadius: '50px',
-                boxShadow: '0 12px 36px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08)',
-                border: '1px solid rgba(0, 0, 0, 0.06)',
-                animation: 'logoFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                opacity: 0
-              }}
-            >
-              <img src={jollibeeLogo} alt="Jollibee" style={{ height: '48px' }} />
-            </div>
-
             {/* Vertical Divider Line - Fine Gradient */}
             <div 
               className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2"
@@ -424,26 +391,6 @@ const SlideJollibeeCase = () => {
         </div>
 
         <style>{`
-          @keyframes fadeIn {
-            from {
-              opacity: 0;
-            }
-            to {
-              opacity: 1;
-            }
-          }
-
-          @keyframes logoFadeIn {
-            from {
-              opacity: 0;
-              transform: translate(-50%, -50%) scale(0.9);
-            }
-            to {
-              opacity: 1;
-              transform: translate(-50%, -50%) scale(1);
-            }
-          }
-
           @keyframes dividerDraw {
             from {
               scaleY: 0;
