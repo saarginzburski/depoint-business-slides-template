@@ -126,7 +126,7 @@ const SlideJollibeeOperationBook = () => {
         totalSlides="31"
         logoSrc={depointLogo}
         componentName="SlideJollibeeOperationBook"
-        backgroundClass="bg-gradient-to-br from-white via-[#F8FAFB] to-[#F5F7FA]"
+        backgroundClass="bg-white"
         footerTagline="Turns out fried chicken tastes even better when Bluetooth does the temperature check."
       >
         <div className="h-full flex flex-col justify-center px-10 pb-6 pt-4">
